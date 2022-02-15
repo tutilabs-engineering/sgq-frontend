@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 // import jwt from 'jsonwebtoken'
-function Auth(to,from, next){
- console.log(to.matched[0].props.default)
+function Auth(to, from, next) {
+  console.log(to.matched[0].props.default)
   // const secret = "@#$%¨&*(UGYdkjsbvkjdbvbdsojew#$%¨&Hddjdjbskjdepwopwwcjshvcdsjvcds";
-  if(localStorage.getItem("token") != undefined){
+  if (localStorage.getItem("token") != undefined) {
     next()
-  }else{
+  } else {
     next("/login");
   }
 }
@@ -37,6 +37,12 @@ const routes = [
     path: '/table-rp',
     name: 'TabelaReprovados',
     component: () => import('../views/TabelaReprovados'),
+    beforeEnter: Auth
+  },
+  {
+    path: '/table-ap',
+    name: 'TabelaAprovados',
+    component: () => import('../views/TabelaAprovados'),
     beforeEnter: Auth
   },
   {
@@ -107,13 +113,13 @@ const routes = [
     name: 'NotFound',
     component: () => import('../components/RouteNotFound.vue')
   },
-  
+
   {
     path: '/load',
     name: 'LoadinPage',
     component: () => import('../components/LoadingPage.vue')
   }
-  
+
 ]
 
 const router = createRouter({
