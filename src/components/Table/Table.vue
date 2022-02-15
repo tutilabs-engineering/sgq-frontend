@@ -40,7 +40,7 @@
       <tbody>
         <tr v-for="item in itemsAbertos" :key="item.id">
           <td style="display: none"></td>
-          <td data-title="Codigo">{{ item.codigo }}</td>
+          <td class="codeStartup" data-title="Codigo">{{ item.codigo }}</td>
           <td data-title="Produto">{{ item.produto }}</td>
           <td data-title="Cliente">{{ item.cliente }}</td>
           <td data-title="Maquina">{{ item.maquina }}</td>
@@ -331,6 +331,7 @@ table td {
 }
 
 @media (max-width: 767px) {
+
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
@@ -343,6 +344,10 @@ table td {
     display: block;
   }
 
+  .tableContent table {
+    border-radius: 10px 10px 0 0;
+  }
+
   .tableContent td {
     display: flex;
     align-items: center;
@@ -352,6 +357,7 @@ table td {
   [data-title]{
     color: var(--black_text);
   }
+
 
   .tableContent td:first-of-type {
     font-weight: bold;
@@ -365,10 +371,17 @@ table td {
     content: attr(data-title);
     display: block;
     font-weight: bold;
+    
   }
 
   .lastTd {
-    border-bottom: 3px dotted var(--font-color);
+    border-bottom: 1px solid var(--green_text);
+  }
+
+
+  .codeStartup {
+    font-weight: 600;
+    font-size: 20px;
   }
 }
 </style>
