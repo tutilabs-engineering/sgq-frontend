@@ -1,12 +1,12 @@
 <template>
-    <div class="content-perfil">
+    <div class="cadastro-perfil">
             <div class="perfil">
                 <div class="user">
                     <div class="perfil-img"><i class="fas fa-user-alt"></i></div>
-                    <h2>Perfil</h2>
+                    <h2>Gerenciamento de usuário</h2>
                 </div>
-                <h3>Dados do usuário</h3>
-                <div class="user-data">
+                <h2>Cadastro</h2>
+                <div class="cadastro-user-data">
                     
                     <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'"/>
                     <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'"/>
@@ -14,9 +14,22 @@
                     <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'"/>
                     <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'"/>
 
+                    <div>
+                        <label for="user-name">Nível de Acesso</label>
+                        <select name="lvAcess" id="lvAcess" class="select-lvAcess">
+                            <option value="adm">ADM</option>
+                            <option value="gestor">Gestor</option>
+                            <option value="analista">Analista</option>
+                            <option value="metrologista">Metrologista</option>
+                            <option value="inspetor">Inspetor</option>
+                            </select>
+                    </div>
+
+                    
+
                 </div>
                 <h3>Sistema</h3>
-                <div class="footer-user-data">
+                <div class="footer-cadastro-user-data">
                     <div class="input system-black">
                         <label for="user-name">Nível de Acesso</label>
                         <select name="lvAcess" id="lvAcess" class="select-lvAcess">
@@ -46,7 +59,7 @@ export default {
 
     components: { InputPerfil},
 
-    name: "Perfil",
+    name: "CadastroUsuario",
     data(){
 		return {
             user: {
@@ -69,7 +82,7 @@ export default {
 
 <style scoped>
 
-.content-perfil {
+.cadastro-perfil {
     width: 100%;
     height: calc(90vh - 90px);
     display: flex;
@@ -80,7 +93,7 @@ export default {
 
 
 .perfil {
-    width: 50%;
+    width: 80%;
     height: auto;
 }
 
@@ -94,12 +107,10 @@ export default {
     color: var(--green_text);
 }
 
-.perfil
-
 .user {
     display: flex;
     align-items: center;
-    font-size: 30px;
+    font-size: 25px;
     margin-bottom: 35px;
 }
 
@@ -137,17 +148,13 @@ export default {
     margin-right: 10px;
 }
 
-.user-data {
+.cadastro-user-data {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
     margin-bottom: 20px;
 }
 
-.footer-user-data {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-}
 
 .system-black {
     color: var(--main_primaryWhite);
@@ -184,7 +191,7 @@ export default {
 
 
 @media (max-width: 765px){
-    .user-data, .footer-user-data {
+    .cadastro-user-data {
         grid-template-columns: 1fr;
     }
 

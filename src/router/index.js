@@ -124,6 +124,12 @@ const routes = [
     path: '/perfil',
     name: 'Perfil',
     component: () => import('../views/Perfil.vue')
+  },
+
+  {
+    path: '/cadastroUsuario',
+    name: 'CadastroUsuario',
+    component: () => import('../views/CadastroUsuario.vue')
   }
 
 ]

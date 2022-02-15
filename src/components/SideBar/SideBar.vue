@@ -2,27 +2,23 @@
   <div class="sidebar">
 
     <div  class="sidebarOpened">
-      <div class="option_link_title titleIcon" @click="() => this.$router.push({ name: 'Principal' })"> <i class="fas fa-vial"></i> <h3 class="link_title">SGQ</h3> </div>
 
-      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'Startup' })"> <i class="fas fa-check-circle"></i><span class="link_name">Startup</span>
-      </div>
+      <div class="option_link_title titleIcon" @click="() => this.$router.push({ name: 'Principal' })"> <i class="fas fa-vial"></i> <h3 class="link_title">SGQ</h3></div>
+
+      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'Startup' })"> <i class="fas fa-check-circle"></i><span class="link_name">Startup</span></div>
       
-      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'Status' })"> <i class="fas fa-clone"></i><span class="link_name">Criar Startup</span>
-      </div>
+      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'Status' })"> <i class="fas fa-clone"></i><span class="link_name">Criar Startup</span></div>
 
-      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'Dashboard' })"> <i class="fas fa-chart-bar"></i><span class="link_name">Dashboard</span>
-      </div>
+      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'Dashboard' })"> <i class="fas fa-chart-bar"></i><span class="link_name">Dashboard</span></div>
 
-      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'attributes' })"> <i class="fas fa-desktop"></i><span class="link_name">Análise</span>
-      </div>
+      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'attributes' })"> <i class="fas fa-desktop"></i><span class="link_name">Análise</span></div>
 
-      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'metrologia' })"> <i class="fas fa-ruler-combined"></i><span class="link_name">Metrologia</span>
-      </div>
+      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'metrologia' })"> <i class="fas fa-ruler-combined"></i><span class="link_name">Metrologia</span></div>
 
-      <div class="option_link linkTo exit" @click="Exit"> <i class="fas fa-door-open"></i><span class="link_name">Sair</span>
-      </div>
+      <div class="option_link linkTo exit" @click="Exit"> <i class="fas fa-door-open"></i><span class="link_name">Sair</span></div>
 
     </div>
+    
   </div>
 </template>
 
