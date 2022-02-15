@@ -1,15 +1,18 @@
 <template>
-  <div class="defaultInterface">
-    <div v-if="telaLogin">
-      <Login />
-    </div>
+  <!-- <div class="defaultInterface"> -->
+  <div v-if="telaLogin">
+    <Login />
+  </div>
 
-    <div v-else class="content" :style="{ 'margin-left': sidebarWidth }">
-      <SideBar />
-      <!--<NavBar />-->
+  <div v-else>
+    <SideBar />
+    <Header titlePage="Sistema de Gerenciamento de Qualidade" />
+    <!--<NavBar />-->
+    <div class="content">
       <router-view />
     </div>
   </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -19,6 +22,7 @@ import SideBar from "./components/SideBar/SideBar.vue";
 import { sidebarWidth } from "./components/SideBar/state";
 import Login from "./views/Login.vue";
 import Routes from "./router/index";
+import Header from "./components/Header/Header.vue";
 
 //axios
 
@@ -27,6 +31,7 @@ export default {
     SideBar,
     //NavBar,
     Login,
+    Header,
   },
   setup() {
     return { sidebarWidth };
@@ -70,7 +75,8 @@ export default {
   --black_text: #444444;
   --green_text: #3fc36d;
   --bg_green: #3fc36d;
-  --bg-gray: #f5f5f5;
+  --bg_gray: #f5f5f5;
+  --bg_white: #ffffff;
 
   /* cards */
   --card_green: #3fc36d;
@@ -112,7 +118,7 @@ export default {
   font-family: "Poppins", sans-serif;
 }
 body {
-  background-color: var(--background-color);
+  background-color: var(--bg_gray);
 }
 .defaultInterface {
   display: flex;
@@ -120,10 +126,18 @@ body {
   align-items: center;
   height: 100vh;
 }
+
 .content {
-  justify-content: center;
-  display: flex;
-  background-color: var(--background-color);
-  height: 100vh;
+  width: calc(100% - 210px);
+  height: 100%;
+  margin-left: 210px;
+  /* padding: 40px; */
+  transition: 0.5s;
+}
+
+.content.activeContent {
+  width: calc(100% - 60px);
+  margin-left: 60px;
+  transition: 0.5s;
 }
 </style>
