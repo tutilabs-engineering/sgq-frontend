@@ -1,7 +1,6 @@
 <template>
   <div class="sidebar">
 
-
     <div  class="sidebarOpened">
       <div class="option_link_title titleIcon" @click="() => this.$router.push({ name: 'Principal' })"> <i class="fas fa-vial"></i> <h3 class="link_title">SGQ</h3> </div>
 
