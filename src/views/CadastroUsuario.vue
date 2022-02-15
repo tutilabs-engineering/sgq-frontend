@@ -77,7 +77,7 @@ export default {
 
 .gerenciamento-user {
     width: 100%;
-    height: calc(90vh - 90px);
+    height: calc(100vh - 90px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -179,7 +179,8 @@ export default {
     height: 30px;
 }
 .select-lvAcess * {
-    background-color: var(--black_text);
+    border: 1px solid red;
+    background-color: var(--green_text);
     color: var(--main_primaryWhite);
 }
 
@@ -187,6 +188,10 @@ export default {
 @media (max-width: 765px){
     .cadastro-user-data {
         grid-template-columns: 1fr;
+    }
+
+    .gerenciamento-user {
+        height: calc(100vh + 90px);
     }
 
     .perfil {
