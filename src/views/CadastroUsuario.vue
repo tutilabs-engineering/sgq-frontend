@@ -1,11 +1,12 @@
 <template>
-    <div class="cadastro-perfil">
+    <div class="gerenciamento-user">
             <div class="perfil">
                 <div class="user">
                     <div class="perfil-img"><i class="fas fa-user-alt"></i></div>
                     <h2>Gerenciamento de usuário</h2>
                 </div>
                 <h2>Cadastro</h2>
+
                 <div class="cadastro-user-data">
                     
                     <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'"/>
@@ -14,7 +15,7 @@
                     <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'"/>
                     <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'"/>
 
-                    <div>
+                    <div class="input-acessLevel">
                         <label for="user-name">Nível de Acesso</label>
                         <select name="lvAcess" id="lvAcess" class="select-lvAcess">
                             <option value="adm">ADM</option>
@@ -25,26 +26,18 @@
                             </select>
                     </div>
 
-                    
-
                 </div>
-                <h3>Sistema</h3>
-                <div class="footer-cadastro-user-data">
-                    <div class="input system-black">
-                        <label for="user-name">Nível de Acesso</label>
-                        <select name="lvAcess" id="lvAcess" class="select-lvAcess">
-                            <option value="adm">ADM</option>
-                            <option value="gestor">Gestor</option>
-                            <option value="analista">Analista</option>
-                            <option value="metrologista">Metrologista</option>
-                            <option value="inspetor">Inspetor</option>
-                            </select>
-                    </div>
 
-                    <button class="btn-edit">Editar</button>
+                <div class="buttons-action">
+                    <button class="btn cancel-btn">Cancelar</button>
+                    <button class="btn save-btn">Salvar</button>
                 </div>
+
+                
 
             </div>
+
+
        
     </div>
   
@@ -82,22 +75,18 @@ export default {
 
 <style scoped>
 
-.cadastro-perfil {
+.gerenciamento-user {
     width: 100%;
     height: calc(90vh - 90px);
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
-
 
 .perfil {
-    width: 80%;
+    width: 70%;
     height: auto;
 }
-
-
 
 .perfil h2  {
     color: var(--black_text);
@@ -114,33 +103,20 @@ export default {
     margin-bottom: 35px;
 }
 
+.user h2 {
+    line-height: 35px;
+}
+
 .fa-user-alt {
     color: var(--main_primaryWhite);
-    font-size: 50px;
+    font-size: 3rem;
 }
 
-.input {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--main_primaryWhite);
-    padding: 10px;
-    justify-content: center;
-    height: 80px;
-    border-radius: 10px;
-    color: var(--black_text);
-}
-
-.input input {
-    border: none;
-    outline: none;
-    height: 50px;
-    padding: 0px 5px 0 5px;
-}
 
 .perfil-img {
     border-radius: 10px;
-    height: 70px;
-    width: 70px;
+    height: 4rem;
+    width: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -156,23 +132,42 @@ export default {
 }
 
 
-.system-black {
-    color: var(--main_primaryWhite);
-    background-color: var(--black_text);
-    grid-column-start: 1;
-    grid-column-end: 3;
+.input-acessLevel {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--main_primaryWhite);
+    padding: 10px;
+    justify-content: center;
+    height: 80px;
+    border-radius: 10px;
+    color: var(--black_text);
 }
 
-.btn-edit {
+.buttons-action {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+
+.btn {
     color: var(--black_text);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    height: 80px;
+    height: 60px;
     border-radius: 10px;
     border: none;
     background-color: var(--btn_gray);
-    grid-column: 4;
+}
+
+.cancel-btn {
+    grid-column: 3;
+}
+
+.save-btn {
+    color: var(--main_primaryWhite);
+    background-color: var(--btn_blue);
 }
 
 .select-lvAcess {
@@ -182,7 +177,6 @@ export default {
     border: none;
     border-radius: 5px;
     height: 30px;
-    font-weight: 600;
 }
 .select-lvAcess * {
     background-color: var(--black_text);
@@ -196,13 +190,28 @@ export default {
     }
 
     .perfil {
-        margin-top: 50px;
+        margin-top: 120px;
         width: 80%;
     }
 
-    .btn-edit {
+    .buttons-action {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .btn {
         margin-top: 20px;
         grid-column: auto;
+    }
+
+    .user {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .user h2 {
+        font-size: 1rem;
+        text-align: center;
     }
 }
 
