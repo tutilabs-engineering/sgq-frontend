@@ -236,7 +236,7 @@ export default {
 table th {
   height: 50px;
   font-size: 17px;
-  color: #292828;
+  color: var(--black_text);
   padding: 10px 10px 0 10px;
 }
 
@@ -281,7 +281,7 @@ table td {
   width: 100%;
   height: 40px;
   border-radius: 10px;
-  color: #292828;
+  color: var(--black_text);
   font-size: max(0.8rem, 1vw);
   font-weight: bold;
   border: none;
@@ -312,18 +312,18 @@ table td {
 }
 
 .fa-ellipsis-h {
-  color: var(--main-color);
+  color: var(--card_green);
   font-size: 25px;
 }
 
 .fa-edit {
-  color: var(--button-color-01);
+  color: var(--black_text);
 }
 .fa-file-excel {
-  color: var(--main-color);
+  color: var(--card_green);
 }
 .fa-door-closed {
-  color: var(--button-color-02);
+  color: var(--card_blue);
 }
 
 .btns {
@@ -347,6 +347,10 @@ table td {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  [data-title]{
+    color: var(--black_text);
   }
 
   .tableContent td:first-of-type {
