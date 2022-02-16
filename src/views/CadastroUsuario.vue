@@ -25,32 +25,29 @@
                             <option value="inspetor">Inspetor</option>
                             </select>
                     </div>
-
                 </div>
 
                 <div class="buttons-action">
                     <button class="btn cancel-btn">Cancelar</button>
                     <button class="btn save-btn">Salvar</button>
                 </div>
-
-                
-
             </div>
 
+         
+            <TableUsers />
 
-       
+            
     </div>
   
 </template>
 
 <script>
-
+import TableUsers from "../components/TableUsers/TableUsers.vue"
 import InputPerfil from "../components/InputsPerfil/InputPerfil.vue";
-
 
 export default {
 
-    components: { InputPerfil},
+    components: {InputPerfil, TableUsers},
 
     name: "CadastroUsuario",
     data(){
@@ -63,8 +60,6 @@ export default {
                 cpf: "96378925802",
                 cargo: "Técnica",
             }
-        
-        
         }
 		
 	},
@@ -76,11 +71,12 @@ export default {
 <style scoped>
 
 .gerenciamento-user {
+    margin-top: 5vh;
     width: 100%;
-    height: calc(100vh - 90px);
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .perfil {
@@ -186,16 +182,15 @@ export default {
 
 
 @media (max-width: 765px){
+
+    .gerenciamento-user {
+        margin-top: 12vh;
+
+    }
     .cadastro-user-data {
         grid-template-columns: 1fr;
     }
-
-    .gerenciamento-user {
-        height: calc(100vh + 90px);
-    }
-
     .perfil {
-        margin-top: 120px;
         width: 80%;
     }
 

@@ -189,7 +189,7 @@ export default {
     }
 
     .perfil {
-        margin-top: 50px;
+        margin-top: 12vh;
         width: 80%;
     }
 
