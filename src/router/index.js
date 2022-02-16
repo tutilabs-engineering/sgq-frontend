@@ -130,7 +130,12 @@ const routes = [
     path: '/cadastroUsuario',
     name: 'CadastroUsuario',
     component: () => import('../views/CadastroUsuario.vue')
-  }
+  },
+  {
+    path: '/metrologiaDetalhes',
+    name: 'MetrologiaDetalhes',
+    component: () => import('../views/MetrologiaDetalhes.vue')
+  },
 
 ]
 
