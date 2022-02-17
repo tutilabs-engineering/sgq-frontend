@@ -34,13 +34,17 @@ export default {
   },
   data() {
     return {
-      username: "",
+      username: "Pablo",
     };
   },
 
   mounted() {
     const secret =
       "@#$%¨&*(UGYdkjsbvkjdbvbdsojew#$%¨&Hddjdjbskjdepwopwwcjshvcdsjvcds";
+
+      // xiuuuuuuuuuuuu!!! é segredo
+
+
     if (localStorage.getItem("token") != undefined) {
       var token = localStorage.getItem("token");
       const decoded = jwt.verify(token, secret);
@@ -54,9 +58,9 @@ export default {
       this.$swal
         .fire({
           title: "Até a proxima, " + this.username.split(" ")[0] + "!",
-          imageUrl: "/img/qualidade.png",
-          imageWidth: 400,
-          imageHeight: 200,
+          imageUrl: "/img/ql.gif",
+          imageWidth: 550,
+          imageHeight: 300,
           imageAlt: "Custom image",
         })
         .then(() => {
