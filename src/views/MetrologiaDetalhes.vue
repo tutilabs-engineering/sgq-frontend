@@ -3,8 +3,11 @@
 <div class="content-metrologiaDetalhes">
     <h2>METROLOGIA DETALHES</h2>
 
-    <label for="codProd"></label>
-    <input type="text" >
+    <div class="input-metrologiaDetalhes">
+        <InputMetrologia title="sadad" value="habdahbd" type="text" plac/>
+        
+
+    </div>
 
 </div>
   
@@ -12,10 +15,14 @@
 
 <script>
 
+import InputMetrologia from '../          '
 
 export default {
-
+    components: {InputMetrologia},
     name: "MetrologiaDetalhes",
+    data(){
+        return {};
+    }
 
 
 }
