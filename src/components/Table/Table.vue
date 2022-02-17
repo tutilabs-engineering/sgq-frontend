@@ -330,12 +330,16 @@ table td {
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 850px) {
 
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
   }
+
+  .tableContent{
+    padding: 0;
+  } 
   .tableContent thead {
     display: none;
   }

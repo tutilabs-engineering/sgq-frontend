@@ -60,7 +60,7 @@ export default defineComponent({
 }
 
 .cards {
-  margin-top: 80px; 
+  margin-top: 10px; 
   width: 100%;
   height: auto;
   display: flex;
