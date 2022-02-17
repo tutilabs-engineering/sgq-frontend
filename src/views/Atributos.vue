@@ -23,7 +23,14 @@
           <td data-title="Inspetor">{{ item.inspetor }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
-              <ModalAtributo titleModal="Variável" />
+              <ModalAtributo
+                :modalAtributo="modalAtributo"
+                @open-modal-atributo="openModalAtributo"
+              />
+              <ModalVariavel
+                :modalVariavel="modalVariavel"
+                @open-modal-variavel="openModalVariavel"
+              />
             </div>
           </td>
         </tr>
@@ -34,10 +41,12 @@
 
 <script>
 import ModalAtributo from "../components/Modal/ModalAtributo.vue";
+import ModalVariavel from "../components/Modal/ModalVariavel.vue";
 export default {
-  components: { ModalAtributo },
+  components: { ModalAtributo, ModalVariavel },
   setup() {},
   name: "Table",
+  emits: ["modalAtributo", "modalVariavel"],
   data() {
     return {
       itemsAbertos: [
@@ -98,7 +107,17 @@ export default {
           inspetor: "Guilherme",
         },
       ],
+      modalAtributo: false,
+      modalVariavel: false,
     };
+  },
+  methods: {
+    openModalAtributo() {
+      this.modalAtributo = !this.modalAtributo;
+    },
+    openModalVariavel() {
+      this.modalVariavel = !this.modalVariavel;
+    },
   },
 };
 </script>
