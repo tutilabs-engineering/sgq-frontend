@@ -264,6 +264,7 @@ table td {
     display: block;
   }
 
+
   .tableContent td {
     display: flex;
     align-items: center;

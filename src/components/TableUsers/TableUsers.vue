@@ -1,0 +1,235 @@
+<template>
+  <div className="tableContent">
+    <table cellpadding="0" cellspacing="0">
+
+      <thead>
+        <th>Nome</th>
+        <th>Matricula</th>
+        <th>Email</th>
+        <th>Nível de Acesso</th>
+        <th>Status</th>
+        <th>Opções</th>
+      </thead>
+
+      <tbody>
+        <tr v-for="user in users" :key="user.id">
+          <td style="display: none"></td>
+          <td class="codeStartup" data-title="Nome">{{ user.name }}</td>
+          <td data-title="Matricula">{{ user.matricula }}</td>
+          <td data-title="Email">{{ user.email }}</td>
+          <td data-title="Nv. Acesso">{{ user.nivelAcesso }}</td>
+          <td data-title="Status">{{ user.status }}</td>
+          <td class="lastTd" data-title="Opcoes">
+            <div className="opcoes">
+              <i class="fas fa-ellipsis-h"></i>
+              <div class="dropdown-content">
+                <button className="btnOpcoes">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button className="btnOpcoes">
+                  <i class="fas fa-file-excel"></i>
+                </button>
+                <button className="btnOpcoes">
+                  <i class="fas fa-door-closed"></i>
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</template>
+
+<script>
+export default {
+  setup() {},
+  name: "Table",
+  data() {
+    return {
+      users: [
+        {
+          id: 1,
+          name: "Maria do Bairro",
+          matricula: "56783",
+          email: "maria.bairro@tuti.com.br",
+          nivelAcesso: "Gerente",
+          status: "habilitado",
+        },
+        {
+          id: 2,
+          name: "Jorge Gama",
+          matricula: "987662",
+          email: "jorge.gama@tuti.com.br",
+          nivelAcesso: "Inspetor",
+          status: "habilitado",
+        },
+        {
+          id: 3,
+          name: "Renato Maia",
+          matricula: "4844",
+          email: "renato.maia@tuti.com.br",
+          nivelAcesso: "ADM",
+          status: "habilitado",
+        },
+        {
+          id: 4,
+          name: "Bruno Marinho",
+          matricula: "9675",
+          email: "bruno.marinho@tuti.com.br",
+          nivelAcesso: "Metrologista",
+          status: "habilitado",
+        }
+      ],
+      statusTable: true,
+    };
+  },
+};
+</script>
+
+<style scoped>
+.dropdown-content {
+  display: none;
+  background-color: #fff;
+  border-radius: 10px;
+  min-width: 50px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 15px 5px;
+  z-index: 1;
+}
+
+.opcoes:hover .dropdown-content {
+  display: block;
+}
+
+.tableContent {
+  width: 70%;
+  margin-top: 40px;
+
+}
+
+.tableContent table {
+  background-color: var(--bg_white);
+  width: 100%;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
+}
+
+table th {
+  height: 50px;
+  font-size: 17px;
+  color: var(--black_text);
+  padding: 10px 10px 0 10px;
+}
+
+.tableContent tr {
+  height: 100px;
+}
+
+table td {
+  border-top: 0.4px solid rgba(0, 0, 0, 0.199);
+}
+
+.tableContent td {
+  text-align: center;
+  height: 50px;
+  padding: 0 10px 0 10px;
+}
+
+.opcoes {
+  display: flex;
+  flex-direction: column;
+}
+
+.btnOpcoes {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.btnOpcoes i {
+  margin: 0 10px 0 10px;
+}
+
+.fa-ellipsis-h {
+  color: var(--card_green);
+  font-size: 25px;
+}
+
+.fa-edit {
+  color: var(--black_text);
+}
+.fa-file-excel {
+  color: var(--card_green);
+}
+.fa-door-closed {
+  color: var(--card_blue);
+}
+
+.btns {
+  display: none;
+}
+
+@media (max-width: 1114px) and (min-width: 800px){
+    .tableContent table {
+        font-size: 13px;
+    }
+
+    .tableContent th {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 800px) {
+
+  .tableContent thead {
+    display: none;
+  }
+
+  .tableButton {
+    display: block;
+  }
+
+  .tableContent table {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .tableContent td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  [data-title]{
+    color: var(--black_text);
+  }
+
+
+  .tableContent td:first-of-type {
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .tableContent td:not(:first-of-type):before {
+    content: attr(data-title);
+    display: block;
+    font-weight: bold;
+    
+  }
+
+  .lastTd {
+    border-bottom: 1px solid var(--green_text);
+  }
+
+
+  .codeStartup {
+    font-weight: 600;
+    font-size: 20px;
+  }
+}
+</style>

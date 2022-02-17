@@ -40,14 +40,14 @@ export default {
 .header {
   position: relative;
   width: calc(100% - 210px);
-  height: 90px;
+  height: 75px;
   margin-left: 210px;
   transition: 0.5s;
   display: flex;
   align-items: center;
   padding: 0 20px;
   background-color: var(--bg_white);
-  box-shadow: 0 0.2rem 0.2rem rgb(156 156 156);
+  box-shadow: 0 0.1rem 0.2rem rgb(156 156 156);
 }
 
 .header.activeHeader {
@@ -58,7 +58,7 @@ export default {
 
 .collapse-icon {
   font-size: 26px;
-  color: var(--main-color);
+  color: var(--green_text);
   padding: 0.75em;
   transition: 0.3s linear;
   cursor: pointer;
@@ -71,8 +71,9 @@ export default {
 
 .title {
   font-size: max(1.3rem, 1rem);
-  color: var(--font-color);
+  color: var(--black_text);
   margin-left: 5px;
+  line-height: 25px;
 }
 </style>
 
