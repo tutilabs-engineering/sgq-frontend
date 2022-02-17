@@ -1,29 +1,28 @@
 <template>
-
-  <div class="defaultInterface">
-    <div v-if="telaLogin">
-      <Login />
-    </div>
-    
-    <div v-else class="content" :style="{ 'margin-left': sidebarWidth}">
-      
-      <SideBar />
-      <!--<NavBar />-->
-      <router-view />
-      
-      
-    </div>
+  <!-- <div class="defaultInterface"> -->
+  <div v-if="telaLogin">
+    <Login />
   </div>
 
+  <div v-else>
+    <SideBar />
+    <Header titlePage="Sistema de Gerenciamento de Qualidade" />
+    <!--<NavBar />-->
+    <div class="content">
+      <router-view />
+    </div>
+  </div>
+  <!-- </div> -->
 </template>
 
 <script>
 //import NavBar from "./components/NavBar";
 
-import SideBar from './components/SideBar/SideBar.vue'
-import {sidebarWidth} from './components/SideBar/state'
+import SideBar from "./components/SideBar/SideBar.vue";
+import { sidebarWidth } from "./components/SideBar/state";
 import Login from "./views/Login.vue";
 import Routes from "./router/index";
+import Header from "./components/Header/Header.vue";
 
 //axios
 
@@ -32,9 +31,10 @@ export default {
     SideBar,
     //NavBar,
     Login,
+    Header,
   },
-  setup(){
-    return {sidebarWidth}
+  setup() {
+    return { sidebarWidth };
   },
   computed: {
     telaLogin() {
@@ -43,28 +43,22 @@ export default {
   },
 
   mounted() {
-
     const currentPath = window.location.pathname;
     var routesExists = Routes.options.routes;
 
-    var result = routesExists.find(element => element.path == currentPath);
+    var result = routesExists.find((element) => element.path == currentPath);
 
-
-    if(result == undefined && localStorage.getItem("token") == undefined) {
-      this.$router.push({path: "/notFound"});
+    if (result == undefined && localStorage.getItem("token") == undefined) {
+      this.$router.push({ path: "/notFound" });
     }
 
-    var nameURL = window.location.pathname
-     var display = document.querySelector(".defaultInterface");
-    if(nameURL == "/login"){
-     
-      display.style.display="block"
-    }else{
-      
-      display.style.display="block"
+    var nameURL = window.location.pathname;
+    var display = document.querySelector(".defaultInterface");
+    if (nameURL == "/login") {
+      display.style.display = "block";
+    } else {
+      display.style.display = "block";
     }
-
-
   },
   methods: {
     mudar() {
@@ -75,29 +69,56 @@ export default {
 </script>
 
 <style>
-
 :root {
-  --main-color:#43CC74;
-  --font-color: #1B1A1A;
-  --button-color-01: #FFAE3D ;
-  --button-color-02: #5F9DFF;
-  --button-color-03: #FF5349;
-  --background-color: #ECECEC;
-  --card-color: #fff;
-  --card-color-hover: #FEFEFE;
+  /* colors */
+  --main_primaryWhite: #ffffff;
+  --black_text: #444444;
+  --green_text: #3fc36d;
+  --bg_green: #3fc36d;
+  --bg_gray: #f5f5f5;
+  --bg_white: #ffffff;
+
+  /* cards */
+  --card_green: #3fc36d;
+  --card_orange: #ffae3d;
+  --card_red: #ff5349;
+  --card_blue: #5f9dff;
+  --card_white: #ffffff;
+
+  /* buttons */
+  --btn_blue: #5f9dff;
+  --btn_green: #3fc36d;
+  --btn_gray: #e9dfdf;
+  --btn_white: #ffffff;
+
+  /* flag */
+  --flag_yellow: #e3e745;
+
+  /* / border radius / */
+  --radius: 1rem;
+  --circuleRadius: 50%;
+
+  /* / shadow / */
+  --shadow: 0px 0px 1rem #d2d2d2a6;
+
+  /* / padding / */
+  --paddingInput: 1rem;
+  --negativeSpace: 2vw;
+  /* / weight */
+  --bold: 600;
+  --regular: 400;
 }
 
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 body {
-  background-color: var(--background-color);
+  background-color: var(--bg_gray);
 }
 .defaultInterface {
   display: flex;
@@ -105,12 +126,18 @@ body {
   align-items: center;
   height: 100vh;
 }
+
 .content {
-  justify-content: center;
-  display: flex;
-  background-color: var(--background-color);
-  height: 100vh;
+  width: calc(100% - 210px);
+  height: 100%;
+  margin-left: 210px;
+  /* padding: 40px; */
+  transition: 0.5s;
 }
 
-
+.content.activeContent {
+  width: calc(100% - 60px);
+  margin-left: 60px;
+  transition: 0.5s;
+}
 </style>

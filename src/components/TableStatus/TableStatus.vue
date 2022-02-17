@@ -1,97 +1,7 @@
 <template>
   <div className="tableContent">
-    <table v-if="statusTable" cellpadding="0" cellspacing="0">
-      <div class="btns">
-        <button @click="statusTable = true" class="btn startup-opened">
-          Startups Abertas
-        </button>
-        <button @click="statusTable = false" class="btn startup">
-          Startups Fechadas
-        </button>
-      </div>
-
-      <thead>
-        <th>
-          <button @click="statusTable = true" class="btn startup-opened">
-            Startups Abertas
-          </button>
-        </th>
-        <th>
-          <button @click="statusTable = false" class="btn startup">
-            Startups Fechadas
-          </button>
-        </th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </thead>
-
-      <thead>
-        <th>Cód.Startup</th>
-        <th>Produtos</th>
-        <th>Cliente</th>
-        <th>Máquina</th>
-        <th>Data</th>
-        <th>Inspetor</th>
-        <th>Opções</th>
-      </thead>
-
-      <tbody>
-        <tr v-for="item in itemsAbertos" :key="item.id">
-          <td style="display: none"></td>
-          <td data-title="Codigo">{{ item.codigo }}</td>
-          <td data-title="Produto">{{ item.produto }}</td>
-          <td data-title="Cliente">{{ item.cliente }}</td>
-          <td data-title="Maquina">{{ item.maquina }}</td>
-          <td data-title="Data">{{ item.data }}</td>
-          <td data-title="Inspetor">{{ item.inspetor }}</td>
-          <td class="lastTd" data-title="Opcoes">
-            <div className="opcoes">
-              <i class="fas fa-ellipsis-h"></i>
-              <div class="dropdown-content">
-                <button className="btnOpcoes">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button className="btnOpcoes">
-                  <i class="fas fa-file-excel"></i>
-                </button>
-                <button className="btnOpcoes">
-                  <i class="fas fa-door-closed"></i>
-                </button>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <table v-else cellpadding="0" cellspacing="0">
-      <div class="btns">
-        <button @click="statusTable = true" class="btn startup">
-          Startups Abertas
-        </button>
-        <button @click="statusTable = false" class="btn startup-closed">
-          Startups Fechadas
-        </button>
-      </div>
-
-      <thead>
-        <th>
-          <button @click="statusTable = true" class="btn startup">
-            Startups Abertas
-          </button>
-        </th>
-        <th>
-          <button @click="statusTable = false" class="btn startup-closed">
-            Startups Fechadas
-          </button>
-        </th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </thead>
+    <h2 class="titleTable">{{ titleTable }}</h2>
+    <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cód.Startup</th>
         <th>Produtos</th>
@@ -116,13 +26,13 @@
               <i class="fas fa-ellipsis-h"></i>
               <div class="dropdown-content">
                 <button className="btnOpcoes">
-                  <i class="fas fa-edit"></i>
+                  <i :class="iconeEdit"></i>
                 </button>
                 <button className="btnOpcoes">
-                  <i class="fas fa-file-excel"></i>
+                  <i :class="iconeAdicionar"></i>
                 </button>
                 <button className="btnOpcoes">
-                  <i class="fas fa-door-closed"></i>
+                  <i :class="iconeFile"></i>
                 </button>
               </div>
             </div>
@@ -137,6 +47,7 @@
 export default {
   setup() {},
   name: "Table",
+  props: ["titleTable", "iconeAdicionar", "iconeFile", "iconeEdit"],
   data() {
     return {
       itemsAbertos: [
@@ -197,15 +108,25 @@ export default {
           inspetor: "Guilherme",
         },
       ],
-      statusTable: true,
     };
   },
 };
 </script>
 
 <style scoped>
+.tableContent {
+  position: relative;
+  width: 100%;
+}
+
+.tableContent h2 {
+  margin-bottom: 20px;
+}
+
 .dropdown-content {
   display: none;
+  justify-content: center;
+  align-items: center;
   background-color: #fff;
   border-radius: 10px;
   min-width: 50px;
@@ -226,7 +147,7 @@ export default {
 }
 
 .tableContent table {
-  background-color: var(--bg_white);
+  background-color: var(--card-color);
   width: 100%;
   border-radius: 10px 10px 10px 10px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
