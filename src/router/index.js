@@ -118,7 +118,24 @@ const routes = [
     path: '/load',
     name: 'LoadinPage',
     component: () => import('../components/LoadingPage.vue')
-  }
+  },
+
+  {
+    path: '/perfil',
+    name: 'Perfil',
+    component: () => import('../views/Perfil.vue')
+  },
+
+  {
+    path: '/cadastroUsuario',
+    name: 'CadastroUsuario',
+    component: () => import('../views/CadastroUsuario.vue')
+  },
+  {
+    path: '/metrologiaDetalhes',
+    name: 'MetrologiaDetalhes',
+    component: () => import('../views/MetrologiaDetalhes.vue')
+  },
 
 ]
 

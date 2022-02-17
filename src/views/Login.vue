@@ -203,6 +203,7 @@ html {
 }
 
 .inputForm::placeholder {
+  outline: none;
   font-size: 16px;
   color: var(--font-color);
   opacity: 0.5;

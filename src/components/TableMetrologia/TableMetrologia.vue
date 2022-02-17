@@ -3,22 +3,22 @@
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
-          Startups Abertas
+          Histórico
         </button>
         <button @click="statusTable = false" class="btn startup">
-          Startups Fechadas
+          Solicitações
         </button>
       </div>
 
       <thead>
         <th>
           <button @click="statusTable = true" class="btn startup-opened">
-            Startups Abertas
+            Histórico
           </button>
         </th>
         <th>
           <button @click="statusTable = false" class="btn startup">
-            Startups Fechadas
+            Solicitações
           </button>
         </th>
         <th></th>
@@ -28,39 +28,24 @@
       </thead>
 
       <thead>
-        <th>Cód.Startup</th>
-        <th>Produtos</th>
-        <th>Cliente</th>
-        <th>Máquina</th>
-        <th>Data</th>
-        <th>Inspetor</th>
-        <th>Opções</th>
+        <th>O.Produção</th>
+        <th>Cod. Produto</th>
+        <th>Produto</th>
+        <th>Técnico</th>
+        <th>Data de Abertura</th>
+        <th>Opção</th>
       </thead>
 
       <tbody>
         <tr v-for="item in itemsAbertos" :key="item.id">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="Codigo">{{ item.codigo }}</td>
+          <td class="codeStartup" data-title="O.P">{{ item.op}}</td>
+          <td data-title="Cod. Produto">{{ item.codProd }}</td>
           <td data-title="Produto">{{ item.produto }}</td>
-          <td data-title="Cliente">{{ item.cliente }}</td>
-          <td data-title="Maquina">{{ item.maquina }}</td>
-          <td data-title="Data">{{ item.data }}</td>
-          <td data-title="Inspetor">{{ item.inspetor }}</td>
-          <td class="lastTd" data-title="Opcoes">
-            <div className="opcoes">
-              <i class="fas fa-ellipsis-h"></i>
-              <div class="dropdown-content">
-                <button className="btnOpcoes">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button className="btnOpcoes">
-                  <i class="fas fa-file-excel"></i>
-                </button>
-                <button className="btnOpcoes">
-                  <i class="fas fa-door-closed"></i>
-                </button>
-              </div>
-            </div>
+          <td data-title="Técnico">{{ item.tecnico }}</td>
+          <td data-title="Data de Abertura">{{ item.data }}</td>
+          <td class="lastTd" data-title="Opção">
+            <button class="btn-view">Visualizar</button>
           </td>
         </tr>
       </tbody>
@@ -69,22 +54,22 @@
     <table v-else cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup">
-          Startups Abertas
+          Histórico
         </button>
         <button @click="statusTable = false" class="btn startup-closed">
-          Startups Fechadas
+          Solicitações
         </button>
       </div>
 
       <thead>
         <th>
           <button @click="statusTable = true" class="btn startup">
-            Startups Abertas
+            Histórico
           </button>
         </th>
         <th>
           <button @click="statusTable = false" class="btn startup-closed">
-            Startups Fechadas
+            Solicitações
           </button>
         </th>
         <th></th>
@@ -92,40 +77,25 @@
         <th></th>
         <th></th>
       </thead>
+
+
       <thead>
-        <th>Cód.Startup</th>
-        <th>Produtos</th>
-        <th>Cliente</th>
-        <th>Máquina</th>
-        <th>Data</th>
-        <th>Inspetor</th>
-        <th>Opções</th>
+        <th>O.Produção</th>
+        <th>Cod. Produto</th>
+        <th>Produto</th>
+        <th>Data de Envio</th>
+        <th>Opção</th>
       </thead>
 
       <tbody>
         <tr v-for="item in itemsFechados" :key="item.id">
           <td style="display: none"></td>
-          <td data-title="Codigo">{{ item.codigo }}</td>
+          <td class="codeStartup" data-title="O.P">{{ item.op}}</td>
+          <td data-title="Cod. Produto">{{ item.codProd }}</td>
           <td data-title="Produto">{{ item.produto }}</td>
-          <td data-title="Cliente">{{ item.cliente }}</td>
-          <td data-title="Maquina">{{ item.maquina }}</td>
-          <td data-title="Data">{{ item.data }}</td>
-          <td data-title="Inspetor">{{ item.inspetor }}</td>
-          <td class="lastTd" data-title="Opcoes">
-            <div className="opcoes">
-              <i class="fas fa-ellipsis-h"></i>
-              <div class="dropdown-content">
-                <button className="btnOpcoes">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button className="btnOpcoes">
-                  <i class="fas fa-file-excel"></i>
-                </button>
-                <button className="btnOpcoes">
-                  <i class="fas fa-door-closed"></i>
-                </button>
-              </div>
-            </div>
+          <td data-title="Data de Abertura">{{ item.data }}</td>
+          <td class="lastTd" data-title="Opção">
+            <button class="btn-preencher">Preencher</button>
           </td>
         </tr>
       </tbody>
@@ -142,59 +112,70 @@ export default {
       itemsAbertos: [
         {
           id: 1,
-          produto: "produto D",
-          codigo: "521",
-          cliente: "Honda",
-          maquina: "Injetora",
-          data: "22-03-2022",
-          inspetor: "Jorge",
+          op: "001525",
+          codProd: "00.1548/01",
+          produto: "Maquineta",
+          tecnico: "Luan Pablo",
+          data: "22/03/2022",
         },
         {
           id: 2,
-          produto: "produto E",
-          codigo: "523",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "23-03-2022",
-          inspetor: "Renato",
+          op: "001526",
+          codProd: "00.1548/01",
+          produto: "Maquineta",
+          tecnico: "Luan Pablo",
+          data: "22/03/2022",
         },
         {
           id: 3,
-          produto: "produto F",
-          codigo: "242",
-          cliente: "Tutu",
-          maquina: "Injetora",
-          data: "24-03-2022",
-          inspetor: "Guilherme",
+          op: "001527",
+          codProd: "00.1698/02",
+          produto: "Maquineta",
+          tecnico: "Luan Pablo",
+          data: "22/03/2022",
         },
+        {
+          id: 4,
+          op: "001528",
+          codProd: "00.1818/01",
+          produto: "Maquineta",
+          tecnico: "Luan Pablo",
+          data: "22/03/2022",
+        },
+        {
+          id: 5,
+          op: "001529",
+          codProd: "00.1345/01",
+          produto: "Maquineta",
+          tecnico: "Luan Pablo",
+          data: "22/03/2022",
+        },
+        {
+          id: 6,
+          op: "001530",
+          codProd: "00.1978/01",
+          produto: "Maquineta",
+          tecnico: "Luan Pablo",
+          data: "22/03/2022",
+        },
+       
       ],
+
+
       itemsFechados: [
         {
           id: 1,
-          produto: "produto A",
-          codigo: "241",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "21-02-2022",
-          inspetor: "Jorge",
+          op: "001531",
+          codProd: "00.1590/02",
+          produto: "Maquineta",
+          data: "23/04/2022",
         },
         {
           id: 2,
-          produto: "produto B",
-          codigo: "598",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "21-03-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 3,
-          produto: "produto C",
-          codigo: "242",
-          cliente: "Tutu",
-          maquina: "Injetora",
-          data: "22-01-2022",
-          inspetor: "Guilherme",
+          op: "001532",
+          codProd: "00.1588/02",
+          produto: "Maquineta",
+          data: "22/04/2022",
         },
       ],
       statusTable: true,
@@ -219,10 +200,10 @@ export default {
 }
 
 .tableContent {
-  padding: 0px 25px 0px 25px;
+  width: 70%;
   margin-top: 40px;
-  overflow-x: auto;
-  padding: 0 40px 40px 40px;
+  margin-bottom: 20px;
+
 }
 
 .tableContent table {
@@ -230,7 +211,6 @@ export default {
   width: 100%;
   border-radius: 10px 10px 10px 10px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
-  overflow-x: scroll;
 }
 
 table th {
@@ -252,17 +232,6 @@ table td {
   text-align: center;
   height: 50px;
   padding: 0 10px 0 10px;
-}
-
-.tdStatus {
-  color: #fff;
-  width: 200px;
-  height: 30px;
-  border-radius: 5px;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* BTNS */
@@ -300,30 +269,18 @@ table td {
   flex-direction: column;
 }
 
-.btnOpcoes {
-  background-color: transparent;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
+.btn-view, .btn-preencher {
+    cursor: pointer;
+    color: var(--main_primaryWhite);
+    border: none;
+    background-color: var(--btn_blue);
+    height: 2.5rem;
+    width: 4.6rem;
+    border-radius: 5px;
 }
 
-.btnOpcoes i {
-  margin: 0 10px 0 10px;
-}
-
-.fa-ellipsis-h {
-  color: var(--card_green);
-  font-size: 25px;
-}
-
-.fa-edit {
-  color: var(--black_text);
-}
-.fa-file-excel {
-  color: var(--card_green);
-}
-.fa-door-closed {
-  color: var(--card_blue);
+.btn-preencher {
+    background-color: var(--card_orange);
 }
 
 .btns {
@@ -334,7 +291,7 @@ table td {
 
   .btns {
     display: flex;
-    padding: 10px 30px 10px 30px;
+    padding: 10px 20px 10px 20px;
   }
   .tableContent thead {
     display: none;
@@ -358,7 +315,6 @@ table td {
     color: var(--black_text);
   }
 
-
   .tableContent td:first-of-type {
     font-weight: bold;
     font-size: 1.2rem;
@@ -377,8 +333,6 @@ table td {
   .lastTd {
     border-bottom: 1px solid var(--green_text);
   }
-
-
   .codeStartup {
     font-weight: 600;
     font-size: 20px;
