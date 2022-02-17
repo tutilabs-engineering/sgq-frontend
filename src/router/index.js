@@ -84,6 +84,12 @@ const routes = [
     component: () => import('../views/MetrologiaDetalhes.vue')
   },
 
+  {
+    path: '/configuracoes',
+    name: 'Configuracoes',
+    component: () => import('../views/Configuracoes.vue')
+  },
+
 ]
 
 const router = createRouter({

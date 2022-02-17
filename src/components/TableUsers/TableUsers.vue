@@ -105,7 +105,7 @@ export default {
 
 .tableContent {
   width: 70%;
-  margin-top: 40px;
+  margin-top: 60px;
 
 }
 
