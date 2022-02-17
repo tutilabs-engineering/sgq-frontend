@@ -23,8 +23,7 @@
           <td data-title="Inspetor">{{ item.inspetor }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
-              <button class="btnAt">AT</button>
-              <button class="btnVa">VA</button>
+              <ModalAtributo titleModal="Variável" />
             </div>
           </td>
         </tr>
@@ -34,7 +33,9 @@
 </template>
 
 <script>
+import ModalAtributo from "../components/Modal/ModalAtributo.vue";
 export default {
+  components: { ModalAtributo },
   setup() {},
   name: "Table",
   data() {
