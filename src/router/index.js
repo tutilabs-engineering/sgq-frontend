@@ -34,15 +34,21 @@ const routes = [
     beforeEnter: Auth
   },
   {
-    path: '/table-rp',
+    path: '/startups-aprovadas',
+    name: 'TabelaAprovados',
+    component: () => import('../views/TabelaAprovados'),
+    beforeEnter: Auth
+  },
+  {
+    path: '/startups-reprovadas',
     name: 'TabelaReprovados',
     component: () => import('../views/TabelaReprovados'),
     beforeEnter: Auth
   },
   {
-    path: '/table-ap',
-    name: 'TabelaAprovados',
-    component: () => import('../views/TabelaAprovados'),
+    path: '/startups-andamentos',
+    name: 'TabelaAndamento',
+    component: () => import('../views/TabelaAndamento'),
     beforeEnter: Auth
   },
   {
