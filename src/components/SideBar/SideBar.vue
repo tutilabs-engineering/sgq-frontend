@@ -60,7 +60,7 @@ export default {
       this.$swal
         .fire({
           title: "Até a proxima, " + this.username.split(" ")[0] + "!",
-          imageUrl: "/img/ql.gif",
+          imageUrl: "/img/logout_img.gif",
           imageWidth: 550,
           imageHeight: 300,
           imageAlt: "Custom image",
