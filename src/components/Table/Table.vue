@@ -219,10 +219,7 @@ export default {
 }
 
 .tableContent {
-  padding: 0px 25px 0px 25px;
   margin-top: 40px;
-  overflow-x: auto;
-  padding: 0 40px 40px 40px;
 }
 
 .tableContent table {

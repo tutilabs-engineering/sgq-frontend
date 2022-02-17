@@ -42,6 +42,8 @@
 <script>
 import ModalAtributo from "../components/Modal/ModalAtributo.vue";
 import ModalVariavel from "../components/Modal/ModalVariavel.vue";
+
+
 export default {
   components: { ModalAtributo, ModalVariavel },
   setup() {},
@@ -97,12 +99,15 @@ export default {
 .tableContent {
   position: relative;
   width: 100%;
-  padding: 0px 25px 0px 25px;
-  padding: 0 40px 40px 40px;
 }
 
 .tableContent h2 {
   margin-bottom: 20px;
+}
+
+.titleTable {
+  color: var(--black_text);
+  text-align: center;
 }
 
 .dropdown-content {
@@ -156,7 +161,7 @@ export default {
 table th {
   height: 50px;
   font-size: 17px;
-  color: #292828;
+  color: var(--black_text);
   padding: 10px 10px 0 10px;
 }
 
@@ -196,6 +201,10 @@ table td {
 
   .tableButton {
     display: block;
+  }
+
+  [data-title]{
+    color: var(--black_text);
   }
 
   .tableContent td {

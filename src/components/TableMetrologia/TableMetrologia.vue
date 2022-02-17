@@ -200,8 +200,7 @@ export default {
 }
 
 .tableContent {
-  width: 70%;
-  margin-top: 40px;
+  width: 100%;
   margin-bottom: 20px;
 
 }
