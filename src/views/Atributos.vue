@@ -1,176 +1,235 @@
 <template>
-  <div id="main">
-    <h2 class="titulo">Atributos</h2>
+  <div className="tableContent">
+    <h2 class="titleTable">ANÁLISE DE PRODUTOS</h2>
+    <table cellpadding="0" cellspacing="0">
+      <thead>
+        <th>Cód.Startup</th>
+        <th>Produtos</th>
+        <th>Cliente</th>
+        <th>Máquina</th>
+        <th>Data</th>
+        <th>Inspetor</th>
+        <th>Opções</th>
+      </thead>
 
-    <div class="campos">
-      <div class="camposInput">
-        <h4>Código Produto:</h4>
-        <input class="inputs" id="product" type="text" value="123" readonly />
-
-        <h4 class="produto">Produto:</h4>
-        <input class="inputs" id="product" type="text" value="Produto A" readonly />
-      </div>
-
-      <div class="camposInput">
-        <h4>Código Cliente:</h4>
-        <input class="inputs" id="client" type="text" value="3243" readonly />
-
-        <h4>Cliente:</h4>
-        <input class="inputs" id="client" type="text" value="Visteon" readonly />
-      </div>
-    </div>
-
-    <div class="tabela">
-      <table class="tab">
-        <tr>
-          <th></th>
-          <td>CAVIDADE 1</td>
-          <td>CAVIDADE 2</td>
-          <td>CAVIDADE 3</td>
+      <tbody>
+        <tr v-for="item in itemsFechados" :key="item.id">
+          <td style="display: none"></td>
+          <td data-title="Codigo">{{ item.codigo }}</td>
+          <td data-title="Produto">{{ item.produto }}</td>
+          <td data-title="Cliente">{{ item.cliente }}</td>
+          <td data-title="Maquina">{{ item.maquina }}</td>
+          <td data-title="Data">{{ item.data }}</td>
+          <td data-title="Inspetor">{{ item.inspetor }}</td>
+          <td class="lastTd" data-title="Opcoes">
+            <div class="opcoes">
+              <button class="btnAt">AT</button>
+              <button class="btnVa">VA</button>
+            </div>
+          </td>
         </tr>
-        <tr>
-          <th>Indentificação 1</th>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th>Indentificação 2</th>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <th>Indentificação 3</th>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </table>
-      <div class="button">
-        <button class="cancel" style="cursor: pointer">CANCELAR</button>
-        <button class="save" style="cursor: pointer">SALVAR</button>
-      </div>
-    </div>
+      </tbody>
+    </table>
   </div>
 </template>
 
-
 <script>
 export default {
-  name: "Attributes",
-
-  mounted(){
-    
-  }
+  setup() {},
+  name: "Table",
+  data() {
+    return {
+      itemsAbertos: [
+        {
+          id: 1,
+          produto: "produto D",
+          codigo: "521",
+          cliente: "Honda",
+          maquina: "Injetora",
+          data: "22-03-2022",
+          inspetor: "Jorge",
+        },
+        {
+          id: 2,
+          produto: "produto E",
+          codigo: "523",
+          cliente: "Yamaha",
+          maquina: "Injetora",
+          data: "23-03-2022",
+          inspetor: "Renato",
+        },
+        {
+          id: 3,
+          produto: "produto F",
+          codigo: "242",
+          cliente: "Tutu",
+          maquina: "Injetora",
+          data: "24-03-2022",
+          inspetor: "Guilherme",
+        },
+      ],
+      itemsFechados: [
+        {
+          id: 1,
+          produto: "produto A",
+          codigo: "241",
+          cliente: "Yamaha",
+          maquina: "Injetora",
+          data: "21-02-2022",
+          inspetor: "Jorge",
+        },
+        {
+          id: 2,
+          produto: "produto B",
+          codigo: "598",
+          cliente: "Yamaha",
+          maquina: "Injetora",
+          data: "21-03-2022",
+          inspetor: "Jorge",
+        },
+        {
+          id: 3,
+          produto: "produto C",
+          codigo: "242",
+          cliente: "Tutu",
+          maquina: "Injetora",
+          data: "22-01-2022",
+          inspetor: "Guilherme",
+        },
+      ],
+    };
+  },
 };
 </script>
 
 <style scoped>
-.titulo {
-  color: #2daa7d;
-  font-size: 30px;
-}
-
-.inputs {
-  padding: 8px;
-  margin-right: 1rem;
-  width: 80%;
-  border-radius: 5px;
-  border: 1px solid transparent;
-  outline: none;
-}
-
-.produto {
-  margin-right: 2rem;
-}
-
-.camposInput {
-  width: 40%;
-}
-
-.campos {
-  margin-inline: 0%;
-  color: #707070;
-  font-size: 12px;
-  display: flex;
-  margin-top: 15px;
-  width: 70%;
-}
-
-.cliente {
-  display: grid;
-}
-
-input.produto {
-  padding-inline: 2rem;
-  margin-bottom: 20px;
-  border: 1px solid gray;
-}
-
-input.cliente {
-  padding-inline: 2rem;
-  margin-bottom: 20px;
-  border: 1px solid gray;
-}
-
-.tabela {
-  margin: 1rem 0 0 0;
-  align-items: center;
-  align-content: center;
-}
-
-.tabela .tab {
+.tableContent {
   position: relative;
   width: 100%;
+  padding: 0px 25px 0px 25px;
+  overflow-x: auto;
+  padding: 0 40px 40px 40px;
 }
 
-.tabela .tab,
-td,
-th {
-  border: 1px solid gray;
-  border-collapse: collapse;
-  padding: 10px;
-  padding-inline-end: 16px;
-  margin-top: 2rem;
-  text-align: center;
-  
+.tableContent h2 {
+  margin-bottom: 20px;
 }
 
+.dropdown-content {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  min-width: 50px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 15px 5px;
+  z-index: 1;
+}
 
-.button {
-  margin-top: 2rem;
+.opcoes {
   display: flex;
-  border-radius: 1rem;
-  justify-content: right;
+  width: 100%;
+  gap: 0.5rem;
 }
 
-.save {
-  background-color: #1cc88a;
-  color: white;
-  width: 100px;
-  padding: 1rem;
+.opcoes .btnAt {
+  width: 50%;
+  background: var(--card_orange);
   border: none;
-  border-radius: 1rem;
+  border-radius: 10px;
+  padding: 0.2rem 0rem;
+  color: var(--main_primaryWhite);
+  text-align: center;
+  cursor: pointer;
 }
 
-.save:hover {
-  background-color: #03ac6eb9;
-  transition: all 0.3s ease;
-}
-
-.cancel {
-  background: #dad7d7;
-  width: 100px;
-  padding: 1rem;
+.opcoes .btnVa {
+  width: 50%;
+  background: var(--card_blue);
   border: none;
-  border-radius: 1rem;
-  margin: 0 1rem 0 0;
+  border-radius: 10px;
+  padding: 0.2rem 0rem;
+  color: var(--main_primaryWhite);
+  text-align: center;
+  cursor: pointer;
 }
 
-.cancel:hover {
-  background-color: rgba(182, 178, 178, 0.63);
-  color: rgb(0, 0, 0);
-  transition: all 0.3s ease;
+.tableContent table {
+  background-color: var(--bg_white);
+  width: 100%;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
+  overflow-x: scroll;
+}
+
+table th {
+  height: 50px;
+  font-size: 17px;
+  color: #292828;
+  padding: 10px 10px 0 10px;
+}
+
+.tableContent tr {
+  height: 100px;
+}
+
+table td {
+  border-top: 0.4px solid rgba(0, 0, 0, 0.199);
+}
+
+.tableContent td {
+  text-align: center;
+  height: 50px;
+  padding: 0 10px 0 10px;
+}
+
+.tdStatus {
+  color: #fff;
+  width: 200px;
+  height: 30px;
+  border-radius: 5px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .btns {
+    display: flex;
+    padding: 10px 30px 10px 30px;
+  }
+  .tableContent thead {
+    display: none;
+  }
+
+  .tableButton {
+    display: block;
+  }
+
+  .tableContent td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tableContent td:first-of-type {
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .tableContent td:not(:first-of-type):before {
+    content: attr(data-title);
+    display: block;
+    font-weight: bold;
+  }
+
+  .lastTd {
+    border-bottom: 3px dotted var(--font-color);
+  }
 }
 </style>

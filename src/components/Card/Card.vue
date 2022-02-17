@@ -26,7 +26,7 @@ a {
 }
 
 .cardStatus {
-  margin: 30px 10px 0px 10px;
+  /* margin: 30px 10px 0px 10px; */
   width: 250px;
   height: 120px;
   background-color: var(--bg_white);
