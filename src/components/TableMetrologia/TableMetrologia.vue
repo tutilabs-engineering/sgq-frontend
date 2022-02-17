@@ -287,7 +287,7 @@ table td {
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 880px) {
 
   .btns {
     display: flex;

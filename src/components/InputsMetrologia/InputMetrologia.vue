@@ -1,7 +1,7 @@
 <template>
     <div class="input">
         <label for="">{{title}}</label>
-        <input :type="type" :placeholder="placeholder" :value="value">
+        <input :type="type" :placeholder="placeholder">
     </div>
   
 </template>
@@ -9,7 +9,7 @@
 <script>
 export default {
     name: "InputMetrologia",
-    props: ["title", "value", "type", "placeholder"],
+    props: ["title", "type", "placeholder"],
     data() {
         return {};
     },
@@ -35,6 +35,8 @@ export default {
     height: 50px;
     padding: 0px 5px 0 5px;
 }
+
+
 
 
 </style>
