@@ -131,7 +131,7 @@ body {
   width: calc(100% - 210px);
   height: 100%;
   margin-left: 210px;
-  /* padding: 40px; */
+  padding: 40px;
   transition: 0.5s;
 }
 
