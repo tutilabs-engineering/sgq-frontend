@@ -42,6 +42,8 @@
 <script>
 import ModalAtributo from "../components/Modal/ModalAtributo.vue";
 import ModalVariavel from "../components/Modal/ModalVariavel.vue";
+
+
 export default {
   components: { ModalAtributo, ModalVariavel },
   setup() {},
@@ -49,35 +51,6 @@ export default {
   emits: ["modalAtributo", "modalVariavel"],
   data() {
     return {
-      itemsAbertos: [
-        {
-          id: 1,
-          produto: "produto D",
-          codigo: "521",
-          cliente: "Honda",
-          maquina: "Injetora",
-          data: "22-03-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 2,
-          produto: "produto E",
-          codigo: "523",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "23-03-2022",
-          inspetor: "Renato",
-        },
-        {
-          id: 3,
-          produto: "produto F",
-          codigo: "242",
-          cliente: "Tutu",
-          maquina: "Injetora",
-          data: "24-03-2022",
-          inspetor: "Guilherme",
-        },
-      ],
       itemsFechados: [
         {
           id: 1,
@@ -126,13 +99,15 @@ export default {
 .tableContent {
   position: relative;
   width: 100%;
-  padding: 0px 25px 0px 25px;
-  overflow-x: auto;
-  padding: 0 40px 40px 40px;
 }
 
 .tableContent h2 {
   margin-bottom: 20px;
+}
+
+.titleTable {
+  color: var(--black_text);
+  text-align: center;
 }
 
 .dropdown-content {
@@ -149,31 +124,12 @@ export default {
 
 .opcoes {
   display: flex;
+  justify-content:center;
   width: 100%;
   gap: 0.5rem;
 }
 
-.opcoes .btnAt {
-  width: 50%;
-  background: var(--card_orange);
-  border: none;
-  border-radius: 10px;
-  padding: 0.2rem 0rem;
-  color: var(--main_primaryWhite);
-  text-align: center;
-  cursor: pointer;
-}
 
-.opcoes .btnVa {
-  width: 50%;
-  background: var(--card_blue);
-  border: none;
-  border-radius: 10px;
-  padding: 0.2rem 0rem;
-  color: var(--main_primaryWhite);
-  text-align: center;
-  cursor: pointer;
-}
 
 .tableContent table {
   background-color: var(--bg_white);
@@ -186,7 +142,7 @@ export default {
 table th {
   height: 50px;
   font-size: 17px;
-  color: #292828;
+  color: var(--black_text);
   padding: 10px 10px 0 10px;
 }
 
@@ -215,7 +171,12 @@ table td {
   align-items: center;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 900px) {
+
+  .opcoes {
+    justify-content: end;
+  }
+  
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
@@ -226,6 +187,10 @@ table td {
 
   .tableButton {
     display: block;
+  }
+
+  [data-title]{
+    color: var(--black_text);
   }
 
   .tableContent td {

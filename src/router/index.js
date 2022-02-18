@@ -17,12 +17,6 @@ const routes = [
     beforeEnter: Auth
   },
   {
-    path: '/register',
-    name: 'Register',
-    component: () => import('../components/CreateUser.vue'),
-    beforeEnter: Auth
-  },
-  {
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue'),
@@ -52,79 +46,32 @@ const routes = [
     beforeEnter: Auth
   },
   {
-    path: '/principal',
-    name: 'Principal',
-    component: () => import('../views/Principal.vue'),
-    beforeEnter: Auth
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue'),
-    beforeEnter: Auth
-  },
-  {
     path: '/attributes',
     name: 'attributes',
     component: () => import('../views/Atributos.vue'),
     beforeEnter: Auth
   },
-  {
-    path: '/analise-produtos',
-    name: 'AnaliseProdutos',
-    component: () => import('../views/AnaliseProdutos.vue'),
-    beforeEnter: Auth
-  },
+
   {
     path: '/metrologia',
     name: 'metrologia',
     component: () => import('../views/Metrologia.vue'),
     beforeEnter: Auth
   },
-  {
-    path: '/Modalvar',
-    name: 'modalvar',
-    component: () => import('../views/Modalvar.vue'),
-    beforeEnter: Auth
-  },
-  {
-    path: '/Modalatr',
-    name: 'modalatr',
-    component: () => import('../views/Modalatr.vue'),
-    beforeEnter: Auth
-  },
-  {
-    path: '/StartupDigital',
-    name: 'startupdigital',
-    component: () => import('../views/StartupDigital.vue'),
-    beforeEnter: Auth
-  },
-
-  {
-    path: '/Dashboard',
-    name: 'Dashboard',
-    component: () => import('../views/Dashboard.vue'),
-    beforeEnter: Auth
-  },
 
   {
     path: '/error',
     name: 'errorPermission',
-    component: () => import('../components/Error.vue'),
+    component: () => import('../components/ModalError/AccessError.vue'),
     beforeEnter: Auth
   },
 
   {
     path: '/notFound',
     name: 'NotFound',
-    component: () => import('../components/RouteNotFound.vue')
+    component: () => import('../components/ModalError/RouteNotFoundError.vue')
   },
 
-  {
-    path: '/load',
-    name: 'LoadinPage',
-    component: () => import('../components/LoadingPage.vue')
-  },
 
   {
     path: '/perfil',
@@ -141,6 +88,12 @@ const routes = [
     path: '/metrologiaDetalhes',
     name: 'MetrologiaDetalhes',
     component: () => import('../views/MetrologiaDetalhes.vue')
+  },
+
+  {
+    path: '/configuracoes',
+    name: 'Configuracoes',
+    component: () => import('../views/Configuracoes.vue')
   },
 
 ]

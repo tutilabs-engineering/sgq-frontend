@@ -80,7 +80,7 @@ export default {
 
 
 .perfil {
-    width: 50%;
+    width: 70%;
     height: auto;
 }
 

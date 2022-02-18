@@ -15,6 +15,8 @@
 
       <div class="option_link linkTo" @click="() => this.$router.push({ name: 'metrologia' })"> <i class="fas fa-ruler-combined"></i><span class="link_name">Metrologia</span></div>
 
+      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'Configuracoes' })"> <i class="fas fa-tools"></i><span class="link_name">Configurações</span></div>
+
       <div class="option_link linkTo exit" @click="Exit"> <i class="fas fa-door-open"></i><span class="link_name">Sair</span></div>
 
     </div>
@@ -34,13 +36,17 @@ export default {
   },
   data() {
     return {
-      username: "",
+      username: "Pablo",
     };
   },
 
   mounted() {
     const secret =
       "@#$%¨&*(UGYdkjsbvkjdbvbdsojew#$%¨&Hddjdjbskjdepwopwwcjshvcdsjvcds";
+
+      // xiuuuuuuuuuuuu!!! é segredo
+
+
     if (localStorage.getItem("token") != undefined) {
       var token = localStorage.getItem("token");
       const decoded = jwt.verify(token, secret);
@@ -54,9 +60,9 @@ export default {
       this.$swal
         .fire({
           title: "Até a proxima, " + this.username.split(" ")[0] + "!",
-          imageUrl: "/img/qualidade.png",
-          imageWidth: 400,
-          imageHeight: 200,
+          imageUrl: "/img/logout_img.gif",
+          imageWidth: 550,
+          imageHeight: 300,
           imageAlt: "Custom image",
         })
         .then(() => {

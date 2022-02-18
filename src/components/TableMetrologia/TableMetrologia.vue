@@ -200,8 +200,7 @@ export default {
 }
 
 .tableContent {
-  width: 70%;
-  margin-top: 40px;
+  width: 100%;
   margin-bottom: 20px;
 
 }
@@ -287,7 +286,7 @@ table td {
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 880px) {
 
   .btns {
     display: flex;

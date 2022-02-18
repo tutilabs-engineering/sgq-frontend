@@ -105,7 +105,7 @@ export default {
 
 .tableContent {
   width: 70%;
-  margin-top: 40px;
+  margin-top: 60px;
 
 }
 
@@ -182,7 +182,7 @@ table td {
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 860px) {
 
   .tableContent thead {
     display: none;
@@ -206,7 +206,6 @@ table td {
     color: var(--black_text);
   }
 
-
   .tableContent td:first-of-type {
     font-weight: bold;
     font-size: 1.2rem;
@@ -225,7 +224,6 @@ table td {
   .lastTd {
     border-bottom: 1px solid var(--green_text);
   }
-
 
   .codeStartup {
     font-weight: 600;
