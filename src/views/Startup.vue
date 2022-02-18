@@ -7,21 +7,21 @@
         qtde="34"
         img="fas fa-check-square"
         colore="#43CC74"
-        link="/table-ap"
+        link="/startups-aprovadas"
       />
       <Card
         status="EM ANDAMENTO"
         qtde="15"
         img="fas fa-tasks"
         colore="#FFAE3D"
-        link="#"
+        link="/startups-andamentos"
       />
       <Card
         status="REPROVADOS"
         qtde="0"
         img="fas fa-times"
         colore="#FF5349"
-        link="/table-rp"
+        link="/startups-reprovadas"
       />
       <Card
         status="FECHADOS"
