@@ -28,7 +28,7 @@
       </thead>
 
       <thead>
-        <th>Cód.Startup</th>
+        <th>Código</th>
         <th>Produtos</th>
         <th>Cliente</th>
         <th>Máquina</th>
@@ -40,7 +40,7 @@
       <tbody>
         <tr v-for="item in itemsAbertos" :key="item.id">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="Codigo">{{ item.codigo }}</td>
+          <td class="codeStartup" data-title="Código">{{ item.codigo }}</td>
           <td data-title="Produto">{{ item.produto }}</td>
           <td data-title="Cliente">{{ item.cliente }}</td>
           <td data-title="Maquina">{{ item.maquina }}</td>
@@ -93,7 +93,7 @@
         <th></th>
       </thead>
       <thead>
-        <th>Cód.Startup</th>
+        <th>Código</th>
         <th>Produtos</th>
         <th>Cliente</th>
         <th>Máquina</th>
@@ -105,7 +105,7 @@
       <tbody>
         <tr v-for="item in itemsFechados" :key="item.id">
           <td style="display: none"></td>
-          <td data-title="Codigo">{{ item.codigo }}</td>
+          <td class="codeStartup" data-title="Código">{{ item.codigo }}</td>
           <td data-title="Produto">{{ item.produto }}</td>
           <td data-title="Cliente">{{ item.cliente }}</td>
           <td data-title="Maquina">{{ item.maquina }}</td>

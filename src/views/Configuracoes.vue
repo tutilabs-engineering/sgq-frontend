@@ -8,7 +8,7 @@
 
             <CardsConfiguracao  icon="fas fa-user-cog" title="Gerenciamento de Usuário" link="/cadastroUsuario" />
 
-        </div>
+        </div> 
         
     </div>
 
@@ -45,6 +45,10 @@ export default {
 
 
 @media (max-width: 765px){
+
+    .content-configuracao{
+        margin-top: 12vh;
+    }
 
     .cardsConfiguracao{
         grid-template-columns: 1fr;

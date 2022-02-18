@@ -29,7 +29,7 @@ export default {
     width: 90%;
     height: 300px;
     text-align: center;
-    color: var(--black_text);
+    color: var(--bg_green);
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -40,6 +40,7 @@ export default {
 .cardConfiguracao:hover {
     background-color: var(--card_green);
     color: var(--main_primaryWhite);
+    transform: scale(1.1);
 }
 
 

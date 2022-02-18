@@ -124,31 +124,12 @@ export default {
 
 .opcoes {
   display: flex;
+  justify-content:center;
   width: 100%;
   gap: 0.5rem;
 }
 
-.opcoes .btnAt {
-  width: 50%;
-  background: var(--card_orange);
-  border: none;
-  border-radius: 10px;
-  padding: 0.2rem 0rem;
-  color: var(--main_primaryWhite);
-  text-align: center;
-  cursor: pointer;
-}
 
-.opcoes .btnVa {
-  width: 50%;
-  background: var(--card_blue);
-  border: none;
-  border-radius: 10px;
-  padding: 0.2rem 0rem;
-  color: var(--main_primaryWhite);
-  text-align: center;
-  cursor: pointer;
-}
 
 .tableContent table {
   background-color: var(--bg_white);
@@ -191,6 +172,11 @@ table td {
 }
 
 @media (max-width: 900px) {
+
+  .opcoes {
+    justify-content: end;
+  }
+  
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
