@@ -1,6 +1,7 @@
 <template>
   <div className="tableContent">
-    <h2 class="titleTable">Análise de startups - [Reprovadas]</h2>
+    <h2 class="titleTable">Análise de Startups</h2>
+    <h3>Reprovadas</h3>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cód.Startup</th>
@@ -108,12 +109,19 @@ export default {
   position: relative;
   width: 100%;
   padding: 0px 25px 0px 25px;
-  margin-top: 100px;
+  margin-top: 50px;
   overflow-x: auto;
   padding: 0 40px 40px 40px;
 }
 
 .tableContent h2 {
+  margin-left: 10px;
+  color: var(--black_text);
+}
+
+.tableContent h3 {
+  margin-left: 10px;
+  color: var(--black_text);
   margin-bottom: 20px;
 }
 
@@ -144,7 +152,7 @@ export default {
 table th {
   height: 50px;
   font-size: 17px;
-  color: #292828;
+  color: var(--black_text);
   padding: 10px 10px 0 10px;
 }
 

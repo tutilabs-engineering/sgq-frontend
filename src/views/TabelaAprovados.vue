@@ -1,6 +1,7 @@
 <template>
   <div className="tableContent">
-    <h2 class="titleTable">Análise de startups - [Aprovadas]</h2>
+    <h2 class="titleTable">Análise de Startups</h2>
+    <h3>Aprovadas</h3>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cód.Startup</th>
@@ -114,12 +115,19 @@ export default {
   position: relative;
   width: 100%;
   padding: 0px 25px 0px 25px;
-  margin-top: 100px;
+  margin-top: 50px;
   overflow-x: auto;
   padding: 0 40px 40px 40px;
 }
 
 .tableContent h2 {
+  margin-left: 10px;
+  color: var(--black_text);
+}
+
+.tableContent h3 {
+  margin-left: 10px;
+  color: var(--black_text);
   margin-bottom: 20px;
 }
 
@@ -150,7 +158,7 @@ export default {
 table th {
   height: 50px;
   font-size: 17px;
-  color: #292828;
+  color: var(--black_text);
   padding: 10px 10px 0 10px;
 }
 
@@ -226,19 +234,18 @@ table td {
 }
 
 .fa-ellipsis-h {
-  color: var(--main-color);
+  color: var(--card_green);
   font-size: 25px;
 }
 
-.fa-edit {
-  color: var(--button-color-01);
+.fa-plus-circle {
+  color: var(--card_orange);
 }
-.fa-file-excel {
-  color: var(--main-color);
+.fa-file-alt {
+  color: var(--card_blue);
 }
-.fa-door-closed {
-  color: var(--button-color-02);
-}
+
+
 
 .btns {
   display: none;
