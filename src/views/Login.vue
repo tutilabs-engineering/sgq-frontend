@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import http from "../services/login";
+import http from "../services/account/login";
 
 export default {
   data() {

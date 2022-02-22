@@ -1,4 +1,4 @@
-import { http } from "./config";
+import { http } from "../config";
 const url = "user/login"
 
 export default {
