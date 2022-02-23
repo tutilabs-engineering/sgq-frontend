@@ -26,7 +26,7 @@
 
 <script>
 import jwt from "jsonwebtoken";
-
+import http from "../../services/account/Users"
 import { collapsed, toggleSidebar, sidebarWidth } from "./state";
 
 export default {
@@ -34,24 +34,25 @@ export default {
   setup() {
     return { collapsed, toggleSidebar, sidebarWidth };
   },
-  data() {
-    return {
-      username: "Pablo",
-    };
-  },
 
-  mounted() {
-    const secret =
-      "@#$%¨&*(UGYdkjsbvkjdbvbdsojew#$%¨&Hddjdjbskjdepwopwwcjshvcdsjvcds";
+  created: async function() { 
 
-      // xiuuuuuuuuuuuu!!! é segredo
+    // const secret = process.env.SECRET
 
+    const secretQuefunciona = "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
 
-    if (localStorage.getItem("token") != undefined) {
-      var token = localStorage.getItem("token");
-      const decoded = jwt.verify(token, secret);
-      console.log(decoded);
-      this.username = decoded.name;
+    const token = sessionStorage.getItem("token");
+
+    if (token) {
+      try {
+        const {sub} = await jwt.verify(token, secretQuefunciona);
+        await http.findUserById(sub).then((res) => {
+          return this.username = res.data.user.name
+        }).catch((error) => console.log("error", error))
+        
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
 
@@ -67,9 +68,14 @@ export default {
         })
         .then(() => {
           this.$router.push({ name: "Login" });
-          localStorage.removeItem("token");
+          sessionStorage.removeItem("token");
         });
     },
+  },
+  data() {
+    return {
+      username: "",
+    };
   },
 };
 </script>

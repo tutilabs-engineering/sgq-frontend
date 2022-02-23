@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
+// import http from "../services/account/Users"
 // import jwt from 'jsonwebtoken'
-function Auth(to, from, next) {
-  console.log(to.matched[0].props.default)
-  // const secret = "@#$%¨&*(UGYdkjsbvkjdbvbdsojew#$%¨&Hddjdjbskjdepwopwwcjshvcdsjvcds";
-  if (localStorage.getItem("token") != undefined) {
-    next()
-  } else {
-    next("/login");
+async function Auth(to, from, next) {
+  
+  const token = sessionStorage.getItem("token")
+  
+  if(!token) {
+    return next("/login")
   }
+  next()
 }
 const routes = [
   {
