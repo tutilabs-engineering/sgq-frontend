@@ -158,6 +158,15 @@ html {
   opacity: 0.8;
 }
 
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px var(--green_text) inset;
+}
+
+/* Cor do texto do autocomplete */
+input:-webkit-autofill {
+    -webkit-text-fill-color: var(--main_primaryWhite) !important;
+}
+
 .inputForm::placeholder {
   outline: none;
   font-size: 16px;
