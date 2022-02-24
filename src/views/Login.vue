@@ -52,7 +52,7 @@ export default {
   methods: {
     Login: async function() {
       const access = this.dataLogin;
-
+      this.$store.commit("$SETISLOADING")
       await http.sessions(access).then((response) => {
         if(response.status === 200) {
           const token = response.data.token
@@ -64,6 +64,7 @@ export default {
       }).catch((error) => {
         return window.alert(error.response.data.message)
       })
+      this.$store.commit("$SETISLOADING")
     }
   }
 };
