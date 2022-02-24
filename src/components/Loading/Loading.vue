@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .loading-content {
     width: 100vw;
@@ -43,18 +43,35 @@ export default {
 }
 
 .quadrado {
-    width: 200px;
-    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
     animation: cubo-transform 2s infinite;
 }
 
 .title {
     color: var(--black_text);
     font-size: 70px;
+    animation: title-transform 1s;
 }
 
 .displayLoading {
     display: none;
+}
+
+@keyframes title-transform {
+    0% {
+        opacity: 0.1;
+    }
+    25% {
+        opacity: 0.5;
+    }
+
+    100%{
+        opacity: 1;
+    }
 }
 
 @keyframes cubo-transform{
@@ -62,6 +79,7 @@ export default {
     0%{
 
     border-radius: 0 0 0 0;
+    opacity: 0.1;
 
     }
 
@@ -70,6 +88,7 @@ export default {
     border-radius: 0 100% 0 0;
 
     background-color: var(--card_red);
+    opacity: 0.5;
 
     }
 
@@ -78,20 +97,21 @@ export default {
     border-radius: 0 100% 100% 0;
 
     background-color: var(--card_green);
-
+    opacity: 1;
     }
 
     75%{
 
     border-radius: 0 100% 100% 100%;
 
-    background-color: var(--card_orange);
-
+    background-color: var(--card_blue);
+    opacity: 0.5;
     }
 
     100%{
 
     border-radius: 100% 100% 100% 100%;
+    opacity: 1;
     }
 }
 
