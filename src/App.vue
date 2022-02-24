@@ -1,19 +1,15 @@
 <template>
-  <div v-if="this.$store.getters.$GETISLOADING">
-        <Loading /> 
-  </div>
 
   <div v-if="telaLogin">
     <Login />
   </div>
 
-  
-
   <div v-else>
 
-    
+    <div v-if="this.$store.getters.$GETISLOADING">
+        <Loading /> 
+    </div>
 
-  
     <SideBar />
     <Header titlePage="Sistema de Gerenciamento de Qualidade" />
 

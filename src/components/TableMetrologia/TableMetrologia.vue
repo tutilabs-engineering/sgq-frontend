@@ -228,6 +228,7 @@ table td {
 }
 
 .tableContent td {
+  font-size: 17px;
   text-align: center;
   height: 50px;
   padding: 0 10px 0 10px;
