@@ -7,10 +7,13 @@
       </div>
       <h2>Cadastro</h2>
 
+      {{ user.nomeCompleto }}
+
       <div class="cadastro-user-data">
+        <input type="text" v-model="user.nomeCompleto" />
         <InputPerfil
           title="Nome Completo"
-          :value="user.nomeCompleto"
+          v-model:value="user.nomeCompleto"
           :type="text"
           :placeholder="'Maria do Bairro'"
         />
@@ -80,7 +83,7 @@ export default {
 
       user: {
         id: 1,
-        nomeCompleto: "Maria de Fátima Marques",
+        nomeCompleto: "",
         email: "marifatima@tuti.com",
         matricula: "5677898",
         cpf: "96378925802",
@@ -90,10 +93,12 @@ export default {
   },
 
   created: async function () {
+    this.$store.commit("$SETISLOADING");
     await http.listUsers().then((res) => {
       this.users = res.data.users;
       console.log(this.users);
     });
+    this.$store.commit("$SETISLOADING");
   },
 };
 </script>
