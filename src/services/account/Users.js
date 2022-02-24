@@ -10,6 +10,10 @@ export default {
 
     findUserById: (id) => {
         return http.get(`users/${id}`)
+    },
+
+    listUsers: () => {
+        return http.get('users')
     }
 
     // verify: async () => {
