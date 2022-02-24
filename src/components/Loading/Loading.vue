@@ -77,41 +77,31 @@ export default {
 @keyframes cubo-transform{
 
     0%{
-
-    border-radius: 0 0 0 0;
-    opacity: 0.1;
-
+        border-radius: 0 0 0 0;
+        opacity: 0.1;
     }
 
     25%{
-
-    border-radius: 0 100% 0 0;
-
-    background-color: var(--card_red);
-    opacity: 0.5;
-
+        border-radius: 0 100% 0 0;
+        background-color: var(--card_red);
+        opacity: 0.5;
     }
 
     50%{
-
-    border-radius: 0 100% 100% 0;
-
-    background-color: var(--card_green);
-    opacity: 1;
+        border-radius: 0 100% 100% 0;
+        background-color: var(--card_green);
+        opacity: 1;
     }
 
     75%{
-
-    border-radius: 0 100% 100% 100%;
-
-    background-color: var(--card_blue);
-    opacity: 0.5;
+        border-radius: 0 100% 100% 100%;
+        background-color: var(--card_blue);
+        opacity: 0.5;
     }
 
     100%{
-
-    border-radius: 100% 100% 100% 100%;
-    opacity: 1;
+        border-radius: 100% 100% 100% 100%;
+        opacity: 1;
     }
 }
 
