@@ -25,6 +25,7 @@ export default {
 }
 
 .title h2 {
+	font-size: 30px;
 	margin-bottom: 20px;
 	text-align: center;
 	color: var(--black_text);

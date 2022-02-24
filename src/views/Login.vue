@@ -52,18 +52,19 @@ export default {
   methods: {
     Login: async function() {
       const access = this.dataLogin;
-
+      this.$store.commit("$SETISLOADING")
       await http.sessions(access).then((response) => {
         if(response.status === 200) {
           const token = response.data.token
           sessionStorage.setItem("token", token)
           
-          window.alert("Logado")
+          //window.alert("Logado")
           return this.$router.push({name: "Startup"})
         }
       }).catch((error) => {
-        return window.alert(error.response.data.message)
+        return console.log(error.response.data.message)
       })
+      this.$store.commit("$SETISLOADING")
     }
   }
 };

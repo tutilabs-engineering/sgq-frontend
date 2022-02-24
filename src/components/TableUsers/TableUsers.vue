@@ -72,7 +72,7 @@ export default {
 }
 
 .tableContent {
-  width: 70%;
+  width: 90%;
   margin-top: 60px;
 
 }
