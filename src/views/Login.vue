@@ -58,11 +58,11 @@ export default {
           const token = response.data.token
           sessionStorage.setItem("token", token)
           
-          window.alert("Logado")
+          //window.alert("Logado")
           return this.$router.push({name: "Startup"})
         }
       }).catch((error) => {
-        return window.alert(error.response.data.message)
+        return console.log(error.response.data.message)
       })
       this.$store.commit("$SETISLOADING")
     }

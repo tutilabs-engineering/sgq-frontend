@@ -30,7 +30,7 @@ export default {
 .loading-content {
     width: 100vw;
     height: 100vh;
-    background-color: rgba(255, 255, 255, 0.774);
+    background-color: rgba(255, 255, 255, 0.849);
     display: flex;
     justify-content: center;
     flex-direction: column;
