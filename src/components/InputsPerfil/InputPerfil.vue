@@ -1,7 +1,7 @@
 <template>
     <div class="input">
         <label for="">{{title}}</label>
-        <input :type="type" :placeholder="placeholder" :value="value">
+        <input :type="type" :placeholder="placeholder" :value="value" disabled>
     </div>
   
 </template>
@@ -28,6 +28,7 @@ export default {
     height: 80px;
     border-radius: 10px;
     color: var(--black_text);
+    font-weight: 600;
 }
 
 .input input {
@@ -36,6 +37,7 @@ export default {
     height: 50px;
     padding: 0px 5px 0 5px;
 }
+
 
 
 </style>

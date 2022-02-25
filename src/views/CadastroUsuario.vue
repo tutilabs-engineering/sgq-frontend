@@ -15,22 +15,22 @@
 
                         <div class="input">
                             <label for="">Nome</label>
-                            <input type="text" placeholder="" v-model="userRegister.name">
+                            <input type="text" placeholder="ex: João das Neves" v-model="userRegister.name">
                         </div>
 
                         <div class="input">
                             <label for="">Email</label>
-                            <input type="text" placeholder="" v-model="userRegister.email">
+                            <input type="text" placeholder="ex: nome@tuti.com.br" v-model="userRegister.email">
                         </div>
 
                         <div class="input">
                             <label for="">CPF</label>
-                            <input type="text" placeholder="" v-model="userRegister.cpf">
+                            <input type="text" placeholder="CPF do usuário" v-model="userRegister.cpf">
                         </div>
 
                         <div class="input">
                             <label for="">Matrícula</label>
-                            <input type="text" placeholder="" v-model="userRegister.register">
+                            <input type="text" placeholder="Matrícula do usuário" v-model="userRegister.register">
                         </div>
 
                         <div class="input-acessLevel">
@@ -43,7 +43,7 @@
                          </div>
 
                          <div class="buttons-action">
-                            <button class="btn cancel-btn">Cancelar</button>
+                            
                             <button class="btn save-btn" type="submit">Salvar</button>
                         </div>
 
@@ -142,6 +142,7 @@ export default {
     height: 80px;
     border-radius: 10px;
     color: var(--black_text);
+    font-weight: 600;
 }
 
 .input input {
@@ -172,10 +173,12 @@ input:-webkit-autofill {
 
 .perfil h2  {
     color: var(--black_text);
+    margin-bottom: 20px;
 }
 
 .perfil h3 {
     color: var(--green_text);
+    margin-bottom: 20px;
 }
 
 .user {
@@ -223,12 +226,16 @@ input:-webkit-autofill {
     height: 80px;
     border-radius: 10px;
     color: var(--black_text);
+    font-weight: 600;
 }
+
 
 .buttons-action {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -243,11 +250,16 @@ input:-webkit-autofill {
     background-color: var(--btn_gray);
 }
 
+/*
 .cancel-btn {
     grid-column: 3;
 }
 
+*/
+
 .save-btn {
+    width: 100% ;
+    grid-column: 4;
     color: var(--main_primaryWhite);
     background-color: var(--btn_blue);
 }
@@ -281,7 +293,7 @@ input:-webkit-autofill {
     }
 
     .buttons-action {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
     }
 
     .btn {
