@@ -11,31 +11,45 @@
 
                 
 
-                <div class="cadastro-user-data">
-                    
-                    
-                    <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'"/>
-                    <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'"/>
-                    <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'"/>
-                    <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'"/>
-                    <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'"/>
+                    <form action="" class="cadastro-user-data" @submit.prevent="RegisterUser">
 
-                    <div class="input-acessLevel">
-                        <label for="user-name">Nível de Acesso</label>
-                        <select name="lvAcess" id="lvAcess" class="select-lvAcess">
-                            <option value="adm">ADM</option>
-                            <option value="gestor">Gestor</option>
-                            <option value="analista">Analista</option>
-                            <option value="metrologista">Metrologista</option>
-                            <option value="inspetor">Inspetor</option>
+                        <div class="input">
+                            <label for="">Nome</label>
+                            <input type="text" placeholder="" v-model="userRegister.name">
+                        </div>
+
+                        <div class="input">
+                            <label for="">Email</label>
+                            <input type="text" placeholder="" v-model="userRegister.email">
+                        </div>
+
+                        <div class="input">
+                            <label for="">CPF</label>
+                            <input type="text" placeholder="" v-model="userRegister.cpf">
+                        </div>
+
+                        <div class="input">
+                            <label for="">Matrícula</label>
+                            <input type="text" placeholder="" v-model="userRegister.register">
+                        </div>
+
+                        <div class="input-acessLevel">
+                            <label for="user-name">Nível de Acesso</label>
+                            <select name="lvAcess" id="lvAcess" class="select-lvAcess" v-model="userRegister.fk_role">
+                                <option v-for="(option, index) in options"
+                                :value="option.value"
+                                :key="index">{{option.text}}</option>
                             </select>
-                    </div>
-                </div>
+                         </div>
 
-                <div class="buttons-action">
-                    <button class="btn cancel-btn">Cancelar</button>
-                    <button class="btn save-btn">Salvar</button>
-                </div>
+                         <div class="buttons-action">
+                            <button class="btn cancel-btn">Cancelar</button>
+                            <button class="btn save-btn" type="submit">Salvar</button>
+                        </div>
+
+
+                    </form>
+           
             </div>
 
             <div v-for="tudo of Tudousers" :key="tudo.id">
@@ -54,26 +68,34 @@
 
 <script>
 import TableUsers from "../components/TableUsers/TableUsers.vue"
-import InputPerfil from "../components/InputsPerfil/InputPerfil.vue";
+//import InputPerfil from "../components/InputsPerfil/InputPerfil.vue";
 import http from "../services/account/Users"
 
 export default {
 
-    components: {InputPerfil, TableUsers},
+    components: {/*InputPerfil,*/ TableUsers},
 
     name: "CadastroUsuario",
     data(){
 		return {
             users: [],
 
-            user: {
-                id: 1,
-                nomeCompleto: "Maria de Fátima Marques",
-                email: "marifatima@tuti.com",
-                matricula: "5677898",
-                cpf: "96378925802",
-                cargo: "Técnica",
+            userRegister: {
+                name: "",
+                email: "",
+                cpf: "",
+                register: "",
+                fk_role: "",
             },
+            options: [
+                {text: "Escolha", value: ""},
+                {text: "ADM", value: 1},
+                {text: "Gestor", value: 2},
+                {text: "Inspetor", value: 3},
+                {text: "Analista", value: 4},
+                {text: "Metrologista", value: 5},
+            ]
+            
         }
 	},
 
@@ -84,7 +106,29 @@ export default {
             console.log(this.users)
         })
         this.$store.commit('$SETISLOADING')
+    },
+
+    methods: {
+        RegisterUser: async function (){
+            this.$store.commit('$SETISLOADING')
+            const userRegister = this.userRegister
+            await http.registerUser(userRegister).then( (response) => {
+                if(response.status === 201){
+                    console.log("Criado")
+                }
+            }).catch ((error) => {
+                return console.log(error.response.data.message)
+                
+            })
+
+            this.$store.commit('$SETISLOADING')
+        }
     }
+
+
+
+
+
 
 
 }
@@ -93,6 +137,30 @@ export default {
 </script>
 
 <style scoped>
+
+
+.input {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--main_primaryWhite);
+    padding: 10px;
+    justify-content: center;
+    height: 80px;
+    border-radius: 10px;
+    color: var(--black_text);
+}
+
+.input input {
+    border: none;
+    outline: none;
+    height: 50px;
+    padding: 0px 5px 0 5px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px var(--main_primaryWhite) inset;
+}
+
 
 .gerenciamento-user {
     margin-top: 5vh;
