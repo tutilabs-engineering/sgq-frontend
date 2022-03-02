@@ -11,11 +11,11 @@
 
             <div class="user-data">
                     
-                <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'"/>
-                <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'"/>
-                <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'"/>
-                <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'"/>
-                <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'"/>
+                <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'" :disabled="1"/>
+                <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'" :disabled="1"/>
+                <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'" :disabled="1"/>
+                <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'" :disabled="1"/>
+                <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'" :disabled="1"/>
 
             </div>
                 <h3>Sistema</h3>
@@ -29,7 +29,7 @@
                         </select>
                     </div>
 
-                    <button class="btn-edit">Editar</button>
+                    <button class="btn-edit" @click="disableButton()">Editar</button>
                 </div>
 
             </div>
@@ -61,8 +61,23 @@ export default {
                 cargo: "",
                 lvAccess: ""
             },
+
+            isDisable: true,
         }	
 	},
+
+    methods: {
+        disableButton() {
+
+            this.isDisable = !this.isDisable
+            
+            if(this.isDisable === true){
+                console.log("Ta habiltiado")
+            }else {
+                console.log("Tá desabilitado")
+            }
+        }
+    },
 
     
     created: async function () { 
