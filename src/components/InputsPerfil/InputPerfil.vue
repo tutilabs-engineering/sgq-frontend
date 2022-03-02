@@ -1,7 +1,7 @@
 <template>
   <div class="input">
     <label for="">{{ title }}</label>
-    <input :type="type" :placeholder="placeholder" :v-model="value" />
+    <input :type="type" :placeholder="placeholder" :value="value" disabled />
   </div>
 </template>
 

@@ -34,15 +34,14 @@
   </div>
 </template>
 <script>
-
-import http from "../services/account/Users"
+import http from "../services/account/Users";
 
 export default {
   data() {
     return {
       dataLogin: {
         register: "",
-        password: ""
+        password: "",
       },
       errorValidation: false,
       img_login: "/img/img_login.png",
@@ -50,23 +49,26 @@ export default {
   },
 
   methods: {
-    Login: async function() {
+    Login: async function () {
       const access = this.dataLogin;
-      this.$store.commit("$SETISLOADING")
-      await http.sessions(access).then((response) => {
-        if(response.status === 200) {
-          const token = response.data.token
-          sessionStorage.setItem("token", token)
-          
-          //window.alert("Logado")
-          return this.$router.push({name: "Startup"})
-        }
-      }).catch((error) => {
-        return console.log(error.response.data.message)
-      })
-      this.$store.commit("$SETISLOADING")
-    }
-  }
+      this.$store.commit("$SETISLOADING");
+      await http
+        .sessions(access)
+        .then((response) => {
+          if (response.status === 200) {
+            const token = response.data.token;
+            sessionStorage.setItem("token", token);
+
+            //window.alert("Logado")
+            return this.$router.push({ name: "Startup" });
+          }
+        })
+        .catch((error) => {
+          return console.log(error.response.data.message);
+        });
+      this.$store.commit("$SETISLOADING");
+    },
+  },
 };
 </script>
 <style scoped>
@@ -160,12 +162,12 @@ html {
 }
 
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px var(--green_text) inset;
+  -webkit-box-shadow: 0 0 0 30px var(--green_text) inset;
 }
 
 /* Cor do texto do autocomplete */
 input:-webkit-autofill {
-    -webkit-text-fill-color: var(--main_primaryWhite) !important;
+  -webkit-text-fill-color: var(--main_primaryWhite) !important;
 }
 
 .inputForm::placeholder {
