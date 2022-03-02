@@ -25,6 +25,7 @@ export default {
   height: 80px;
   border-radius: 10px;
   color: var(--black_text);
+  font-weight: 600;
 }
 
 .input input {
