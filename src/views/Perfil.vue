@@ -124,6 +124,7 @@ export default {
 
 .perfil h3 {
     color: var(--green_text);
+    margin-bottom: 20px;
 }
 
 .perfil
