@@ -1,5 +1,5 @@
 <template>
-    <div class="content-perfil">
+    <div class="content-perfil" v-if="editStatus">
 
         <div class="perfil">
             <div class="user">
@@ -29,7 +29,44 @@
                         </select>
                     </div>
 
-                    <button class="btn-edit" @click="disableButton()">Editar</button>
+                    <button class="btn-edit" @click="editStatus = false">Editar</button>
+                </div>
+
+            </div>
+       
+    </div>
+
+    <div class="content-perfil" v-else>
+
+        <div class="perfil">
+            <div class="user">
+                <div class="perfil-img"><i class="fas fa-user-alt"></i></div>
+                <h2>Editar Usuário</h2>
+            </div>
+
+            <h3>Dados do usuário</h3>
+
+            <div class="user-data">
+                    
+                <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'" :disabled="1"/>
+                <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'" :disabled="1"/>
+                <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'" :disabled="1"/>
+                <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'" :disabled="1"/>
+                <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'" :disabled="1"/>
+
+            </div>
+                <h3>Sistema</h3>
+                <div class="footer-user-data">
+                    <div class="input system-black">
+                        <label for="user-name">Nível de Acesso</label>
+                        <select name="lvAcess" id="lvAcess" class="select-lvAcess" disabled>
+
+                            <option value="adm">{{user.cargo}}</option>
+                            <!-- FAZER V-FOR NA PARTE DE EDITAR -> V-FOR NO SELECT-->
+                        </select>
+                    </div>
+
+                    <button class="btn-salve" @click="editStatus = true">Salvar</button>
                 </div>
 
             </div>
@@ -63,6 +100,7 @@ export default {
             },
 
             isDisable: true,
+            editStatus: true,
         }	
 	},
 
