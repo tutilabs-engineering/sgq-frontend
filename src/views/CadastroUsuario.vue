@@ -192,9 +192,12 @@ export default {
   background-color: var(--btn_gray);
 }
 
+/*
 .cancel-btn {
   grid-column: 3;
 }
+
+*/
 
 .save-btn {
   color: var(--main_primaryWhite);

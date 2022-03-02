@@ -14,6 +14,10 @@ export default {
 
     listUsers: () => {
         return http.get('users')
+    },
+
+    registerUser: async (data) => {
+        return await http.post('users', data)
     }
 
     // verify: async () => {
