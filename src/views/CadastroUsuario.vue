@@ -52,7 +52,7 @@
       </div>
 
       <div class="buttons-action">
-        <button class="btn cancel-btn">Cancelar</button>
+        <button class="btn cancel-btn" @click="teste">Cancelar</button>
         <button class="btn save-btn">Salvar</button>
       </div>
     </div>
@@ -69,6 +69,7 @@
 import TableUsers from "../components/TableUsers/TableUsers.vue";
 import InputPerfil from "../components/InputsPerfil/InputPerfil.vue";
 import http from "../services/account/Users";
+import { useToast } from "vue-toastification";
 
 export default {
   components: { InputPerfil, TableUsers },
@@ -94,6 +95,14 @@ export default {
       this.users = res.data.users;
       console.log(this.users);
     });
+  },
+
+  methods: {
+    teste() {
+      const toast = useToast();
+
+      toast.success("Testando");
+    },
   },
 };
 </script>

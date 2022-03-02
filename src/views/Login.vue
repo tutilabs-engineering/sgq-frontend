@@ -34,6 +34,7 @@
   </div>
 </template>
 <script>
+import { useToast } from "vue-toastification";
 import http from "../services/account/Users";
 
 export default {
@@ -50,23 +51,37 @@ export default {
 
   methods: {
     Login: async function () {
-      const access = this.dataLogin;
-      this.$store.commit("$SETISLOADING");
-      await http
-        .sessions(access)
-        .then((response) => {
-          if (response.status === 200) {
-            const token = response.data.token;
-            sessionStorage.setItem("token", token);
+      if (this.dataLogin.register === "" || this.dataLogin.password === "") {
+        const toast = useToast();
+        toast.error("Preencha todos os campos!");
+      } else {
+        const access = this.dataLogin;
+        this.$store.commit("$SETISLOADING");
+        await http
+          .sessions(access)
+          .then((response) => {
+            if (response.status === 200) {
+              const token = response.data.token;
+              sessionStorage.setItem("token", token);
+              if (token) {
+                const toast = useToast();
+                toast.success("Usuário logado com sucesso");
+              }
 
-            //window.alert("Logado")
-            return this.$router.push({ name: "Startup" });
-          }
-        })
-        .catch((error) => {
-          return console.log(error.response.data.message);
-        });
-      this.$store.commit("$SETISLOADING");
+              //window.alert("Logado")
+              return this.$router.push({ name: "Startup" });
+            }
+            // console.log(response.data);
+          })
+          .catch((error) => {
+            if (error.response.data.message) {
+              const toast = useToast();
+              toast.error("Matrícula ou Senha incorretos!");
+            }
+            return console.log(error.response.data.message);
+          });
+        this.$store.commit("$SETISLOADING");
+      }
     },
   },
 };
