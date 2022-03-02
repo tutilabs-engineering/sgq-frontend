@@ -34,15 +34,15 @@
   </div>
 </template>
 <script>
-
-import http from "../services/account/Users"
+import { useToast } from "vue-toastification";
+import http from "../services/account/Users";
 
 export default {
   data() {
     return {
       dataLogin: {
         register: "",
-        password: ""
+        password: "",
       },
       errorValidation: false,
       img_login: "/img/img_login.png",
@@ -50,23 +50,40 @@ export default {
   },
 
   methods: {
-    Login: async function() {
-      const access = this.dataLogin;
-      this.$store.commit("$SETISLOADING")
-      await http.sessions(access).then((response) => {
-        if(response.status === 200) {
-          const token = response.data.token
-          sessionStorage.setItem("token", token)
-          
-          //window.alert("Logado")
-          return this.$router.push({name: "Startup"})
-        }
-      }).catch((error) => {
-        return console.log(error.response.data.message)
-      })
-      this.$store.commit("$SETISLOADING")
-    }
-  }
+    Login: async function () {
+      if (this.dataLogin.register === "" || this.dataLogin.password === "") {
+        const toast = useToast();
+        toast.error("Preencha todos os campos!");
+      } else {
+        const access = this.dataLogin;
+        this.$store.commit("$SETISLOADING");
+        await http
+          .sessions(access)
+          .then((response) => {
+            if (response.status === 200) {
+              const token = response.data.token;
+              sessionStorage.setItem("token", token);
+              if (token) {
+                const toast = useToast();
+                toast.success("Usuário logado com sucesso");
+              }
+
+              //window.alert("Logado")
+              return this.$router.push({ name: "Startup" });
+            }
+            // console.log(response.data);
+          })
+          .catch((error) => {
+            if (error.response.data.message) {
+              const toast = useToast();
+              toast.error("Matrícula ou Senha incorretos!");
+            }
+            return console.log(error.response.data.message);
+          });
+        this.$store.commit("$SETISLOADING");
+      }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -160,12 +177,12 @@ html {
 }
 
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px var(--green_text) inset;
+  -webkit-box-shadow: 0 0 0 30px var(--green_text) inset;
 }
 
 /* Cor do texto do autocomplete */
 input:-webkit-autofill {
-    -webkit-text-fill-color: var(--main_primaryWhite) !important;
+  -webkit-text-fill-color: var(--main_primaryWhite) !important;
 }
 
 .inputForm::placeholder {

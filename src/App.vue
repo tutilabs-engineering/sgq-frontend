@@ -1,13 +1,11 @@
 <template>
-
   <div v-if="telaLogin">
     <Login />
   </div>
 
   <div v-else>
-
     <div v-if="this.$store.getters.$GETISLOADING">
-        <Loading /> 
+      <Loading />
     </div>
 
     <SideBar />
@@ -17,7 +15,6 @@
       <router-view />
     </div>
   </div>
-
 </template>
 
 <script>
@@ -29,16 +26,15 @@ import Login from "./views/Login.vue";
 import Routes from "./router/index";
 import Header from "./components/Header/Header.vue";
 
-import Loading from './components/Loading/Loading.vue'
+import Loading from "./components/Loading/Loading.vue";
 
 //axios
 
 export default {
-
   data() {
     return {
       isLoading: this.$store.getters.$GETISLOADING,
-    }
+    };
   },
   components: {
     SideBar,
@@ -68,8 +64,6 @@ export default {
     var nameURL = window.location.pathname;
     var display = document.querySelector(".defaultInterface");
     if (nameURL == "/login") {
-      display.style.display = "block";
-    } else {
       display.style.display = "block";
     }
   },

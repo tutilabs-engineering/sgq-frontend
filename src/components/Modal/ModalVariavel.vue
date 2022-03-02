@@ -92,10 +92,8 @@
                   <input type="text" v-model="variavel.min" />
                 </div>
 
-                <div class="inputUpLoad">
-                  <label @click="incrementVariable"
-                    ><i class="fas fa-plus"></i
-                  ></label>
+                <div class="inputUpLoad" @click="incrementVariable">
+                  <label><i class="fas fa-plus"></i></label>
                 </div>
               </div>
             </div>
@@ -108,6 +106,7 @@
 </template>
 
 <script>
+import { useToast } from "vue-toastification";
 export default {
   components: {},
   name: "Modal",
@@ -142,21 +141,8 @@ export default {
         this.variavel.max === "" ||
         this.variavel.min === ""
       ) {
-        const Toast = this.$swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", this.$swal.stopTimer);
-            toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-          },
-        });
-        Toast.fire({
-          icon: "warning",
-          title: "Preencha todos os campos.",
-        });
+        const toast = useToast();
+        toast.error("Preencha todos os campos!");
       } else if (this.count < 10) {
         this.count++;
         this.variavel.identificacao = "";
@@ -406,11 +392,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--main_primaryWhite);
+  cursor: pointer;
+  font-size: 1.4rem;
 }
 
 .modal_mask .modal_body .attributeVariable .inputUpLoad .fa-plus {
-  color: var(--main_primaryWhite);
-  font-size: 1.4rem;
   cursor: pointer;
 }
 

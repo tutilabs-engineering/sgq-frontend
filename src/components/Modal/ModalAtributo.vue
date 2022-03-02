@@ -101,6 +101,7 @@
 </template>
 
 <script>
+import { useToast } from "vue-toastification";
 export default {
   components: {},
   name: "Modal",
@@ -130,21 +131,8 @@ export default {
 
     addNovaPergunta() {
       if (this.newTodoText === "") {
-        const Toast = this.$swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", this.$swal.stopTimer);
-            toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-          },
-        });
-        Toast.fire({
-          icon: "warning",
-          title: "Adicione uma pergunta.",
-        });
+        const toast = useToast();
+        toast.error("Adicione ao menos uma pergunta");
       } else if (this.count < 10) {
         this.count++;
         this.todos.push({
@@ -154,21 +142,8 @@ export default {
         this.newTodoText = "";
       }
       if (this.count === 10) {
-        const Toast = this.$swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", this.$swal.stopTimer);
-            toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-          },
-        });
-        Toast.fire({
-          icon: "warning",
-          title: "Número máximo de perguntas atingidas.",
-        });
+        const toast = useToast();
+        toast.error("Número máximo de perguntas atingidas.");
       }
     },
 
@@ -237,8 +212,6 @@ export default {
   left: 0;
   padding: 0 15px;
 }
-
-
 
 .btnAt {
   width: 100px;
