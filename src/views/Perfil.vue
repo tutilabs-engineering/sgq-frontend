@@ -48,11 +48,13 @@
 
             <form class="user-data" @submit.prevent="UpdateUser">
                     
-                <InputPerfil title="Nome Completo" :value="user.nomeCompleto"  :type="text" :placeholder="'Maria do Bairro'" :disabled="0" />
+                <InputPerfil title="Nome Completo" :value="user.nomeCompleto"  :type="text" :placeholder="'Maria do Bairro'" :disabled="0" v-model="updateUser.name"/>
                 <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'" :disabled="0"/>
                 <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'" :disabled="0"/>
                 <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'" :disabled="0"/>
                 <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'" :disabled="0"/>
+
+                <button class="btn btn-salve" @click="editStatus = true" type="submit">Salvar</button>
 
             </form>
                 <h3>Sistema</h3>
