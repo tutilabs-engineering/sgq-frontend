@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import http from "../services/account/Users"
-// import jwt from 'jsonwebtoken'
+import http from "../services/account/Users"
 async function Auth(to, from, next) {
   
   const token = sessionStorage.getItem("token")
@@ -8,8 +7,18 @@ async function Auth(to, from, next) {
   if(!token) {
     return next("/login")
   }
-  next()
+
+  await http.validate().then((response) => {
+    if(response.status === 200) {
+      return next()
+    } 
+    return next("/login")
+  }).catch(() => {
+    return next("/login")
+  })
+  return next("/login")
 }
+
 const routes = [
   {
     path: '/startup',

@@ -18,10 +18,10 @@ export default {
 
     registerUser: async (data) => {
         return await http.post('users', data)
-    }
+    },
 
-    // verify: async () => {
-    //     return await http.post("/verifyToken")
-    // }
+    validate: () => {
+        return http.get("validateToken")
+    }
 
 }
