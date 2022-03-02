@@ -238,8 +238,10 @@ export default {
   padding: 0 15px;
 }
 
+
+
 .btnAt {
-  width: 50%;
+  width: 100px;
   background: var(--card_blue);
   border: none;
   border-radius: 10px;

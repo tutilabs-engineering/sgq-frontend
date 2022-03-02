@@ -218,7 +218,7 @@ export default {
 }
 
 .btnVa {
-  width: 50%;
+  width: 100px;
   background: var(--card_orange);
   border: none;
   border-radius: 10px;

@@ -12,13 +12,13 @@
       </thead>
 
       <tbody>
-        <tr v-for="user in users" :key="user.id">
+        <tr v-for="user in listUsers" :key="user.id">
           <td style="display: none"></td>
           <td class="codeStartup" data-title="Nome">{{ user.name }}</td>
-          <td data-title="Matricula">{{ user.matricula }}</td>
+          <td data-title="Matricula">{{ user.register }}</td>
           <td data-title="Email">{{ user.email }}</td>
-          <td data-title="Nv. Acesso">{{ user.nivelAcesso }}</td>
-          <td data-title="Status">{{ user.status }}</td>
+          <td data-title="Nv. Acesso">{{ user.role.description }}</td>
+          <td data-title="Status">{{ user.is_enabled }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
               <i class="fas fa-ellipsis-h"></i>
@@ -46,43 +46,11 @@
 export default {
   setup() {},
   name: "Table",
+  props: ['listUsers'],
+
   data() {
     return {
-      users: [
-        {
-          id: 1,
-          name: "Maria do Bairro",
-          matricula: "56783",
-          email: "maria.bairro@tuti.com.br",
-          nivelAcesso: "Gerente",
-          status: "habilitado",
-        },
-        {
-          id: 2,
-          name: "Jorge Gama",
-          matricula: "987662",
-          email: "jorge.gama@tuti.com.br",
-          nivelAcesso: "Inspetor",
-          status: "habilitado",
-        },
-        {
-          id: 3,
-          name: "Renato Maia",
-          matricula: "4844",
-          email: "renato.maia@tuti.com.br",
-          nivelAcesso: "ADM",
-          status: "habilitado",
-        },
-        {
-          id: 4,
-          name: "Bruno Marinho",
-          matricula: "9675",
-          email: "bruno.marinho@tuti.com.br",
-          nivelAcesso: "Metrologista",
-          status: "habilitado",
-        }
-      ],
-      statusTable: true,
+
     };
   },
 };
@@ -104,8 +72,8 @@ export default {
 }
 
 .tableContent {
-  width: 70%;
-  margin-top: 40px;
+  width: 90%;
+  margin-top: 60px;
 
 }
 
@@ -182,7 +150,7 @@ table td {
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 860px) {
 
   .tableContent thead {
     display: none;
@@ -206,7 +174,6 @@ table td {
     color: var(--black_text);
   }
 
-
   .tableContent td:first-of-type {
     font-weight: bold;
     font-size: 1.2rem;
@@ -225,7 +192,6 @@ table td {
   .lastTd {
     border-bottom: 1px solid var(--green_text);
   }
-
 
   .codeStartup {
     font-weight: 600;

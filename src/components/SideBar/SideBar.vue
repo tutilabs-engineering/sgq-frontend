@@ -15,6 +15,8 @@
 
       <div class="option_link linkTo" @click="() => this.$router.push({ name: 'metrologia' })"> <i class="fas fa-ruler-combined"></i><span class="link_name">Metrologia</span></div>
 
+      <div class="option_link linkTo" @click="() => this.$router.push({ name: 'Configuracoes' })"> <i class="fas fa-tools"></i><span class="link_name">Configurações</span></div>
+
       <div class="option_link linkTo exit" @click="Exit"> <i class="fas fa-door-open"></i><span class="link_name">Sair</span></div>
 
     </div>
@@ -24,7 +26,7 @@
 
 <script>
 import jwt from "jsonwebtoken";
-
+import http from "../../services/account/Users"
 import { collapsed, toggleSidebar, sidebarWidth } from "./state";
 
 export default {
@@ -32,20 +34,25 @@ export default {
   setup() {
     return { collapsed, toggleSidebar, sidebarWidth };
   },
-  data() {
-    return {
-      username: "",
-    };
-  },
 
-  mounted() {
-    const secret =
-      "@#$%¨&*(UGYdkjsbvkjdbvbdsojew#$%¨&Hddjdjbskjdepwopwwcjshvcdsjvcds";
-    if (localStorage.getItem("token") != undefined) {
-      var token = localStorage.getItem("token");
-      const decoded = jwt.verify(token, secret);
-      console.log(decoded);
-      this.username = decoded.name;
+  created: async function() { 
+
+    // const secret = process.env.SECRET
+
+    const secretQuefunciona = "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
+
+    const token = sessionStorage.getItem("token");
+
+    if (token) {
+      try {
+        const {sub} = await jwt.verify(token, secretQuefunciona);
+        await http.findUserById(sub).then((res) => {
+          return this.username = res.data.user.name
+        }).catch((error) => console.log("error", error))
+        
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
 
@@ -54,16 +61,21 @@ export default {
       this.$swal
         .fire({
           title: "Até a proxima, " + this.username.split(" ")[0] + "!",
-          imageUrl: "/img/qualidade.png",
-          imageWidth: 400,
-          imageHeight: 200,
+          imageUrl: "/img/logout_img.gif",
+          imageWidth: 550,
+          imageHeight: 300,
           imageAlt: "Custom image",
         })
         .then(() => {
           this.$router.push({ name: "Login" });
-          localStorage.removeItem("token");
+          sessionStorage.removeItem("token");
         });
     },
+  },
+  data() {
+    return {
+      username: "",
+    };
   },
 };
 </script>

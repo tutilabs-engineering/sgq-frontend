@@ -1,5 +1,7 @@
 <template>
     <div class="gerenciamento-user">
+
+        
             <div class="perfil">
                 <div class="user">
                     <div class="perfil-img"><i class="fas fa-user-alt"></i></div>
@@ -7,7 +9,10 @@
                 </div>
                 <h2>Cadastro</h2>
 
+                
+
                 <div class="cadastro-user-data">
+                    
                     
                     <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'"/>
                     <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'"/>
@@ -33,8 +38,14 @@
                 </div>
             </div>
 
+            <div v-for="tudo of Tudousers" :key="tudo.id">
+                <h2>{{tudo}}</h2>
+            </div>
+
          
-            <TableUsers />
+            <TableUsers :listUsers="users"/>
+
+            
 
             
     </div>
@@ -44,6 +55,7 @@
 <script>
 import TableUsers from "../components/TableUsers/TableUsers.vue"
 import InputPerfil from "../components/InputsPerfil/InputPerfil.vue";
+import http from "../services/account/Users"
 
 export default {
 
@@ -52,6 +64,8 @@ export default {
     name: "CadastroUsuario",
     data(){
 		return {
+            users: [],
+
             user: {
                 id: 1,
                 nomeCompleto: "Maria de Fátima Marques",
@@ -59,13 +73,23 @@ export default {
                 matricula: "5677898",
                 cpf: "96378925802",
                 cargo: "Técnica",
-            }
+            },
         }
-		
 	},
+
+    created: async function () {
+        this.$store.commit('$SETISLOADING')
+        await http.listUsers().then( res => {
+            this.users = res.data.users
+            console.log(this.users)
+        })
+        this.$store.commit('$SETISLOADING')
+    }
 
 
 }
+
+
 </script>
 
 <style scoped>

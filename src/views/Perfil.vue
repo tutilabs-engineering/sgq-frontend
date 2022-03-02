@@ -1,31 +1,32 @@
 <template>
     <div class="content-perfil">
-            <div class="perfil">
-                <div class="user">
-                    <div class="perfil-img"><i class="fas fa-user-alt"></i></div>
-                    <h2>Perfil</h2>
-                </div>
-                <h3>Dados do usuário</h3>
-                <div class="user-data">
-                    
-                    <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'"/>
-                    <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'"/>
-                    <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'"/>
-                    <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'"/>
-                    <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'"/>
 
-                </div>
+        <div class="perfil">
+            <div class="user">
+                <div class="perfil-img"><i class="fas fa-user-alt"></i></div>
+                <h2>Perfil</h2>
+            </div>
+
+            <h3>Dados do usuário</h3>
+
+            <div class="user-data">
+                    
+                <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'"/>
+                <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'"/>
+                <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'"/>
+                <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'"/>
+                <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'"/>
+
+            </div>
                 <h3>Sistema</h3>
                 <div class="footer-user-data">
                     <div class="input system-black">
                         <label for="user-name">Nível de Acesso</label>
-                        <select name="lvAcess" id="lvAcess" class="select-lvAcess">
-                            <option value="adm">ADM</option>
-                            <option value="gestor">Gestor</option>
-                            <option value="analista">Analista</option>
-                            <option value="metrologista">Metrologista</option>
-                            <option value="inspetor">Inspetor</option>
-                            </select>
+                        <select name="lvAcess" id="lvAcess" class="select-lvAcess" disabled>
+
+                            <option value="adm">{{user.cargo}}</option>
+                            <!-- FAZER V-FOR NA PARTE DE EDITAR -> V-FOR NO SELECT-->
+                        </select>
                     </div>
 
                     <button class="btn-edit">Editar</button>
@@ -39,29 +40,60 @@
 
 <script>
 
+import jwt from "jsonwebtoken";
 import InputPerfil from "../components/InputsPerfil/InputPerfil.vue";
+import http from "../services/account/Users"
 
 
 export default {
 
     components: { InputPerfil},
-
     name: "Perfil",
+
     data(){
 		return {
             user: {
                 id: 1,
-                nomeCompleto: "Maria de Fátima Marques",
-                email: "marifatima@tuti.com",
-                matricula: "5677898",
-                cpf: "96378925802",
-                cargo: "Técnica",
-            }
-        
-        
-        }
-		
+                nomeCompleto: "",
+                email: "",
+                matricula: "",
+                cpf: "",
+                cargo: "",
+                lvAccess: ""
+            },
+        }	
 	},
+
+    
+    created: async function () { 
+
+    const secretQuefunciona = "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
+
+    const token = sessionStorage.getItem("token");
+
+    if (token) {
+      try {
+        const {sub} = await jwt.verify(token, secretQuefunciona);
+        this.$store.commit("$SETISLOADING")
+        await http.findUserById(sub).then((res) => {
+          this.user.nomeCompleto = res.data.user.name
+          this.user.email = res.data.user.email
+          this.user.matricula = res.data.user.register
+          this.user.cpf = res.data.user.cpf
+          this.user.cargo = res.data.user.role.description
+          this.user.lvAccess = res.data.user.role.id
+
+          
+        }).catch((error) => console.log("error", error))
+        this.$store.commit("$SETISLOADING")
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
+
+    
+  },
 
 
 }
@@ -80,7 +112,7 @@ export default {
 
 
 .perfil {
-    width: 50%;
+    width: 70%;
     height: auto;
 }
 

@@ -12,11 +12,11 @@
           <label for="matricula" class="labelForm">Matricula</label>
           <input
             class="inputForm"
-            type="number"
+            type="text"
             name=""
             id=""
             placeholder="Digite a sua matricula"
-            v-model="login.matricula"
+            v-model="dataLogin.register"
           />
 
           <label for="senha" class="labelForm">Senha</label>
@@ -24,7 +24,7 @@
             class="inputForm"
             type="password"
             placeholder="*****"
-            v-model="login.senha"
+            v-model="dataLogin.password"
           />
 
           <input class="btnLogin" type="submit" value="Entrar" />
@@ -34,82 +34,39 @@
   </div>
 </template>
 <script>
-import http from "../services/login";
+
+import http from "../services/account/Users"
 
 export default {
   data() {
     return {
-      login: {
-        matricula: "",
-        senha: "",
+      dataLogin: {
+        register: "",
+        password: ""
       },
+      errorValidation: false,
       img_login: "/img/img_login.png",
     };
   },
+
   methods: {
-    Login: function () {
-      if (this.login.matricula == "" || this.login.senha == "") {
-        const Toast = this.$swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", this.$swal.stopTimer);
-            toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-          },
-        });
-        Toast.fire({
-          icon: "warning",
-          title: "Registration and password fields must be completed.",
-        });
-      } else {
-        http
-          .login(this.login)
-          .then((response) => {
-            if (response.data.token.length > 0) {
-              localStorage.setItem("token", response.data.token);
-              this.$router.push({ path: "/startup" });
-              const Toast = this.$swal.mixin({
-                toast: true,
-                position: "top-start",
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener("mouseenter", this.$swal.stopTimer);
-                  toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-                },
-              });
-              Toast.fire({
-                icon: "success",
-                title: "Logged",
-              });
-            } else {
-              alert("error");
-            }
-          })
-          .catch((error) => {
-            const Toast = this.$swal.mixin({
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener("mouseenter", this.$swal.stopTimer);
-                toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-              },
-            });
-            Toast.fire({
-              icon: "error",
-              title: error.response.data.message,
-            });
-          });
-      }
-    },
-  },
+    Login: async function() {
+      const access = this.dataLogin;
+      this.$store.commit("$SETISLOADING")
+      await http.sessions(access).then((response) => {
+        if(response.status === 200) {
+          const token = response.data.token
+          sessionStorage.setItem("token", token)
+          
+          //window.alert("Logado")
+          return this.$router.push({name: "Startup"})
+        }
+      }).catch((error) => {
+        return console.log(error.response.data.message)
+      })
+      this.$store.commit("$SETISLOADING")
+    }
+  }
 };
 </script>
 <style scoped>
@@ -200,6 +157,15 @@ html {
   font-size: 20px;
   color: var(--main_primaryWhite);
   opacity: 0.8;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px var(--green_text) inset;
+}
+
+/* Cor do texto do autocomplete */
+input:-webkit-autofill {
+    -webkit-text-fill-color: var(--main_primaryWhite) !important;
 }
 
 .inputForm::placeholder {

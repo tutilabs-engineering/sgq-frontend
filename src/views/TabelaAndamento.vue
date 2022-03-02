@@ -1,6 +1,7 @@
 <template>
   <div className="tableContent">
-    <h2 class="titleTable">ANÁLISE DE PRODUTOS</h2>
+    <h2 class="titleTable">Análise Startup</h2>
+    <h3>Em andamento</h3>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cód.Startup</th>
@@ -22,15 +23,16 @@
           <td data-title="Data">{{ item.data }}</td>
           <td data-title="Inspetor">{{ item.inspetor }}</td>
           <td class="lastTd" data-title="Opcoes">
-            <div class="opcoes">
-              <ModalAtributo
-                :modalAtributo="modalAtributo"
-                @open-modal-atributo="openModalAtributo"
-              />
-              <ModalVariavel
-                :modalVariavel="modalVariavel"
-                @open-modal-variavel="openModalVariavel"
-              />
+            <div className="opcoes">
+              <i class="fas fa-ellipsis-h"></i>
+              <div class="dropdown-content">
+                <button className="btnOpcoes">
+                  <i class="fas fa-plus-circle"></i>
+                </button>
+                <button className="btnOpcoes">
+                  <i class="fas fa-file-alt"></i>
+                </button>
+              </div>
             </div>
           </td>
         </tr>
@@ -40,17 +42,40 @@
 </template>
 
 <script>
-import ModalAtributo from "../components/Modal/ModalAtributo.vue";
-import ModalVariavel from "../components/Modal/ModalVariavel.vue";
-
-
 export default {
-  components: { ModalAtributo, ModalVariavel },
   setup() {},
   name: "Table",
-  emits: ["modalAtributo", "modalVariavel"],
   data() {
     return {
+      itemsAbertos: [
+        {
+          id: 1,
+          produto: "produto D",
+          codigo: "521",
+          cliente: "Honda",
+          maquina: "Injetora",
+          data: "22-03-2022",
+          inspetor: "Jorge",
+        },
+        {
+          id: 2,
+          produto: "produto E",
+          codigo: "523",
+          cliente: "Yamaha",
+          maquina: "Injetora",
+          data: "23-03-2022",
+          inspetor: "Renato",
+        },
+        {
+          id: 3,
+          produto: "produto F",
+          codigo: "242",
+          cliente: "Tutu",
+          maquina: "Injetora",
+          data: "24-03-2022",
+          inspetor: "Guilherme",
+        },
+      ],
       itemsFechados: [
         {
           id: 1,
@@ -80,17 +105,7 @@ export default {
           inspetor: "Guilherme",
         },
       ],
-      modalAtributo: false,
-      modalVariavel: false,
     };
-  },
-  methods: {
-    openModalAtributo() {
-      this.modalAtributo = !this.modalAtributo;
-    },
-    openModalVariavel() {
-      this.modalVariavel = !this.modalVariavel;
-    },
   },
 };
 </script>
@@ -99,15 +114,21 @@ export default {
 .tableContent {
   position: relative;
   width: 100%;
+  padding: 0px 25px 0px 25px;
+  margin-top: 50px;
+  overflow-x: auto;
+  padding: 0 40px 40px 40px;
 }
 
 .tableContent h2 {
-  margin-bottom: 20px;
+  margin-left: 10px;
+  color: var(--black_text);
 }
 
-.titleTable {
+.tableContent h3 {
+  margin-left: 10px;
   color: var(--black_text);
-  text-align: center;
+  margin-bottom: 20px;
 }
 
 .dropdown-content {
@@ -122,14 +143,9 @@ export default {
   z-index: 1;
 }
 
-.opcoes {
-  display: flex;
-  justify-content:center;
-  width: 100%;
-  gap: 0.5rem;
+.opcoes:hover .dropdown-content {
+  display: block;
 }
-
-
 
 .tableContent table {
   background-color: var(--bg_white);
@@ -171,12 +187,69 @@ table td {
   align-items: center;
 }
 
-@media (max-width: 900px) {
+/* BTNS */
 
-  .opcoes {
-    justify-content: end;
-  }
-  
+.menuBtn {
+  width: 100%;
+  display: flex;
+  height: 80px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn {
+  background-color: transparent;
+  cursor: pointer;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  color: #292828;
+  font-size: max(0.8rem, 1vw);
+  font-weight: bold;
+  border: none;
+  font-weight: 300px;
+}
+
+.startup-opened,
+.startup-closed {
+  background-color: var(--bg_green);
+  border: 3px solid var(--main-color);
+  color: #fff;
+}
+
+.opcoes {
+  display: flex;
+  flex-direction: column;
+}
+
+.btnOpcoes {
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.btnOpcoes i {
+  margin: 0 10px 0 10px;
+}
+
+.fa-ellipsis-h {
+  color: var(--card_green);
+  font-size: 25px;
+}
+
+.fa-plus-circle {
+  color: var(--card_orange);
+}
+.fa-file-alt {
+  color: var(--card_blue);
+}
+
+.btns {
+  display: none;
+}
+
+@media (max-width: 767px) {
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
@@ -187,10 +260,6 @@ table td {
 
   .tableButton {
     display: block;
-  }
-
-  [data-title]{
-    color: var(--black_text);
   }
 
   .tableContent td {

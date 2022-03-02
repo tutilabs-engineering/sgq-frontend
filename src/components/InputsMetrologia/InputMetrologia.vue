@@ -1,19 +1,18 @@
 <template>
     <div class="input">
         <label for="">{{title}}</label>
-        <input :type="type" :placeholder="placeholder" :value="value" disabled>
+        <input :type="type" :placeholder="placeholder">
     </div>
   
 </template>
 
 <script>
 export default {
-    name: "InputPerfil",
-    props: ["title", "value", "type", "placeholder"],
+    name: "InputMetrologia",
+    props: ["title", "type", "placeholder"],
     data() {
         return {};
     },
-
 }
 </script>
 
@@ -36,6 +35,8 @@ export default {
     height: 50px;
     padding: 0px 5px 0 5px;
 }
+
+
 
 
 </style>

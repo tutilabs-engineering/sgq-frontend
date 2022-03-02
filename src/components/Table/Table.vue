@@ -28,7 +28,7 @@
       </thead>
 
       <thead>
-        <th>Cód.Startup</th>
+        <th>Código</th>
         <th>Produtos</th>
         <th>Cliente</th>
         <th>Máquina</th>
@@ -40,7 +40,7 @@
       <tbody>
         <tr v-for="item in itemsAbertos" :key="item.id">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="Codigo">{{ item.codigo }}</td>
+          <td class="codeStartup" data-title="Código">{{ item.codigo }}</td>
           <td data-title="Produto">{{ item.produto }}</td>
           <td data-title="Cliente">{{ item.cliente }}</td>
           <td data-title="Maquina">{{ item.maquina }}</td>
@@ -93,7 +93,7 @@
         <th></th>
       </thead>
       <thead>
-        <th>Cód.Startup</th>
+        <th>Código</th>
         <th>Produtos</th>
         <th>Cliente</th>
         <th>Máquina</th>
@@ -105,7 +105,7 @@
       <tbody>
         <tr v-for="item in itemsFechados" :key="item.id">
           <td style="display: none"></td>
-          <td data-title="Codigo">{{ item.codigo }}</td>
+          <td class="codeStartup" data-title="Código">{{ item.codigo }}</td>
           <td data-title="Produto">{{ item.produto }}</td>
           <td data-title="Cliente">{{ item.cliente }}</td>
           <td data-title="Maquina">{{ item.maquina }}</td>
@@ -219,10 +219,7 @@ export default {
 }
 
 .tableContent {
-  padding: 0px 25px 0px 25px;
   margin-top: 40px;
-  overflow-x: auto;
-  padding: 0 40px 40px 40px;
 }
 
 .tableContent table {
@@ -330,12 +327,16 @@ table td {
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 850px) {
 
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
   }
+
+  .tableContent{
+    padding: 0;
+  } 
   .tableContent thead {
     display: none;
   }

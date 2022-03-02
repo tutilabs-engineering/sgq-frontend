@@ -1,18 +1,23 @@
 <template>
-  <!-- <div class="defaultInterface"> -->
+
   <div v-if="telaLogin">
     <Login />
   </div>
 
   <div v-else>
+
+    <div v-if="this.$store.getters.$GETISLOADING">
+        <Loading /> 
+    </div>
+
     <SideBar />
     <Header titlePage="Sistema de Gerenciamento de Qualidade" />
-    <!--<NavBar />-->
+
     <div class="content">
       <router-view />
     </div>
   </div>
-  <!-- </div> -->
+
 </template>
 
 <script>
@@ -24,12 +29,20 @@ import Login from "./views/Login.vue";
 import Routes from "./router/index";
 import Header from "./components/Header/Header.vue";
 
+import Loading from './components/Loading/Loading.vue'
+
 //axios
 
 export default {
+
+  data() {
+    return {
+      isLoading: this.$store.getters.$GETISLOADING,
+    }
+  },
   components: {
     SideBar,
-    //NavBar,
+    Loading,
     Login,
     Header,
   },

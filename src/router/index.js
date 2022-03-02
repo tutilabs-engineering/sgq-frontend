@@ -1,25 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
+// import http from "../services/account/Users"
 // import jwt from 'jsonwebtoken'
-function Auth(to, from, next) {
-  console.log(to.matched[0].props.default)
-  // const secret = "@#$%¨&*(UGYdkjsbvkjdbvbdsojew#$%¨&Hddjdjbskjdepwopwwcjshvcdsjvcds";
-  if (localStorage.getItem("token") != undefined) {
-    next()
-  } else {
-    next("/login");
+async function Auth(to, from, next) {
+  
+  const token = sessionStorage.getItem("token")
+  
+  if(!token) {
+    return next("/login")
   }
+  next()
 }
 const routes = [
   {
     path: '/startup',
     name: 'Startup',
     component: () => import('../views/Startup.vue'),
-    beforeEnter: Auth
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: () => import('../components/CreateUser.vue'),
     beforeEnter: Auth
   },
   {
@@ -34,27 +29,21 @@ const routes = [
     beforeEnter: Auth
   },
   {
-    path: '/table-rp',
-    name: 'TabelaReprovados',
-    component: () => import('../views/TabelaReprovados'),
-    beforeEnter: Auth
-  },
-  {
-    path: '/table-ap',
+    path: '/startups-aprovadas',
     name: 'TabelaAprovados',
     component: () => import('../views/TabelaAprovados'),
     beforeEnter: Auth
   },
   {
-    path: '/principal',
-    name: 'Principal',
-    component: () => import('../views/Principal.vue'),
+    path: '/startups-reprovadas',
+    name: 'TabelaReprovados',
+    component: () => import('../views/TabelaReprovados'),
     beforeEnter: Auth
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue'),
+    path: '/startups-andamentos',
+    name: 'TabelaAndamento',
+    component: () => import('../views/TabelaAndamento'),
     beforeEnter: Auth
   },
   {
@@ -63,62 +52,27 @@ const routes = [
     component: () => import('../views/Atributos.vue'),
     beforeEnter: Auth
   },
-  {
-    path: '/analise-produtos',
-    name: 'AnaliseProdutos',
-    component: () => import('../views/AnaliseProdutos.vue'),
-    beforeEnter: Auth
-  },
+
   {
     path: '/metrologia',
     name: 'metrologia',
     component: () => import('../views/Metrologia.vue'),
     beforeEnter: Auth
   },
-  {
-    path: '/Modalvar',
-    name: 'modalvar',
-    component: () => import('../views/Modalvar.vue'),
-    beforeEnter: Auth
-  },
-  {
-    path: '/Modalatr',
-    name: 'modalatr',
-    component: () => import('../views/Modalatr.vue'),
-    beforeEnter: Auth
-  },
-  {
-    path: '/StartupDigital',
-    name: 'startupdigital',
-    component: () => import('../views/StartupDigital.vue'),
-    beforeEnter: Auth
-  },
-
-  {
-    path: '/Dashboard',
-    name: 'Dashboard',
-    component: () => import('../views/Dashboard.vue'),
-    beforeEnter: Auth
-  },
 
   {
     path: '/error',
     name: 'errorPermission',
-    component: () => import('../components/Error.vue'),
+    component: () => import('../components/ModalError/AccessError.vue'),
     beforeEnter: Auth
   },
 
   {
     path: '/notFound',
     name: 'NotFound',
-    component: () => import('../components/RouteNotFound.vue')
+    component: () => import('../components/ModalError/RouteNotFoundError.vue')
   },
 
-  {
-    path: '/load',
-    name: 'LoadinPage',
-    component: () => import('../components/LoadingPage.vue')
-  },
 
   {
     path: '/perfil',
@@ -135,6 +89,12 @@ const routes = [
     path: '/metrologiaDetalhes',
     name: 'MetrologiaDetalhes',
     component: () => import('../views/MetrologiaDetalhes.vue')
+  },
+
+  {
+    path: '/configuracoes',
+    name: 'Configuracoes',
+    component: () => import('../views/Configuracoes.vue')
   },
 
 ]
