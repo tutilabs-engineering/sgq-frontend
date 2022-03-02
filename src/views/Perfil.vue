@@ -29,7 +29,7 @@
                         </select>
                     </div>
 
-                    <button class="btn-edit" @click="editStatus = false">Editar</button>
+                    <button class="btn btn-edit" @click="editStatus = false">Editar</button>
                 </div>
 
             </div>
@@ -46,15 +46,15 @@
 
             <h3>Dados do usuário</h3>
 
-            <div class="user-data">
+            <form class="user-data" @submit.prevent="UpdateUser">
                     
-                <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'" :disabled="1"/>
-                <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'" :disabled="1"/>
-                <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'" :disabled="1"/>
-                <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'" :disabled="1"/>
-                <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'" :disabled="1"/>
+                <InputPerfil title="Nome Completo" :value="user.nomeCompleto"  :type="text" :placeholder="'Maria do Bairro'" :disabled="0" />
+                <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'" :disabled="0"/>
+                <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'" :disabled="0"/>
+                <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'" :disabled="0"/>
+                <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'" :disabled="0"/>
 
-            </div>
+            </form>
                 <h3>Sistema</h3>
                 <div class="footer-user-data">
                     <div class="input system-black">
@@ -66,7 +66,7 @@
                         </select>
                     </div>
 
-                    <button class="btn-salve" @click="editStatus = true">Salvar</button>
+                    <button class="btn btn-salve" @click="editStatus = true" type="submit">Salvar</button>
                 </div>
 
             </div>
@@ -80,17 +80,17 @@
 import jwt from "jsonwebtoken";
 import InputPerfil from "../components/InputsPerfil/InputPerfil.vue";
 import http from "../services/account/Users"
-
+import { useToast } from "vue-toastification";
 
 export default {
 
     components: { InputPerfil},
     name: "Perfil",
+    
 
     data(){
 		return {
             user: {
-                id: 1,
                 nomeCompleto: "",
                 email: "",
                 matricula: "",
@@ -99,12 +99,37 @@ export default {
                 lvAccess: ""
             },
 
+            updateUser: {
+                name: "",
+                email: "",
+                cpf: "",
+                register: "",
+                fk_role: "",
+            },
+
             isDisable: true,
             editStatus: true,
         }	
 	},
 
     methods: {
+        teste() {
+            const toast = useToast();
+            toast.success("Testando");
+        },
+
+        UpdateUser: async function() {
+            const updateUser = this.updateUser
+
+            await http.updateUserById(updateUser).then( (response) => {
+                if(response.status === 200){
+                    console.log("Usuario atualizado")
+                }
+            }).catch( (error) => {
+                return console.log(error.response.data.message)
+            })
+        },
+
         disableButton() {
 
             this.isDisable = !this.isDisable
@@ -163,12 +188,10 @@ export default {
 
 }
 
-
 .perfil {
     width: 70%;
     height: auto;
 }
-
 
 
 .perfil h2  {
@@ -180,7 +203,6 @@ export default {
     margin-bottom: 20px;
 }
 
-.perfil
 
 .user {
     display: flex;
@@ -242,7 +264,7 @@ export default {
     grid-column-end: 3;
 }
 
-.btn-edit {
+.btn {
     color: var(--black_text);
     font-size: 1.2rem;
     font-weight: 600;
@@ -250,8 +272,16 @@ export default {
     height: 80px;
     border-radius: 10px;
     border: none;
-    background-color: var(--btn_gray);
     grid-column: 4;
+}
+
+.btn-edit {
+    background-color: var(--btn_gray);
+}
+
+.btn-salve {
+    background-color: var(--btn_blue);
+    color: var(--main_primaryWhite);
 }
 
 .select-lvAcess {
