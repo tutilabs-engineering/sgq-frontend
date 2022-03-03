@@ -133,9 +133,6 @@ export default {
 
             },
 
-           
-
-
             isDisable: true,
             editStatus: true,
             
@@ -174,7 +171,6 @@ export default {
                     const toast = useToast()
                     toast.success("Usuário atualizado com sucesso");
                     this.editStatus = !this.editStatus
-                   
                 }
             }).catch( (error) => {
                 this.$store.commit("$SETISLOADING");
@@ -182,9 +178,7 @@ export default {
                 toast.error("Verifique se todos os campos estão corretos " + error.response.data.message)
                 return console.log(error.response.data.message)
             })
-            
         },
-
     },
 
     
@@ -213,10 +207,7 @@ export default {
       } catch (error) {
         console.log(error)
       }
-
     }
-
-    
   },
 
 
@@ -317,7 +308,6 @@ export default {
     justify-content: flex-end;
 }
 
-
 .btn {
     color: var(--black_text);
     font-size: 1rem;
@@ -331,7 +321,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
 .btn-edit {
@@ -348,8 +337,6 @@ export default {
     cursor: pointer;
 }
 
-
-
 .select-lvAcess {
     margin-top: 5px;
     outline: none;
@@ -359,11 +346,11 @@ export default {
     height: 30px;
     font-weight: 600;
 }
+
 .select-lvAcess * {
     background-color: var(--black_text);
     color: var(--main_primaryWhite);
 }
-
 
 @media (max-width: 765px){
     .inputs{
@@ -371,7 +358,6 @@ export default {
     }
 
     .perfil {
-        margin-top: 12vh;
         width: 80%;
     }
 
