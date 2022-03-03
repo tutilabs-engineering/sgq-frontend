@@ -390,7 +390,7 @@ export default {
     }
 
     .perfil h2  {
-        font-size: 2rem;
+        font-size: 1.7rem;
         line-height: 30px;
     }
 
