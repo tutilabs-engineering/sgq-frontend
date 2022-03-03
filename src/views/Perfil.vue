@@ -9,29 +9,32 @@
 
             <h3>Dados do usuário</h3>
 
-            <div class="user-data">
-                    
-                <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'" :disabled="1"/>
-                <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'" :disabled="1"/>
-                <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'" :disabled="1"/>
-                <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'" :disabled="1"/>
-                <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'" :disabled="1"/>
-
-            </div>
-                <h3>Sistema</h3>
+            <form class="user-data">
+                
+                <div class="inputs">
+                    <InputPerfil title="Nome Completo" :value="user.name" :type="text" :placeholder="'Maria do Bairro'" :disabled="1"/>
+                    <InputPerfil title="Matricula" :value="user.register" :type="number" :placeholder="'ex: 8946987'" :disabled="1"/>
+                    <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'" :disabled="1"/>
+                    <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'" :disabled="1"/>
+                </div>
+                
                 <div class="footer-user-data">
+                    <h3>Sistema</h3>
                     <div class="input system-black">
                         <label for="user-name">Nível de Acesso</label>
                         <select name="lvAcess" id="lvAcess" class="select-lvAcess" disabled>
 
                             <option value="adm">{{user.cargo}}</option>
-                            <!-- FAZER V-FOR NA PARTE DE EDITAR -> V-FOR NO SELECT-->
+
                         </select>
                     </div>
+
 
                     <button class="btn btn-edit" @click="editStatus = false">Editar</button>
                 </div>
 
+            </form>
+                
             </div>
        
     </div>
@@ -47,30 +50,50 @@
             <h3>Dados do usuário</h3>
 
             <form class="user-data" @submit.prevent="UpdateUser">
-                    
-                <InputPerfil title="Nome Completo" :value="user.nomeCompleto"  :type="text" :placeholder="'Maria do Bairro'" :disabled="0" v-model="updateUser.name"/>
-                <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'" :disabled="0"/>
-                <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'" :disabled="0"/>
-                <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'" :disabled="0"/>
-                <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'" :disabled="0"/>
 
-                <button class="btn btn-salve" @click="editStatus = true" type="submit">Salvar</button>
+                <div class="inputs">
+                    <div class="input">
+                            <label for="">Nome</label>
+                            <input type="text" placeholder="ex: João das Neves" v-model="user.name">
+                        </div>
 
-            </form>
+                        <div class="input">
+                            <label for="">Email</label>
+                            <input type="text" placeholder="ex: nome@tuti.com.br" v-model="user.email">
+                        </div>
+
+                        <div class="input">
+                            <label for="">CPF</label>
+                            <input type="text" placeholder="CPF do usuário" v-model="user.cpf">
+                        </div>
+
+                        <div class="input">
+                            <label for="">Matrícula</label>
+                            <input type="text" placeholder="Matrícula do usuário" v-model="user.register">
+                        </div>
+
+                </div>
+                
                 <h3>Sistema</h3>
                 <div class="footer-user-data">
+                    
                     <div class="input system-black">
                         <label for="user-name">Nível de Acesso</label>
-                        <select name="lvAcess" id="lvAcess" class="select-lvAcess" disabled>
-
-                            <option value="adm">{{user.cargo}}</option>
-                            <!-- FAZER V-FOR NA PARTE DE EDITAR -> V-FOR NO SELECT-->
-                        </select>
+                            <select name="lvAcess" id="lvAcess" class="select-lvAcess" v-model="user.lvAccess">
+                                <option v-for="(option, index) in options"
+                                :value="option.value"
+                                :key="index">{{option.text}}</option>
+                            </select>
                     </div>
+                    
+                    <span @click="editStatus = true" class="btn-cancel">Cancelar</span>
+                    <button class="btn btn-salve" type="submit">Salvar</button>
+                    
 
-                    <button class="btn btn-salve" @click="editStatus = true" type="submit">Salvar</button>
                 </div>
 
+            </form>
+                
             </div>
        
     </div>
@@ -93,55 +116,68 @@ export default {
     data(){
 		return {
             user: {
-                nomeCompleto: "",
-                email: "",
-                matricula: "",
-                cpf: "",
-                cargo: "",
-                lvAccess: ""
-            },
-
-            updateUser: {
+                id: "",
                 name: "",
                 email: "",
-                cpf: "",
                 register: "",
-                fk_role: "",
+                cpf: "",
+                cargo: "",
+                lvAccess: "",
+
             },
+
+           
+
 
             isDisable: true,
             editStatus: true,
+            
+            options: [
+                {text: "Escolha", value: ""},
+                {text: "ADM", value: 1},
+                {text: "Gestor", value: 2},
+                {text: "Inspetor", value: 3},
+                {text: "Analista", value: 4},
+                {text: "Metrologista", value: 5},
+            ]
         }	
 	},
 
     methods: {
+
         teste() {
             const toast = useToast();
             toast.success("Testando");
         },
 
         UpdateUser: async function() {
-            const updateUser = this.updateUser
-
-            await http.updateUserById(updateUser).then( (response) => {
+            this.$store.commit("$SETISLOADING");
+            const userUpdated = {
+                id: this.user.id,
+                name: this.user.name,
+                email: this.user.email,
+                register: this.user.register,
+                cpf: this.user.cpf,
+                fk_role: this.user.lvAccess
+            }
+        
+            await http.updateUserById(userUpdated).then( (response) => {
                 if(response.status === 200){
-                    console.log("Usuario atualizado")
+                    this.$store.commit("$SETISLOADING");
+                    const toast = useToast()
+                    toast.success("Usuário atualizado com sucesso");
+                    this.editStatus = !this.editStatus
+                   
                 }
             }).catch( (error) => {
+                this.$store.commit("$SETISLOADING");
+                const toast = useToast()
+                toast.error("Verifique se todos os campos estão corretos " + error.response.data.message)
                 return console.log(error.response.data.message)
             })
+            
         },
 
-        disableButton() {
-
-            this.isDisable = !this.isDisable
-            
-            if(this.isDisable === true){
-                console.log("Ta habiltiado")
-            }else {
-                console.log("Tá desabilitado")
-            }
-        }
     },
 
     
@@ -156,9 +192,10 @@ export default {
         const {sub} = await jwt.verify(token, secretQuefunciona);
         this.$store.commit("$SETISLOADING")
         await http.findUserById(sub).then((res) => {
-          this.user.nomeCompleto = res.data.user.name
+        this.user.id = res.data.user.id
+          this.user.name = res.data.user.name
           this.user.email = res.data.user.email
-          this.user.matricula = res.data.user.register
+          this.user.register = res.data.user.register
           this.user.cpf = res.data.user.cpf
           this.user.cargo = res.data.user.role.description
           this.user.lvAccess = res.data.user.role.id
@@ -247,7 +284,7 @@ export default {
     margin-right: 10px;
 }
 
-.user-data {
+.inputs {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
@@ -271,10 +308,11 @@ export default {
     font-size: 1.2rem;
     font-weight: 600;
     cursor: pointer;
-    height: 80px;
+    height: 60px;
     border-radius: 10px;
     border: none;
-    grid-column: 4;
+    grid-column-start: 4;
+    grid-column-end: 4;
 }
 
 .btn-edit {
