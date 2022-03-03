@@ -57,7 +57,6 @@ export default {
                     if(role === 1) {
                         this.showManager = true
                     }
-                    this.$store.commit("$SETISLOADING")
                 }).catch( (error) => {
                     console.log("erro", error)
                 })
@@ -65,6 +64,8 @@ export default {
                 console.log(error)
             }
         }
+
+        this.$store.commit("$SETISLOADING")
 
         
     }

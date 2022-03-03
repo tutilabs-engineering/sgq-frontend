@@ -29,8 +29,10 @@
                         </select>
                     </div>
 
+                    <div class="btns btn-edit-false">
+                        <button class="btn btn-edit" @click="editStatus = false">Editar</button>
+                    </div>
                     
-                    <button class="btn btn-edit" @click="editStatus = false">Editar</button>
                 </div>
 
             </form>
@@ -86,7 +88,7 @@
                             </select>
                     </div>
                     
-                    <div class="btn">
+                    <div class="btns">
                         <button class="btn btn-cancel" @click="editStatus = true">Cancel</button>
 
                         <button class="btn btn-save" type="submit">Salvar</button>        
@@ -309,18 +311,27 @@ export default {
     grid-column-end: 3;
 }
 
+.btns {
+    grid-column: 4;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
 .btn {
     color: var(--black_text);
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     height: 60px;
+    width: 50%;
     border-radius: 10px;
     border: none;
     grid-column-start: 4;
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 .btn-edit {
@@ -330,13 +341,14 @@ export default {
 .btn-save {
     background-color: var(--btn_blue);
     color: var(--main_primaryWhite);
-    width: 100px;
 }
 
 .btn-cancel {
     margin-right: 10px;
     cursor: pointer;
 }
+
+
 
 .select-lvAcess {
     margin-top: 5px;
@@ -367,15 +379,19 @@ export default {
         display: flex;
         flex-direction: column-reverse;
         width: 100%;
-        height: 150px;
+        height: 60px;
         margin: 10px 0 10px 0;
     }
-
 
     .footer-user-data {
         display: flex;
         flex-direction: column;
         -ms-flex-order: 1;
+    }
+
+    .perfil h2  {
+        font-size: 2rem;
+        line-height: 30px;
     }
 
 
