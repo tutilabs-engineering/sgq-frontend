@@ -206,6 +206,7 @@ export default {
         this.$store.commit("$SETISLOADING")
       } catch (error) {
         console.log(error)
+        
       }
     }
   },
