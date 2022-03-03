@@ -139,6 +139,7 @@ body {
   height: 100%;
   margin-left: 210px;
   padding: 40px;
+  padding-top: 100px;
   transition: 0.5s;
 }
 

@@ -51,8 +51,9 @@ export default {
 
   methods: {
     Login: async function () {
+      let toast = useToast();
+
       if (this.dataLogin.register === "" || this.dataLogin.password === "") {
-        const toast = useToast();
         toast.error("Preencha todos os campos!");
       } else {
         const access = this.dataLogin;
@@ -64,7 +65,6 @@ export default {
               const token = response.data.token;
               sessionStorage.setItem("token", token);
               if (token) {
-                const toast = useToast();
                 toast.success("Usuário logado com sucesso");
               }
 
@@ -75,7 +75,7 @@ export default {
           })
           .catch((error) => {
             if (error.response.data.message) {
-              const toast = useToast();
+              
               toast.error("Matrícula ou Senha incorretos!");
             }
             return console.log(error.response.data.message);
