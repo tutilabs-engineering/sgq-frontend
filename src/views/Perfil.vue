@@ -29,7 +29,7 @@
                         </select>
                     </div>
 
-
+                    
                     <button class="btn btn-edit" @click="editStatus = false">Editar</button>
                 </div>
 
@@ -74,9 +74,9 @@
 
                 </div>
                 
-                <h3>Sistema</h3>
+                
                 <div class="footer-user-data">
-                    
+                    <h3>Sistema</h3>
                     <div class="input system-black">
                         <label for="user-name">Nível de Acesso</label>
                             <select name="lvAcess" id="lvAcess" class="select-lvAcess" v-model="user.lvAccess">
@@ -86,8 +86,13 @@
                             </select>
                     </div>
                     
-                    <span @click="editStatus = true" class="btn-cancel">Cancelar</span>
-                    <button class="btn btn-salve" type="submit">Salvar</button>
+                    <div class="btn">
+                        <button class="btn btn-cancel" @click="editStatus = true">Cancel</button>
+
+                        <button class="btn btn-save" type="submit">Salvar</button>        
+
+                    </div>
+                    
                     
 
                 </div>
@@ -312,16 +317,24 @@ export default {
     border-radius: 10px;
     border: none;
     grid-column-start: 4;
-    grid-column-end: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-edit {
     background-color: var(--btn_gray);
 }
 
-.btn-salve {
+.btn-save {
     background-color: var(--btn_blue);
     color: var(--main_primaryWhite);
+    width: 100px;
+}
+
+.btn-cancel {
+    margin-right: 10px;
+    cursor: pointer;
 }
 
 .select-lvAcess {
@@ -340,7 +353,7 @@ export default {
 
 
 @media (max-width: 765px){
-    .user-data, .footer-user-data {
+    .inputs{
         grid-template-columns: 1fr;
     }
 
@@ -349,10 +362,22 @@ export default {
         width: 80%;
     }
 
-    .btn-edit {
-        margin-top: 20px;
-        grid-column: auto;
+    .btn {
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+        height: 150px;
+        margin: 10px 0 10px 0;
     }
+
+
+    .footer-user-data {
+        display: flex;
+        flex-direction: column;
+        -ms-flex-order: 1;
+    }
+
+
 }
 
 
