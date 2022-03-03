@@ -22,6 +22,10 @@ export default {
 
     validate: () => {
         return http.get("validateToken")
+    },
+
+    updateUserById: (dataUpdateUser) => {
+        return http.put("users", dataUpdateUser)
     }
 
 }

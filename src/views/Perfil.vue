@@ -1,5 +1,5 @@
 <template>
-    <div class="content-perfil">
+    <div class="content-perfil" v-if="editStatus">
 
         <div class="perfil">
             <div class="user">
@@ -9,29 +9,96 @@
 
             <h3>Dados do usuário</h3>
 
-            <div class="user-data">
-                    
-                <InputPerfil title="Nome Completo" :value="user.nomeCompleto" :type="text" :placeholder="'Maria do Bairro'"/>
-                <InputPerfil title="Matricula" :value="user.matricula" :type="number" :placeholder="'ex: 8946987'"/>
-                <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'"/>
-                <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'"/>
-                <InputPerfil title="Cargo" :value="user.cargo" :type="text" :placeholder="'ex: Gestor'"/>
-
-            </div>
-                <h3>Sistema</h3>
+            <form class="user-data">
+                
+                <div class="inputs">
+                    <InputPerfil title="Nome Completo" :value="user.name" :type="text" :placeholder="'Maria do Bairro'" :disabled="1"/>
+                    <InputPerfil title="Matricula" :value="user.register" :type="number" :placeholder="'ex: 8946987'" :disabled="1"/>
+                    <InputPerfil title="Email" :value="user.email" :type="email" :placeholder="'ex: joaozinho@tuti.com'" :disabled="1"/>
+                    <InputPerfil title="CPF" :value="user.cpf" :type="text" :placeholder="'ex: 03992355202'" :disabled="1"/>
+                </div>
+                
                 <div class="footer-user-data">
+                    <h3>Sistema</h3>
                     <div class="input system-black">
                         <label for="user-name">Nível de Acesso</label>
                         <select name="lvAcess" id="lvAcess" class="select-lvAcess" disabled>
 
                             <option value="adm">{{user.cargo}}</option>
-                            <!-- FAZER V-FOR NA PARTE DE EDITAR -> V-FOR NO SELECT-->
+
                         </select>
                     </div>
 
-                    <button class="btn-edit">Editar</button>
+                    
+                    <button class="btn btn-edit" @click="editStatus = false">Editar</button>
                 </div>
 
+            </form>
+                
+            </div>
+       
+    </div>
+
+    <div class="content-perfil" v-else>
+
+        <div class="perfil">
+            <div class="user">
+                <div class="perfil-img"><i class="fas fa-user-alt"></i></div>
+                <h2>Editar Usuário</h2>
+            </div>
+
+            <h3>Dados do usuário</h3>
+
+            <form class="user-data" @submit.prevent="UpdateUser">
+
+                <div class="inputs">
+                    <div class="input">
+                            <label for="">Nome</label>
+                            <input type="text" placeholder="ex: João das Neves" v-model="user.name">
+                        </div>
+
+                        <div class="input">
+                            <label for="">Email</label>
+                            <input type="text" placeholder="ex: nome@tuti.com.br" v-model="user.email">
+                        </div>
+
+                        <div class="input">
+                            <label for="">CPF</label>
+                            <input type="text" placeholder="CPF do usuário" v-model="user.cpf">
+                        </div>
+
+                        <div class="input">
+                            <label for="">Matrícula</label>
+                            <input type="text" placeholder="Matrícula do usuário" v-model="user.register">
+                        </div>
+
+                </div>
+                
+                
+                <div class="footer-user-data">
+                    <h3>Sistema</h3>
+                    <div class="input system-black">
+                        <label for="user-name">Nível de Acesso</label>
+                            <select name="lvAcess" id="lvAcess" class="select-lvAcess" v-model="user.lvAccess">
+                                <option v-for="(option, index) in options"
+                                :value="option.value"
+                                :key="index">{{option.text}}</option>
+                            </select>
+                    </div>
+                    
+                    <div class="btn">
+                        <button class="btn btn-cancel" @click="editStatus = true">Cancel</button>
+
+                        <button class="btn btn-save" type="submit">Salvar</button>        
+
+                    </div>
+                    
+                    
+
+                </div>
+
+            </form>
+                
             </div>
        
     </div>
@@ -43,26 +110,80 @@
 import jwt from "jsonwebtoken";
 import InputPerfil from "../components/InputsPerfil/InputPerfil.vue";
 import http from "../services/account/Users"
-
+import { useToast } from "vue-toastification";
 
 export default {
 
     components: { InputPerfil},
     name: "Perfil",
+    
 
     data(){
 		return {
             user: {
-                id: 1,
-                nomeCompleto: "",
+                id: "",
+                name: "",
                 email: "",
-                matricula: "",
+                register: "",
                 cpf: "",
                 cargo: "",
-                lvAccess: ""
+                lvAccess: "",
+
             },
+
+           
+
+
+            isDisable: true,
+            editStatus: true,
+            
+            options: [
+                {text: "Escolha", value: ""},
+                {text: "ADM", value: 1},
+                {text: "Gestor", value: 2},
+                {text: "Inspetor", value: 3},
+                {text: "Analista", value: 4},
+                {text: "Metrologista", value: 5},
+            ]
         }	
 	},
+
+    methods: {
+
+        teste() {
+            const toast = useToast();
+            toast.success("Testando");
+        },
+
+        UpdateUser: async function() {
+            this.$store.commit("$SETISLOADING");
+            const userUpdated = {
+                id: this.user.id,
+                name: this.user.name,
+                email: this.user.email,
+                register: this.user.register,
+                cpf: this.user.cpf,
+                fk_role: this.user.lvAccess
+            }
+        
+            await http.updateUserById(userUpdated).then( (response) => {
+                if(response.status === 200){
+                    this.$store.commit("$SETISLOADING");
+                    const toast = useToast()
+                    toast.success("Usuário atualizado com sucesso");
+                    this.editStatus = !this.editStatus
+                   
+                }
+            }).catch( (error) => {
+                this.$store.commit("$SETISLOADING");
+                const toast = useToast()
+                toast.error("Verifique se todos os campos estão corretos " + error.response.data.message)
+                return console.log(error.response.data.message)
+            })
+            
+        },
+
+    },
 
     
     created: async function () { 
@@ -76,9 +197,10 @@ export default {
         const {sub} = await jwt.verify(token, secretQuefunciona);
         this.$store.commit("$SETISLOADING")
         await http.findUserById(sub).then((res) => {
-          this.user.nomeCompleto = res.data.user.name
+        this.user.id = res.data.user.id
+          this.user.name = res.data.user.name
           this.user.email = res.data.user.email
-          this.user.matricula = res.data.user.register
+          this.user.register = res.data.user.register
           this.user.cpf = res.data.user.cpf
           this.user.cargo = res.data.user.role.description
           this.user.lvAccess = res.data.user.role.id
@@ -110,12 +232,10 @@ export default {
 
 }
 
-
 .perfil {
     width: 70%;
     height: auto;
 }
-
 
 
 .perfil h2  {
@@ -127,7 +247,6 @@ export default {
     margin-bottom: 20px;
 }
 
-.perfil
 
 .user {
     display: flex;
@@ -149,6 +268,7 @@ export default {
     justify-content: center;
     height: 80px;
     border-radius: 10px;
+    font-weight: 600;
     color: var(--black_text);
 }
 
@@ -170,7 +290,7 @@ export default {
     margin-right: 10px;
 }
 
-.user-data {
+.inputs {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
@@ -189,16 +309,33 @@ export default {
     grid-column-end: 3;
 }
 
-.btn-edit {
+.btn {
     color: var(--black_text);
     font-size: 1.2rem;
     font-weight: 600;
     cursor: pointer;
-    height: 80px;
+    height: 60px;
     border-radius: 10px;
     border: none;
+    grid-column-start: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-edit {
     background-color: var(--btn_gray);
-    grid-column: 4;
+}
+
+.btn-save {
+    background-color: var(--btn_blue);
+    color: var(--main_primaryWhite);
+    width: 100px;
+}
+
+.btn-cancel {
+    margin-right: 10px;
+    cursor: pointer;
 }
 
 .select-lvAcess {
@@ -217,7 +354,7 @@ export default {
 
 
 @media (max-width: 765px){
-    .user-data, .footer-user-data {
+    .inputs{
         grid-template-columns: 1fr;
     }
 
@@ -226,10 +363,22 @@ export default {
         width: 80%;
     }
 
-    .btn-edit {
-        margin-top: 20px;
-        grid-column: auto;
+    .btn {
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+        height: 150px;
+        margin: 10px 0 10px 0;
     }
+
+
+    .footer-user-data {
+        display: flex;
+        flex-direction: column;
+        -ms-flex-order: 1;
+    }
+
+
 }
 
 
