@@ -69,7 +69,6 @@
 
 <script>
 import TableUsers from "../components/TableUsers/TableUsers.vue"
-//import InputPerfil from "../components/InputsPerfil/InputPerfil.vue";
 import http from "../services/account/Users"
 
 export default {
@@ -103,19 +102,30 @@ export default {
     created: async function () {
         this.$store.commit('$SETISLOADING')
         await http.listUsers().then( res => {
-            this.users = res.data.users
-            console.log(this.users)
+          this.users = res.data.users
         })
         this.$store.commit('$SETISLOADING')
     },
 
     methods: {
         RegisterUser: async function (){
+
+            const name = this.userRegister.name;
+            const email = this.userRegister.email;
+            const cpf = this.userRegister.cpf;
+            const register = this.userRegister.register;
+            const role = this.userRegister.fk_role;
+
+            if (!name || !email || !cpf || !register || !role) {
+              return window.alert("Necessário preencher todos os campos!")
+            }
+
             this.$store.commit('$SETISLOADING')
             const userRegister = this.userRegister
             await http.registerUser(userRegister).then( (response) => {
                 if(response.status === 201){
-                    console.log("Criado")
+                  window.alert("Usuário cadastrado com sucesso");
+                  window.location.reload(true)
                 }
             }).catch ((error) => {
                 return console.log(error.response.data.message)
@@ -154,7 +164,7 @@ export default {
 }
 
 input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 30px var(--main_primaryWhite) inset;
+  -webkit-box-shadow: 0 0 0 30px var(--main_primaryWhite) inset;
 }
 
 

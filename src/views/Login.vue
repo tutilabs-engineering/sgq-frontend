@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import { useToast } from "vue-toastification";
+// import { useToast } from "vue-toastification";
 import http from "../services/account/Users";
 
 export default {
@@ -51,37 +51,31 @@ export default {
 
   methods: {
     Login: async function () {
-      if (this.dataLogin.register === "" || this.dataLogin.password === "") {
-        const toast = useToast();
-        toast.error("Preencha todos os campos!");
-      } else {
         const access = this.dataLogin;
         this.$store.commit("$SETISLOADING");
         await http
           .sessions(access)
-          .then((response) => {
+          .then(async (response) => {
             if (response.status === 200) {
-              const token = response.data.token;
+              const token = await response.data.token;
               sessionStorage.setItem("token", token);
               if (token) {
-                const toast = useToast();
-                toast.success("Usuário logado com sucesso");
+                window.alert("Logado com sucesso!")
               }
-
-              //window.alert("Logado")
-              return this.$router.push({ name: "Startup" });
+              return await this.$router.push({ name: "Startup" });
             }
-            // console.log(response.data);
           })
           .catch((error) => {
-            if (error.response.data.message) {
-              const toast = useToast();
-              toast.error("Matrícula ou Senha incorretos!");
+            const errorMsg = error.response.data.message
+            if(errorMsg === "register or password incorrect") {
+              return window.alert("Matrícula ou senha incorreta!")
             }
-            return console.log(error.response.data.message);
+            if(errorMsg === "User is disabled") {
+              return window.alert("Usuário desabilitado!")
+            }
+            return window.alert("Erro no servidor");
           });
-        this.$store.commit("$SETISLOADING");
-      }
+          this.$store.commit("$SETISLOADING");
     },
   },
 };
