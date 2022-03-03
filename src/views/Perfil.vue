@@ -268,6 +268,7 @@ export default {
     justify-content: center;
     height: 80px;
     border-radius: 10px;
+    font-weight: 600;
     color: var(--black_text);
 }
 
