@@ -10,7 +10,7 @@ export default {
             this.$swal.fire({
               title: 'Acesso Negado!',
               text: 'Você não tem permissão para acessar esta página',
-              imageUrl: '/img/acesso_negado.jpg',
+              imageUrl: '/img/accessDenied.gif',
               imageWidth: 400,
               imageHeight: 200,
               imageAlt: 'Custom image',
@@ -23,13 +23,11 @@ export default {
 
 <style scoped>
 .errorBackground{
-    background-color: rgb(255, 255, 255);
-    width: 100vw;
-    height: 100vh;
-    padding: -2rem;
-    margin: -6rem -18rem;
-    z-index: 1000;
-    position: absolute;
+  background-color: rgb(255, 255, 255);
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  position: absolute;
 }
 
 </style>

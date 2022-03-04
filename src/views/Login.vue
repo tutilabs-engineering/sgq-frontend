@@ -34,7 +34,6 @@
   </div>
 </template>
 <script>
-// import { useToast } from "vue-toastification";
 import http from "../services/account/Users";
 
 export default {
@@ -51,6 +50,19 @@ export default {
 
   methods: {
     Login: async function () {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+          popup: 'colored-toast',
+          title: 'title-swal-text'
+        },
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true
+      })
+
         const access = this.dataLogin;
         this.$store.commit("$SETISLOADING");
         await http
@@ -60,7 +72,11 @@ export default {
               const token = await response.data.token;
               sessionStorage.setItem("token", token);
               if (token) {
-                window.alert("Logado com sucesso!")
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Logado com sucesso',
+                  background: "#a5dc86",
+                })
               }
               return await this.$router.push({ name: "Startup" });
             }
@@ -68,12 +84,25 @@ export default {
           .catch((error) => {
             const errorMsg = error.response.data.message
             if(errorMsg === "register or password incorrect") {
-              return window.alert("Matrícula ou senha incorreta!")
+                return Toast.fire({
+                  icon: 'error',
+                  title: 'Matrícula ou senha incorreta!',
+                  background: "#ff5349",
+                })
             }
             if(errorMsg === "User is disabled") {
-              return window.alert("Usuário desabilitado!")
+                return Toast.fire({
+                  icon: 'warning',
+                  title: 'Usuário desabilitado!',
+                  background: "#e3e745",
+                  iconColor: "#545454"
+                })
             }
-            return window.alert("Erro no servidor");
+            return Toast.fire({
+              icon: 'error',
+              title: 'Erro no servidor!',
+              background: "#ff5349",
+            })
           });
           this.$store.commit("$SETISLOADING");
     },
@@ -87,6 +116,10 @@ html {
   background-color: #0a7a46;
   padding: 0;
   margin: 0;
+}
+
+.title-swal-text{
+  color: white;
 }
 
 .container {
