@@ -291,7 +291,7 @@ input:-webkit-autofill {
 
 @media (max-width: 765px) {
   .gerenciamento-user {
-    margin-top: 12vh;
+    margin-top: 5vh;
   }
   .cadastro-user-data {
     grid-template-columns: 1fr;
