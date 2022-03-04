@@ -18,10 +18,22 @@ export default {
 
     registerUser: async (data) => {
         return await http.post('users', data)
-    }
+    },
 
-    // verify: async () => {
-    //     return await http.post("/verifyToken")
-    // }
+    validate: () => {
+        return http.get("validateToken")
+    },
+
+    updateUserById: (dataUpdateUser) => {
+        return http.put("users", dataUpdateUser)
+    },
+
+    changeStatus: (userStatus) => {
+      return http.patch("users", userStatus)
+    },
+
+    deleteUser: async (id) => {
+      return await http.delete(`users/${id}`)
+    }
 
 }

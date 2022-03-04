@@ -34,7 +34,6 @@
   </div>
 </template>
 <script>
-import { useToast } from "vue-toastification";
 import http from "../services/account/Users";
 
 export default {
@@ -51,37 +50,65 @@ export default {
 
   methods: {
     Login: async function () {
-      if (this.dataLogin.register === "" || this.dataLogin.password === "") {
-        const toast = useToast();
-        toast.error("Preencha todos os campos!");
-      } else {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+          popup: 'colored-toast',
+          title: 'title-swal-text'
+        },
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', this.$swal.stopTimer)
+          toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true
+      })
+
         const access = this.dataLogin;
         this.$store.commit("$SETISLOADING");
         await http
           .sessions(access)
-          .then((response) => {
+          .then(async (response) => {
             if (response.status === 200) {
-              const token = response.data.token;
+              const token = await response.data.token;
               sessionStorage.setItem("token", token);
               if (token) {
-                const toast = useToast();
-                toast.success("Usuário logado com sucesso");
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Logado com sucesso',
+                  background: "#A8D4FF",
+                })
               }
-
-              //window.alert("Logado")
-              return this.$router.push({ name: "Startup" });
+              return await this.$router.push({ name: "Startup" });
             }
-            // console.log(response.data);
           })
           .catch((error) => {
-            if (error.response.data.message) {
-              const toast = useToast();
-              toast.error("Matrícula ou Senha incorretos!");
+            const errorMsg = error.response.data.message
+            if(errorMsg === "register or password incorrect") {
+                return Toast.fire({
+                  icon: 'error',
+                  title: 'Matrícula ou senha incorreta!',
+                  background: "#FFA490",
+                })
             }
-            return console.log(error.response.data.message);
+            if(errorMsg === "User is disabled") {
+                return Toast.fire({
+                  icon: 'warning',
+                  title: 'Usuário desabilitado!',
+                  background: "#E8EB7C",
+                  iconColor: "#545454"
+                })
+            }
+            return Toast.fire({
+              icon: 'error',
+              title: 'Erro no servidor!',
+              background: "#FFA490",
+            })
           });
-        this.$store.commit("$SETISLOADING");
-      }
+          this.$store.commit("$SETISLOADING");
     },
   },
 };
@@ -93,6 +120,10 @@ html {
   background-color: #0a7a46;
   padding: 0;
   margin: 0;
+}
+
+.title-swal-text {
+  color: white !important;
 }
 
 .container {

@@ -9,7 +9,7 @@ export default {
       .fire({
         title: "Opss",
         text: "A página que está procurando não existe!",
-        imageUrl: "/img/cao_404.jpg",
+        imageUrl: "/img/404.gif",
         imageWidth: 400,
         imageHeight: 200,
         imageAlt: "Custom image",
@@ -25,10 +25,7 @@ export default {
 .errorBackground {
   background-color: rgb(255, 255, 255);
   width: 100vw;
-  height: 110vh;
-  padding-top: 0px;
-  margin-left: -210px;
-  margin-top: -100px;
+  height: 100vh;
   z-index: 1000;
   position: absolute;
 }
