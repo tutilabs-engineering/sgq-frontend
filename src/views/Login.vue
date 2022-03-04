@@ -58,8 +58,12 @@ export default {
           popup: 'colored-toast',
           title: 'title-swal-text'
         },
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', this.$swal.stopTimer)
+          toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+        },
         showConfirmButton: false,
-        timer: 2000,
+        timer: 2500,
         timerProgressBar: true
       })
 
@@ -75,7 +79,7 @@ export default {
                 Toast.fire({
                   icon: 'success',
                   title: 'Logado com sucesso',
-                  background: "#a5dc86",
+                  background: "#A8D4FF",
                 })
               }
               return await this.$router.push({ name: "Startup" });
@@ -87,21 +91,21 @@ export default {
                 return Toast.fire({
                   icon: 'error',
                   title: 'Matrícula ou senha incorreta!',
-                  background: "#ff5349",
+                  background: "#FFA490",
                 })
             }
             if(errorMsg === "User is disabled") {
                 return Toast.fire({
                   icon: 'warning',
                   title: 'Usuário desabilitado!',
-                  background: "#e3e745",
+                  background: "#E8EB7C",
                   iconColor: "#545454"
                 })
             }
             return Toast.fire({
               icon: 'error',
               title: 'Erro no servidor!',
-              background: "#ff5349",
+              background: "#FFA490",
             })
           });
           this.$store.commit("$SETISLOADING");
@@ -118,8 +122,8 @@ html {
   margin: 0;
 }
 
-.title-swal-text{
-  color: white;
+.title-swal-text {
+  color: white !important;
 }
 
 .container {

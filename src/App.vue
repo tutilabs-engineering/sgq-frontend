@@ -7,6 +7,10 @@
     <ModalErrorPermission />
   </div>
 
+  <div v-if="EmConstrucao">
+    <EmConstrucao />
+  </div>
+
   <div v-if="telaLogin">
     <Login />
   </div>
@@ -35,6 +39,7 @@ import Routes from "./router/index";
 import Header from "./components/Header/Header.vue";
 import ModalNotFound from "./components/ModalError/RouteNotFoundError.vue"
 import ModalErrorPermission from "./components/ModalError/AccessError.vue"
+import EmConstrucao from "./components/ModalError/EmConstrucao.vue"
 import Loading from "./components/Loading/Loading.vue";
 
 //axios
@@ -46,6 +51,7 @@ export default {
     };
   },
   components: {
+    EmConstrucao,
     ModalNotFound,
     ModalErrorPermission,
     SideBar,
@@ -65,6 +71,9 @@ export default {
     },
     ModalErrorPermission() {
       return this.$route.name === "ErrorPermission";
+    },
+    EmConstrucao() {
+      return this.$route.name === "EmConstrucao";
     }
   },
 

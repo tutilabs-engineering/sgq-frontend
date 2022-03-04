@@ -144,7 +144,6 @@
 import jwt from "jsonwebtoken";
 import InputPerfil from "../components/InputsPerfil/InputPerfil.vue";
 import http from "../services/account/Users";
-import { useToast } from "vue-toastification";
 
 export default {
   components: { InputPerfil },
@@ -177,12 +176,25 @@ export default {
   },
 
   methods: {
-    teste() {
-      const toast = useToast();
-      toast.success("Testando");
-    },
-
     UpdateUser: async function () {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+          popup: 'colored-toast',
+          title: 'title-swal-text'
+        },
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', this.$swal.stopTimer)
+          toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true
+      })
+
+
       this.$store.commit("$SETISLOADING");
       const userUpdated = {
         id: this.user.id,
@@ -198,32 +210,35 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             this.$store.commit("$SETISLOADING");
-            const toast = useToast();
-            toast.success("Usuário atualizado com sucesso");
+            Toast.fire({
+              icon: 'success',
+              title: 'Usuário atualizado com sucesso',
+              background: "#A8D4FF",
+            })
             this.editStatus = !this.editStatus;
           }
         })
         .catch((error) => {
           this.$store.commit("$SETISLOADING");
-          const toast = useToast();
-          toast.error(
-            "Verifique se todos os campos estão corretos " +
-              error.response.data.message
-          );
-          return console.log(error.response.data.message);
+          return Toast.fire({
+            icon: 'warning',
+            title: `Verifique se todos os campos estão corretos!, error: ${error.response.data.message}`,
+            background: "#E8EB7C",
+            iconColor: "#545454"
+          })  
         });
     },
   },
 
   created: async function () {
-    const secretQuefunciona =
+    const secret =
       "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
 
     const token = sessionStorage.getItem("token");
 
     if (token) {
       try {
-        const { sub } = await jwt.verify(token, secretQuefunciona);
+        const { sub } = await jwt.verify(token, secret);
         this.$store.commit("$SETISLOADING");
         await http
           .findUserById(sub)
