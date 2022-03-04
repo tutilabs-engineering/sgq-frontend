@@ -41,7 +41,6 @@ async function AuthAdmin(to, from, next) {
       next("/login")
       return false
     })
-    next("/login")
     return false
   }
 
@@ -71,6 +70,39 @@ async function AuthAdmin(to, from, next) {
   }
 }
 
+async function EmManutencao(to, from, next) {
+
+  async function IsAuth() {
+    const token = sessionStorage.getItem("token")
+  
+    if(!token) {
+      next("/login")
+      return false
+    }
+  
+    await http.validate().then((response) => {
+      if(response.status === 200) {
+        return true
+      } 
+      next("/login")
+      return false
+    }).catch(() => {
+      next("/login")
+      return false
+    })
+    return false
+  }
+
+  const auth = IsAuth();
+
+  if(!auth) {
+    return next("/login")
+  }
+
+  next("/emConstrucao")
+}
+
+
 const routes = [
   {
     path: '/startup',
@@ -87,38 +119,38 @@ const routes = [
     path: '/create-startup',
     name: 'Status',
     component: () => import('../views/NovaStartup.vue'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
   {
     path: '/startups-aprovadas',
     name: 'TabelaAprovados',
     component: () => import('../views/TabelaAprovados'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
   {
     path: '/startups-reprovadas',
     name: 'TabelaReprovados',
     component: () => import('../views/TabelaReprovados'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
   {
     path: '/startups-andamentos',
     name: 'TabelaAndamento',
     component: () => import('../views/TabelaAndamento'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
   {
     path: '/attributes',
     name: 'attributes',
     component: () => import('../views/Atributos.vue'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
 
   {
     path: '/metrologia',
     name: 'metrologia',
     component: () => import('../views/Metrologia.vue'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
 
   {
@@ -152,7 +184,7 @@ const routes = [
     path: '/metrologiaDetalhes',
     name: 'MetrologiaDetalhes',
     component: () => import('../views/MetrologiaDetalhes.vue'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
 
   {
@@ -165,6 +197,12 @@ const routes = [
     path: '/editarUsuario',
     name: 'EditarUsuario',
     component: () => import('../views/EditarUsuario.vue'),
+    beforeEnter: AuthAdmin
+  },
+  {
+    path: '/emConstrucao',
+    name: 'EmConstrucao',
+    component: () => import('../components/ModalError/EmConstrucao.vue'),
     beforeEnter: AuthAdmin
   },
 

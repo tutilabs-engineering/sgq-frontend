@@ -116,6 +116,23 @@ export default {
 
   methods: {
     RegisterUser: async function () {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+          popup: 'colored-toast',
+          title: 'title-swal-text'
+        },
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', this.$swal.stopTimer)
+          toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true
+      })
+
       const name = this.userRegister.name;
       const email = this.userRegister.email;
       const cpf = this.userRegister.cpf;
@@ -123,7 +140,11 @@ export default {
       const role = this.userRegister.fk_role;
 
       if (!name || !email || !cpf || !register || !role) {
-        return window.alert("Necessário preencher todos os campos!");
+        return Toast.fire({
+          icon: 'error',
+          title: "Necessário preencher todos os campos!",
+          background: "#FFA490",
+        })
       }
 
       this.$store.commit("$SETISLOADING");
@@ -132,12 +153,21 @@ export default {
         .registerUser(userRegister)
         .then((response) => {
           if (response.status === 201) {
-            window.alert("Usuário cadastrado com sucesso");
+            Toast.fire({
+              icon: 'success',
+              title: 'Usuário cadastrado com sucesso',
+              background: "#A8D4FF",
+            })
             window.location.reload(true);
           }
         })
         .catch((error) => {
-          return console.log(error.response.data.message);
+          return Toast.fire({
+            icon: 'warning',
+            title: `Verifique se todos os campos estão corretos!, error: ${error.response.data.message}`,
+            background: "#E8EB7C",
+            iconColor: "#545454"
+          })  
         });
 
       this.$store.commit("$SETISLOADING");
