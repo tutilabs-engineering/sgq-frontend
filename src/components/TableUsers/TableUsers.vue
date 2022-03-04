@@ -36,6 +36,10 @@
                   <button type="submit" className="btnOpcoes">
                     <i class="fas fa-trash"></i>
                   </button>
+                  <a className="btnOpcoes" @click="RedirectForEditUser">
+                    <input type="hidden" :value="user.id">
+                    <i class="fas fa-edit"></i>
+                  </a>
                 </form>
               </div>
             </div>
@@ -104,6 +108,10 @@ export default {
           document.location.reload(true)
         }).catch((error) => console.log(error))
       }
+    },
+    RedirectForEditUser: function(event) {
+      const userId = event.path[2][0].value
+      this.$router.push({path: "/editarUsuario", query: {id: userId}})
     }
   }
 };
@@ -122,6 +130,10 @@ export default {
 
 .fas.fa-trash {
   color: var(--card_red)
+}
+
+.fas.fa-edit {
+  color: var(--btn_blue)
 }
 
 .btn {

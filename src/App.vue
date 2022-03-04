@@ -1,4 +1,12 @@
 <template>
+  <div v-if="ModalNotFound">
+    <ModalNotFound />
+  </div>
+  
+  <div v-if="ModalErrorPermission">
+    <ModalErrorPermission />
+  </div>
+
   <div v-if="telaLogin">
     <Login />
   </div>
@@ -25,7 +33,8 @@ import { sidebarWidth } from "./components/SideBar/state";
 import Login from "./views/Login.vue";
 import Routes from "./router/index";
 import Header from "./components/Header/Header.vue";
-
+import ModalNotFound from "./components/ModalError/RouteNotFoundError.vue"
+import ModalErrorPermission from "./components/ModalError/AccessError.vue"
 import Loading from "./components/Loading/Loading.vue";
 
 //axios
@@ -37,6 +46,8 @@ export default {
     };
   },
   components: {
+    ModalNotFound,
+    ModalErrorPermission,
     SideBar,
     Loading,
     Login,
@@ -49,6 +60,12 @@ export default {
     telaLogin() {
       return this.$route.name === "Login";
     },
+    ModalNotFound() {
+      return this.$route.name === "NotFound";
+    },
+    ModalErrorPermission() {
+      return this.$route.name === "ErrorPermission";
+    }
   },
 
   mounted() {
@@ -59,6 +76,7 @@ export default {
 
     if (result == undefined && localStorage.getItem("token") == undefined) {
       this.$router.push({ path: "/notFound" });
+      
     }
 
     var nameURL = window.location.pathname;
@@ -138,8 +156,7 @@ body {
   width: calc(100% - 210px);
   height: 100%;
   margin-left: 210px;
-  padding: 40px;
-  padding-top: 100px;
+  padding: 100px 40px;
   transition: 0.5s;
 }
 
