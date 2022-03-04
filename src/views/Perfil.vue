@@ -11,7 +11,7 @@
       <form class="user-data">
         <div class="inputs">
           <InputPerfil
-            title="Nome Completo"
+            title="Nome"
             :value="user.name"
             :type="text"
             :placeholder="'Maria do Bairro'"
@@ -80,6 +80,15 @@
           </div>
 
           <div class="input">
+            <label for="">Matrícula</label>
+            <input
+              type="text"
+              placeholder="Matrícula do usuário"
+              v-model="user.register"
+            />
+          </div>
+
+          <div class="input">
             <label for="">Email</label>
             <input
               type="text"
@@ -97,14 +106,7 @@
             />
           </div>
 
-          <div class="input">
-            <label for="">Matrícula</label>
-            <input
-              type="text"
-              placeholder="Matrícula do usuário"
-              v-model="user.register"
-            />
-          </div>
+          
         </div>
 
         <div class="footer-user-data">

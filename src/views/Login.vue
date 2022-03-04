@@ -76,7 +76,6 @@ export default {
                   icon: 'success',
                   title: 'Logado com sucesso',
                   background: "#a5dc86",
-                  color: "#fff"
                 })
               }
               return await this.$router.push({ name: "Startup" });
