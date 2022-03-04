@@ -105,6 +105,11 @@ async function EmManutencao(to, from, next) {
 
 const routes = [
   {
+    path: '/',
+    name: 'default',
+    beforeEnter: Auth
+  },
+  {
     path: '/startup',
     name: 'Startup',
     component: () => import('../views/Startup.vue'),
