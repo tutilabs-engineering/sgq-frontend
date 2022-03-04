@@ -41,7 +41,7 @@ async function AuthAdmin(to, from, next) {
       next("/login")
       return false
     })
-    next("/login")
+    //next("/login")
     return false
   }
 
