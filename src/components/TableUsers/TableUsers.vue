@@ -98,16 +98,51 @@ export default {
     },
 
     DeleteUser: async function(event) { 
-      const confirm = window.confirm("Tem certeza de que deseja deletar? Esta ação é irreversível!");
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+          popup: 'colored-toast',
+          title: 'title-swal-text'
+        },
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', this.$swal.stopTimer)
+          toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true
+      })
+
       const userId = event.path[0][0].value;
-      console.log(userId)
-      if(confirm) {
-        this.$store.commit('$SETISLOADING')
-        await http.deleteUser(userId).then(() => {
-          window.alert("Usuário deletado com sucesso!")
-          document.location.reload(true)
+
+      this.$swal.fire({
+        title: 'Você tem certeza?',
+        text: "Esta ação não poderá ser desfeita!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim deletar!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          this.$store.commit('$SETISLOADING')
+          await http.deleteUser(userId).then(() => {
+          Toast.fire({
+              icon: 'success',
+              title: 'Usuário deletado com sucesso!',
+              background: "#A8D4FF",
+          })
         }).catch((error) => console.log(error))
-      }
+          this.$swal.fire(
+            'Deletado!',
+            'Usuário foi deltado com sucesso',
+            'success'
+          ).then(() => document.location.reload(true))
+        }
+      })
+
     },
     RedirectForEditUser: function(event) {
       const userId = event.path[2][0].value
