@@ -19,6 +19,15 @@
         </div>
 
         <div class="input">
+          <label for="">Matrícula</label>
+          <input
+            type="text"
+            placeholder="Matrícula do usuário"
+            v-model="userRegister.register"
+          />
+        </div>
+
+        <div class="input">
           <label for="">Email</label>
           <input
             type="text"
@@ -36,14 +45,7 @@
           />
         </div>
 
-        <div class="input">
-          <label for="">Matrícula</label>
-          <input
-            type="text"
-            placeholder="Matrícula do usuário"
-            v-model="userRegister.register"
-          />
-        </div>
+        
 
         <div class="input-acessLevel">
           <label for="user-name">Nível de Acesso</label>
@@ -319,7 +321,7 @@ input:-webkit-autofill {
 
 @media (max-width: 765px) {
   .gerenciamento-user {
-    margin-top: 12vh;
+    margin-top: 5vh;
   }
   .cadastro-user-data {
     grid-template-columns: 1fr;
