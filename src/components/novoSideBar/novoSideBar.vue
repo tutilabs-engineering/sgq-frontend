@@ -122,7 +122,7 @@ export default {
     flex-direction: column;
     background-color: var(--green_text);
     width: 100%;
-    height: 100VH;
+    height: 100vh;
 }
 
 .fas {
@@ -133,10 +133,10 @@ export default {
 .header .menu-icon .navicon {
   background: var(--main_primaryWhite);
   display: block;
-  height: 2px;
+  height: 3px;
   position: relative;
   transition: background .2s ease-out;
-  width: 18px;
+  width: 25px;
 }
 .header .menu-icon .navicon:before,
 .header .menu-icon .navicon:after {
@@ -149,10 +149,10 @@ export default {
   width: 100%;
 }
 .header .menu-icon .navicon:before {
-  top: 5px;
+  top: 6px;
 }
 .header .menu-icon .navicon:after {
-  top: -5px;
+  top: -6px;
 }
 /* menu btn */
 .header .menu-btn {
