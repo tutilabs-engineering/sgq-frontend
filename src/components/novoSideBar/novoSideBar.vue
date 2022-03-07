@@ -74,9 +74,7 @@ export default {
     height: 100VH;
 }
 
-.logo .menu-btn {
-    padd
-}
+
 .header .menu-icon .navicon {
   background: #333;
   display: block;

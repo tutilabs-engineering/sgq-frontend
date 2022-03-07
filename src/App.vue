@@ -177,4 +177,11 @@ body {
   margin-left: 60px;
   transition: 0.5s;
 }
+
+@media (max-width: 48em){
+  .content {
+    width: 100vw;
+    margin-left: 0;
+  }
+}
 </style>
