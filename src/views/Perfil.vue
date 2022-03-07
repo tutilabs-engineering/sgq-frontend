@@ -105,8 +105,6 @@
               v-model="user.cpf"
             />
           </div>
-
-          
         </div>
 
         <div class="footer-user-data">
@@ -181,21 +179,20 @@ export default {
     UpdateUser: async function () {
       const Toast = this.$swal.mixin({
         toast: true,
-        position: 'top-right',
-        iconColor: 'white',
+        position: "top-right",
+        iconColor: "white",
         customClass: {
-          popup: 'colored-toast',
-          title: 'title-swal-text'
+          popup: "colored-toast",
+          title: "title-swal-text",
         },
         didOpen: (toast) => {
-          toast.addEventListener('mouseenter', this.$swal.stopTimer)
-          toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
         },
         showConfirmButton: false,
         timer: 2500,
-        timerProgressBar: true
-      })
-
+        timerProgressBar: true,
+      });
 
       this.$store.commit("$SETISLOADING");
       const userUpdated = {
@@ -213,21 +210,21 @@ export default {
           if (response.status === 200) {
             this.$store.commit("$SETISLOADING");
             Toast.fire({
-              icon: 'success',
-              title: 'Usuário atualizado com sucesso',
+              icon: "success",
+              title: "Usuário atualizado com sucesso",
               background: "#A8D4FF",
-            })
+            });
             this.editStatus = !this.editStatus;
           }
         })
         .catch((error) => {
           this.$store.commit("$SETISLOADING");
           return Toast.fire({
-            icon: 'warning',
+            icon: "warning",
             title: `Verifique se todos os campos estão corretos!, error: ${error.response.data.message}`,
             background: "#E8EB7C",
-            iconColor: "#545454"
-          })  
+            iconColor: "#545454",
+          });
         });
     },
   },
@@ -397,13 +394,17 @@ export default {
   color: var(--main_primaryWhite);
 }
 
-@media (max-width: 765px) {
+@media (max-width: 768px) {
+  .content-perfil {
+    display: block;
+  }
+
   .inputs {
     grid-template-columns: 1fr;
   }
 
   .perfil {
-    width: 80%;
+    width: 100%;
   }
 
   .btn {
