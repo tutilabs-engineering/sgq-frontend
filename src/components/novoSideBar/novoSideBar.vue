@@ -4,11 +4,11 @@
         <input class="menu-btn" type="checkbox" id="menu-btn" />
         <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
         <ul class="menu">
-            <li><a href="#work">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#about">Skills</a></li>
-            <li><a href="#careers">Portfolio</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#work">OPTION</a></li>
+            <li><a href="#about">OPTION</a></li>
+            <li><a href="#about">SOPTION</a></li>
+            <li><a href="#careers">OPTION</a></li>
+            <li><a href="#contact">OPTION</a></li>
         </ul>
     </header>
 </template>
@@ -21,10 +21,12 @@ export default {
 <style scoped>
 /* header */
 .header {
-  width: 100vw;
+  width: 210px;
   height: 10vh;
-  z-index: 3;
+  z-index: 10;
   position: fixed;
+  background-color: var(--bg_green);
+  color: var(--main_primaryWhite);
 }
 .header ul {
   margin: 0;
@@ -62,6 +64,18 @@ export default {
   padding: 28px 20px;
   position: relative;
   user-select: none;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--green_text);
+    width: 100%;
+    height: 100VH;
+}
+
+.logo .menu-btn {
+    padd
 }
 .header .menu-icon .navicon {
   background: #333;
@@ -108,8 +122,14 @@ export default {
   top: 0;
 }
 /* 48em = 768px */
+
+@media (max-width: 48em) {
+    .header {
+        width: 100vw;
+    }
+}
 @media (min-width: 48em) {
-  
+
   .header li {
     float: left;
   }
@@ -124,5 +144,6 @@ export default {
   .header .menu-icon {
     display: none;
   }
+
 }
 </style>
