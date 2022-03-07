@@ -43,31 +43,35 @@
                 <h3>VARIÁVEL</h3>
               </div>
 
-              <div class="inputsHeader" v-for="index in count" :key="index">
-                <h4>{{ index }}</h4>
-                <div class="inputIdentificacao">
-                  <p>IDENTIFICAÇÃO:</p>
-                  <input type="text" />
-                </div>
+              <div class="variavel_increment">
+                <div class="inputsHeader" v-for="index in count" :key="index">
+                  <h4>{{ index }}</h4>
+                  <div class="inputIdentificacao">
+                    <p>IDENTIFICAÇÃO:</p>
+                    <input type="text" />
+                  </div>
 
-                <div class="inputCota">
-                  <p>COTA:</p>
-                  <input type="text" />
-                </div>
+                  <div class="inputCota">
+                    <p>COTA:</p>
+                    <input type="text" />
+                  </div>
 
-                <div class="inputCota">
-                  <p>MÁX:</p>
-                  <input type="text" />
-                </div>
+                  <div class="inputCota">
+                    <p>MÁX:</p>
+                    <input type="text" />
+                  </div>
 
-                <div class="inputCota">
-                  <p>MIN:</p>
-                  <input type="text" />
-                </div>
+                  <div class="inputCota">
+                    <p>MIN:</p>
+                    <input type="text" />
+                  </div>
 
-                <div class="inputUpLoad">
-                  <label for="inputImage"><i class="fas fa-upload"></i></label>
-                  <input ref="file" type="file" id="inputImage" />
+                  <div class="inputUpLoad">
+                    <label for="inputImage"
+                      ><i class="fas fa-upload"></i
+                    ></label>
+                    <input ref="file" type="file" id="inputImage" />
+                  </div>
                 </div>
               </div>
 
@@ -160,7 +164,7 @@ export default {
 .modal_mask {
   position: fixed;
   display: table;
-  z-index: 1;
+  z-index: 1000;
   top: 0;
   left: 0;
   width: 100%;
@@ -242,6 +246,7 @@ export default {
 
 ::-webkit-scrollbar-track {
   background: rgb(182, 181, 181);
+  border-radius: 15px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -404,6 +409,14 @@ export default {
 .modal_mask .modal_body .titleBody {
   margin: 1rem 0;
   text-align: start;
+}
+
+.modal_mask .modal_body .variavel_increment {
+  width: 100%;
+  height: 45%;
+  overflow-y: auto;
+  position: relative;
+  padding: 0 0.5rem;
 }
 
 @media (max-width: 770px) {
