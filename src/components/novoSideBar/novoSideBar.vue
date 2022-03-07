@@ -4,17 +4,65 @@
         <input class="menu-btn" type="checkbox" id="menu-btn" />
         <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
         <ul class="menu">
-            <li><a href="#work">OPTION</a></li>
-            <li><a href="#about">OPTION</a></li>
-            <li><a href="#about">SOPTION</a></li>
-            <li><a href="#careers">OPTION</a></li>
-            <li><a href="#contact">OPTION</a></li>
+            <li><a @click="() => this.$router.push({ name: 'Startup' })"><i class="fas fa-check-circle"></i>Startup</a></li>
+            <li><a @click="() => this.$router.push({ name: 'Status' })"><i class="fas fa-clone"></i>Criar Startup</a></li>
+            <li><a @click="() => this.$router.push({ name: 'Dashboard' })"> <i class="fas fa-chart-bar"></i>Dashboard</a></li>
+            <li><a @click="() => this.$router.push({ name: 'attributes' })"><i class="fas fa-desktop"></i>Análise</a></li>
+            <li><a @click="() => this.$router.push({ name: 'metrologia' })"><i class="fas fa-ruler-combined"></i>Metrologia</a></li>
+            <li><a @click="() => this.$router.push({ name: 'Configuracoes' })"><i class="fas fa-tools"></i>Configuracoes</a></li>
+            <li><a @click="Exit"><i class="fas fa-door-open"></i>Sair</a></li>
         </ul>
     </header>
 </template>
 
 <script>
+
+import jwt from "jsonwebtoken";
+import http from "../../services/account/Users"
+
 export default {
+  created: async function() { 
+
+    // const secret = process.env.SECRET
+
+    const secretQuefunciona = "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
+
+    const token = sessionStorage.getItem("token");
+
+    if (token) {
+      try {
+        const {sub} = await jwt.verify(token, secretQuefunciona);
+        await http.findUserById(sub).then((res) => {
+          return this.username = res.data.user.name
+        }).catch((error) => console.log("error", error))
+        
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  },
+
+  methods: {
+    Exit: function () {
+      this.$swal
+        .fire({
+          title: "Até a proxima, " + this.username.split(" ")[0] + "!",
+          imageUrl: "/img/logout_img.gif",
+          imageWidth: 550,
+          imageHeight: 300,
+          imageAlt: "Custom image",
+        })
+        .then(() => {
+          this.$router.push({ name: "Login" });
+          sessionStorage.removeItem("token");
+        });
+    },
+  },
+  data() {
+    return {
+      username: "",
+    };
+  },
 }
 </script>
 
@@ -33,10 +81,12 @@ export default {
   padding: 0;
   list-style: none;
   overflow: hidden;
+  cursor: pointer;
+  
 }
 .header li a {
     font-weight: 400;
-    color: black;
+    color: #fff;
     display: block;
     padding: 20px 20px;
     text-decoration: none;
