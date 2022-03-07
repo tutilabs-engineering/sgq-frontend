@@ -6,11 +6,11 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "vue-cli-service serve"
+    "start": "vue-cli-service serve",
+    "production": "serve -s -p 2500 ./dist"
   },
   "dependencies": {
     "axios": "^0.21.4",
-    "chart.js": "^3.5.1",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "datatables.net": "^1.11.1",
@@ -18,7 +18,9 @@
     "dotenv": "^16.0.0",
     "jsonwebtoken": "^8.5.1",
     "remove": "^0.1.5",
+    "serve": "^13.0.2",
     "vue": "^3.2.22",
+    "vue-chart-3": "^3.1.2",
     "vue-chartkick": "^1.1.0",
     "vue-cli": "^2.9.6",
     "vue-loading-overlay": "^5.0.3",

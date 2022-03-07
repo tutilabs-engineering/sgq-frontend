@@ -137,7 +137,7 @@ export default {
         }).catch((error) => console.log(error))
           this.$swal.fire(
             'Deletado!',
-            'Usuário foi deltado com sucesso',
+            'Usuário foi deletado com sucesso',
             'success'
           ).then(() => document.location.reload(true))
         }
