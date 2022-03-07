@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import http from "../services/account/Users"
 async function Auth(to, from, next) {
-  
+
   const token = sessionStorage.getItem("token")
-  
-  if(!token) {
+
+  if (!token) {
     return next("/login")
   }
 
   await http.validate().then((response) => {
-    if(response.status === 200) {
+    if (response.status === 200) {
       return next()
-    } 
+    }
     return next("/login")
   }).catch(() => {
     return next("/login")
@@ -105,6 +105,12 @@ const routes = [
     name: 'Configuracoes',
     component: () => import('../views/Configuracoes.vue')
   },
+
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('../views/Dashboard.vue')
+  }
 
 ]
 
