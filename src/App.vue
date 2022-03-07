@@ -22,7 +22,7 @@
 
     <NovoSideBar />
     <!-- <SideBar /> -->
-    <!-- <Header titlePage="Sistema de Gerenciamento de Qualidade" /> -->
+    <Header titlePage="Sistema de Gerenciamento de Qualidade" />
 
     <div class="content">
       <router-view />
@@ -37,7 +37,7 @@
 import { sidebarWidth } from "./components/SideBar/state";
 import Login from "./views/Login.vue";
 import Routes from "./router/index";
-//import Header from "./components/Header/Header.vue";
+import Header from "./components/Header/Header.vue";
 import ModalNotFound from "./components/ModalError/RouteNotFoundError.vue"
 import ModalErrorPermission from "./components/ModalError/AccessError.vue"
 import EmConstrucao from "./components/ModalError/EmConstrucao.vue"
@@ -59,7 +59,7 @@ export default {
     // SideBar,
     Loading,
     Login,
-    //Header,
+    Header,
     NovoSideBar,
   },
   setup() {

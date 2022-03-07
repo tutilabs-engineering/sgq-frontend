@@ -1,6 +1,6 @@
 <template>
     <header class="header">
-        <a href="" class="logo">SGQ</a>
+        <a href="" class="logo"><i class="fas fa-vial"></i>SGQ</a>
         <input class="menu-btn" type="checkbox" id="menu-btn" />
         <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
         <ul class="menu">
@@ -95,9 +95,10 @@ export default {
   display: block;
   float: left;
   font-weight: 600;
-  color: black;
-  font-size: 1.5rem;
+  color: #fff;
+  font-size: 1.8rem;
   padding: 10px 20px;
+  margin-left: 10px; 
   text-decoration: none;
 }
 /* menu */
@@ -111,7 +112,7 @@ export default {
   cursor: pointer;
   display: inline-block;
   float: right;
-  padding: 28px 20px;
+  padding: 28px 30px;
   position: relative;
   user-select: none;
 }
@@ -124,9 +125,13 @@ export default {
     height: 100VH;
 }
 
+.fas {
+  margin-right: 10px;
+}
+
 
 .header .menu-icon .navicon {
-  background: #333;
+  background: var(--main_primaryWhite);
   display: block;
   height: 2px;
   position: relative;
@@ -135,7 +140,7 @@ export default {
 }
 .header .menu-icon .navicon:before,
 .header .menu-icon .navicon:after {
-  background: #333;
+  background: var(--main_primaryWhite);
   content: '';
   display: block;
   height: 100%;
@@ -154,7 +159,7 @@ export default {
   display: none;
 }
 .header .menu-btn:checked ~ .menu {
-  max-height: 300px;
+  max-height: 450px;
 }
 .header .menu-btn:checked ~ .menu-icon .navicon {
   background: transparent;
@@ -174,9 +179,12 @@ export default {
 @media (max-width: 48em) {
     .header {
         width: 100vw;
+        height: 65px;
     }
+    
 }
 @media (min-width: 48em) {
+
 
   .header li {
     float: left;
@@ -192,6 +200,11 @@ export default {
   .header .menu-icon {
     display: none;
   }
+
+  .header .menu-btn:checked ~ .menu {
+      max-height: 100vw;
+    } 
+  
 
 }
 </style>
