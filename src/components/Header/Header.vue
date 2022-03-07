@@ -37,9 +37,9 @@ export default {
 
 <style scoped>
 .header {
-  position: relative;
+  position: fixed;
   width: calc(100% - 210px);
-  height: 75px;
+  height: 70px;
   margin-left: 210px;
   transition: 0.5s;
   display: flex;
@@ -47,6 +47,7 @@ export default {
   padding: 0 20px;
   background-color: var(--bg_white);
   box-shadow: 0 0.1rem 0.2rem rgb(156 156 156);
+  z-index: 10;
 }
 
 .header.activeHeader {

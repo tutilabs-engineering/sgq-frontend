@@ -26,7 +26,7 @@ export default {
     cursor: pointer;
     background-color: var(--main_primaryWhite);
     border-radius: 10px;
-    width: 90%;
+    width: 100%;
     height: 300px;
     text-align: center;
     color: var(--bg_green);
@@ -35,6 +35,7 @@ export default {
     justify-content: space-around;
     transition: 0.5s;
     padding: 20px;
+    margin: 100px;
 }
 
 .cardConfiguracao:hover {
@@ -50,6 +51,31 @@ export default {
 
 a {
     text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    
+}
+
+@media (max-width: 1200px){
+
+    a {
+        width: 100%;
+    }
+    .cardConfiguracao {
+        margin: 10px;
+    }
+}
+
+@media (max-width: 765px) {
+    a {
+        padding: 0;
+        margin-bottom: 30px;
+        width: 100%;
+    }
+
+    
 }
 
 </style>

@@ -1,14 +1,14 @@
 <template>
   <div class="input">
     <label for="">{{ title }}</label>
-    <input :type="type" :placeholder="placeholder" :value="value" disabled />
+    <input :type="type" :placeholder="placeholder" :value="value" :disabled="disabled"/>
   </div>
 </template>
 
 <script>
 export default {
   name: "InputPerfil",
-  props: ["title", "value", "type", "placeholder"],
+  props: ["title", "value", "type", "placeholder", "disabled"],
   data() {
     return {};
   },

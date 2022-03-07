@@ -171,7 +171,7 @@ table td {
   align-items: center;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
 
   .opcoes {
     justify-content: end;

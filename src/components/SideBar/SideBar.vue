@@ -91,6 +91,7 @@ export default {
   overflow: hidden;
   transition: 0.5s;
   padding: 0.5em;
+  z-index: 10;
 }
 
 .sidebar.activeSidebar {
