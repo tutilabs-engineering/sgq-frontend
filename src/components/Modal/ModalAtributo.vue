@@ -160,7 +160,7 @@ export default {
 .modal_mask {
   position: fixed;
   display: table;
-  z-index: 1;
+  z-index: 1000;
   top: 0;
   left: 0;
   width: 100%;
@@ -252,6 +252,7 @@ export default {
 
 ::-webkit-scrollbar-track {
   background: rgb(182, 181, 181);
+  border-radius: 15px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -296,8 +297,10 @@ export default {
 
 .perguntas {
   width: 100%;
+  overflow-y: auto;
   position: relative;
   padding: 1rem 0;
+  height: 60%;
 }
 
 .perguntas .headerPerguntas {
@@ -387,5 +390,38 @@ export default {
   border-radius: 0 10px 10px 0;
   border: none;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .modal_mask .modal_body .inputsHeader .input {
+    width: 49%;
+  }
+
+  .title_modal input {
+    width: 4vw;
+    height: 4vw;
+    font-size: 2vw;
+  }
+
+  .incrementAtributo .inputAdd input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 425px) {
+  .title_modal input {
+    width: 7vw;
+    height: 7vw;
+    font-size: 4vw;
+  }
+
+  .modal_mask .modal_body .inputsHeader .input {
+    width: 100%;
+  }
+
+  .perguntas .headerPerguntas .titleHeader {
+    width: 100%;
+    font-weight: bold;
+  }
 }
 </style>
