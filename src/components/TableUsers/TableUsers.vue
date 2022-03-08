@@ -308,7 +308,6 @@ table td {
     content: attr(data-title);
     display: block;
     font-weight: bold;
-    
   }
 
   .lastTd {
@@ -319,5 +318,11 @@ table td {
     font-weight: 600;
     font-size: 20px;
   }
+
+  .tableContent {
+    width: 100%;
+  }
+
+
 }
 </style>

@@ -327,7 +327,7 @@ input:-webkit-autofill {
     grid-template-columns: 1fr;
   }
   .perfil {
-    width: 80%;
+    width: 100%;
   }
 
   .buttons-action {
