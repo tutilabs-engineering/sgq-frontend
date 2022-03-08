@@ -266,7 +266,6 @@ export default {
 <style scoped>
 .content-perfil {
   width: 100%;
-  height: calc(90vh - 90px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -403,7 +402,7 @@ export default {
   }
 
   .perfil {
-    width: 80%;
+    width: 100%;
   }
 
   .btn {
