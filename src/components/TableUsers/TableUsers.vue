@@ -161,6 +161,7 @@ export default {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 15px 5px;
   z-index: 1;
+  position: absolute;
 }
 
 .fas.fa-trash {
