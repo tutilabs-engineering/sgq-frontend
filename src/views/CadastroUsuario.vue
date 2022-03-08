@@ -45,8 +45,7 @@
           />
         </div>
 
-        
-
+      
         <div class="input-acessLevel">
           <label for="user-name">Nível de Acesso</label>
           <select
@@ -203,7 +202,6 @@ input:-webkit-autofill {
 }
 
 .gerenciamento-user {
-  margin-top: 5vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -320,9 +318,7 @@ input:-webkit-autofill {
 }
 
 @media (max-width: 765px) {
-  .gerenciamento-user {
-    margin-top: 5vh;
-  }
+  
   .cadastro-user-data {
     grid-template-columns: 1fr;
   }
@@ -346,7 +342,7 @@ input:-webkit-autofill {
   }
 
   .user h2 {
-    font-size: 1rem;
+    font-size: 1.3rem;
     text-align: center;
   }
 }
