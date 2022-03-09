@@ -5,99 +5,62 @@
         <label>OP</label>
         <input
           type="text"
-          @change="ReturnDataOp"
-          v-model="code_op"
-          name=""
+          v-model.lazy="code_op"
           id=""
         />
 
         <label>Cliente</label>
-        <input type="text" name="" id="" v-model="autoReturn.client" />
+        <input type="text" name="" id="" :value="headerInfo.client"/>
 
         <label>Código Cliente</label>
-        <input type="text" name="" id="" v-model="autoReturn.codeClient" />
+        <input type="text" name="" id="" :value="headerInfo.codeClient"/>
       </div>
 
       <div class="form-col">
         <label>Produto</label>
-        <input type="text" name="" id="" v-model="autoReturn.product" />
+        <input type="text" name="" id="" :value="headerInfo.product"/>
 
         <label>Código Produto</label>
-        <input type="text" name="" id="" v-model="autoReturn.codeProduct" />
+        <input type="text" name="" id="" :value="headerInfo.codeProduct"/>
 
         <label>Quantidade</label>
-        <input type="number" name="" id="" />
+        <input type="number" name="" id="" :value="headerInfo.quantity"/>
       </div>
 
       <div class="form-col">
         <label>Data</label>
-        <input type="date" name="" id="" v-model="autoReturn.date" />
+        <input type="date" name="" id="" :value="headerInfo.date"/>
 
         <label>Hora inicial</label>
-        <input type="time" name="" id="" v-model="autoReturn.startTime" />
+        <input type="time" name="" id="" :value="headerInfo.startTime"/>
 
         <label>Hora Final</label>
-        <input type="time" name="" id="" />
+        <input type="time" name="" id=""/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import http from "../../services/startup";
+// import http from "../../services/startup";
+
 export default {
   data() {
     return {
       code_op: "",
-      autoReturn: {
-        client: "",
-        codeClient: "",
-        product: "",
-        codeProduct: "",
-        date: "",
-        startTime: "",
-      },
     };
   },
-  methods: {
-    ReturnDataOp: async function () {
-      function GetDate() {
-        const date = new Date();
-        let day = date.getDay();
-        let month = date.getMonth() + 1;
-        const year = date.getFullYear();
-
-        if (day !== 1) {
-          day = day - 1;
-        }
-        if (day.toString().length === 1) {
-          day = `0${day}`;
-        }
-        if (month < 10) {
-          month = `0${month}`;
-        }
-
-        return `${year}-${month}-${day}`;
-      }
-      function GetHour() {
-        const date = new Date();
-
-        let hour = date.getHours();
-        let minutes = date.getMinutes();
-
-        return `${hour}:${minutes}`;
-      }
-
-      const opData = await http.listDataByCodeOp(this.code_op);
-      this.autoReturn.client = opData.data.data_op.client;
-      this.autoReturn.codeClient = opData.data.data_op.code_client;
-      this.autoReturn.product = opData.data.data_op.product;
-      this.autoReturn.codeProduct = opData.data.data_op.code_product;
-      this.autoReturn.date = GetDate();
-      this.autoReturn.startTime = GetHour();
-    },
+  props: {
+    headerInfo: Object
   },
+  methods: {},
+  watch: {
+    code_op (newValor) {
+      this.$emit("returnCodeOp", newValor)
+    }
+  }
 };
+
 </script>
 
 <style scoped>
