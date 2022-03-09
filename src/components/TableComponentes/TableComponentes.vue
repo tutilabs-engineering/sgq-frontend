@@ -1,12 +1,8 @@
 <template>
-  <div className="tableContent">
+  <div class="tableContent">
+    <fieldset>
+      <legend>Componentes</legend>
     <table cellpadding="0" cellspacing="0">
-      <thead>
-        <tr>
-          <th colspan="5"><h2>Componentes</h2></th>
-        </tr>
-      </thead>
-
       <thead>
         <th>#</th>
         <th>N° do Item</th>
@@ -25,6 +21,7 @@
         </tr>
       </tbody>
     </table>
+    </fieldset>
   </div>
 </template>
 
@@ -44,29 +41,41 @@ export default {
 </script>
 
 <style scoped>
-.tableContent {
-  padding: 0px 25px 0px 25px;
+
+fieldset {
+  border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
-  overflow-x: auto;
+  background-color: white;
+  border-radius: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
+
+.tableContent {
+  width: 100%;
   padding: 20px;
   display: flex;
   justify-content: center;
 }
 
-.tableContent table {
-  background-color: var(--card-color);
-  width: 85%;
-  border-radius: 10px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
-  overflow-x: scroll;
-  border-right: 7px solid var(--button-color-03);
+table {
+  width: 100%;
+  padding: 20px;
+  background-color: transparent;
 }
 
 table th {
-  height: 50px;
   font-size: 17px;
   color: #292828;
-  padding: 10px 10px 0 10px;
+  padding: 10px 10px 10px 10px;
 }
 
 .tableContent tr {
@@ -74,7 +83,7 @@ table th {
 }
 
 table td {
-  border-top: 0.4px solid rgba(0, 0, 0, 0.199);
+  border-bottom: 0.4px solid rgba(0, 0, 0, 0.199);
 }
 
 .tableContent td {
