@@ -89,7 +89,7 @@ table td {
 
 .tableContent td {
   text-align: center;
-  height: 30px;
+  height: 50px;
   padding: 0 20px 0 20px;
 }
 
@@ -146,6 +146,11 @@ table td {
 
   .tableContent {
     width: 100%;
+    padding: 0;
+  }
+
+  legend {
+    text-align: center;
   }
 }
 </style>
