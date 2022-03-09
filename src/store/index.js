@@ -5,6 +5,7 @@ export default createStore({
     user: {
       name: ""
     },
+    dataOP: {},
     isLoading: false,
   },
   mutations: {
@@ -13,6 +14,9 @@ export default createStore({
     },
     $SETISLOADING (state){
       state.isLoading = !state.isLoading;
+    },
+    $SETDATAOP(state, data){
+      state.dataOP = data
     }
   },
   actions: {
@@ -20,6 +24,9 @@ export default createStore({
   getters: {
     $GETISLOADING (state) {
       return state.isLoading
+    },
+    $GETDATAOP (state) {
+      return state.dataOP
     }
   }
 })

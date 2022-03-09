@@ -1,17 +1,12 @@
 import axios from "axios"
 
 const http = axios.create({
-    baseURL: "http://localhost:8000/",
+    baseURL: "http://185.209.179.253:7600",
     headers: {
         "Accept": "application/json",
         "Content": "application/json"
     }
 })
-
-// const httpLogin = axios.create({
-//     baseURL: "http://localhost:8000/"
-// })
-
 
 http.interceptors.request.use(function (config) {
     let token = sessionStorage.getItem("token");
