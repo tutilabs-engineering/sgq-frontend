@@ -107,8 +107,4 @@ export default {
   width: 100%;
 }
 
-.subtitle {
-  margin-top: 3vh;
-  text-align: center;
-}
 </style>
