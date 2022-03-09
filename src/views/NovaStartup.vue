@@ -1,7 +1,5 @@
 <template>
   <div class="content-novaStartup">
-    <!-- <Header titlePage="Nova Startup"/> -->
-    <h2 class="title">Start-Injeção</h2>
     <StartupCadastro @returnCodeOp="ReturnCodeOp" :headerInfo="headerInfo" />
     <TableCavidade :techniqueInfo="techniqueInfo"/>
     <TableComponentes :componentsInfo="componentsInfo"/>
@@ -107,10 +105,6 @@ export default {
 <style scoped>
 .content-novaStartup {
   width: 100%;
-}
-
-.title {
-  text-align: center;
 }
 
 .subtitle {

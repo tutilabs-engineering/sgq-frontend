@@ -1,51 +1,54 @@
 <template>
   <div class="content-startupCadastro">
-    <div class="input">
-        <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa">
-      </div>
-    <div class="form">
+    
+    <fieldset class="form">
 
       
+      <legend>Start-Injeção</legend>
 
+      <div class="input">
+        <label for="op">Ordem de Produção</label>
+        <input type="text" name="client" id="op" placeholder="type qualquer coisa" v-model.lazy="code_op">
+      </div>
+      
+      
 
-      <div class="form-col">
-        <label>OP</label>
-        <input
-          type="text"
-          v-model.lazy="code_op"
-          id=""
-        />
-
-        <label>Cliente</label>
-        <input type="text" name="" id="" :value="headerInfo.client"/>
-
-        <label>Código Cliente</label>
-        <input type="text" name="" id="" :value="headerInfo.codeClient"/>
+      <div class="input">
+        <label for="client">Cliente</label>
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.client">
       </div>
 
-      <div class="form-col">
-        <label>Produto</label>
-        <input type="text" name="" id="" :value="headerInfo.product"/>
-
-        <label>Código Produto</label>
-        <input type="text" name="" id="" :value="headerInfo.codeProduct"/>
-
-        <label>Quantidade</label>
-        <input type="number" name="" id="" :value="headerInfo.quantity"/>
+      <div class="input">
+        <label for="client">Código cliente</label>
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.codeClient">
       </div>
 
-      <div class="form-col">
-        <label>Data</label>
-        <input type="date" name="" id="" :value="headerInfo.date"/>
-
-        <label>Hora inicial</label>
-        <input type="time" name="" id="" :value="headerInfo.startTime"/>
-
-        <label>Hora Final</label>
-        <input type="time" name="" id=""/>
+      <div class="input">
+        <label for="client">Produto</label>
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.product">
       </div>
-    </div>
+
+      <div class="input">
+        <label for="client">Quantidade</label>
+        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.quantity">
+      </div>
+
+      <div class="input">
+        <label for="client">Data</label>
+        <input type="date" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.date">
+      </div>
+
+      <div class="input">
+        <label for="client">Hora inicial</label>
+        <input type="time" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.startTime">
+      </div>
+
+      <div class="input">
+        <label for="client">Hora final</label>
+        <input type="time" name="client" id="client" placeholder="type qualquer coisa">
+      </div>
+
+    </fieldset>
   </div>
 </template>
 
@@ -81,62 +84,53 @@ export default {
 }
 
 .form {
-  background-color: var(--card-color);
-  padding: 20px 0 20px 0;
-  width: 85%;
+  padding: 20px;
+  width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
+  background-color: white;
   border-radius: 10px 10px 10px 10px;
-  border-right: 7px solid var(--button-color-01);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
 }
-
-.form-col {
-  margin: 0px 30px 0 30px;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-col label {
-  font-weight: 600;
-  font-size: 17px;
-  margin-bottom: 5px;
-}
-
-.form-col input {
-  padding: 0 5px 0 5px;
-  width: auto;
-  border: 1px solid rgba(0, 0, 0, 0.514);
-  border-radius: 5px;
-  height: 30px;
-  outline: none;
-  margin-bottom: 10px;
-}
-
 
 .input {
-  background-color: var(--bg_gray);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 55px;
+  height: 60px;
   padding: 5px;
   border-radius: 5px 5px 0 0;
+}
+
+.input label {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--black_text);
 }
 
 .input input {
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid var(--black_text);
+  transition: 1s;
   outline: none;
+}
+
+.input input:focus {
+  border-bottom: 1px solid var(--black_text);
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
 }
 
 @media (max-width: 1017px) {
   .form {
     padding: 12px;
     max-width: 80%;
-    flex-direction: column;
+    grid-template-columns: auto;
   }
 }
 </style>
