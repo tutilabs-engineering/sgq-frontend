@@ -8,19 +8,19 @@
 
       <div class="input">
         <label for="op">Ordem de Produção</label>
-        <input type="text" name="client" id="op" placeholder="type qualquer coisa" v-model.lazy="code_op">
+        <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
       </div>
       
       
 
       <div class="input">
         <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.client">
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="headerInfo.client">
       </div>
 
       <div class="input">
         <label for="client">Código cliente</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.codeClient">
+        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient">
       </div>
 
       <div class="input">
@@ -98,7 +98,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 60px;
+  height: 70px;
   padding: 5px;
   border-radius: 5px 5px 0 0;
 }
@@ -114,10 +114,13 @@ export default {
   border: none;
   transition: 1s;
   outline: none;
+  font-size: 15px;
+  height: 52px;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.39);
 }
 
-.input input:focus {
-  border-bottom: 1px solid var(--black_text);
+fieldset {
+  border: 1px solid rgba(37, 36, 36, 0.281);
 }
 
 legend {
@@ -126,11 +129,18 @@ legend {
   color: var(--black_text);
 }
 
-@media (max-width: 1017px) {
+@media (max-width: 965px) {
+
+  .content-startupCadastro {
+    padding: 0;
+  }
   .form {
     padding: 12px;
-    max-width: 80%;
     grid-template-columns: auto;
+  }
+
+  legend {
+    text-align: center;
   }
 }
 </style>
