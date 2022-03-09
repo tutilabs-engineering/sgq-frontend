@@ -13,11 +13,11 @@
 
       <tbody>
         <tr v-for="component in componentsInfo" :key="component.DocEntry">
-          <td>{{ component.DocEntry }}</td>
-          <td>{{ component.ItemCode }}</td>
-          <td>{{ component.description }}</td>
-          <td>{{ component.um }}</td>
-          <td>{{ component.PlannedQty }}</td>
+          <td data-title="#">{{ component.DocEntry }}</td>
+          <td data-title="N° item">{{ component.ItemCode }}</td>
+          <td data-title="Descrição">{{ component.description }}</td>
+          <td data-title="UM">{{ component.um }}</td>
+          <td data-title="Planejado">{{ component.PlannedQty }}</td>
         </tr>
       </tbody>
     </table>
@@ -80,6 +80,7 @@ table th {
 
 .tableContent tr {
   height: 60px;
+  word-break:normal;
 }
 
 table td {
@@ -93,8 +94,58 @@ table td {
 }
 
 @media (max-width: 765px) {
+  
+  .tableContent thead {
+    display: none;
+  }
+
+  .tableButton {
+    display: block;
+  }
+
+  .tableContent table {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .tableContent td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  [data-title]{
+    color: var(--black_text);
+  }
+
+
+  .tableContent td:first-of-type {
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+
+
+  .tableContent td:not(:first-of-type):before {
+    content: attr(data-title);
+    display: block;
+    font-weight: bold;
+
+  }
+
+  .lastTd {
+    border-bottom: 1px solid var(--green_text);
+  }
+
+  .codeStartup {
+    font-weight: 600;
+    font-size: 20px;
+  }
+
   .tableContent {
-    padding-left: 30vh;
+    width: 100%;
   }
 }
 </style>
