@@ -110,7 +110,6 @@ export default {
 }
 
 .title {
-  margin-top: 12vh;
   text-align: center;
 }
 

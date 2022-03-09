@@ -1,6 +1,14 @@
 <template>
   <div class="content-startupCadastro">
+    <div class="input">
+        <label for="client">Cliente</label>
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa">
+      </div>
     <div class="form">
+
+      
+
+
       <div class="form-col">
         <label>OP</label>
         <input
@@ -66,7 +74,6 @@ export default {
 <style scoped>
 .content-startupCadastro {
   padding: 20px;
-  margin-top: 1vh;
   width: 100%;
   height: auto;
   display: flex;
@@ -105,6 +112,24 @@ export default {
   height: 30px;
   outline: none;
   margin-bottom: 10px;
+}
+
+
+.input {
+  background-color: var(--bg_gray);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 55px;
+  padding: 5px;
+  border-radius: 5px 5px 0 0;
+}
+
+.input input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid var(--black_text);
+  outline: none;
 }
 
 @media (max-width: 1017px) {
