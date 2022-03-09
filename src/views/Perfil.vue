@@ -49,11 +49,13 @@
             </select>
           </div>
 
-          <div class="btns btn-edit-false">
+          <div class="btns btn-edit-false" v-if="btnEdit">
             <button class="btn btn-edit" @click="editStatus = false">
               Editar
             </button>
           </div>
+
+          
         </div>
       </form>
     </div>
@@ -163,6 +165,7 @@ export default {
 
       isDisable: true,
       editStatus: true,
+      btnEdit: false,
 
       options: [
         { text: "Escolha", value: "" },
@@ -249,6 +252,11 @@ export default {
             this.user.cpf = res.data.user.cpf;
             this.user.cargo = res.data.user.role.description;
             this.user.lvAccess = res.data.user.role.id;
+
+            const role = res.data.user.role.id
+                    if(role === 1 || role === 2) {
+                        this.btnEdit = true
+                    }
           })
           .catch((error) => console.log("error", error));
         this.$store.commit("$SETISLOADING");
@@ -256,14 +264,16 @@ export default {
         console.log(error);
       }
     }
+
   },
+
+  
 };
 </script>
 
 <style scoped>
 .content-perfil {
   width: 100%;
-  height: calc(90vh - 90px);
   display: flex;
   justify-content: center;
   align-items: center;

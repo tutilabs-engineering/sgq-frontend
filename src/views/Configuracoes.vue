@@ -54,7 +54,7 @@ export default {
 
                 await http.findUserById(sub).then( (response ) => {
                     const role = response.data.user.role.id
-                    if(role === 1) {
+                    if(role === 1 || role === 2) {
                         this.showManager = true
                     }
                 }).catch( (error) => {

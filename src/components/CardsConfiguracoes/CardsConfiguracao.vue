@@ -41,7 +41,7 @@ export default {
 .cardConfiguracao:hover {
     background-color: var(--card_green);
     color: var(--main_primaryWhite);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 

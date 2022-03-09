@@ -20,7 +20,8 @@
       <Loading />
     </div>
 
-    <SideBar />
+    <NovoSideBar />
+    <!-- <SideBar /> -->
     <Header titlePage="Sistema de Gerenciamento de Qualidade" />
 
     <div class="content">
@@ -32,7 +33,7 @@
 <script>
 //import NavBar from "./components/NavBar";
 
-import SideBar from "./components/SideBar/SideBar.vue";
+// import SideBar from "./components/SideBar/SideBar.vue";
 import { sidebarWidth } from "./components/SideBar/state";
 import Login from "./views/Login.vue";
 import Routes from "./router/index";
@@ -41,6 +42,7 @@ import ModalNotFound from "./components/ModalError/RouteNotFoundError.vue"
 import ModalErrorPermission from "./components/ModalError/AccessError.vue"
 import EmConstrucao from "./components/ModalError/EmConstrucao.vue"
 import Loading from "./components/Loading/Loading.vue";
+import NovoSideBar from "./components/novoSideBar/novoSideBar.vue"
 
 //axios
 
@@ -54,10 +56,11 @@ export default {
     EmConstrucao,
     ModalNotFound,
     ModalErrorPermission,
-    SideBar,
+    // SideBar,
     Loading,
     Login,
     Header,
+    NovoSideBar,
   },
   setup() {
     return { sidebarWidth };
@@ -173,5 +176,12 @@ body {
   width: calc(100% - 60px);
   margin-left: 60px;
   transition: 0.5s;
+}
+
+@media (max-width: 48em){
+  .content {
+    width: 100vw;
+    margin-left: 0;
+  }
 }
 </style>

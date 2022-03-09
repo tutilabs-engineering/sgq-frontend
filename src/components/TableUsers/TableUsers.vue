@@ -161,6 +161,7 @@ export default {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 15px 5px;
   z-index: 1;
+  position: absolute;
 }
 
 .fas.fa-trash {
@@ -308,7 +309,6 @@ table td {
     content: attr(data-title);
     display: block;
     font-weight: bold;
-    
   }
 
   .lastTd {
@@ -319,5 +319,11 @@ table td {
     font-weight: 600;
     font-size: 20px;
   }
+
+  .tableContent {
+    width: 100%;
+  }
+
+
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div class="header">
-    <span
+    <!-- <span
       class="collapse-icon"
       @click="toggleSidebar"
       :class="{ 'rotate-180': collapsed }"
       ><i class="fas fa-bars"></i
-    ></span>
+    ></span> -->
     <h2 class="title">{{ titlePage }}</h2>
   </div>
 </template>
@@ -74,6 +74,12 @@ export default {
   color: var(--black_text);
   margin-left: 5px;
   line-height: 25px;
+}
+
+@media (max-width: 768px){
+  .header {
+    display: none;
+  }
 }
 </style>
 
