@@ -183,7 +183,7 @@ export default {
     }
     
 }
-@media (min-width: 48em) {
+@media (min-width: 47em) {
 
 
   .header li {

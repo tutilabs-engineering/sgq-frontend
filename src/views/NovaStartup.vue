@@ -1,20 +1,27 @@
 <template>
   <div class="content-novaStartup">
-    <!-- <Header titlePage="Nova Startup"/> -->
-    <h2 class="title">Start-Injeção</h2>
     <StartupCadastro @returnCodeOp="ReturnCodeOp" :headerInfo="headerInfo" />
     <TableCavidade :techniqueInfo="techniqueInfo"/>
     <TableComponentes :componentsInfo="componentsInfo"/>
-    <ListaPerguntas />
+
+    <div v-if="showQuestions">
+      <ListaPerguntas />
+    </div>
+
+    
+    <BtnStartupCreate @returnFillStatus="changedShowQuestions"/>
+
+    
+    
   </div>
 </template>
 
 <script>
-// import Header from "../components/Header/Header.vue";
 import TableCavidade from "../components/TableCavidade/TableCavidade.vue";
 import TableComponentes from "../components/TableComponentes/TableComponentes.vue";
 import StartupCadastro from "../components/StartupCadastro/StartupCadastro.vue";
 import ListaPerguntas from "../components/ListaPerguntas/ListaPerguntas.vue";
+import BtnStartupCreate from "../components/BtnStartupCreate/BtnStartupCreate.vue";
 
 import http from "../services/startup"
 
@@ -35,17 +42,22 @@ export default {
         cavity: "",
         cycle: "",
       },
-      componentsInfo: []
+      componentsInfo: [],
+      showQuestions: false,
     }
   },
   components: {
-    // Header,
     StartupCadastro,
     TableCavidade,
     TableComponentes,
     ListaPerguntas,
+    BtnStartupCreate,
   },
   methods: {
+    changedShowQuestions (e){
+       this.showQuestions = e;
+    },
+
     ReturnCodeOp: async function(code_op) {
       //headerInfo
 
@@ -109,13 +121,4 @@ export default {
   width: 100%;
 }
 
-.title {
-  margin-top: 12vh;
-  text-align: center;
-}
-
-.subtitle {
-  margin-top: 3vh;
-  text-align: center;
-}
 </style>
