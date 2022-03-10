@@ -46,7 +46,7 @@ export default {
   align-items: center;
   padding: 0 20px;
   background-color: var(--bg_white);
-  box-shadow: 0 0.1rem 0.2rem rgb(156 156 156);
+  border-bottom: 1px solid rgba(37, 36, 36, 0.281);
   z-index: 10;
 }
 
