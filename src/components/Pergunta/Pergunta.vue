@@ -3,7 +3,7 @@
         <fieldset>
             <div class="first-row">
                 <i class="fa fa-check-circle" aria-hidden="true"></i>
-                <label for="res">Cavidade</label>
+                <label for="res">{{description}}</label>
             </div>
 
             <div class="second-row">
@@ -12,25 +12,24 @@
 
             <div class="third-row">
                 <div class="input">
-                    <input type="radio" name="option" id="AP">
+                    <input type="radio" :name="idQuestion" id="AP">
                     <label for="Ap">C</label>
                 </div>
 
                 <div class="input">
-                    <input type="radio" name="option" id="AP">
+                    <input type="radio" :name="idQuestion" id="AP">
                     <label for="Ap">NC</label>
                 </div>
 
                 <div class="input">
-                    <input type="radio" name="option" id="AP">
+                    <input type="radio" :name="idQuestion" id="AP">
                     <label for="Ap">NA</label>
                 </div>
-                
             </div>
 
             <div class="fourth-row">
                 <div class="input">
-                    <input type="radio" name="option" id="AP">
+                    <input type="radio" :name="idQuestion" id="AP">
                     <label for="Ap">NA</label>
                 </div>
                 <label for="file" class="labelFile">Enviar Arquivo</label>
@@ -43,7 +42,10 @@
 
 <script>
 export default {
-
+  props: {
+    description: String,
+    idQuestion: String
+  }
 }
 </script>
 

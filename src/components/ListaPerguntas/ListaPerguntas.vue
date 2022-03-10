@@ -1,32 +1,26 @@
 <template>
-
-    <div class="content-tablePerguntas">
-
-            <Pergunta />
-            <Pergunta />
-            <Pergunta />
-            <Pergunta />
-            <Pergunta />
-            <Pergunta />
-            <Pergunta />
-            <Pergunta />
-            <Pergunta />
-     
-        
- 
-        
+  <div class="content-tablePerguntas">
+    <div v-for="defaultQuestion in defaultQuestions" :key="defaultQuestion.id">
+    <Pergunta :description="defaultQuestion.description" :idQuestion="defaultQuestion.id"/>
     </div>
+  </div>
 </template>
 
 <script>
 import Pergunta from '../Pergunta/Pergunta.vue'
-
+import http from '../../services/startup/index'
 
 export default {
+  data() {
+    return {
+      defaultQuestions: []
+    }
+  },
   components: { Pergunta },
-
-
-
+  created: async function () {
+    const response = await http.listAllDefaultQuestions()
+    this.defaultQuestions = response.data.defaultQuestions
+  }
 }
 </script>
 
