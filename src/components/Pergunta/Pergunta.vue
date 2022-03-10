@@ -13,52 +13,29 @@
             <div class="third-row">
                 <div class="input">
                     <input type="radio" name="option" id="AP">
-                    <label for="Ap">Contempla</label>
+                    <label for="Ap">C</label>
                 </div>
 
                 <div class="input">
                     <input type="radio" name="option" id="AP">
-                    <label for="Ap">Não Contempla</label>
+                    <label for="Ap">NC</label>
                 </div>
 
                 <div class="input">
                     <input type="radio" name="option" id="AP">
                     <label for="Ap">NA</label>
-                    
                 </div>
                 
             </div>
 
             <div class="fourth-row">
-                <input type="radio" name="option" id="AP">
-                    <label for="Ap">GM</label>
-                <input type="file" name="" id="file">
-            </div>
-                <!-- <div class="statusColor"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
-
-                <div class="aboutQuestion">
-                    <label for="res">Cavidade</label>
-                    <input type="text" placeholder="Aguardando Resposta">
+                <div class="input">
+                    <input type="radio" name="option" id="AP">
+                    <label for="Ap">NA</label>
                 </div>
-
-                <div class="checkboxQuestion">
-                    <input type="radio" name="option" id="AP">
-                    <label for="Ap">AP</label>
-
-                    <input type="radio" name="option" id="RP">
-                    <label for="Ap">RP</label>
-
-                    <select name="radio">
-                        <option value="valor1">Valor 1</option>
-                        <option value="valor2">Valor 2</option>
-                        <option value="valor3">Valor 3</option>
-                    </select>
-
-                    <input type="radio" name="option" id="AP">
-                    <label for="Ap">GM</label>
-
-                    <input type="file" name="" id="file">
-                </div> -->
+                <label for="file" class="labelFile">Enviar Arquivo</label>
+                <input type="file" name="file" id="file" class="input_file">
+            </div>
         </fieldset>
     </div>
 
@@ -121,16 +98,44 @@ fieldset {
 .second-row input {
     width: 100%;
     border: none;
-    height: 30px;
+    height: 35px;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.226);
+    padding: 0 10px 0 10px;
+    outline: none;
 }
+
 
 .third-row {
     display: flex;
     justify-content: space-between;
 }
 
+input[type="file"] {
+    display: none;
+}
+
+input[type="radio"]{
+    margin-right: 10px;
+}
+
+.fourth-row {
+    margin: 10px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.labelFile {
+    font-size: 13px;
+    width: 40%;
+    background-color: var(--card_green);
+    color: #FFF;
+    text-transform: uppercase;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+}
 
 
 
