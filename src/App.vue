@@ -182,6 +182,7 @@ body {
   .content {
     width: 100vw;
     margin-left: 0;
+    padding: 25% 4%;
   }
 }
 </style>
