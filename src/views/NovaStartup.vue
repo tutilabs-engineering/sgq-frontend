@@ -3,7 +3,8 @@
     <StartupCadastro @returnCodeOp="ReturnCodeOp" :headerInfo="headerInfo" />
     <TableCavidade :techniqueInfo="techniqueInfo"/>
     <TableComponentes :componentsInfo="componentsInfo"/>
-    <ListaPerguntas />
+    <BtnStartupCreate />
+    <!-- <ListaPerguntas /> -->
   </div>
 </template>
 
@@ -12,7 +13,8 @@
 import TableCavidade from "../components/TableCavidade/TableCavidade.vue";
 import TableComponentes from "../components/TableComponentes/TableComponentes.vue";
 import StartupCadastro from "../components/StartupCadastro/StartupCadastro.vue";
-import ListaPerguntas from "../components/ListaPerguntas/ListaPerguntas.vue";
+// import ListaPerguntas from "../components/ListaPerguntas/ListaPerguntas.vue";
+import BtnStartupCreate from "../components/BtnStartupCreate/BtnStartupCreate.vue";
 
 import http from "../services/startup"
 
@@ -41,7 +43,8 @@ export default {
     StartupCadastro,
     TableCavidade,
     TableComponentes,
-    ListaPerguntas,
+    // ListaPerguntas,
+    BtnStartupCreate,
   },
   methods: {
     ReturnCodeOp: async function(code_op) {
