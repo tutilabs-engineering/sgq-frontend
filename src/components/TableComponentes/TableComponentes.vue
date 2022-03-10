@@ -74,7 +74,7 @@ table {
 
 table th {
   font-size: 17px;
-  color: #292828;
+  color: var(--black_text);
   padding: 10px 10px 10px 10px;
 }
 
@@ -93,7 +93,7 @@ table td {
   padding: 0 20px 0 20px;
 }
 
-@media (max-width: 765px) {
+@media (max-width: 965px) {
   
   .tableContent thead {
     display: none;
