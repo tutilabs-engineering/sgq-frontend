@@ -43,7 +43,6 @@
 import ModalAtributo from "../components/Modal/ModalAtributo.vue";
 import ModalVariavel from "../components/Modal/ModalVariavel.vue";
 
-
 export default {
   components: { ModalAtributo, ModalVariavel },
   setup() {},
@@ -124,12 +123,10 @@ export default {
 
 .opcoes {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   width: 100%;
   gap: 0.5rem;
 }
-
-
 
 .tableContent table {
   background-color: var(--bg_white);
@@ -172,11 +169,10 @@ table td {
 }
 
 @media (max-width: 1000px) {
-
   .opcoes {
     justify-content: end;
   }
-  
+
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
@@ -189,7 +185,7 @@ table td {
     display: block;
   }
 
-  [data-title]{
+  [data-title] {
     color: var(--black_text);
   }
 
