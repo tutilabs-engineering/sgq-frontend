@@ -1,37 +1,43 @@
 <template>
     <div class="question">
-
-                <div class="statusColor"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
-
-                <div class="aboutQuestion">
-                    <label for="res">Cavidade</label>
-                    <input type="text" placeholder="Aguardando Resposta">
-                </div>
-
-                <div class="checkboxQuestion">
-                    <input type="radio" name="option" id="AP">
-                    <label for="Ap">AP</label>
-
-                    <input type="radio" name="option" id="RP">
-                    <label for="Ap">RP</label>
-
-                    <select name="radio">
-                        <option value="valor1">Valor 1</option>
-                        <option value="valor2">Valor 2</option>
-                        <option value="valor3">Valor 3</option>
-                    </select>
-
-                    <input type="radio" name="option" id="AP">
-                    <label for="Ap">GM</label>
-
-                    <input type="file" name="" id="file">
-                </div>
-
-                <div class="status">
-                    <h2>AQ</h2>
-                </div>  
-
+        <fieldset>
+            <div class="first-row">
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+                <label for="res">Cavidade</label>
             </div>
+
+            <div class="second-row">
+                <input type="text" placeholder="Aguardando Resposta">
+            </div>
+
+            <div class="third-row">
+                <div class="input">
+                    <input type="radio" name="option" id="AP">
+                    <label for="Ap">C</label>
+                </div>
+
+                <div class="input">
+                    <input type="radio" name="option" id="AP">
+                    <label for="Ap">NC</label>
+                </div>
+
+                <div class="input">
+                    <input type="radio" name="option" id="AP">
+                    <label for="Ap">NA</label>
+                </div>
+                
+            </div>
+
+            <div class="fourth-row">
+                <div class="input">
+                    <input type="radio" name="option" id="AP">
+                    <label for="Ap">NA</label>
+                </div>
+                <label for="file" class="labelFile">Enviar Arquivo</label>
+                <input type="file" name="file" id="file" class="input_file">
+            </div>
+        </fieldset>
+    </div>
 
 </template>
 
@@ -46,10 +52,9 @@ export default {
 
 .question {
     background-color: var(--card-color);
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 200px;
     border-right: 7px solid var(--button-color-01);
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -57,47 +62,82 @@ export default {
     margin-bottom: 20px;
 }
 
-.statusColor {
-    width: 5%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+fieldset {
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+
+.fa {
+    margin-right: 10px;
     font-size: 30px;
-    color: var(--main-color);
+    color: var(--card_green);
 }
 
-.statusColor i {
-    margin-left: 20px;
-}
-
-.checkboxQuestion {
-    width: 50%;
-    height: 100%;
+.first-row {
+    width: 100%;
     display: flex;
     align-items: center;
 }
 
-.checkboxQuestion input, .checkboxQuestion label, .checkboxQuestion select {
-    margin: 0 10px 0 0;
+.first-row label {
+    font-size: 20px;
 }
 
-.status{
-    width: 10%;
-    height: 100%;
+.second-row {
+    width: 100%;
+    margin:10px 0px;
 }
 
-.aboutQuestion {
-    padding-top: 10px;
-    width: 20%;
-    height: 100%;
+.second-row input {
+    width: 100%;
+    border: none;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.226);
+    padding: 0 10px 0 10px;
+    outline: none;
+}
+
+
+.third-row {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
 }
 
-.status {
-    border-left: 1px solid #11101d54;
-    padding: 20px;
+input[type="file"] {
+    display: none;
 }
+
+input[type="radio"]{
+    margin-right: 10px;
+}
+
+.fourth-row {
+    margin: 10px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.labelFile {
+    font-size: 13px;
+    width: 40%;
+    background-color: var(--card_green);
+    color: #FFF;
+    text-transform: uppercase;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+}
+
+
+
 
 </style>

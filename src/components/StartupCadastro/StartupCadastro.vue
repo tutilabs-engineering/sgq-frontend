@@ -1,43 +1,54 @@
 <template>
   <div class="content-startupCadastro">
-    <div class="form">
-      <div class="form-col">
-        <label>OP</label>
-        <input
-          type="text"
-          v-model.lazy="code_op"
-          id=""
-        />
+    
+    <fieldset class="form">
 
-        <label>Cliente</label>
-        <input type="text" name="" id="" :value="headerInfo.client"/>
+      
+      <legend>Start-Injeção</legend>
 
-        <label>Código Cliente</label>
-        <input type="text" name="" id="" :value="headerInfo.codeClient"/>
+      <div class="input">
+        <label for="op">Ordem de Produção</label>
+        <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+      </div>
+      
+      
+
+      <div class="input">
+        <label for="client">Cliente</label>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="headerInfo.client">
       </div>
 
-      <div class="form-col">
-        <label>Produto</label>
-        <input type="text" name="" id="" :value="headerInfo.product"/>
-
-        <label>Código Produto</label>
-        <input type="text" name="" id="" :value="headerInfo.codeProduct"/>
-
-        <label>Quantidade</label>
-        <input type="number" name="" id="" :value="headerInfo.quantity"/>
+      <div class="input">
+        <label for="client">Código cliente</label>
+        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient">
       </div>
 
-      <div class="form-col">
-        <label>Data</label>
-        <input type="date" name="" id="" :value="headerInfo.date"/>
-
-        <label>Hora inicial</label>
-        <input type="time" name="" id="" :value="headerInfo.startTime"/>
-
-        <label>Hora Final</label>
-        <input type="time" name="" id=""/>
+      <div class="input">
+        <label for="client">Produto</label>
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.product">
       </div>
-    </div>
+
+      <div class="input">
+        <label for="client">Quantidade</label>
+        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.quantity">
+      </div>
+
+      <div class="input">
+        <label for="client">Data</label>
+        <input type="date" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.date">
+      </div>
+
+      <div class="input">
+        <label for="client">Hora inicial</label>
+        <input type="time" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.startTime">
+      </div>
+
+      <div class="input">
+        <label for="client">Hora final</label>
+        <input type="time" name="client" id="client" placeholder="type qualquer coisa">
+      </div>
+
+    </fieldset>
   </div>
 </template>
 
@@ -66,7 +77,6 @@ export default {
 <style scoped>
 .content-startupCadastro {
   padding: 20px;
-  margin-top: 1vh;
   width: 100%;
   height: auto;
   display: flex;
@@ -74,44 +84,63 @@ export default {
 }
 
 .form {
-  background-color: var(--card-color);
-  padding: 20px 0 20px 0;
-  width: 85%;
+  padding: 20px;
+  width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
+  background-color: white;
   border-radius: 10px 10px 10px 10px;
-  border-right: 7px solid var(--button-color-01);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
 }
 
-.form-col {
-  margin: 0px 30px 0 30px;
+.input {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  height: 70px;
+  padding: 5px;
+  border-radius: 5px 5px 0 0;
 }
 
-.form-col label {
+.input label {
   font-weight: 600;
-  font-size: 17px;
-  margin-bottom: 5px;
+  font-size: 18px;
+  color: var(--black_text);
 }
 
-.form-col input {
-  padding: 0 5px 0 5px;
-  width: auto;
-  border: 1px solid rgba(0, 0, 0, 0.514);
-  border-radius: 5px;
-  height: 30px;
+.input input {
+  background-color: transparent;
+  border: none;
+  transition: 1s;
   outline: none;
-  margin-bottom: 10px;
+  font-size: 15px;
+  height: 52px;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.39);
 }
 
-@media (max-width: 1017px) {
+fieldset {
+  border: 1px solid rgba(37, 36, 36, 0.281);
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
+@media (max-width: 965px) {
+
+  .content-startupCadastro {
+    padding: 0;
+  }
   .form {
     padding: 12px;
-    max-width: 80%;
-    flex-direction: column;
+    grid-template-columns: auto;
+  }
+
+  legend {
+    text-align: center;
   }
 }
 </style>
