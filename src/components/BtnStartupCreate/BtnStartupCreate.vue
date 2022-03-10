@@ -1,6 +1,8 @@
 <template>
     <div class="btns">
-        <button class="btn-fill-save btn">Preencher + Opções</button>
+
+            <button class="btn-fill-save btn" v-on:click="fillValue">Preencher + Opções</button>
+
         <div class="btns-options">
             <button class="btn-cancel btn">Cancelar</button>
             <button class="btn-save btn">Salvar</button>
@@ -9,9 +11,24 @@
 </template>
 
 <script>
+
 export default {
 
     name: "BtnStartupCreate",
+    data () {
+        return{
+            fillStatus: false,
+        }
+    },
+
+    methods: {
+        fillValue (){
+            this.fillStatus = !this.fillStatus
+            this.$emit("returnFillStatus", this.fillStatus)
+        }
+    },
+
+
 }
 </script>
 
@@ -59,8 +76,6 @@ export default {
     .btn-cancel {
         background-color: var(--card_red);
     }
-
-
 
     @media (max-width: 48em){
         .btns {
