@@ -1,7 +1,7 @@
 <template>
 
     <div class="content-tablePerguntas">
-        <div class="content-perguntas"> 
+
             <Pergunta />
             <Pergunta />
             <Pergunta />
@@ -11,8 +11,7 @@
             <Pergunta />
             <Pergunta />
             <Pergunta />
-            <Pergunta />
-        </div>
+     
         
  
         
@@ -34,17 +33,45 @@ export default {
 <style secoped>
 
 .content-tablePerguntas {
-    padding: 0px 25px 0px 25px;
     width: 100%;
-    overflow-x: auto;
     padding: 20px;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
 }
 
-.content-perguntas {
-    width: 85%;
+@media (min-width: 1600px){
+    .content-tablePerguntas {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-gap: 10px;
+    }
 }
+
+
+@media (max-width: 1200px){
+    .content-tablePerguntas {
+        margin-top: 30px;
+        padding:20;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 965px){
+    .content-tablePerguntas {
+        margin-top: 30px;
+        padding:0;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 56em){
+    .content-tablePerguntas {
+        margin-top: 30px;
+        padding: 0;
+        grid-template-columns: 1fr;
+    }
+}
+
 
 
 </style>
