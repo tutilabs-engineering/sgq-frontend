@@ -3,10 +3,36 @@
         <fieldset>
             <div class="first-row">
                 <i class="fa fa-check-circle" aria-hidden="true"></i>
-                <div class="aboutQuestion">
-                    <label for="res">Cavidade</label>
-                    <input type="text" placeholder="Aguardando Resposta">
+                <label for="res">Cavidade</label>
+            </div>
+
+            <div class="second-row">
+                <input type="text" placeholder="Aguardando Resposta">
+            </div>
+
+            <div class="third-row">
+                <div class="input">
+                    <input type="radio" name="option" id="AP">
+                    <label for="Ap">Contempla</label>
                 </div>
+
+                <div class="input">
+                    <input type="radio" name="option" id="AP">
+                    <label for="Ap">Não Contempla</label>
+                </div>
+
+                <div class="input">
+                    <input type="radio" name="option" id="AP">
+                    <label for="Ap">NA</label>
+                    
+                </div>
+                
+            </div>
+
+            <div class="fourth-row">
+                <input type="radio" name="option" id="AP">
+                    <label for="Ap">GM</label>
+                <input type="file" name="" id="file">
             </div>
                 <!-- <div class="statusColor"><i class="fa fa-check-circle" aria-hidden="true"></i></div>
 
@@ -70,10 +96,41 @@ fieldset {
   padding: 20px;
 }
 
+
+.fa {
+    margin-right: 10px;
+    font-size: 30px;
+    color: var(--card_green);
+}
+
 .first-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.first-row label {
+    font-size: 20px;
+}
+
+.second-row {
+    width: 100%;
+    margin:10px 0px;
+}
+
+.second-row input {
+    width: 100%;
+    border: none;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.226);
+}
+
+.third-row {
     display: flex;
     justify-content: space-between;
 }
+
 
 
 
