@@ -20,7 +20,7 @@
     </fieldset>
 
     <fieldset>
-      <TableQtdeCavidade />
+      <TableQtdeCavidade :numberCavidade="numberCavidade" />
 
     </fieldset>
   </div>
@@ -36,13 +36,18 @@ import http from '../../services/startup/index'
 export default {
   data() {
     return {
-      defaultQuestions: []
+      defaultQuestions: [],
+      numberCavidade: this.qtdeCavidade
     }
+  },
+
+  props: {
+    qtdeCavidade: Number
   },
   components: { 
     PerguntaPadrao, 
     PerguntaAnalise,
-    TableQtdeCavidade 
+    TableQtdeCavidade
     },
   created: async function () {
     const response = await http.listAllDefaultQuestions()

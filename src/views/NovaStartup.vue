@@ -1,11 +1,11 @@
 <template>
   <div class="content-novaStartup">
     <StartupCadastro @returnCodeOp="ReturnCodeOp" :headerInfo="headerInfo" />
-    <TableCavidade :techniqueInfo="techniqueInfo"/>
+    <TableCavidade :techniqueInfo="techniqueInfo" />
     <TableComponentes :componentsInfo="componentsInfo"/>
 
     <div v-if="showQuestions">
-      <ListaPerguntas />
+      <ListaPerguntas :qtdeCavidade="techniqueInfo.cavity"/>
     </div>
 
     <BtnStartupCreate @returnFillStatus="changedShowQuestions"/>
