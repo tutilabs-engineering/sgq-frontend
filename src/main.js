@@ -15,6 +15,8 @@ import VueChartkick from 'vue-chartkick'
 import 'chartkick/chart.js'
 import VueParticles from 'vue-particles';
 
+import VueApexCharts from "vue3-apexcharts"
+
 dotenv.config()
 
 const options = {
@@ -28,6 +30,7 @@ app.use(store);
 app.use(VueParticles);
 app.use(router)
 app.use(VueSweetalert2);
-app.use(VueChartkick)
+app.use(VueChartkick);
+app.use(VueApexCharts)
 app.mount('#app')
 
