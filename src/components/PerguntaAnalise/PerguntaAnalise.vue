@@ -115,7 +115,7 @@ export default {
 
 .card-flag {
   border: 1px solid rgba(37, 36, 36, 0.281);
-  border-right: 10px solid var(--card_orange);
+  border-right: 10px solid var(--flag_yellow);
   width: 100%;
   height: 100%;
   background-color: white;

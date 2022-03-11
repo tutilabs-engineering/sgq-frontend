@@ -15,7 +15,7 @@
         <legend class="legenda">Tabela de Análise</legend>
         <PerguntaAnalise :flag="true"/>
         <PerguntaAnalise :flag="false"/>
-        <PerguntaAnalise :flag="true"/>
+        <PerguntaAnalise :flag="false"/>
    
 
     </fieldset>
