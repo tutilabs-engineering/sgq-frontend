@@ -13,9 +13,9 @@
     <fieldset class="content-tablePerguntas">
 
         <legend class="legenda">Tabela de Análise</legend>
-        <PerguntaAnalise />
-        <PerguntaAnalise />
-        <PerguntaAnalise />
+        <PerguntaAnalise :flag="true"/>
+        <PerguntaAnalise :flag="false"/>
+        <PerguntaAnalise :flag="true"/>
    
 
     </fieldset>
