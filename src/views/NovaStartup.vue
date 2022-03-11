@@ -8,7 +8,6 @@
       <ListaPerguntas />
     </div>
 
-    
     <BtnStartupCreate @returnFillStatus="changedShowQuestions"/>
 
     

@@ -17,6 +17,10 @@
         <PerguntaAnalise :flag="false"/>
         <PerguntaAnalise :flag="false"/>
    
+    </fieldset>
+
+    <fieldset>
+      <TableQtdeCavidade />
 
     </fieldset>
   </div>
@@ -26,6 +30,7 @@
 
 import PerguntaAnalise from '../PerguntaAnalise/PerguntaAnalise.vue'
 import PerguntaPadrao from '../PerguntaPadrao/PerguntaPadrao.vue'
+import TableQtdeCavidade from '../TableQtdeCavidade/TableQtdeCavidade.vue'
 import http from '../../services/startup/index'
 
 export default {
@@ -34,7 +39,11 @@ export default {
       defaultQuestions: []
     }
   },
-  components: { PerguntaPadrao, PerguntaAnalise },
+  components: { 
+    PerguntaPadrao, 
+    PerguntaAnalise,
+    TableQtdeCavidade 
+    },
   created: async function () {
     const response = await http.listAllDefaultQuestions()
     this.defaultQuestions = response.data.defaultQuestions
@@ -66,16 +75,12 @@ export default {
   padding: 20px;
 }
 
-
-
-
 @media (min-width: 1600px){
     .content-tablePerguntas {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-gap: 10px;
     }
 }
-
 
 @media (max-width: 1200px){
     .content-tablePerguntas {
