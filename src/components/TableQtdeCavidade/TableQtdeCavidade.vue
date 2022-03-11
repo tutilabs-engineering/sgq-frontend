@@ -73,9 +73,18 @@ table th {
   height: 60px;
 }
 
-table td {
+.table td {
   text-align: center;
   border-top: 0.4px solid rgba(0, 0, 0, 0.199);
+}
+
+input {
+    border-radius: 10px;
+    border: none;
+    width: 80%;
+    padding: 10px;
+    outline: none;
+    border: var(--black_text);
 }
 
 
