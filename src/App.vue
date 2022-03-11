@@ -30,9 +30,7 @@
 </template>
 
 <script>
-//import NavBar from "./components/NavBar";
 
-// import SideBar from "./components/SideBar/SideBar.vue";
 import Login from "./views/Login.vue";
 import Routes from "./router/index";
 import Header from "./components/Header/Header.vue";
@@ -42,7 +40,6 @@ import EmConstrucao from "./components/ModalError/EmConstrucao.vue"
 import Loading from "./components/Loading/Loading.vue";
 import SideBar from "./components/SideBar/SideBar.vue"
 
-//axios
 
 export default {
   data() {
