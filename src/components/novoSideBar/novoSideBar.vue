@@ -91,6 +91,15 @@ export default {
     padding: 20px 20px;
     text-decoration: none;
 }
+
+.header li {
+  transition: 0.3s;
+}
+
+.header li:hover {
+  margin-left: 5px;
+}
+
 .header .logo {
   display: block;
   float: left;
@@ -128,6 +137,7 @@ export default {
 .fas {
   margin-right: 10px;
 }
+
 
 
 .header .menu-icon .navicon {
