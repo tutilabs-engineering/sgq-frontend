@@ -78,6 +78,7 @@ table td {
   border-top: 0.4px solid rgba(0, 0, 0, 0.199);
 }
 
+
 .tableContent td {
   text-align: center;
   height: 30px;
