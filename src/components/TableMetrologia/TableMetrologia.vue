@@ -1,5 +1,6 @@
 <template>
-  <div className="tableContent">
+  <fieldset className="tableContent">
+    <legend>Metrologia</legend>
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
@@ -100,7 +101,7 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </fieldset>
 </template>
 
 <script>
@@ -186,13 +187,20 @@ export default {
 
 <style scoped>
 .dropdown-content {
+
   display: none;
   background-color: #fff;
   border-radius: 10px;
   min-width: 50px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(37, 36, 36, 0.281);  
   padding: 15px 5px;
   z-index: 1;
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
 }
 
 .opcoes:hover .dropdown-content {
@@ -209,7 +217,7 @@ export default {
   background-color: var(--bg_white);
   width: 100%;
   border-radius: 10px 10px 10px 10px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
+
 }
 
 table th {
@@ -336,6 +344,10 @@ table td {
   .codeStartup {
     font-weight: 600;
     font-size: 20px;
+  }
+
+  legend {
+    text-align: center;
   }
 }
 </style>

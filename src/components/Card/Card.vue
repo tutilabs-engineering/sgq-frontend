@@ -21,16 +21,18 @@ export default {
 </script>
 
 <style scoped>
+
 a {
   text-decoration: none;
 }
+
 
 .cardStatus {
   /* margin: 30px 10px 0px 10px; */
   width: 250px;
   height: 120px;
   background-color: var(--bg_white);
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
+  border: 1px solid rgba(37, 36, 36, 0.281);
   display: flex;
   justify-content: space-between;
   align-items: center;
