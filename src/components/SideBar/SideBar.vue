@@ -1,16 +1,16 @@
 <template>
     <header class="header">
         <a href="" class="logo"><i class="fas fa-vial"></i>SGQ</a>
-        <input class="menu-btn" type="checkbox" id="menu-btn" />
+        <input class="menu-btn" type="checkbox" id="menu-btn" v-model="checkboxValue"/>
         <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
         <ul class="menu">
-            <li><a @click="() => this.$router.push({ name: 'Startup' })"><i class="fas fa-check-circle"></i>Startup</a></li>
-            <li><a @click="() => this.$router.push({ name: 'Status' })"><i class="fas fa-clone"></i>Criar Startup</a></li>
-            <li><a @click="() => this.$router.push({ name: 'Dashboard' })"> <i class="fas fa-chart-bar"></i>Dashboard</a></li>
-            <li><a @click="() => this.$router.push({ name: 'attributes' })"><i class="fas fa-desktop"></i>Análise</a></li>
-            <li><a @click="() => this.$router.push({ name: 'metrologia' })"><i class="fas fa-ruler-combined"></i>Metrologia</a></li>
-            <li><a @click="() => this.$router.push({ name: 'Configuracoes' })"><i class="fas fa-tools"></i>Configuracoes</a></li>
-            <li><a @click="Exit"><i class="fas fa-door-open"></i>Sair</a></li>
+            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Startup' }) "><i class="fas fa-check-circle"></i>Startup</a></li>
+            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Status' })"><i class="fas fa-clone"></i>Criar Startup</a></li>
+            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Dashboard' })"> <i class="fas fa-chart-bar"></i>Dashboard</a></li>
+            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'attributes' })"><i class="fas fa-desktop"></i>Análise</a></li>
+            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'metrologia' })"><i class="fas fa-ruler-combined"></i>Metrologia</a></li>
+            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Configuracoes' })"><i class="fas fa-tools"></i>Configuracoes</a></li>
+            <li @click="changeCheckboxValue"><a @click="Exit"><i class="fas fa-door-open"></i>Sair</a></li>
         </ul>
     </header>
 </template>
@@ -43,6 +43,10 @@ export default {
   },
 
   methods: {
+    changeCheckboxValue (){
+      this.checkboxValue = !this.checkboxValue
+    },
+    
     Exit: function () {
       this.$swal
         .fire({
@@ -61,6 +65,7 @@ export default {
   data() {
     return {
       username: "",
+      checkboxValue: false,
     };
   },
 }
