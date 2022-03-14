@@ -1,6 +1,7 @@
 <template>
   <div class="question">
-    <fieldset>
+    <fieldset v-bind:class="classCard">
+
       <div class="first-row">
 
         <div v-if="valueQuestion == 0">
@@ -27,7 +28,6 @@
         <input type="text" placeholder="Aguardando Resposta" />
       </div>
 
-      <!-- <form @submit.prevent="getResponse"> -->
       <div class="third-row">
         <div class="input">
           <input type="radio" :name="idQuestion" id="AP" @change="changeIcon(1)"/>
@@ -54,7 +54,6 @@
         <input type="file" name="file" id="file" class="input_file" />
       </div>
 
-      <!-- </form> -->
     </fieldset>
   </div>
 </template>
@@ -64,13 +63,28 @@ export default {
   props: {
     description: String,
     idQuestion: String,
+    flag: String,
+  },
+
+  created: async function () {
+    if(this.flag === true){
+        this.classCard = "card-flag"
+        return this.classCard
+    }else {
+        this.classCard = "card"
+        return this.classCard
+    }
+        
   },
 
   methods: {
     changeIcon(e){
       this.valueQuestion = e
       console.log(this.valueQuestion)
+    
     }
+    
+    
   },
 
   data() {
@@ -79,7 +93,8 @@ export default {
       responsee: {
         id: this.idQuestion,
 
-      }
+      },
+      classCard: "",
     };
   },
 };
@@ -98,7 +113,19 @@ export default {
   margin-bottom: 20px;
 }
 
-fieldset {
+.card-flag {
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  border-right: 10px solid var(--flag_yellow);
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.card {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
   height: 100%;
@@ -122,10 +149,11 @@ fieldset {
 }
 
 .first-row label {
-  text-overflow: ellipsis;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--black_text);
+  max-height: 50px;
+  width: 100%;
 }
 
 .second-row {

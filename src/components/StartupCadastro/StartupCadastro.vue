@@ -11,8 +11,6 @@
         <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
       </div>
       
-      
-
       <div class="input">
         <label for="client">Cliente</label>
         <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="headerInfo.client">
@@ -26,6 +24,11 @@
       <div class="input">
         <label for="client">Produto</label>
         <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.product">
+      </div>
+
+      <div class="input">
+        <label for="client">Código Produto</label>
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.codeProduct">
       </div>
 
       <div class="input">

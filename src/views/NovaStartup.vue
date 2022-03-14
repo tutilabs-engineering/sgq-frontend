@@ -1,14 +1,13 @@
 <template>
   <div class="content-novaStartup">
     <StartupCadastro @returnCodeOp="ReturnCodeOp" :headerInfo="headerInfo" />
-    <TableCavidade :techniqueInfo="techniqueInfo"/>
+    <TableCavidade :techniqueInfo="techniqueInfo" />
     <TableComponentes :componentsInfo="componentsInfo"/>
 
     <div v-if="showQuestions">
-      <ListaPerguntas />
+      <ListaPerguntas :qtdeCavidade="techniqueInfo.cavity"/>
     </div>
 
-    
     <BtnStartupCreate @returnFillStatus="changedShowQuestions"/>
 
     
@@ -59,8 +58,7 @@ export default {
     },
 
     ReturnCodeOp: async function(code_op) {
-      //headerInfo
-
+    
       function GetDateTime(){
         function GetDate() {
           const date = new Date();
@@ -111,6 +109,7 @@ export default {
 
       //componentsInfo
       this.componentsInfo = [...data.components]
+
     }
   } 
 };
