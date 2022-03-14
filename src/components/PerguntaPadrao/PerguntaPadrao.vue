@@ -119,10 +119,11 @@ fieldset {
 }
 
 .first-row label {
-  text-overflow: ellipsis;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--black_text);
+  max-height: 50px;
+  width: 100%;
 }
 
 .second-row {
@@ -180,7 +181,7 @@ input[type="radio"] {
 }
 
 .fa-blue {
-  color: var(--card_blue);
+  color: var(--flag_yellow);
 }
 
 .fa-circle {

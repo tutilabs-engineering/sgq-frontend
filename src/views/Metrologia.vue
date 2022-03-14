@@ -1,7 +1,5 @@
 <template>
 	<div class="title">
-		<h2>METROLOGIA</h2>
-
 		<TableMetrologia />
 
 	</div>

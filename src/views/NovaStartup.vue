@@ -2,13 +2,12 @@
   <div class="content-novaStartup">
     <StartupCadastro @returnCodeOp="ReturnCodeOp" :headerInfo="headerInfo" />
     <TableCavidade :techniqueInfo="techniqueInfo" />
-    <TableComponentes :componentsInfo="componentsInfo" />
+    <TableComponentes :componentsInfo="componentsInfo"/>
 
     <div v-if="showQuestions">
-      <ListaPerguntas />
+      <ListaPerguntas :qtdeCavidade="techniqueInfo.cavity"/>
     </div>
-
-    <BtnStartupCreate @returnFillStatus="changedShowQuestions" />
+    <BtnStartupCreate @returnFillStatus="changedShowQuestions"/>
   </div>
 </template>
 
@@ -54,10 +53,8 @@ export default {
       this.showQuestions = e;
     },
 
-    ReturnCodeOp: async function (code_op) {
-      //headerInfo
-
-      function GetDateTime() {
+    ReturnCodeOp: async function(code_op) {
+      function GetDateTime(){
         function GetDate() {
           const date = new Date();
           let day = date.getDay();
@@ -105,9 +102,9 @@ export default {
       this.techniqueInfo.cycle = data.cycle;
 
       //componentsInfo
-      this.componentsInfo = [...data.components];
-    },
-  },
+      this.componentsInfo = [...data.components]
+    }
+  } 
 };
 </script>
 
