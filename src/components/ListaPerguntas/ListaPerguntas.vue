@@ -26,9 +26,9 @@
 
     <fieldset class="content-imgs">
 
- <UploadImage />
-      <UploadImage />
-      <UploadImage />
+      <UploadImage :id="1"/>
+      <UploadImage :id="2"/>
+      <UploadImage :id="3"/>
     </fieldset>
 
      
@@ -85,6 +85,11 @@ export default {
   border: none;
 }
 
+.content-imgs {
+  margin-bottom: 30px;
+}
+
+
 .legenda {
   font-size: 30px;
   font-weight: 600;
@@ -93,7 +98,7 @@ export default {
 }
 
 @media (min-width: 1600px){
-    .content-tablePerguntas, .content-imgs {
+    .content-tablePerguntas {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-gap: 10px;
     }
@@ -127,7 +132,7 @@ export default {
         padding: 0;
     }
     
-    .content-tablePerguntas {
+    .content-tablePerguntas, .content-imgs {
         margin-top: 30px;
         padding: 0;
         grid-template-columns: 1fr;
