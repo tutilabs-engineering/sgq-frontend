@@ -67,7 +67,6 @@ export default {
   methods: {
     changeIcon(e){
       this.valueQuestion = e
-      console.log(this.valueQuestion)
     }
   },
 
