@@ -22,7 +22,17 @@
     <fieldset>
       <TableQtdeCavidade :numberCavidade="numberCavidade" />
 
+    </fieldset >
+
+    <fieldset class="content-imgs">
+
+ <UploadImage />
+      <UploadImage />
+      <UploadImage />
     </fieldset>
+
+     
+
   </div>
 </template>
 
@@ -31,6 +41,7 @@
 import PerguntaAnalise from '../PerguntaAnalise/PerguntaAnalise.vue'
 import PerguntaPadrao from '../PerguntaPadrao/PerguntaPadrao.vue'
 import TableQtdeCavidade from '../TableQtdeCavidade/TableQtdeCavidade.vue'
+import UploadImage from '../UploadImage/UploadImage.vue'
 import http from '../../services/startup/index'
 
 export default {
@@ -47,7 +58,8 @@ export default {
   components: { 
     PerguntaPadrao, 
     PerguntaAnalise,
-    TableQtdeCavidade
+    TableQtdeCavidade,
+    UploadImage
     },
   created: async function () {
     const response = await http.listAllDefaultQuestions()
@@ -63,7 +75,7 @@ export default {
   padding: 20px;
 }
 
-.content-tablePerguntas {
+.content-tablePerguntas, .content-imgs {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -81,14 +93,14 @@ export default {
 }
 
 @media (min-width: 1600px){
-    .content-tablePerguntas {
+    .content-tablePerguntas, .content-imgs {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-gap: 10px;
     }
 }
 
 @media (max-width: 1200px){
-    .content-tablePerguntas {
+    .content-tablePerguntas, .content-imgs {
         margin-top: 30px;
         padding:20;
         grid-template-columns: 1fr 1fr;
@@ -96,7 +108,7 @@ export default {
 }
 
 @media (max-width: 965px){
-    .content-tablePerguntas {
+    .content-tablePerguntas, .content-imgs {
         margin-top: 30px;
         padding:0;
         grid-template-columns: 1fr 1fr;

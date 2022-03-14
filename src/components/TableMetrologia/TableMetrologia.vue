@@ -187,7 +187,6 @@ export default {
 
 <style scoped>
 .dropdown-content {
-
   display: none;
   background-color: #fff;
   border-radius: 10px;
