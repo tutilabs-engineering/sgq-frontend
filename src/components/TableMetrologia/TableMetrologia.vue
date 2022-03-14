@@ -207,6 +207,16 @@ legend {
   display: block;
 }
 
+fieldset {
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  width: 100%;
+  background-color: white;
+  border-radius: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
 .tableContent {
   width: 100%;
   margin-bottom: 20px;
