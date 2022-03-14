@@ -11,7 +11,7 @@
         <tbody>
           <tr v-for="i in 3" :key="i">
             <td>{{"Identificador " + i}}</td>
-            <td v-for="cavidade in qtdeCavidade" :key="cavidade"><input type="text" placeholder="Informe o valor"></td>
+            <td v-for="cavidade in qtdeCavidade" :key="cavidade"><input  class="inputdataCav" type="text" placeholder="Informe o valor"></td>
           </tr>
         </tbody>
       </table>
@@ -78,13 +78,12 @@ table th {
   border-top: 0.4px solid rgba(0, 0, 0, 0.199);
 }
 
-input {
-    border-radius: 10px;
-    border: none;
-    width: 80%;
-    padding: 10px;
-    outline: none;
-    border: var(--black_text);
+.inputdataCav {
+  padding: 0 10px 0 10px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid var(--black_text);
+  outline: none;
 }
 
 

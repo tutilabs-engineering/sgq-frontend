@@ -58,8 +58,7 @@ export default {
     },
 
     ReturnCodeOp: async function(code_op) {
-      //headerInfo
-
+    
       function GetDateTime(){
         function GetDate() {
           const date = new Date();
@@ -110,6 +109,7 @@ export default {
 
       //componentsInfo
       this.componentsInfo = [...data.components]
+
     }
   } 
 };
