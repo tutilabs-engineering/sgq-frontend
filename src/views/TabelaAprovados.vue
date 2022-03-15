@@ -23,9 +23,13 @@
           <td data-title="Inspetor">{{ item.inspetor }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
+              <ModalNovaOp :modalNovaOp="modalNovaOp"
+                  @open-modal-novaOp="openModalNovaOp"/>
               <i class="fas fa-ellipsis-h"></i>
               <div class="dropdown-content">
+                
                 <button className="btnOpcoes">
+                  
                   <i class="fas fa-plus-circle"></i>
                 </button>
                 <button className="btnOpcoes">
@@ -41,11 +45,24 @@
 </template>
 
 <script>
+
+import ModalNovaOp from '../components/Modal/ModalNovaOp.vue'
+
 export default {
+  components: {
+    ModalNovaOp
+  },
+  emits: ["modalNovaOp"],
   setup() {},
   name: "Table",
+  methods: {
+    openModalNovaOp() {
+      this.modalNovaOp = !this.modalNovaOp;
+    }
+  },
   data() {
     return {
+      modalNovaOp:false,
       itemsAbertos: [
         {
           id: 1,

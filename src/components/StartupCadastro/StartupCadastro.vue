@@ -37,6 +37,16 @@
       </div>
 
       <div class="input">
+        <label for="client">Máquina</label>
+        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.quantity">
+      </div>
+
+      <div class="input">
+        <label for="client">Molde</label>
+        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.quantity">
+      </div>
+
+      <div class="input">
         <label for="client">Data</label>
         <input type="date" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.date">
       </div>
