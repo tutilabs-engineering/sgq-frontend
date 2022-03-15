@@ -70,7 +70,7 @@ export default {
 }
 
 .title {
-  font-size: max(1.3rem, 1rem);
+  font-size: max(1.5rem, 1rem);
   color: var(--black_text);
   margin-left: 5px;
   line-height: 25px;
