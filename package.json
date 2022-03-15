@@ -10,6 +10,7 @@
     "production": "serve -s -p 2500 ./dist"
   },
   "dependencies": {
+    "apexcharts": "^3.33.2",
     "axios": "^0.21.4",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",

@@ -1,81 +1,77 @@
 <template>
   <div class="content-questions">
-    
     <fieldset class="content-tablePerguntas">
       <legend class="legenda">Perguntas Padrões</legend>
-      <div class="defaultQuestion" v-for="defaultQuestion in defaultQuestions" :key="defaultQuestion.id">
-        <PerguntaPadrao :description="defaultQuestion.description" :idQuestion="defaultQuestion.id"/>
+      <div
+        class="defaultQuestion"
+        v-for="defaultQuestion in defaultQuestions"
+        :key="defaultQuestion.id"
+      >
+        <PerguntaPadrao
+          :description="defaultQuestion.description"
+          :idQuestion="defaultQuestion.id"
+        />
       </div>
-
-      
     </fieldset>
 
     <fieldset class="content-tablePerguntas">
-
-        <legend class="legenda">Tabela de Análise</legend>
-        <PerguntaAnalise :flag="true"/>
-        <PerguntaAnalise :flag="false"/>
-        <PerguntaAnalise :flag="false"/>
-   
+      <legend class="legenda">Tabela de Análise</legend>
+      <PerguntaAnalise :flag="true" />
+      <PerguntaAnalise :flag="false" />
+      <PerguntaAnalise :flag="false" />
     </fieldset>
 
     <fieldset>
       <TableQtdeCavidade :numberCavidade="numberCavidade" />
-
-    </fieldset >
-
-    <fieldset class="content-imgs">
-
-      <UploadImage :id="1"/>
-      <UploadImage :id="2"/>
-      <UploadImage :id="3"/>
     </fieldset>
 
-     
-
+    <fieldset class="content-imgs">
+      <UploadImage :id="1" />
+      <UploadImage :id="2" />
+      <UploadImage :id="3" />
+    </fieldset>
   </div>
 </template>
 
 <script>
-
-import PerguntaAnalise from '../PerguntaAnalise/PerguntaAnalise.vue'
-import PerguntaPadrao from '../PerguntaPadrao/PerguntaPadrao.vue'
-import TableQtdeCavidade from '../TableQtdeCavidade/TableQtdeCavidade.vue'
-import UploadImage from '../UploadImage/UploadImage.vue'
-import http from '../../services/startup/index'
+import PerguntaAnalise from "../PerguntaAnalise/PerguntaAnalise.vue";
+import PerguntaPadrao from "../PerguntaPadrao/PerguntaPadrao.vue";
+import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
+import UploadImage from "../UploadImage/UploadImage.vue";
+import http from "../../services/startup/index";
 
 export default {
   data() {
     return {
       defaultQuestions: [],
-      numberCavidade: this.qtdeCavidade
-    }
+      numberCavidade: this.qtdeCavidade,
+    };
   },
 
   props: {
-    qtdeCavidade: Number
+    qtdeCavidade: Number,
   },
-  components: { 
-    PerguntaPadrao, 
+  components: {
+    PerguntaPadrao,
     PerguntaAnalise,
     TableQtdeCavidade,
-    UploadImage
-    },
+    UploadImage,
+  },
   created: async function () {
-    const response = await http.listAllDefaultQuestions()
-    this.defaultQuestions = response.data.defaultQuestions
-  }
-}
+    const response = await http.listAllDefaultQuestions();
+    this.defaultQuestions = response.data.defaultQuestions;
+  },
+};
 </script>
 
 <style secoped>
-
 .content-questions {
   width: 100%;
   padding: 20px;
 }
 
-.content-tablePerguntas, .content-imgs {
+.content-tablePerguntas,
+.content-imgs {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -89,7 +85,6 @@ export default {
   margin-bottom: 30px;
 }
 
-
 .legenda {
   font-size: 30px;
   font-weight: 600;
@@ -97,48 +92,48 @@ export default {
   padding: 20px;
 }
 
-@media (min-width: 1600px){
-    .content-tablePerguntas {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-gap: 10px;
-    }
+@media (min-width: 1600px) {
+  .content-tablePerguntas {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+  }
 }
 
-@media (max-width: 1200px){
-    .content-tablePerguntas, .content-imgs {
-        margin-top: 30px;
-        padding:20;
-        grid-template-columns: 1fr 1fr;
-    }
+@media (max-width: 1200px) {
+  .content-tablePerguntas,
+  .content-imgs {
+    margin-top: 30px;
+    padding: 20;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-@media (max-width: 965px){
-    .content-tablePerguntas, .content-imgs {
-        margin-top: 30px;
-        padding:0;
-        grid-template-columns: 1fr 1fr;
-    }
-    .content-questions {
-        padding: 0;
-    }
+@media (max-width: 965px) {
+  .content-tablePerguntas,
+  .content-imgs {
+    margin-top: 30px;
+    padding: 0;
+    grid-template-columns: 1fr 1fr;
+  }
+  .content-questions {
+    padding: 0;
+  }
 
-    .legenda {
+  .legenda {
     text-align: center;
   }
 }
 
-@media (max-width: 56em){
-    .content-questions {
-        padding: 0;
-    }
-    
-    .content-tablePerguntas, .content-imgs {
-        margin-top: 30px;
-        padding: 0;
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 56em) {
+  .content-questions {
+    padding: 0;
+  }
+
+  .content-tablePerguntas,
+  .content-imgs {
+    margin-top: 30px;
+    padding: 0;
+    grid-template-columns: 1fr;
+  }
 }
-
-
-
 </style>

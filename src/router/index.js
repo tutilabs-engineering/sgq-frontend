@@ -146,9 +146,9 @@ const routes = [
     beforeEnter: Auth
   },
   {
-    path: '/attributes',
-    name: 'attributes',
-    component: () => import('../views/Atributos.vue'),
+    path: '/analise_produtos',
+    name: 'AnaliseDeProdutos',
+    component: () => import('../views/AnaliseDeProdutos.vue'),
     beforeEnter: Auth
   },
 
@@ -170,6 +170,13 @@ const routes = [
     path: '/notFound',
     name: 'NotFound',
     component: () => import('../components/ModalError/RouteNotFoundError.vue')
+  },
+
+  {
+    path: '/modal_base',
+    name: 'ModalBase',
+    component: () => import('../components/Modal/ModalBase.vue'),
+    beforeEnter: Auth
   },
 
 

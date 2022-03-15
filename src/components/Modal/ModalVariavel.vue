@@ -197,8 +197,9 @@ export default {
 }
 
 .modal_mask .modal_content .modal_header .title_modal {
-  width: 90%;
+  width: 100%;
   margin: auto;
+  padding: 0 2%;
   color: var(--main_primaryWhite);
   font-size: 1.5rem;
   display: flex;
@@ -219,23 +220,17 @@ export default {
 }
 
 .title_modal input {
-  width: 2vw;
-  height: 2vw;
-  border-radius: 8px;
-  background: red;
-  color: white;
+  padding: 5px 10px;
+  border-radius: 50%;
   border: none;
-  font-size: 0.8vw;
+  color: var(--white);
+  background-color: rgb(223, 97, 97);
+  cursor: pointer;
+  font-weight: 600;  
 }
 
 .title_modal input:hover {
-  width: 2vw;
-  height: 2vw;
-  border-radius: 8px;
-  background: rgb(158, 3, 3);
-  color: white;
-  border: none;
-  font-size: 0.8vw;
+  background-color: rgb(148, 7, 7);
 }
 
 /* Style ScrollBar -------- */

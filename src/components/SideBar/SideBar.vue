@@ -7,7 +7,7 @@
             <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Startup' }) "><i class="fas fa-check-circle"></i>Startup</a></li>
             <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Status' })"><i class="fas fa-clone"></i>Criar Startup</a></li>
             <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Dashboard' })"> <i class="fas fa-chart-bar"></i>Dashboard</a></li>
-            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'attributes' })"><i class="fas fa-desktop"></i>Análise</a></li>
+            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'AnaliseDeProdutos' })"><i class="fas fa-desktop"></i>Análise</a></li>
             <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'metrologia' })"><i class="fas fa-ruler-combined"></i>Metrologia</a></li>
             <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Configuracoes' })"><i class="fas fa-tools"></i>Configuracoes</a></li>
             <li @click="changeCheckboxValue"><a @click="Exit"><i class="fas fa-door-open"></i>Sair</a></li>
