@@ -15,9 +15,16 @@
                 />
               </div>
             </div>
-
-            <div class="info-modal-op"></div>
-            <div class="historic-op"></div>
+            
+            <div class="content-modal-op">
+              <div class="info-modal-op">
+                <label for="">OP</label>
+                <input type="text">
+              </div>
+              <div class="historic-op"></div>
+            </div>
+            
+            
 
             
           </div>
@@ -215,11 +222,38 @@ export default {
   font-size: 25px;
   cursor: pointer;
 }
+.content-modal-op {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: red;
+}
+.info-modal-op {
+  width: 70%;
+  height: 100%;
+  border-right: 1px solid rgba(0, 0, 0, 0.603);
+  background-color: green;
+}
 
+.historic-op {
+  width: 30%;
+  height: 100%;
+  background-color: blue;
+}
 
 @media (max-width: 768px) {
   .modal_mask .modal_body .inputsHeader .input {
     width: 49%;
+  }
+  .info-modal-op, .historic-op {
+    width: 100%;
+    border-right: 0;
+  }
+
+  .content-modal-op {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
   }
 
   .title_modal input {
