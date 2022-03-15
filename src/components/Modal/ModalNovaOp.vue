@@ -18,15 +18,32 @@
             
             <div class="content-modal-op">
               <div class="info-modal-op">
-                <label for="">OP</label>
-                <input type="text">
+
+                <div class="input">
+                  <label for="op">Ordem de Produção</label>
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+                </div>
+
+                <div class="input">
+                  <label for="op">Ordem de Produção</label>
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+                </div>
+
+                <div class="input">
+                  <label for="op">Ordem de Produção</label>
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+                </div>
+
+                <div class="input">
+                  <label for="op">Ordem de Produção</label>
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+                </div>
+
+
               </div>
               <div class="historic-op"></div>
             </div>
-            
-            
 
-            
           </div>
         </div>
       </form>
@@ -39,56 +56,19 @@
 </template>
 
 <script>
-import { useToast } from "vue-toastification";
+
 export default {
   components: {},
   name: "Modal",
   emits: ["openModalNovaOp"],
   data() {
     return {
-      actionButton: "Insert",
-      dynamicTitle: "Add Data",
-      comments: "",
-      count: 0,
-      newTodoText: "",
-      todos: [{}],
-      nextTodoId: 0,
-      textBtn: "Habilitar",
-      btnDesabilitado: false,
     };
   },
   props: {
     titleModal: String,
     id: Number,
     modalNovaOp: String,
-  },
-  methods: {
-    getComments(value) {
-      this.comments = value;
-    },
-
-    addNovaPergunta() {
-      if (this.newTodoText === "") {
-        const toast = useToast();
-        toast.error("Adicione ao menos uma pergunta");
-      } else if (this.count < 10) {
-        this.count++;
-        this.todos.push({
-          id: this.nextTodoId++,
-          title: this.newTodoText,
-        });
-        this.newTodoText = "";
-      }
-      if (this.count === 10) {
-        const toast = useToast();
-        toast.error("Número máximo de perguntas atingidas.");
-      }
-    },
-
-    trocaStatus() {
-      this.textBtn = "Desabilitado";
-      this.btnDesabilitado = true;
-    },
   },
 };
 </script>
@@ -226,20 +206,47 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  background-color: red;
 }
 .info-modal-op {
+  padding: 20px;
   width: 70%;
   height: 100%;
-  border-right: 1px solid rgba(0, 0, 0, 0.603);
-  background-color: green;
+  border-radius: 10px 10px 10px 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 70px;
+  padding: 5px;
+  border-radius: 5px 5px 0 0;
+}
+
+.input label {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--black_text);
+}
+
+.input input {
+  background-color: transparent;
+  border: none;
+  transition: 1s;
+  outline: none;
+  font-size: 15px;
+  height: 52px;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.39);
 }
 
 .historic-op {
   width: 30%;
   height: 100%;
-  background-color: blue;
 }
+
 
 @media (max-width: 768px) {
   .modal_mask .modal_body .inputsHeader .input {
@@ -248,6 +255,10 @@ export default {
   .info-modal-op, .historic-op {
     width: 100%;
     border-right: 0;
+  }
+
+  .info-modal-op {
+    grid-template-columns: 1fr 1fr;
   }
 
   .content-modal-op {
@@ -276,6 +287,15 @@ export default {
     width: 7vw;
     height: 7vw;
     font-size: 4vw;
+  }
+
+  .info-modal-op {
+    grid-template-columns: 1fr;
+  }
+
+  .input {
+    align-items: center;
+    width: 100%;
   }
 
   .modal_mask .modal_body .inputsHeader .input {
