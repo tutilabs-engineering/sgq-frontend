@@ -75,7 +75,7 @@ export default {
 /* header */
 .header {
   width: 210px;
-  height: 10vh;
+  height: auto;
   z-index: 10;
   position: fixed;
   background-color: var(--bg_green);
@@ -195,15 +195,16 @@ export default {
 }
 /* 48em = 768px */
 
-@media (max-width: 48em) {
+@media (max-width: 768px) {
     .header {
         width: 100vw;
         height: 65px;
     }
+
+    
     
 }
-@media (min-width: 47em) {
-
+@media (min-width: 769px) {
 
   .header li {
     float: left;

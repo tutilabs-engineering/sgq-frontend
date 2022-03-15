@@ -20,28 +20,38 @@
               <div class="info-modal-op">
 
                 <div class="input">
-                  <label for="op">Ordem de Produção</label>
+                  <label for="op">Cód. Startup</label>
                   <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
                 </div>
 
                 <div class="input">
-                  <label for="op">Ordem de Produção</label>
+                  <label for="op">Máquina</label>
                   <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
                 </div>
 
                 <div class="input">
-                  <label for="op">Ordem de Produção</label>
+                  <label for="op">Cód. Produto</label>
                   <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
                 </div>
 
                 <div class="input">
-                  <label for="op">Ordem de Produção</label>
+                  <label for="op">Nova OP</label>
                   <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+                </div>
+
+                <div class="save-btn">
+                  <button class="btn btn-cancel" @click="$emit('openModalNovaOp')">cancelar</button>
+                  <button class="btn btn-save">salvar</button>
                 </div>
 
 
               </div>
-              <div class="historic-op"></div>
+              <div class="historic-op">
+                <span>Histórico de Op's desta startup</span>
+                <li><i class="fa fa-calendar-check"></i> <span>123-234-200-4322-01</span></li>
+                <li><i class="fa fa-calendar-check"></i> <span>123-234-200-4322-02</span></li>
+
+              </div>
             </div>
 
           </div>
@@ -90,7 +100,7 @@ export default {
 .modal_mask .modal_content {
   position: relative;
   width: 80%;
-  height: 90%;
+  height: 60%;
   margin: 30px auto;
   background: var(--bg_white);
   border-radius: 10px;
@@ -210,11 +220,13 @@ export default {
 .info-modal-op {
   padding: 20px;
   width: 70%;
-  height: 100%;
-  border-radius: 10px 10px 10px 10px;
+  height: 200px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  
 }
 
 .input {
@@ -239,12 +251,50 @@ export default {
   outline: none;
   font-size: 15px;
   height: 52px;
+  width: 100%;
   border-bottom: 2px solid rgba(128, 128, 128, 0.39);
 }
 
+.save-btn {
+  width: 100%;
+  grid-column-start: 2;
+  margin-top: 30px;
+  display: flex;
+  justify-content: end;
+}
+
+.btn {
+  color: var(--black_text);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer !important;
+  height: 50px;
+  width: 50%;
+  margin: 0 0 0 10px;
+  border-radius: 10px;
+  border: none;
+  grid-column-start: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-save {
+  background-color: var(--card_blue);
+  color: #fff;
+}
+
 .historic-op {
+  padding-top: 20px;
   width: 30%;
   height: 100%;
+  border-left: 1px solid rgba(0, 0, 0, 0.397);
+  
+}
+
+.historic-op li {
+  margin-top: 10px;
+  list-style: none;
 }
 
 
@@ -252,12 +302,19 @@ export default {
   .modal_mask .modal_body .inputsHeader .input {
     width: 49%;
   }
+
+  .modal_content {
+    height: 90% !important;
+  }
+
   .info-modal-op, .historic-op {
     width: 100%;
-    border-right: 0;
+    height: auto;
+    border-left: 0;
   }
 
   .info-modal-op {
+    display: grid;
     grid-template-columns: 1fr 1fr;
   }
 
@@ -290,12 +347,17 @@ export default {
   }
 
   .info-modal-op {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 
   .input {
     align-items: center;
     width: 100%;
+  }
+
+  .save-btn {
+    grid-column-start: auto;
+    justify-content: center;
   }
 
   .modal_mask .modal_body .inputsHeader .input {
