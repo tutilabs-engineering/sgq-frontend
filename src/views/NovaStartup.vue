@@ -7,11 +7,7 @@
     <div v-if="showQuestions">
       <ListaPerguntas :qtdeCavidade="techniqueInfo.cavity"/>
     </div>
-
     <BtnStartupCreate @returnFillStatus="changedShowQuestions"/>
-
-    
-    
   </div>
 </template>
 
@@ -22,7 +18,7 @@ import StartupCadastro from "../components/StartupCadastro/StartupCadastro.vue";
 import ListaPerguntas from "../components/ListaPerguntas/ListaPerguntas.vue";
 import BtnStartupCreate from "../components/BtnStartupCreate/BtnStartupCreate.vue";
 
-import http from "../services/startup"
+import http from "../services/startup";
 
 export default {
   data() {
@@ -43,7 +39,7 @@ export default {
       },
       componentsInfo: [],
       showQuestions: false,
-    }
+    };
   },
   components: {
     StartupCadastro,
@@ -53,12 +49,11 @@ export default {
     BtnStartupCreate,
   },
   methods: {
-    changedShowQuestions (e){
-       this.showQuestions = e;
+    changedShowQuestions(e) {
+      this.showQuestions = e;
     },
 
     ReturnCodeOp: async function(code_op) {
-    
       function GetDateTime(){
         function GetDate() {
           const date = new Date();
@@ -84,13 +79,12 @@ export default {
           let hour = date.getHours();
           let minutes = date.getMinutes();
 
-          if(hour < 10) {
+          if (hour < 10) {
             return `0${hour}:${minutes}`;
           }
           return `${hour}:${minutes}`;
-          
         }
-        return { GetDate, GetStartHour }
+        return { GetDate, GetStartHour };
       }
 
       const dataOp = await http.listDataByCodeOp(code_op);
@@ -101,7 +95,7 @@ export default {
       this.headerInfo.codeProduct = data.code_product;
       this.headerInfo.date = GetDateTime().GetDate();
       this.headerInfo.startTime = GetDateTime().GetStartHour();
-      
+
       //techniqueData
 
       this.techniqueInfo.cavity = data.cavity;
@@ -109,7 +103,6 @@ export default {
 
       //componentsInfo
       this.componentsInfo = [...data.components]
-
     }
   } 
 };
@@ -119,5 +112,4 @@ export default {
 .content-novaStartup {
   width: 100%;
 }
-
 </style>

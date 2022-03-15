@@ -27,7 +27,6 @@
         <input type="text" placeholder="Aguardando Resposta" />
       </div>
 
-      <!-- <form @submit.prevent="getResponse"> -->
       <div class="third-row">
         <div class="input">
           <input type="radio" :name="idQuestion" id="AP" @change="changeIcon(1)"/>
@@ -53,8 +52,7 @@
         <label for="file" class="labelFile">Enviar Arquivo</label>
         <input type="file" name="file" id="file" class="input_file" />
       </div>
-
-      <!-- </form> -->
+      
     </fieldset>
   </div>
 </template>
@@ -69,14 +67,13 @@ export default {
   methods: {
     changeIcon(e){
       this.valueQuestion = e
-      console.log(this.valueQuestion)
     }
   },
 
   data() {
     return {
       valueQuestion: 0,
-      responsee: {
+      response: {
         id: this.idQuestion,
 
       }
@@ -174,7 +171,6 @@ input[type="radio"] {
   display: block;
   cursor: pointer;
 }
-
 
 .fa-times-circle {
   color: var(--card_red);
