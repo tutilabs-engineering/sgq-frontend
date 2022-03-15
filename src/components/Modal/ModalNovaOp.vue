@@ -106,7 +106,7 @@ export default {
   height: 90%;
   margin: 30px auto;
   background: var(--bg_white);
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -119,8 +119,8 @@ export default {
   height: 3.5rem;
   line-height: 3.5rem;
   background: var(--bg_green);
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .modal_mask .modal_content .modal_header .title_modal {
