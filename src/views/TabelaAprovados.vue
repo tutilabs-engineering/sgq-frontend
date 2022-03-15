@@ -1,6 +1,6 @@
 <template>
   <fieldset className="tableContent">
-    <legend>Análise de Startups - Aprovadas</legend>
+    <legend>Análise de Startup - Aprovadas</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cód.Startup</th>
@@ -142,7 +142,7 @@ export default {
 }
 
 legend {
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   color: var(--black_text);
 }
@@ -156,7 +156,6 @@ legend {
   background-color: var(--bg_white);
   width: 100%;
   border-radius: 10px 10px 10px 10px;
-  overflow-x: scroll;
 }
 
 table th {
