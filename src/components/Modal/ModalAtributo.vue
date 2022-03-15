@@ -101,7 +101,6 @@
 </template>
 
 <script>
-import { useToast } from "vue-toastification";
 export default {
   components: {},
   name: "Modal",
@@ -130,20 +129,28 @@ export default {
     },
 
     addNovaPergunta() {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
       if (this.newTodoText === "") {
-        const toast = useToast();
-        toast.error("Adicione ao menos uma pergunta");
-      } else if (this.count < 10) {
-        this.count++;
-        this.todos.push({
-          id: this.nextTodoId++,
-          title: this.newTodoText,
+        Toast.fire({
+          icon: "error",
+          title: "Adicione ao menos uma pergunta",
+          background: "#FFA490",
         });
-        this.newTodoText = "";
-      }
-      if (this.count === 10) {
-        const toast = useToast();
-        toast.error("Número máximo de perguntas atingidas.");
       }
     },
 

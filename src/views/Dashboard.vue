@@ -157,4 +157,14 @@ select {
 .barCHart_content .barChart_filter .legend_chart .checkBox_filter {
   overflow: auto;
 }
+
+@media (max-width: 768px) {
+  .barCHart_content {
+    grid-template-columns: 1fr;
+  }
+
+  .barCHart_content .barChart {
+    padding: 2rem 0;
+  }
+}
 </style>
