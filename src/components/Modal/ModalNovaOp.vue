@@ -26,7 +26,9 @@
     </transition>
   </div>
 
-  <button class="btnAt" @click="$emit('openModalNovaOp')">AT</button>
+  <i class="fas fa-plus-circle" @click="$emit('openModalNovaOp')"></i>
+  
+
 </template>
 
 <script>
@@ -143,17 +145,6 @@ export default {
   padding: 0 15px;
 }
 
-.btnAt {
-  width: 100px;
-  background: var(--card_blue);
-  border: none;
-  border-radius: 10px;
-  padding: 0.2rem 0rem;
-  color: var(--main_primaryWhite);
-  text-align: center;
-  cursor: pointer;
-}
-
 .title_modal input {
   padding: 5px 10px;
   border-radius: 50%;
@@ -219,6 +210,11 @@ export default {
   outline: none;
 }
 
+.fa-plus-circle {
+  color: var(--card_orange);
+  font-size: 25px;
+  cursor: pointer;
+}
 
 
 @media (max-width: 768px) {
@@ -234,6 +230,10 @@ export default {
 
   .incrementAtributo .inputAdd input {
     width: 100%;
+  }
+
+  .fa-plus-circle {
+    margin: 20px;
   }
 }
 

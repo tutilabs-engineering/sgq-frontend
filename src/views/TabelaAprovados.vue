@@ -25,17 +25,8 @@
             <div className="opcoes">
               <ModalNovaOp :modalNovaOp="modalNovaOp"
                   @open-modal-novaOp="openModalNovaOp"/>
-              <i class="fas fa-ellipsis-h"></i>
-              <div class="dropdown-content">
-                
-                <button className="btnOpcoes">
-                  
-                  <i class="fas fa-plus-circle"></i>
-                </button>
-                <button className="btnOpcoes">
-                  <i class="fas fa-file-alt"></i>
-                </button>
-              </div>
+              <i class="fas fa-file-alt"></i>
+             
             </div>
           </td>
         </tr>
@@ -239,37 +230,17 @@ table td {
 
 .opcoes {
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.btnOpcoes {
-  background-color: transparent;
-  border: none;
-  font-size: 20px;
+
+.fa-file-alt {
+  color: var(--card_blue);
+  font-size: 25px;
   cursor: pointer;
 }
 
-.btnOpcoes i {
-  margin: 0 10px 0 10px;
-}
-
-.fa-ellipsis-h {
-  color: var(--card_green);
-  font-size: 25px;
-}
-
-.fa-plus-circle {
-  color: var(--card_orange);
-}
-.fa-file-alt {
-  color: var(--card_blue);
-}
-
-
-
-.btns {
-  display: none;
-}
 
 @media (max-width: 960px) {
   .btns {
