@@ -13,14 +13,14 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in itemsFechados" :key="item.id">
+        <tr v-for="product in listProducts" :key="product.id">
           <td style="display: none"></td>
-          <td data-title="Codigo">{{ item.codigo }}</td>
-          <td data-title="Produto">{{ item.produto }}</td>
-          <td data-title="Cliente">{{ item.cliente }}</td>
-          <td data-title="Maquina">{{ item.maquina }}</td>
-          <td data-title="Data">{{ item.data }}</td>
-          <td data-title="Inspetor">{{ item.inspetor }}</td>
+          <td data-title="Codigo">{{ product.codigo_produto }}</td>
+          <td data-title="Produto">{{ product.descricao }}</td>
+          <td data-title="Cliente">c c </td>
+          <td data-title="Maquina">fdbfd</td>
+          <td data-title="Data">fdbfdb</td>
+          <td data-title="Inspetor">fdbfd</td>
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
               <ModalAtributo
@@ -42,6 +42,7 @@
 <script>
 import ModalAtributo from "../components/Modal/ModalAtributo.vue";
 import ModalVariavel from "../components/Modal/ModalVariavel.vue";
+import http from "../services/productAnalysis/Products"
 
 export default {
   components: { ModalAtributo, ModalVariavel },
@@ -50,35 +51,7 @@ export default {
   emits: ["modalAtributo", "modalVariavel"],
   data() {
     return {
-      itemsFechados: [
-        {
-          id: 1,
-          produto: "produto A",
-          codigo: "241",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "21-02-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 2,
-          produto: "produto B",
-          codigo: "598",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "21-03-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 3,
-          produto: "produto C",
-          codigo: "242",
-          cliente: "Tutu",
-          maquina: "Injetora",
-          data: "22-01-2022",
-          inspetor: "Guilherme",
-        },
-      ],
+      listProducts: [],
       modalAtributo: false,
       modalVariavel: false,
     };
@@ -91,6 +64,10 @@ export default {
       this.modalVariavel = !this.modalVariavel;
     },
   },
+  created: async function() {
+    const products = await http.listProducts();
+    this.listProducts = products.data.list
+  }
 };
 </script>
 
