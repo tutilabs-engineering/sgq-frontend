@@ -3,24 +3,20 @@
     <legend>Análise de Produto</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
-        <th>Cód.Startup</th>
-        <th>Produtos</th>
+        <th>Cód. Produto</th>
+        <th>Produto</th>
+        <th>Cód. Cliente</th>
         <th>Cliente</th>
-        <th>Máquina</th>
-        <th>Data</th>
-        <th>Inspetor</th>
         <th>Opções</th>
       </thead>
 
       <tbody>
         <tr v-for="product in listProducts" :key="product.id">
           <td style="display: none"></td>
-          <td data-title="Codigo">{{ product.codigo_produto }}</td>
+          <td data-title="Cód. Prod.">{{ product.codigo_produto }}</td>
           <td data-title="Produto">{{ product.descricao }}</td>
-          <td data-title="Cliente">c c </td>
-          <td data-title="Maquina">fdbfd</td>
-          <td data-title="Data">fdbfdb</td>
-          <td data-title="Inspetor">fdbfd</td>
+          <td data-title="Cód. Cli.">xxxxxxxxxxxxxxxxx</td>
+          <td data-title="Cliente">{{product.cliente}}</td>
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
               <ModalAtributo
@@ -65,8 +61,11 @@ export default {
     },
   },
   created: async function() {
+    this.$store.commit("$SETISLOADING");
     const products = await http.listProducts();
     this.listProducts = products.data.list
+    console.log(this.listProducts)
+    this.$store.commit("$SETISLOADING");
   }
 };
 </script>
