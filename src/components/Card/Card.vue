@@ -26,6 +26,12 @@ a {
   text-decoration: none;
 }
 
+.cardStatus:hover {
+  background-color: rgba(0, 0, 0, 0.007);
+  transform: scale(1.02);
+  
+}
+
 
 .cardStatus {
   /* margin: 30px 10px 0px 10px; */
@@ -54,5 +60,7 @@ a {
 .cardImg {
   font-size: 30px;
 }
+
+
 </style>
 
