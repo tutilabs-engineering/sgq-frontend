@@ -110,7 +110,6 @@
 </template>
 
 <script>
-import { useToast } from "vue-toastification";
 export default {
   components: {},
   name: "Modal",
@@ -139,20 +138,33 @@ export default {
       this.comments = value;
     },
     incrementVariable() {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
       if (
         this.variavel.identificacao === "" ||
         this.variavel.cota === "" ||
         this.variavel.max === "" ||
         this.variavel.min === ""
       ) {
-        const toast = useToast();
-        toast.error("Preencha todos os campos!");
-      } else if (this.count < 10) {
-        this.count++;
-        this.variavel.identificacao = "";
-        this.variavel.cota = "";
-        this.variavel.max = "";
-        this.variavel.min = "";
+        Toast.fire({
+          icon: "error",
+          title: "Preencha todos os campos!",
+          background: "#FFA490",
+        });
       }
     },
   },
