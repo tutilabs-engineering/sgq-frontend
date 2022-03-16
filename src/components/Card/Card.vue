@@ -1,5 +1,6 @@
 <template>
-  <Popper content="This is the Popper content 🍿" hover="true">
+  <Popper arrow
+    disableClickAway content="This is the Popper content 🍿" hover="true">
     <router-link :to="link">
       
         <button></button>
@@ -32,6 +33,15 @@ export default {
 </script>
 
 <style scoped>
+
+:deep(.popper) {
+    background: var(--card_green);
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 
 a {
   text-decoration: none;
