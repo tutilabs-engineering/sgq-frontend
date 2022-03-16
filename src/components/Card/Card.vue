@@ -1,9 +1,6 @@
 <template>
-  <Popper arrow
-    disableClickAway content="This is the Popper content 🍿" hover="true">
+  <Popper :content="textContentPopper" hover="true" placement="bottom">
     <router-link :to="link">
-      
-        <button></button>
       <div class="cardStatus" :style="{ color: colore, borderLeft: '7px solid' }">
         <div className="cardStatusText">
           <h3>{{ status }}</h3>
@@ -22,7 +19,7 @@ import Popper from "vue3-popper";
 
 export default {
   name: "Card",
-  props: ["status", "qtde", "img", "colore", "link"],
+  props: ["status", "qtde", "img", "colore", "link", "textContentPopper"],
   components: {
     Popper,
   },
@@ -36,11 +33,13 @@ export default {
 
 :deep(.popper) {
     background: var(--card_green);
-    padding: 10px;
-    border-radius: 10px;
+    padding: 5px;
+    border-radius: 5px;
     color: #fff;
     font-weight: bold;
     text-transform: uppercase;
+    font-size: 10px;
+    height: 25px;
   }
 
 a {
@@ -50,7 +49,6 @@ a {
 .cardStatus:hover {
   background-color: rgba(0, 0, 0, 0.007);
   transform: scale(1.02);
-  
 }
 
 
