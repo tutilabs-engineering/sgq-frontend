@@ -1,19 +1,28 @@
 <template>
-  <router-link :to="link">
-    <div class="cardStatus" :style="{ color: colore, borderLeft: '7px solid' }">
-      <div className="cardStatusText">
-        <h3>{{ status }}</h3>
-        <spam>{{ qtde }}</spam>
+  <Popper :content="textContentPopper" hover="true" placement="bottom">
+    <router-link :to="link">
+      <div class="cardStatus" :style="{ color: colore, borderLeft: '7px solid' }">
+        <div className="cardStatusText">
+          <h3>{{ status }}</h3>
+          <spam>{{ qtde }}</spam>
+        </div>
+        <i :class="img" class="cardImg"></i>
       </div>
-      <i :class="img" class="cardImg"></i>
-    </div>
-  </router-link>
+      
+    </router-link>
+  </Popper>
 </template>
 
 <script>
+
+import Popper from "vue3-popper";
+
 export default {
   name: "Card",
-  props: ["status", "qtde", "img", "colore", "link"],
+  props: ["status", "qtde", "img", "colore", "link", "textContentPopper"],
+  components: {
+    Popper,
+  },
   data() {
     return {};
   },
@@ -22,8 +31,24 @@ export default {
 
 <style scoped>
 
+:deep(.popper) {
+    background: var(--card_green);
+    padding: 5px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 10px;
+    height: 25px;
+  }
+
 a {
   text-decoration: none;
+}
+
+.cardStatus:hover {
+  background-color: rgba(0, 0, 0, 0.007);
+  transform: scale(1.02);
 }
 
 
@@ -54,5 +79,7 @@ a {
 .cardImg {
   font-size: 30px;
 }
+
+
 </style>
 

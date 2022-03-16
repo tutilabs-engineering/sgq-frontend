@@ -7,28 +7,28 @@
         qtde="34"
         img="fas fa-check-square"
         colore="#43CC74"
-        link="/startups-aprovadas"
+        link="/startups-aprovadas" textContentPopper="Clique para ver mais detalhes"
       />
       <Card
         status="EM ANDAMENTO"
         qtde="15"
         img="fas fa-tasks"
         colore="#FFAE3D"
-        link="/startups-andamentos"
+        link="/startups-andamentos" textContentPopper="Clique para ver mais detalhes"
       />
       <Card
         status="REPROVADOS"
         qtde="0"
         img="fas fa-times"
         colore="#FF5349"
-        link="/startups-reprovadas"
+        link="/startups-reprovadas" textContentPopper="Clique para ver mais detalhes"
       />
       <Card
         status="FECHADOS"
         qtde="22"
         img="fas fa-door-closed"
         colore="#5F9DFF"
-        link="#"
+        link="#" textContentPopper=""
       />
     </div>
 

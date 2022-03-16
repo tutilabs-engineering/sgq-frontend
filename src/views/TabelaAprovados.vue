@@ -1,7 +1,6 @@
 <template>
-  <div className="tableContent">
-    <h2 class="titleTable">Análise de Startups</h2>
-    <h3>Aprovadas</h3>
+  <fieldset className="tableContent">
+    <legend>Análise de Startup - Aprovadas</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cód.Startup</th>
@@ -24,29 +23,37 @@
           <td data-title="Inspetor">{{ item.inspetor }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
-              <i class="fas fa-ellipsis-h"></i>
-              <div class="dropdown-content">
-                <button className="btnOpcoes">
-                  <i class="fas fa-plus-circle"></i>
-                </button>
-                <button className="btnOpcoes">
-                  <i class="fas fa-file-alt"></i>
-                </button>
-              </div>
+              <ModalNovaOp :modalNovaOp="modalNovaOp"
+                  @open-modal-novaOp="openModalNovaOp"/>
+              <i class="fas fa-file-alt"></i>
+             
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-  </div>
+  </fieldset>
 </template>
 
 <script>
+
+import ModalNovaOp from '../components/Modal/ModalNovaOp.vue'
+
 export default {
+  components: {
+    ModalNovaOp
+  },
+  emits: ["modalNovaOp"],
   setup() {},
   name: "Table",
+  methods: {
+    openModalNovaOp() {
+      this.modalNovaOp = !this.modalNovaOp;
+    }
+  },
   data() {
     return {
+      modalNovaOp:false,
       itemsAbertos: [
         {
           id: 1,
@@ -114,10 +121,10 @@ export default {
 .tableContent {
   position: relative;
   width: 100%;
-  padding: 0px 25px 0px 25px;
-  margin-top: 50px;
-  overflow-x: auto;
-  padding: 0 40px 40px 40px;
+  background-color: var(--bg_white);
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  border-radius: 10px 10px 10px 10px;
+  padding: 20px;
 }
 
 .tableContent h2 {
@@ -133,26 +140,30 @@ export default {
 
 .dropdown-content {
   display: none;
-  justify-content: center;
-  align-items: center;
   background-color: #fff;
   border-radius: 10px;
   min-width: 50px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(37, 36, 36, 0.281);  
   padding: 15px 5px;
   z-index: 1;
+  position: absolute;
+}
+
+legend {
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--black_text);
 }
 
 .opcoes:hover .dropdown-content {
   display: block;
+  
 }
 
 .tableContent table {
   background-color: var(--bg_white);
   width: 100%;
   border-radius: 10px 10px 10px 10px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
-  overflow-x: scroll;
 }
 
 table th {
@@ -219,39 +230,19 @@ table td {
 
 .opcoes {
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.btnOpcoes {
-  background-color: transparent;
-  border: none;
-  font-size: 20px;
+
+.fa-file-alt {
+  color: var(--card_blue);
+  font-size: 25px;
   cursor: pointer;
 }
 
-.btnOpcoes i {
-  margin: 0 10px 0 10px;
-}
 
-.fa-ellipsis-h {
-  color: var(--card_green);
-  font-size: 25px;
-}
-
-.fa-plus-circle {
-  color: var(--card_orange);
-}
-.fa-file-alt {
-  color: var(--card_blue);
-}
-
-
-
-.btns {
-  display: none;
-}
-
-@media (max-width: 767px) {
+@media (max-width: 960px) {
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
@@ -286,6 +277,10 @@ table td {
 
   .lastTd {
     border-bottom: 3px dotted var(--font-color);
+  }
+
+  legend {
+    text-align: center;
   }
 }
 </style>

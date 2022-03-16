@@ -1,6 +1,6 @@
 <template>
     <header class="header">
-        <a href="" class="logo"><i class="fas fa-vial"></i>SGQ</a>
+        <a @click="() => this.$router.push({ name: 'Startup' })" class="logo"><i class="fas fa-vial"></i>SGQ</a>
         <input class="menu-btn" type="checkbox" id="menu-btn" v-model="checkboxValue"/>
         <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
         <ul class="menu">
@@ -75,7 +75,7 @@ export default {
 /* header */
 .header {
   width: 210px;
-  height: 10vh;
+  height: auto;
   z-index: 10;
   position: fixed;
   background-color: var(--bg_green);
@@ -114,6 +114,10 @@ export default {
   padding: 10px 20px;
   margin-left: 10px; 
   text-decoration: none;
+}
+
+.logo {
+  cursor: pointer;
 }
 /* menu */
 .header .menu {
@@ -191,15 +195,16 @@ export default {
 }
 /* 48em = 768px */
 
-@media (max-width: 48em) {
+@media (max-width: 768px) {
     .header {
         width: 100vw;
         height: 65px;
     }
+
+    
     
 }
-@media (min-width: 47em) {
-
+@media (min-width: 769px) {
 
   .header li {
     float: left;
