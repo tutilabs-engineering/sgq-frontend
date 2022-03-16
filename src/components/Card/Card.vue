@@ -1,19 +1,30 @@
 <template>
-  <router-link :to="link">
-    <div class="cardStatus" :style="{ color: colore, borderLeft: '7px solid' }">
-      <div className="cardStatusText">
-        <h3>{{ status }}</h3>
-        <spam>{{ qtde }}</spam>
+  <Popper content="This is the Popper content 🍿" hover="true">
+    <router-link :to="link">
+      
+        <button></button>
+      <div class="cardStatus" :style="{ color: colore, borderLeft: '7px solid' }">
+        <div className="cardStatusText">
+          <h3>{{ status }}</h3>
+          <spam>{{ qtde }}</spam>
+        </div>
+        <i :class="img" class="cardImg"></i>
       </div>
-      <i :class="img" class="cardImg"></i>
-    </div>
-  </router-link>
+      
+    </router-link>
+  </Popper>
 </template>
 
 <script>
+
+import Popper from "vue3-popper";
+
 export default {
   name: "Card",
   props: ["status", "qtde", "img", "colore", "link"],
+  components: {
+    Popper,
+  },
   data() {
     return {};
   },
