@@ -1,7 +1,6 @@
 <template>
   <div v-if="modalNovaOp">
     <transition name="model">
-      <form action="">
         <div class="modal_mask">
           <div class="modal_content">
             <div class="modal_header">
@@ -21,17 +20,17 @@
 
                 <div class="input">
                   <label for="op">Cód. Startup</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model="code_op">
                 </div>
 
                 <div class="input">
                   <label for="op">Máquina</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP">
                 </div>
 
                 <div class="input">
                   <label for="op">Cód. Produto</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.codeProduct">
                 </div>
 
                 <div class="input">
@@ -56,7 +55,6 @@
 
           </div>
         </div>
-      </form>
     </transition>
   </div>
 
@@ -67,12 +65,26 @@
 
 <script>
 
+import http from "../../services/startup/index";
+
+
 export default {
   components: {},
   name: "Modal",
   emits: ["openModalNovaOp"],
   data() {
     return {
+      headerInfo: {
+        client: "",
+        codeClient: "",
+        product: "",
+        codeProduct: "",
+        quantity: "",
+        date: "",
+        startTime: "",
+        endTime: "",
+      },
+
     };
   },
   props: {
@@ -80,6 +92,19 @@ export default {
     id: Number,
     modalNovaOp: String,
   },
+
+  methods: {
+    ReturnCodeOp: async function(code_op) {
+      
+      const dataOp = await http.listDataByCodeOp(code_op);
+      const data = dataOp.data.data_op;
+      this.headerInfo.client = data.client;
+      this.headerInfo.codeClient = data.code_client;
+      this.headerInfo.product = data.product;
+      this.headerInfo.codeProduct = data.code_product;
+
+  }
+  }
 };
 </script>
 
@@ -295,6 +320,10 @@ export default {
 .historic-op li {
   margin-top: 10px;
   list-style: none;
+}
+
+.fa {
+  color: var(--card_green);
 }
 
 
