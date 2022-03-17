@@ -1,5 +1,5 @@
 <template>
-  <div v-if="modalVariavel">
+  <div>
     <transition name="model">
       <form action="">
         <div class="modal_mask">
@@ -20,22 +20,26 @@
               <div class="inputsHeader">
                 <div class="input">
                   <p>Cód. Produto</p>
-                  <input type="text" readonly :value="productsCodigo"/>
+                  <input
+                    type="text"
+                    readonly
+                    :value="dataProduct.codigo_produto"
+                  />
                 </div>
 
                 <div class="input">
                   <p>Produto</p>
-                  <input type="text" readonly :value="productsDescricao"/>
+                  <input type="text" readonly :value="dataProduct.descricao" />
                 </div>
 
                 <div class="input">
                   <p>Cód. Cliente</p>
-                  <input type="text" readonly :value="productsCodeClient"/>
+                  <input type="text" readonly value="XXXXXXXX-XX" />
                 </div>
 
                 <div class="input">
                   <p>Descrição Cliente</p>
-                  <input type="text" readonly :value="productsCliente"/>
+                  <input type="text" readonly :value="dataProduct.cliente" />
                 </div>
               </div>
 
@@ -106,7 +110,7 @@
       </form>
     </transition>
   </div>
-  <button class="btnVa" @click="$emit('openModalVariavel')">VA</button>
+  <!-- <button class="btnVa" @click="$emit('openModalVariavel')">VA</button> -->
 </template>
 
 <script>
@@ -129,13 +133,7 @@ export default {
     };
   },
   props: {
-    titleModal: String,
-    id: Number,
-    modalVariavel: String,
-    productsCodigo: String,
-    productsDescricao: String,
-    productsCliente: String,
-    productsCodeClient: String
+    dataProduct: Object,
   },
   methods: {
     getComments(value) {
@@ -242,7 +240,7 @@ export default {
   color: var(--white);
   background-color: rgb(223, 97, 97);
   cursor: pointer;
-  font-weight: 600;  
+  font-weight: 600;
 }
 
 .title_modal input:hover {

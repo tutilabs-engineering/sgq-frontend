@@ -1,5 +1,5 @@
 <template>
-  <div v-if="modalAtributo">
+  <div>
     <transition name="model">
       <form action="">
         <div class="modal_mask">
@@ -20,22 +20,26 @@
               <div class="inputsHeader">
                 <div class="input">
                   <p>Cód. Produto</p>
-                  <input type="text" readonly :value="productsCodigo"/>
+                  <input
+                    type="text"
+                    readonly
+                    :value="dataProduct.codigo_produto"
+                  />
                 </div>
 
                 <div class="input">
                   <p>Produto</p>
-                  <input type="text" readonly :value="productsDescricao"/>
+                  <input type="text" readonly :value="dataProduct.descricao" />
                 </div>
 
                 <div class="input">
                   <p>Cód. Cliente</p>
-                  <input type="text" readonly :value="productsCodeClient"/>
+                  <input type="text" readonly value="xxxxxx-xxx" />
                 </div>
 
                 <div class="input">
                   <p>Descrição Cliente</p>
-                  <input type="text" readonly :value="productsCliente"/>
+                  <input type="text" readonly :value="dataProduct.cliente" />
                 </div>
               </div>
 
@@ -80,10 +84,10 @@
                 </div>
               </div>
               <div class="incrementAtributo">
-                <form action="" @submit.prevent="addNovaPergunta">
+                <form action="" @submit.prevent="CreateNewQuestion">
                   <h3>ADICIONAR PERGUNTA:</h3>
                   <div class="inputAdd">
-                    <input type="text" v-model="newTodoText" />
+                    <input type="text" v-model="dataAttribute.question"/>
                     <button class="btnHabilitar">
                       <i class="fas fa-plus"></i>
                     </button>
@@ -97,10 +101,13 @@
     </transition>
   </div>
 
-  <button class="btnAt" @click="$emit('openModalAtributo')">AT</button>
+  <!-- <button class="btnAt" @click="$emit('openModalAtributo')">AT</button> -->
 </template>
 
 <script>
+
+import http from "../../services/productAnalysis/Attributes"
+
 export default {
   components: {},
   name: "Modal",
@@ -111,52 +118,30 @@ export default {
       dynamicTitle: "Add Data",
       comments: "",
       count: 0,
-      newTodoText: "",
       todos: [{}],
       nextTodoId: 0,
       textBtn: "Habilitar",
       btnDesabilitado: false,
+      dataAttribute: {
+        cod_sap: "(Remover isso do back-end)",
+        cod_product: this.dataProduct.codigo_produto,
+        attention: true,
+        question: "",
+        is_enabled: true
+      }
     };
   },
   props: {
-    titleModal: String,
-    id: Number,
-    modalAtributo: String,
-    productsCodigo: String,
-    productsDescricao: String,
-    productsCliente: String,
-    productsCodeClient: String
-
+    dataProduct: Object,
   },
   methods: {
     getComments(value) {
       this.comments = value;
     },
 
-    addNovaPergunta() {
-      const Toast = this.$swal.mixin({
-        toast: true,
-        position: "top-right",
-        iconColor: "white",
-        customClass: {
-          popup: "colored-toast",
-          title: "title-swal-text",
-        },
-        didOpen: (toast) => {
-          toast.addEventListener("mouseenter", this.$swal.stopTimer);
-          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-        },
-        showConfirmButton: false,
-        timer: 2500,
-        timerProgressBar: true,
-      });
-      if (this.newTodoText === "") {
-        Toast.fire({
-          icon: "error",
-          title: "Adicione ao menos uma pergunta",
-          background: "#FFA490",
-        });
-      }
+    CreateNewQuestion: async function() {
+      const newQuestion = await http.CreateAttribute(this.dataAttribute);
+      console.log(newQuestion)
     },
 
     trocaStatus() {
@@ -244,7 +229,7 @@ export default {
   color: var(--white);
   background-color: rgb(223, 97, 97);
   cursor: pointer;
-  font-weight: 600;  
+  font-weight: 600;
 }
 
 .title_modal input:hover {

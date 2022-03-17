@@ -16,67 +16,55 @@
           <td data-title="Cód. Prod.">{{ product.codigo_produto }}</td>
           <td data-title="Produto">{{ product.descricao }}</td>
           <td data-title="Cód. Cli.">xxxxxxxxxxxxxxxxx</td>
-          <td data-title="Cliente">{{product.cliente}}</td>
+          <td data-title="Cliente">{{ product.cliente }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
-              <ModalAtributo
-                :modalAtributo="modalAtributo"
-                @open-modal-atributo="openModalAtributo" 
-                :productsCodigo="product.codigo_produto"
-                :productsDescricao="product.descricao"
-                :productsCliente="product.cliente"
-                :productsCodeClient="varDefaultCodeClient"
-              />
-              <ModalVariavel
-                :modalVariavel="modalVariavel"
-                @open-modal-variavel="openModalVariavel"
-                :productsCodigo="product.codigo_produto"
-                :productsDescricao="product.descricao"
-                :productsCliente="product.cliente"
-                :productsCodeClient="varDefaultCodeClient"
-              />
+              <button @click="StartComponentAttribute(product)">AT</button>
+              <button @click="StartComponentVariable(product)">VA</button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+    <ModalAttribute v-if="modalAttributeOpen" :dataProduct="dataHeader" />
+    <ModalVariable v-if="modalVariableOpen" :dataProduct="dataHeader" />
   </fieldset>
 </template>
 
 <script>
-import ModalAtributo from "../components/Modal/ModalAtributo.vue";
-import ModalVariavel from "../components/Modal/ModalVariavel.vue";
-import http from "../services/productAnalysis/Products"
+import ModalAttribute from "../components/Modal/ModalAtributo.vue";
+import ModalVariable from "../components/Modal/ModalVariavel.vue";
+import http from "../services/productAnalysis/Products";
 
 export default {
-  components: { ModalAtributo, ModalVariavel },
+  components: { ModalAttribute, ModalVariable },
   setup() {},
   name: "Table",
   emits: ["modalAtributo", "modalVariavel"],
   data() {
     return {
       listProducts: [],
-      modalAtributo: false,
-      modalVariavel: false,
-      varDefaultCodeClient: "xxxxxxxx-xx"
+      modalAttributeOpen: false,
+      modalVariableOpen: false,
+      dataHeader: Object,
     };
   },
   methods: {
-    openModalAtributo() {
-      this.modalAtributo = !this.modalAtributo;
+    StartComponentAttribute: function (dataProduct) {
+      this.modalAttributeOpen = !this.modalAttributeOpen;
+      this.dataHeader = dataProduct;
     },
-    openModalVariavel() {
-      this.modalVariavel = !this.modalVariavel;
+    StartComponentVariable: function (dataProduct) {
+      this.modalVariableOpen = !this.modalVariableOpen;
+      this.dataHeader = dataProduct;
     },
   },
-  created: async function() {
+  created: async function () {
     this.$store.commit("$SETISLOADING");
     const products = await http.listProducts();
-    this.listProducts = products.data.list
-    console.log(this.listProducts)
-    console.log(this.listProducts)
+    this.listProducts = products.data.list;
     this.$store.commit("$SETISLOADING");
-  }
+  },
 };
 </script>
 
