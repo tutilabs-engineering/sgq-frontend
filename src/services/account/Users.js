@@ -19,7 +19,7 @@ export default {
   registerUser: async (data) => {
     return await http.post('users', data)
   },
-
+  
   validate: () => {
     return http.get("validateToken")
   },

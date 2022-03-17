@@ -21,11 +21,19 @@
             <div class="opcoes">
               <ModalAtributo
                 :modalAtributo="modalAtributo"
-                @open-modal-atributo="openModalAtributo"
+                @open-modal-atributo="openModalAtributo" 
+                :productsCodigo="product.codigo_produto"
+                :productsDescricao="product.descricao"
+                :productsCliente="product.cliente"
+                :productsCodeClient="varDefaultCodeClient"
               />
               <ModalVariavel
                 :modalVariavel="modalVariavel"
                 @open-modal-variavel="openModalVariavel"
+                :productsCodigo="product.codigo_produto"
+                :productsDescricao="product.descricao"
+                :productsCliente="product.cliente"
+                :productsCodeClient="varDefaultCodeClient"
               />
             </div>
           </td>
@@ -50,6 +58,7 @@ export default {
       listProducts: [],
       modalAtributo: false,
       modalVariavel: false,
+      varDefaultCodeClient: "xxxxxxxx-xx"
     };
   },
   methods: {
@@ -64,6 +73,7 @@ export default {
     this.$store.commit("$SETISLOADING");
     const products = await http.listProducts();
     this.listProducts = products.data.list
+    console.log(this.listProducts)
     console.log(this.listProducts)
     this.$store.commit("$SETISLOADING");
   }
