@@ -95,7 +95,6 @@ export default {
 
   methods: {
     ReturnCodeOp: async function(code_op) {
-      
       const dataOp = await http.listDataByCodeOp(code_op);
       const data = dataOp.data.data_op;
       this.headerInfo.client = data.client;
