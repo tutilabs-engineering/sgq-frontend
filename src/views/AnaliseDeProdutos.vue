@@ -21,7 +21,9 @@
             <div class="opcoes">
               <ModalAtributo
                 :modalAtributo="modalAtributo"
-                @open-modal-atributo="openModalAtributo"
+                @open-modal-atributo="openModalAtributo" :productsCodigo="product.codigo_produto"
+                :productsDescricao="product.descricao"
+                :productsCliente="product.cliente"
               />
               <ModalVariavel
                 :modalVariavel="modalVariavel"
@@ -64,6 +66,7 @@ export default {
     this.$store.commit("$SETISLOADING");
     const products = await http.listProducts();
     this.listProducts = products.data.list
+    console.log(this.listProducts)
     console.log(this.listProducts)
     this.$store.commit("$SETISLOADING");
   }

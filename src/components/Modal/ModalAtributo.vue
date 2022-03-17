@@ -19,22 +19,22 @@
             <div class="modal_body">
               <div class="inputsHeader">
                 <div class="input">
-                  <p>CODIGO PRODUTO:</p>
-                  <input type="text" readonly />
+                  <p>Código Produto:</p>
+                  <input type="text" readonly :value="productsCodigo"/>
                 </div>
 
                 <div class="input">
-                  <p>PRODUTO:</p>
-                  <input type="text" readonly />
+                  <p>Produto:</p>
+                  <input type="text" readonly :value="productsDescricao"/>
                 </div>
 
                 <div class="input">
-                  <p>CLIENTE:</p>
-                  <input type="text" readonly />
+                  <p>Cliente:</p>
+                  <input type="text" readonly :value="productsCliente"/>
                 </div>
 
                 <div class="input">
-                  <p>DESCRIÇÃO DO CLIENTE:</p>
+                  <p>Descrição Cliente:</p>
                   <input type="text" readonly />
                 </div>
               </div>
@@ -122,6 +122,10 @@ export default {
     titleModal: String,
     id: Number,
     modalAtributo: String,
+    productsCodigo: String,
+    productsDescricao: String,
+    productsCliente: String,
+
   },
   methods: {
     getComments(value) {
