@@ -149,6 +149,15 @@ export default {
       this.btnDesabilitado = true;
     },
   },
+
+  created: async function (){
+  await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+      console.log(res.data)
+    })
+    
+  }
+
+
 };
 </script>
 

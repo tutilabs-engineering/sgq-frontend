@@ -114,6 +114,9 @@
 </template>
 
 <script>
+
+import http from "../../services/productAnalysis/Variables"
+
 export default {
   components: {},
   name: "Modal",
@@ -170,6 +173,12 @@ export default {
       }
     },
   },
+  created: async function (){
+  await http.FindVariableByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+      console.log(res.data)
+    })
+    
+  }
 };
 </script>
 

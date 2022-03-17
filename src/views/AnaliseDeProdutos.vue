@@ -36,6 +36,7 @@ import ModalAttribute from "../components/Modal/ModalAtributo.vue";
 import ModalVariable from "../components/Modal/ModalVariavel.vue";
 import http from "../services/productAnalysis/Products";
 
+
 export default {
   components: { ModalAttribute, ModalVariable },
   setup() {},
@@ -44,6 +45,7 @@ export default {
   data() {
     return {
       listProducts: [],
+      listAttributes: [],
       modalAttributeOpen: false,
       modalVariableOpen: false,
       dataHeader: Object,
@@ -71,7 +73,7 @@ export default {
     this.$store.commit("$SETISLOADING");
     const products = await http.listProducts();
     this.listProducts = products.data.list;
-    this.$store.commit("$SETISLOADING");
+    this.$store.commit("$SETISLOADING");  
   },
 };
 </script>
@@ -165,7 +167,7 @@ table td {
   .btn-va {
     background-color: var(--card_orange);
   }
-  
+
 
 @media (max-width: 1000px) {
   legend {
