@@ -172,7 +172,7 @@ export default {
   height: 90%;
   margin: 30px auto;
   background: var(--bg_white);
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -185,8 +185,6 @@ export default {
   height: 3.5rem;
   line-height: 3.5rem;
   background: var(--bg_green);
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
 }
 
 .modal_mask .modal_content .modal_header .title_modal {
@@ -223,34 +221,23 @@ export default {
 }
 
 .title_modal input {
-  padding: 5px 10px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 5px 5px;
+  border-radius: 10px;
   border: none;
+  font-size: 20px;
   color: var(--white);
-  background-color: rgb(223, 97, 97);
+  background-color: transparent;
   cursor: pointer;
   font-weight: 600;
+  transition: 1s;
 }
 
 .title_modal input:hover {
-  background-color: rgb(148, 7, 7);
+  transform: rotate(180deg);
 }
 
-/* Style ScrollBar -------- */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgb(182, 181, 181);
-  border-radius: 15px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--bg_green);
-  border-radius: 15px;
-}
 
 /* -------- Style Atributo ------- */
 #inputImage {
@@ -390,9 +377,9 @@ export default {
   }
 
   .title_modal input {
-    width: 4vw;
-    height: 4vw;
-    font-size: 2vw;
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
   }
 
   .incrementAtributo .inputAdd input {
@@ -402,9 +389,9 @@ export default {
 
 @media (max-width: 425px) {
   .title_modal input {
-    width: 7vw;
-    height: 7vw;
-    font-size: 4vw;
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
   }
 
   .modal_mask .modal_body .inputsHeader .input {
