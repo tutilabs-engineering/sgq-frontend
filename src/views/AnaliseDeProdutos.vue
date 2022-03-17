@@ -21,9 +21,11 @@
             <div class="opcoes">
               <ModalAtributo
                 :modalAtributo="modalAtributo"
-                @open-modal-atributo="openModalAtributo" :productsCodigo="product.codigo_produto"
+                @open-modal-atributo="openModalAtributo" 
+                :productsCodigo="product.codigo_produto"
                 :productsDescricao="product.descricao"
                 :productsCliente="product.cliente"
+                :productsCodeClient="varDefaultCodeClient"
               />
               <ModalVariavel
                 :modalVariavel="modalVariavel"
@@ -31,6 +33,7 @@
                 :productsCodigo="product.codigo_produto"
                 :productsDescricao="product.descricao"
                 :productsCliente="product.cliente"
+                :productsCodeClient="varDefaultCodeClient"
               />
             </div>
           </td>
@@ -55,6 +58,7 @@ export default {
       listProducts: [],
       modalAtributo: false,
       modalVariavel: false,
+      varDefaultCodeClient: "xxxxxxxx-xx"
     };
   },
   methods: {

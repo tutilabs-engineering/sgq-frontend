@@ -19,22 +19,22 @@
             <div class="modal_body">
               <div class="inputsHeader">
                 <div class="input">
-                  <p>Código Produto:</p>
+                  <p>Cód. Produto</p>
                   <input type="text" readonly :value="productsCodigo"/>
                 </div>
 
                 <div class="input">
-                  <p>Produto:</p>
+                  <p>Produto</p>
                   <input type="text" readonly :value="productsDescricao"/>
                 </div>
 
                 <div class="input">
-                  <p>Cliente:</p>
-                  <input type="text" readonly />
+                  <p>Cód. Cliente</p>
+                  <input type="text" readonly :value="productsCodeClient"/>
                 </div>
 
                 <div class="input">
-                  <p>Descrição Cliente:</p>
+                  <p>Descrição Cliente</p>
                   <input type="text" readonly :value="productsCliente"/>
                 </div>
               </div>
@@ -125,6 +125,7 @@ export default {
     productsCodigo: String,
     productsDescricao: String,
     productsCliente: String,
+    productsCodeClient: String
 
   },
   methods: {
