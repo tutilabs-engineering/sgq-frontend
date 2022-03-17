@@ -11,7 +11,7 @@
                   type="button"
                   value="X"
                   colorButton="red"
-                  @click="$emit('openModalAtributo')"
+                  @click="$emit('changeStatus')"
                 />
               </div>
             </div>
@@ -101,7 +101,7 @@
     </transition>
   </div>
 
-  <!-- <button class="btnAt" @click="$emit('openModalAtributo')">AT</button> -->
+  <button class="btnAt" @click="$emit('changeStatus')">AT</button>
 </template>
 
 <script>
@@ -111,7 +111,7 @@ import http from "../../services/productAnalysis/Attributes"
 export default {
   components: {},
   name: "Modal",
-  emits: ["openModalAtributo"],
+  emits: ["changeStatus"],
   data() {
     return {
       actionButton: "Insert",

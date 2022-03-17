@@ -11,7 +11,7 @@
                   type="button"
                   value="X"
                   colorButton="red"
-                  @click="$emit('openModalVariavel')"
+                  @click="$emit('changeStatus')"
                 />
               </div>
             </div>
@@ -110,14 +110,14 @@
       </form>
     </transition>
   </div>
-  <!-- <button class="btnVa" @click="$emit('openModalVariavel')">VA</button> -->
+  <button class="btnVa" @click="$emit('changeStatus')">VA</button>
 </template>
 
 <script>
 export default {
   components: {},
   name: "Modal",
-  emits: ["openModalVariavel"],
+  emits: ["changeStatus"],
   data() {
     return {
       actionButton: "Insert",
