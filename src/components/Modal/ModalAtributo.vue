@@ -30,12 +30,12 @@
 
                 <div class="input">
                   <p>Cliente:</p>
-                  <input type="text" readonly :value="productsCliente"/>
+                  <input type="text" readonly />
                 </div>
 
                 <div class="input">
                   <p>Descrição Cliente:</p>
-                  <input type="text" readonly />
+                  <input type="text" readonly :value="productsCliente"/>
                 </div>
               </div>
 

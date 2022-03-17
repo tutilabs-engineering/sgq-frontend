@@ -20,12 +20,12 @@
               <div class="inputsHeader">
                 <div class="input">
                   <p>SAP:</p>
-                  <input type="text" readonly />
+                  <input type="text" readonly :value="productsCodigo"/>
                 </div>
 
                 <div class="input">
                   <p>PRODUTO:</p>
-                  <input type="text" readonly />
+                  <input type="text" readonly :value="productsDescricao"/>
                 </div>
 
                 <div class="input">
@@ -35,7 +35,7 @@
 
                 <div class="input">
                   <p>DESCRIÇÃO DO CLIENTE:</p>
-                  <input type="text" readonly />
+                  <input type="text" readonly :value="productsCliente"/>
                 </div>
               </div>
 
@@ -132,6 +132,9 @@ export default {
     titleModal: String,
     id: Number,
     modalVariavel: String,
+    productsCodigo: String,
+    productsDescricao: String,
+    productsCliente: String,
   },
   methods: {
     getComments(value) {

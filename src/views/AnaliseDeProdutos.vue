@@ -28,6 +28,9 @@
               <ModalVariavel
                 :modalVariavel="modalVariavel"
                 @open-modal-variavel="openModalVariavel"
+                :productsCodigo="product.codigo_produto"
+                :productsDescricao="product.descricao"
+                :productsCliente="product.cliente"
               />
             </div>
           </td>
