@@ -64,22 +64,25 @@
 
                     <div class="titleHeader">
                       <input
-                        @click="trocaStatus"
-                        type="radio"
+                        @click="changeAttention(todo.id, !todo.attention)"
+                        type="checkbox"
                         :name="index"
-                        :checked="todo.attention"
-                        id=""
+                        v-model="todo.attention"
+                       
                       />
+                      {{todo.attention}}
                     </div>
                     <div class="titleHeader">
-                      <button
+                      <button type="button"
+                        @click.prevent="changeStatus(todo.id, !todo.is_enabled)"
                         :id="index"
                         class="btnHabilitar"
                         v-if="todo.is_enabled === true"
                       >
                         Habilitado
                       </button>
-                      <button
+                      <button type="button"
+                        @click.prevent="changeStatus(todo.id, !todo.is_enabled)"
                         :id="index"
                         class="btnDesabilitar"
                          v-else
@@ -130,13 +133,6 @@ export default {
       nextTodoId: 0,
       textBtn: "Habilitar",
       btnDesabilitado: false,
-      dataAttribute: {
-        cod_sap: "(Remover isso do back-end)",
-        cod_product: this.dataProduct.codigo_produto,
-        attention: true,
-        question: "",
-        is_enabled: true
-      }
     };
   },
   props: {
@@ -156,16 +152,29 @@ export default {
       this.textBtn = "Desabilitado";
       this.btnDesabilitado = true;
     },
+
+    async changeAttention(id, attentionValue) {
+      this.$store.commit("$SETISLOADING");
+      await http.ChangeAttentionByAttributes(id, attentionValue)
+      this.$store.commit("$SETISLOADING");
+    },
+
+    async changeStatus(id, statusValue) {
+      await http.ChangeStatusByAttributes(id,  statusValue)
+    }
+
+
   },
 
   created: async function (){
+    this.$store.commit("$SETISLOADING");
     await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
   
       this.listQuestions = res.data.list
       console.log(this.listQuestions)
         
-      })
-    
+    })
+    this.$store.commit("$SETISLOADING");
   }
 
 
