@@ -67,6 +67,7 @@
                         @click="trocaStatus"
                         type="radio"
                         :name="index"
+                        :checked="todo.attention"
                         id=""
                       />
                     </div>
@@ -74,9 +75,16 @@
                       <button
                         :id="index"
                         class="btnHabilitar"
-                        :class="{ btnDesabilitar: btnDesabilitado }"
+                        v-if="todo.is_enabled === true"
                       >
-                        {{ textBtn }}
+                        Habilitado
+                      </button>
+                      <button
+                        :id="index"
+                        class="btnDesabilitar"
+                         v-else
+                      >
+                        Desabilitado
                       </button>
                     </div>
                   </div>
@@ -154,6 +162,7 @@ export default {
     await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
   
       this.listQuestions = res.data.list
+      console.log(this.listQuestions)
         
       })
     
