@@ -73,22 +73,22 @@
                       {{todo.attention}}
                     </div>
                     <div class="titleHeader">
-                      <button type="button"
-                        @click.prevent="changeStatus(todo.id, !todo.is_enabled)"
+                 
+                      <input type="button"
+                        @click.prevent="changeStatus($event, todo.id)"
                         :id="index"
                         class="btnHabilitar"
-                        v-if="todo.is_enabled === true"
+                        value="Habilitado"
+                        v-if="todo.is_enabled"
                       >
-                        Habilitado
-                      </button>
-                      <!-- <button type="button"
-                        @click.prevent="changeStatus(todo.id, !todo.is_enabled)"
+                        <input type="button"
+                        v-else
+                        @click.prevent="changeStatus($event, todo.id)"
                         :id="index"
-                        class="btnDesabilitar"
-                         v-else
+                        class="btnDesabilitado"
+                        value="Desabilitado"
                       >
-                        Desabilitado
-                      </button> -->
+             
                     </div>
                   </div>
                 </div>
@@ -133,6 +133,13 @@ export default {
       nextTodoId: 0,
       textBtn: "Habilitar",
       btnDesabilitado: false,
+      dataAttribute: {
+        cod_sap: "(Remover isso do back-end)",
+        cod_product: this.dataProduct.codigo_produto,
+        attention: true,
+        question: "",
+        is_enabled: true
+      }
     };
   },
   props: {
@@ -159,8 +166,21 @@ export default {
       this.$store.commit("$SETISLOADING");
     },
 
-    async changeStatus(id, statusValue) {
-      await http.ChangeStatusByAttributes(id,  statusValue)
+    async changeStatus($event,id) {
+      console.log($event.target);
+        var btnTarget =$event.target;
+        if(btnTarget.value == "Habilitado"){
+        btnTarget.style.backgroundColor="#e9dfdf"
+        btnTarget.style.color="#444444"
+        btnTarget.value="Desabilitado"
+      await http.ChangeStatusByAttributes(id,  false)
+      
+      }else{
+        btnTarget.style.backgroundColor="#5f9dff"
+        btnTarget.style.color="#ffffff"
+        btnTarget.value="Habilitado"
+      await http.ChangeStatusByAttributes(id,  true)
+      }
     }
 
 
