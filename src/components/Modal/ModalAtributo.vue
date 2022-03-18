@@ -81,14 +81,14 @@
                       >
                         Habilitado
                       </button>
-                      <button type="button"
+                      <!-- <button type="button"
                         @click.prevent="changeStatus(todo.id, !todo.is_enabled)"
                         :id="index"
                         class="btnDesabilitar"
                          v-else
                       >
                         Desabilitado
-                      </button>
+                      </button> -->
                     </div>
                   </div>
                 </div>
