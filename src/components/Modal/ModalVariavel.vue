@@ -11,7 +11,7 @@
                   type="button"
                   value="X"
                   colorButton="red"
-                  @click="$emit('openModalVariavel')"
+                  @click="$emit('changeStatus')"
                 />
               </div>
             </div>
@@ -110,14 +110,17 @@
       </form>
     </transition>
   </div>
-  <!-- <button class="btnVa" @click="$emit('openModalVariavel')">VA</button> -->
+  <button class="btnVa" @click="$emit('changeStatus')">VA</button>
 </template>
 
 <script>
+
+import http from "../../services/productAnalysis/Variables"
+
 export default {
   components: {},
   name: "Modal",
-  emits: ["openModalVariavel"],
+  emits: ["changeStatus"],
   data() {
     return {
       actionButton: "Insert",
@@ -170,6 +173,12 @@ export default {
       }
     },
   },
+  created: async function (){
+  await http.FindVariableByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+      console.log(res.data)
+    })
+    
+  }
 };
 </script>
 
@@ -193,7 +202,7 @@ export default {
   height: 90%;
   margin: 30px auto;
   background: var(--bg_white);
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -206,8 +215,6 @@ export default {
   height: 3.5rem;
   line-height: 3.5rem;
   background: var(--bg_green);
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
 }
 
 .modal_mask .modal_content .modal_header .title_modal {
@@ -222,6 +229,8 @@ export default {
   justify-content: space-between;
 }
 
+
+
 .btnVa {
   width: 100px;
   background: var(--card_orange);
@@ -234,34 +243,23 @@ export default {
 }
 
 .title_modal input {
-  padding: 5px 10px;
-  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 5px 5px;
+  border-radius: 10px;
   border: none;
+  font-size: 20px;
   color: var(--white);
-  background-color: rgb(223, 97, 97);
+  background-color: transparent;
   cursor: pointer;
   font-weight: 600;
+  transition: 1s;
 }
 
 .title_modal input:hover {
-  background-color: rgb(148, 7, 7);
+  transform: rotate(180deg);
 }
 
-/* Style ScrollBar -------- */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgb(182, 181, 181);
-  border-radius: 15px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--bg_green);
-  border-radius: 15px;
-}
 
 /* -------- Style Variavel ------- */
 #inputImage {
@@ -430,9 +428,9 @@ export default {
 
 @media (max-width: 770px) {
   .title_modal input {
-    width: 25px;
-    height: 25px;
-    font-size: 10px;
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
   }
 
   .modal_mask .modal_body .titleBody {

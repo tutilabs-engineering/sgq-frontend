@@ -19,15 +19,15 @@
           <td data-title="Cliente">{{ product.cliente }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
-              <button @click="StartComponentAttribute(product)">AT</button>
-              <button @click="StartComponentVariable(product)">VA</button>
+              <button class="btn btn-at" @click="StartComponentAttribute(product)">AT</button>
+              <button class="btn btn-va" @click="StartComponentVariable(product)">VA</button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-    <ModalAttribute v-if="modalAttributeOpen" :dataProduct="dataHeader" />
-    <ModalVariable v-if="modalVariableOpen" :dataProduct="dataHeader" />
+    <ModalAttribute v-if="modalAttributeOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalAtrribute"/>
+    <ModalVariable v-if="modalVariableOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalVariable"/>
   </fieldset>
 </template>
 
@@ -35,6 +35,7 @@
 import ModalAttribute from "../components/Modal/ModalAtributo.vue";
 import ModalVariable from "../components/Modal/ModalVariavel.vue";
 import http from "../services/productAnalysis/Products";
+
 
 export default {
   components: { ModalAttribute, ModalVariable },
@@ -44,6 +45,7 @@ export default {
   data() {
     return {
       listProducts: [],
+      listAttributes: [],
       modalAttributeOpen: false,
       modalVariableOpen: false,
       dataHeader: Object,
@@ -58,12 +60,20 @@ export default {
       this.modalVariableOpen = !this.modalVariableOpen;
       this.dataHeader = dataProduct;
     },
+
+    changeStatusModalAtrribute () {
+      this.modalAttributeOpen = !this.modalAttributeOpen
+    },
+    changeStatusModalVariable () {
+      this.modalVariableOpen = !this.modalVariableOpen
+    }
+
   },
   created: async function () {
     this.$store.commit("$SETISLOADING");
     const products = await http.listProducts();
     this.listProducts = products.data.list;
-    this.$store.commit("$SETISLOADING");
+    this.$store.commit("$SETISLOADING");  
   },
 };
 </script>
@@ -141,6 +151,24 @@ table td {
   align-items: center;
 }
 
+ .btn {
+    border: none;
+    width: 50px;
+    height: 30px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .btn-at {
+    background-color: var(--card_blue);
+  }
+
+  .btn-va {
+    background-color: var(--card_orange);
+  }
+
+
 @media (max-width: 1000px) {
   legend {
     text-align: center;
@@ -188,5 +216,7 @@ table td {
   .lastTd {
     border-bottom: 3px dotted var(--font-color);
   }
+
+ 
 }
 </style>
