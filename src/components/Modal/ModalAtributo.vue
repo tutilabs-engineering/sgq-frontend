@@ -53,14 +53,13 @@
                 <div class="headerPergunta">
                   <div
                     v-show="index !== 0"
-                    v-for="(todo, index) in todos"
-                    v-bind:key="todo.id"
-                    v-on:remove="todos.splice(index, 1)"
+                    v-for="todo in listQuestions"
+                    :key="todo.id"
                     class="testeLi"
                     :id="index"
                   >
                     <div class="titleHeader">
-                      {{ todo.title }}
+                      {{ todo.question }}
                     </div>
 
                     <div class="titleHeader">
@@ -118,6 +117,7 @@ export default {
       dynamicTitle: "Add Data",
       comments: "",
       count: 0,
+      listQuestions: [],
       todos: [{}],
       nextTodoId: 0,
       textBtn: "Habilitar",
@@ -151,9 +151,11 @@ export default {
   },
 
   created: async function (){
-  await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
-      console.log(res.data)
-    })
+    await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+  
+      this.listQuestions = res.data.list
+        
+      })
     
   }
 
