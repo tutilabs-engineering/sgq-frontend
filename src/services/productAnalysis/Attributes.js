@@ -6,6 +6,7 @@ export default {
   },
 
   FindAttributesByCodeProduct: async (code_product) => {
+    console.log(code_product);
     return await http.get(`attribute/${code_product}`)
   },
 
