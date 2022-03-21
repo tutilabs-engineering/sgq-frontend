@@ -77,16 +77,16 @@
                       <input type="button"
                         @click.prevent="changeStatus($event, todo.id)"
                         :id="index"
-                        class="btnHabilitar"
                         value="Habilitado"
+                        class="btnH"
                         v-if="todo.is_enabled"
                       >
                         <input type="button"
                         v-else
                         @click.prevent="changeStatus($event, todo.id)"
                         :id="index"
-                        class="btnDesabilitado"
                         value="Desabilitado"
+                        class="btnD"
                       >
              
                     </div>
@@ -169,17 +169,18 @@ export default {
     async changeStatus($event,id) {
       console.log($event.target);
         var btnTarget =$event.target;
-        if(btnTarget.value == "Habilitado"){
-        btnTarget.style.backgroundColor="#e9dfdf"
-        btnTarget.style.color="#444444"
-        btnTarget.value="Desabilitado"
-      await http.ChangeStatusByAttributes(id,  false)
+        
+        if(btnTarget.value === "Habilitado"){
+          btnTarget.value="Desabilitado"
+          btnTarget.className="btnD"
+          await http.ChangeStatusByAttributes(id,  false)
+          console.log(btnTarget.value)
       
       }else{
-        btnTarget.style.backgroundColor="#5f9dff"
-        btnTarget.style.color="#ffffff"
         btnTarget.value="Habilitado"
-      await http.ChangeStatusByAttributes(id,  true)
+        btnTarget.className="btnH"
+        await http.ChangeStatusByAttributes(id,  true)
+        console.log(btnTarget.value)
       }
     }
 
@@ -419,6 +420,25 @@ export default {
   border: none;
   cursor: pointer;
 }
+
+.btnH, .btnD {
+  width: 100px;
+  border: none;
+  height: 40px;
+  border-radius: 5px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+}
+
+.btnH {
+  background-color: var(--card_blue);
+}
+
+.btnD {
+  background-color: var(--card_red);
+}
+
 
 @media (max-width: 768px) {
   .modal_mask .modal_body .inputsHeader .input {
