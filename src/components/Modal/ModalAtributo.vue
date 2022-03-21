@@ -188,10 +188,8 @@ export default {
   created: async function (){
     this.$store.commit("$SETISLOADING");
     await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
-  
       this.listQuestions = res.data.list
       console.log(this.listQuestions)
-        
     })
     this.$store.commit("$SETISLOADING");
   }
