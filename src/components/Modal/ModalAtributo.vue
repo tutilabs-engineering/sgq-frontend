@@ -181,8 +181,6 @@ export default {
         this.$store.commit("$SETISLOADING");
       }
     }
-
-
   },
 
   created: async function (){
