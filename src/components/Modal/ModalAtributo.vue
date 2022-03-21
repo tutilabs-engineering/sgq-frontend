@@ -68,9 +68,8 @@
                         type="checkbox"
                         :name="index"
                         v-model="todo.attention"
-                       
                       />
-                      {{todo.attention}}
+                      
                     </div>
                     <div class="titleHeader">
                  
@@ -349,6 +348,7 @@ export default {
   width: 100%;
   display: flex;
   gap: 0.5rem;
+  text-align: center;
 }
 .perguntas .headerPergunta .titleHeader {
   position: relative;
@@ -360,6 +360,7 @@ export default {
   position: relative;
   width: 33%;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .perguntas .headerPergunta .titleHeader .btnHabilitar {
@@ -438,6 +439,7 @@ export default {
 .btnD {
   background-color: var(--card_red);
 }
+
 
 
 @media (max-width: 768px) {
