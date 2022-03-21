@@ -79,31 +79,37 @@
                 </div>
               </div>
 
-              <div class="attributeVariable">
+              <form
+                class="attributeVariable"
+                @submit.prevent="RegisterVariable"
+              >
                 <div class="inputIdentificacao">
                   <p>IDENTIFICAÇÃO:</p>
-                  <input type="text" v-model="variavel.identificacao" />
+                  <input type="text" v-model="list.description" />
                 </div>
 
                 <div class="inputCota">
                   <p>COTA:</p>
-                  <input type="text" v-model="variavel.cota" />
+                  <input type="number" v-model="list.cota" />
                 </div>
 
                 <div class="inputCota">
                   <p>MÁX:</p>
-                  <input type="text" v-model="variavel.max" />
+                  <input type="number" v-model="list.max" />
                 </div>
 
                 <div class="inputCota">
                   <p>MIN:</p>
-                  <input type="text" v-model="variavel.min" />
+                  <input type="number" v-model="list.min" />
                 </div>
 
-                <div class="inputUpLoad" @click="incrementVariable">
-                  <label><i class="fas fa-plus"></i></label>
+                <button type="submit" class="inputUpLoad">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <div class="alertMax" v-show="list.max < list.min">
+                  <p>OBS: O campo máximo tem que ser maior que o mínimo</p>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -114,8 +120,7 @@
 </template>
 
 <script>
-
-import http from "../../services/productAnalysis/Variables"
+import http from "../../services/productAnalysis/Variables";
 
 export default {
   components: {},
@@ -127,11 +132,14 @@ export default {
       dynamicTitle: "Add Data",
       comments: "",
       count: 0,
-      variavel: {
-        identificacao: "",
-        cota: "",
-        max: "",
-        min: "",
+      list: {
+        cod_sap: this.dataProduct.codigo_produto,
+        cod_product: this.dataProduct.codigo_produto,
+        description: "",
+        cota: 0,
+        max: 0,
+        min: 0,
+        file: "sadfa",
       },
     };
   },
@@ -142,7 +150,8 @@ export default {
     getComments(value) {
       this.comments = value;
     },
-    incrementVariable() {
+
+    async RegisterVariable() {
       const Toast = this.$swal.mixin({
         toast: true,
         position: "top-right",
@@ -159,26 +168,56 @@ export default {
         timer: 2500,
         timerProgressBar: true,
       });
-      if (
-        this.variavel.identificacao === "" ||
-        this.variavel.cota === "" ||
-        this.variavel.max === "" ||
-        this.variavel.min === ""
-      ) {
-        Toast.fire({
-          icon: "error",
-          title: "Preencha todos os campos!",
-          background: "#FFA490",
+
+      const inputDescription = this.list.description;
+      const inputCota = this.list.cota;
+      const inputMax = this.list.max;
+      const inputMin = this.list.min;
+
+      const variableRegister = this.list;
+      await http
+        .CreateVariable(variableRegister)
+        .then((res) => {
+          if (this.list.max <= this.list.min) {
+            Toast.fire({
+              icon: "error",
+              title: "Campo máximo precisa ser maior que o mínimo!",
+              background: "#FFA490",
+            });
+            this.list.max = "";
+            this.list.min = "";
+          } else {
+            Toast.fire({
+              icon: "success",
+              title: "Variável criada com sucesso!",
+              background: "#A8D4FF",
+            });
+            this.list.description = "";
+            this.list.cota = "";
+            this.list.max = "";
+            this.list.min = "";
+            return res;
+          }
+        })
+        .catch((error) => {
+          if (!inputDescription || !inputCota || !inputMax || !inputMin) {
+            Toast.fire({
+              icon: "error",
+              title: "Preencha todos os campos!",
+              background: "#FFA490",
+            });
+          }
+          return error;
         });
-      }
     },
   },
-  created: async function (){
-  await http.FindVariableByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
-      console.log(res.data)
-    })
-    
-  }
+  created: async function () {
+    await http
+      .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
+      .then((res) => {
+        console.log(res.data.list);
+      });
+  },
 };
 </script>
 
@@ -229,8 +268,6 @@ export default {
   justify-content: space-between;
 }
 
-
-
 .btnVa {
   width: 100px;
   background: var(--card_orange);
@@ -259,7 +296,6 @@ export default {
 .title_modal input:hover {
   transform: rotate(180deg);
 }
-
 
 /* -------- Style Variavel ------- */
 #inputImage {
@@ -395,6 +431,18 @@ export default {
   outline: none;
 }
 
+.modal_mask .modal_body .attributeVariable .alertMax {
+  background: var(--card_red);
+  color: var(--bg_white);
+  font-size: 1rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
 .modal_mask .modal_body .attributeVariable .inputUpLoad {
   width: 10%;
   height: 40px;
@@ -407,7 +455,14 @@ export default {
   color: var(--main_primaryWhite);
   cursor: pointer;
   font-size: 1.4rem;
+  border: none;
 }
+
+/* .modal_mask .modal_body .attributeVariable .inputUpLoad button {
+  background: transparent;
+  color: var(--bg_white);
+  font-size: 1rem;
+} */
 
 .modal_mask .modal_body .attributeVariable .inputUpLoad .fa-plus {
   cursor: pointer;
