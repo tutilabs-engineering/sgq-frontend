@@ -166,20 +166,19 @@ export default {
     },
 
     async changeStatus($event,id) {
-      console.log($event.target);
+      this.$store.commit("$SETISLOADING");
         var btnTarget =$event.target;
-        
         if(btnTarget.value === "Habilitado"){
           btnTarget.value="Desabilitado"
           btnTarget.className="btnD"
           await http.ChangeStatusByAttributes(id,  false)
-          console.log(btnTarget.value)
+          this.$store.commit("$SETISLOADING");
       
       }else{
         btnTarget.value="Habilitado"
         btnTarget.className="btnH"
         await http.ChangeStatusByAttributes(id,  true)
-        console.log(btnTarget.value)
+        this.$store.commit("$SETISLOADING");
       }
     }
 
