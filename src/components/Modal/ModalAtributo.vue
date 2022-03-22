@@ -160,6 +160,8 @@ export default {
     dataProduct: Object,
   },
   methods: {
+
+    
     renderListAttribute: async function () {
       await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
       if(res) {
@@ -169,10 +171,32 @@ export default {
     },
 
     deleteQuestion: async function(id){
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
+
       this.$store.commit("$SETISLOADING");
       await http.DeleteQuestionById(id);
       this.renderListAttribute()
       this.$store.commit("$SETISLOADING");
+      Toast.fire({
+              icon: "error",
+              title: "Pergunta deletada!",
+              background: "#FFA490",
+            });
     },
 
     getComments(value) {
@@ -180,10 +204,33 @@ export default {
     },
 
     CreateNewQuestion: async function() {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
+
+
       this.$store.commit("$SETISLOADING");
       await http.CreateAttribute(this.dataAttribute);
       this.renderListAttribute()
       this.dataAttribute.question = ""
+      Toast.fire({
+              icon: "success",
+              title: "Pergunta criada com sucesso!",
+              background: "#A8D4FF",
+            });
       this.$store.commit("$SETISLOADING");
     },
 
@@ -217,10 +264,15 @@ export default {
   },
 
   created: async function (){
+
+    
+
+
     this.$store.commit("$SETISLOADING");
     await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
       if(res) {
-         this.listQuestions = res.data.list 
+         this.listQuestions = res.data.list
+         
         this.$store.commit("$SETISLOADING");
       }
        
