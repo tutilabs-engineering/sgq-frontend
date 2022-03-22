@@ -223,17 +223,30 @@ export default {
 
 
       this.$store.commit("$SETISLOADING");
-      await http.CreateAttribute(this.dataAttribute);
-      this.renderListAttribute()
-      this.dataAttribute.question = ""
-      Toast.fire({
-              icon: "success",
-              title: "Pergunta criada com sucesso!",
-              background: "#A8D4FF",
+      
+      try {
+        const response = await http.CreateAttribute(this.dataAttribute);
+        
+        this.renderListAttribute()
+        this.dataAttribute.question = ""
+        Toast.fire({
+                icon: "success",
+                title: "Pergunta criada com sucesso!",
+                background: "#A8D4FF",
+              });
+        this.$store.commit("$SETISLOADING");
+        return response;
+      } catch {
+        Toast.fire({
+              icon: "error",
+              title: "Pergunta já existente!",
+              background: "#FFA490",
             });
-      this.$store.commit("$SETISLOADING");
+        
+        this.$store.commit("$SETISLOADING");
+      }
     },
-
+    
     trocaStatus() {
       this.textBtn = "Desabilitado";
       this.btnDesabilitado = true;
