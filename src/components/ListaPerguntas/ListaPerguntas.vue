@@ -10,6 +10,7 @@
         <PerguntaPadrao
           :description="defaultQuestion.description"
           :idQuestion="defaultQuestion.id"
+          @returnAnswered="ReturnAnswered"
         />
       </div>
     </fieldset>
@@ -45,6 +46,7 @@ export default {
     return {
       defaultQuestions: [],
       numberCavidade: this.qtdeCavidade,
+      qtdePerguntas: [],
     };
   },
 
@@ -61,6 +63,17 @@ export default {
     const response = await http.listAllDefaultQuestions();
     this.defaultQuestions = response.data.defaultQuestions;
   },
+
+  methods: {
+    ReturnAnswered: async function(answered){
+      this.qtdePerguntas.push(answered)
+      console.log(this.qtdePerguntas.length)
+  }
+  
+  
+
+  },
+
 };
 </script>
 

@@ -39,7 +39,7 @@ export default {
     left: 0;
     position: fixed;
 
-    z-index: 999;
+    z-index: 10000;
 }
 
 .quadrado {
