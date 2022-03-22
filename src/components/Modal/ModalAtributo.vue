@@ -48,6 +48,7 @@
                   <div class="titleHeader">Pergunta</div>
                   <div class="titleHeader">Atenção</div>
                   <div class="titleHeader">Status</div>
+                  <div class="titleHeader">Opções</div>
                 </div>
 
                 <div class="headerPergunta">
@@ -89,6 +90,19 @@
                       >
              
                     </div>
+
+                    <div class="titleHeader">
+
+                      <input type="button"
+                        @click.prevent="deleteQuestion(todo.id)"
+                        :id="index"
+                        value="Deletar"
+                        class="btn-delete"
+                      >
+                      
+             
+                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -114,6 +128,7 @@
 </template>
 
 <script>
+
 
 import http from "../../services/productAnalysis/Attributes"
 
@@ -145,13 +160,31 @@ export default {
     dataProduct: Object,
   },
   methods: {
+    renderListAttribute: async function () {
+      await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+      if(res) {
+         this.listQuestions = res.data.list 
+      }
+    })
+    },
+
+    deleteQuestion: async function(id){
+      this.$store.commit("$SETISLOADING");
+      await http.DeleteQuestionById(id);
+      this.renderListAttribute()
+      this.$store.commit("$SETISLOADING");
+    },
+
     getComments(value) {
       this.comments = value;
     },
 
     CreateNewQuestion: async function() {
-      const newQuestion = await http.CreateAttribute(this.dataAttribute);
-      console.log(newQuestion)
+      this.$store.commit("$SETISLOADING");
+      await http.CreateAttribute(this.dataAttribute);
+      this.renderListAttribute()
+      this.dataAttribute.question = ""
+      this.$store.commit("$SETISLOADING");
     },
 
     trocaStatus() {
@@ -186,22 +219,13 @@ export default {
   created: async function (){
     this.$store.commit("$SETISLOADING");
     await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
-
       if(res) {
-     
          this.listQuestions = res.data.list 
-         
-     
         this.$store.commit("$SETISLOADING");
       }
        
     })
-    
-    
-      
-      
 
-    
   }
 
 
@@ -429,7 +453,7 @@ export default {
   cursor: pointer;
 }
 
-.btnH, .btnD {
+.btnH, .btnD, .btn-delete {
   width: 100px;
   border: none;
   height: 40px;
@@ -444,6 +468,10 @@ export default {
 }
 
 .btnD {
+  background-color: var(--card_red);
+}
+
+.btn-delete {
   background-color: var(--card_red);
 }
 
