@@ -48,26 +48,30 @@
               </div>
 
               <div class="variavel_increment">
-                <div class="inputsHeader" v-for="index in count" :key="index">
-                  <h4>{{ index }}</h4>
+                <div
+                  class="inputsHeader"
+                  v-for="(variable, index) in variables"
+                  :key="index"
+                >
+                  <h4>{{ index + 1 }}</h4>
                   <div class="inputIdentificacao">
                     <p>IDENTIFICAÇÃO:</p>
-                    <input type="text" />
+                    <p>{{ variable.description }}</p>
                   </div>
 
                   <div class="inputCota">
                     <p>COTA:</p>
-                    <input type="text" />
+                    <p>{{ variable.cota }}</p>
                   </div>
 
                   <div class="inputCota">
                     <p>MÁX:</p>
-                    <input type="text" />
+                    <p>{{ variable.max }}</p>
                   </div>
 
                   <div class="inputCota">
                     <p>MIN:</p>
-                    <input type="text" />
+                    <p>{{ variable.min }}</p>
                   </div>
 
                   <div class="inputUpLoad">
@@ -128,6 +132,7 @@ export default {
   emits: ["changeStatus"],
   data() {
     return {
+      variables: [{}],
       actionButton: "Insert",
       dynamicTitle: "Add Data",
       comments: "",
@@ -175,6 +180,7 @@ export default {
       const inputMin = this.list.min;
 
       const variableRegister = this.list;
+      this.$store.commit("$SETISLOADING");
       await http
         .CreateVariable(variableRegister)
         .then((res) => {
@@ -209,14 +215,17 @@ export default {
           }
           return error;
         });
+      this.$store.commit("$SETISLOADING");
     },
   },
   created: async function () {
+    this.$store.commit("$SETISLOADING");
     await http
       .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
       .then((res) => {
-        console.log(res.data.list);
+        this.variables = res.data.list;
       });
+    this.$store.commit("$SETISLOADING");
   },
 };
 </script>
