@@ -29,24 +29,24 @@
 
       <div class="third-row">
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP" @change="changeIcon(1)"/>
+          <input type="radio" :name="idQuestion" id="AP" @change="changeIcon(1)" @click="isAnswerd"/>
           <label for="Ap">C</label>
         </div>
 
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(2)"/>
+          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(2)" @click="isAnswerd"/>
           <label for="Ap">NC</label>
         </div>
 
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(3)"/>
+          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(3)" @click="isAnswerd"/>
           <label for="Ap">NA</label>
         </div>
       </div>
 
       <div class="fourth-row">
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(4)"/>
+          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(4)" @click="isAnswerd"/>
           <label for="Ap">GM</label>
         </div>
         <label for="file" class="labelFile">Enviar Arquivo</label>
@@ -67,12 +67,24 @@ export default {
   methods: {
     changeIcon(e){
       this.valueQuestion = e
+    },
+
+    isAnswerd(){
+      this.answered = true
+      
+    }
+  },
+
+  watch: {
+    answered(newValor) {
+      this.$emit("returnAnswered", newValor)
     }
   },
 
   data() {
     return {
       valueQuestion: 0,
+      answered: false,
       response: {
         id: this.idQuestion,
 

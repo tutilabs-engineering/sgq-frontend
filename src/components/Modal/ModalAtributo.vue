@@ -53,32 +53,41 @@
                 <div class="headerPergunta">
                   <div
                     v-show="index !== 0"
-                    v-for="(todo, index) in todos"
-                    v-bind:key="todo.id"
-                    v-on:remove="todos.splice(index, 1)"
+                    v-for="todo in listQuestions"
+                    :key="todo.id"
                     class="testeLi"
                     :id="index"
                   >
                     <div class="titleHeader">
-                      {{ todo.title }}
+                      {{ todo.question }}
                     </div>
 
                     <div class="titleHeader">
                       <input
-                        @click="trocaStatus"
-                        type="radio"
+                        @click="changeAttention(todo.id, !todo.attention)"
+                        type="checkbox"
                         :name="index"
-                        id=""
+                        v-model="todo.attention"
                       />
+                      
                     </div>
                     <div class="titleHeader">
-                      <button
+                 
+                      <input type="button"
+                        @click.prevent="changeStatus($event, todo.id)"
                         :id="index"
-                        class="btnHabilitar"
-                        :class="{ btnDesabilitar: btnDesabilitado }"
+                        value="Habilitado"
+                        class="btnH"
+                        v-if="todo.is_enabled"
                       >
-                        {{ textBtn }}
-                      </button>
+                        <input type="button"
+                        v-else
+                        @click.prevent="changeStatus($event, todo.id)"
+                        :id="index"
+                        value="Desabilitado"
+                        class="btnD"
+                      >
+             
                     </div>
                   </div>
                 </div>
@@ -118,6 +127,7 @@ export default {
       dynamicTitle: "Add Data",
       comments: "",
       count: 0,
+      listQuestions: [],
       todos: [{}],
       nextTodoId: 0,
       textBtn: "Habilitar",
@@ -148,12 +158,49 @@ export default {
       this.textBtn = "Desabilitado";
       this.btnDesabilitado = true;
     },
+
+    async changeAttention(id, attentionValue) {
+      this.$store.commit("$SETISLOADING");
+      await http.ChangeAttentionByAttributes(id, attentionValue)
+      this.$store.commit("$SETISLOADING");
+    },
+
+    async changeStatus($event,id) {
+      this.$store.commit("$SETISLOADING");
+        var btnTarget =$event.target;
+        if(btnTarget.value === "Habilitado"){
+          btnTarget.value="Desabilitado"
+          btnTarget.className="btnD"
+          await http.ChangeStatusByAttributes(id,  false)
+          this.$store.commit("$SETISLOADING");
+      
+      }else{
+        btnTarget.value="Habilitado"
+        btnTarget.className="btnH"
+        await http.ChangeStatusByAttributes(id,  true)
+        this.$store.commit("$SETISLOADING");
+      }
+    }
   },
 
   created: async function (){
-  await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
-      console.log(res.data)
+    this.$store.commit("$SETISLOADING");
+    await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+
+      if(res) {
+     
+         this.listQuestions = res.data.list 
+         
+     
+        this.$store.commit("$SETISLOADING");
+      }
+       
     })
+    
+    
+      
+      
+
     
   }
 
@@ -308,6 +355,7 @@ export default {
   width: 100%;
   display: flex;
   gap: 0.5rem;
+  text-align: center;
 }
 .perguntas .headerPergunta .titleHeader {
   position: relative;
@@ -319,6 +367,7 @@ export default {
   position: relative;
   width: 33%;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .perguntas .headerPergunta .titleHeader .btnHabilitar {
@@ -379,6 +428,26 @@ export default {
   border: none;
   cursor: pointer;
 }
+
+.btnH, .btnD {
+  width: 100px;
+  border: none;
+  height: 40px;
+  border-radius: 5px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+}
+
+.btnH {
+  background-color: var(--card_blue);
+}
+
+.btnD {
+  background-color: var(--card_red);
+}
+
+
 
 @media (max-width: 768px) {
   .modal_mask .modal_body .inputsHeader .input {
