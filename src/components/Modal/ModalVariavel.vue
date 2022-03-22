@@ -385,7 +385,7 @@ export default {
   width: 10%;
   height: 40px;
   background: var(--card_blue);
-  border-radius: 20px;
+  border-radius: 10px;
   margin-top: 23px;
   display: flex;
   align-items: center;
@@ -397,6 +397,7 @@ export default {
   font-size: 1.4rem;
   cursor: pointer;
 }
+
 
 .modal_mask .modal_body .attributeVariable {
   width: 100%;
@@ -456,7 +457,7 @@ export default {
   width: 10%;
   height: 40px;
   background: var(--card_green);
-  border-radius: 20px;
+  border-radius: 10px;
   margin-top: 23px;
   display: flex;
   align-items: center;
