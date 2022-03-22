@@ -80,6 +80,10 @@
                     ></label>
                     <input ref="file" type="file" id="inputImage" />
                   </div>
+
+                  <div class="delete" @click="deleteVariable(variable.id)">
+                    <i class="fas fa-times-circle"></i>
+                  </div>
                 </div>
               </div>
 
@@ -151,11 +155,31 @@ export default {
   props: {
     dataProduct: Object,
   },
+
+  created: async function () {
+    this.$store.commit("$SETISLOADING");
+    await http
+      .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
+      .then((res) => {
+        this.variables = res.data.list;
+      });
+    this.$store.commit("$SETISLOADING");
+  },
+
   methods: {
     getComments(value) {
       this.comments = value;
     },
 
+    async reloadList() {
+      await http
+        .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
+        .then((res) => {
+          this.variables = res.data.list;
+        });
+    },
+
+    /* Register Variable */
     async RegisterVariable() {
       const Toast = this.$swal.mixin({
         toast: true,
@@ -179,20 +203,12 @@ export default {
       const inputMax = this.list.max;
       const inputMin = this.list.min;
 
-      const variableRegister = this.list;
       this.$store.commit("$SETISLOADING");
+      const variableRegister = this.list;
       await http
         .CreateVariable(variableRegister)
         .then((res) => {
-          if (this.list.max <= this.list.min) {
-            Toast.fire({
-              icon: "error",
-              title: "Campo máximo precisa ser maior que o mínimo!",
-              background: "#FFA490",
-            });
-            this.list.max = "";
-            this.list.min = "";
-          } else {
+          if (res.status === 201) {
             Toast.fire({
               icon: "success",
               title: "Variável criada com sucesso!",
@@ -202,7 +218,6 @@ export default {
             this.list.cota = "";
             this.list.max = "";
             this.list.min = "";
-            return res;
           }
         })
         .catch((error) => {
@@ -215,17 +230,43 @@ export default {
           }
           return error;
         });
+      this.reloadList();
       this.$store.commit("$SETISLOADING");
     },
-  },
-  created: async function () {
-    this.$store.commit("$SETISLOADING");
-    await http
-      .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
-      .then((res) => {
-        this.variables = res.data.list;
+
+    /* Delete Variable */
+    async deleteVariable(id) {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
       });
-    this.$store.commit("$SETISLOADING");
+      this.$store.commit("$SETISLOADING");
+      await http.DeleteVariable(id).then((res) => {
+        if (res.data.message === "Deleted") {
+          Toast.fire({
+            icon: "success",
+            title: "Variável deletada com sucesso!",
+            background: "#A8D4FF",
+          });
+        }
+        console.log(res.data);
+      });
+
+      this.reloadList();
+      this.$store.commit("$SETISLOADING");
+    },
   },
 };
 </script>
@@ -488,6 +529,13 @@ export default {
   overflow-y: auto;
   position: relative;
   padding: 0 0.5rem;
+}
+
+.modal_mask .modal_body .variavel_increment .delete {
+  color: var(--card_red);
+  font-size: 1.5rem;
+  margin-top: 20px;
+  cursor: pointer;
 }
 
 @media (max-width: 770px) {
