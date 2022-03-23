@@ -379,6 +379,11 @@ export default {
   transition: 1s;
 }
 
+.input p {
+  font-weight: bold;
+  color: var(--black_text);
+}
+
 .title_modal input:hover {
   transform: rotate(180deg);
 }
