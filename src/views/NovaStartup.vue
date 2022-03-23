@@ -5,7 +5,7 @@
     <TableComponentes :componentsInfo="componentsInfo"/>
 
     <div v-if="showQuestions">
-      <ListaPerguntas :qtdeCavidade="techniqueInfo.cavity" />
+      <ListaPerguntas :qtdeCavidade="techniqueInfo.cavity"/>
     </div>
     <BtnStartupCreate @returnFillStatus="changedShowQuestions"/>
   </div>
@@ -53,7 +53,6 @@ export default {
       this.showQuestions = e;
     },
 
-   
     ReturnCodeOp: async function(code_op) {
       function GetDateTime(){
         function GetDate() {

@@ -66,11 +66,9 @@ export default {
 
   methods: {
     ReturnAnswered: async function(answered){
-      this.qtdePerguntas.push(answered)
-      console.log(this.qtdePerguntas.length)
-  }
-  
-  
+      this.$store.commit("$SETQTDEPERGUNTASPADROES"); 
+      console.log(answered)
+  },
 
   },
 
