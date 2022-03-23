@@ -25,8 +25,32 @@ export default {
         },
 
         ValidateQtyAnsweredQuestions () {
+            const Toast = this.$swal.mixin({
+                toast: true,
+                position: 'top-right',
+                iconColor: 'white',
+                customClass: {
+                popup: 'colored-toast',
+                title: 'title-swal-text'
+                },
+                didOpen: (toast) => {
+                toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                },
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true
+            })
+
+
             this.$store.getters.$GETQTDEPERGUNTASPADROES != 16 ? 
-            console.log("Alguma pergunta não foi respondida") 
+            
+            Toast.fire({
+              icon: 'warning',
+              title: 'Verifique se todas as Perguntas Padrões foram respondidas',
+              background: "#E8EB7C",
+            })
+            
             : console.log("Tudo certo");
           
         }

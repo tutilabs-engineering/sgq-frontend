@@ -47,7 +47,14 @@ export default {
       defaultQuestions: [],
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
+      opQuestios: [
+        {idQuestion: 1, flag: false, descriptionQuestion: "Pergunta Teste 01"},
+        {idQuestion: 2, flag: false, descriptionQuestion: "Pergunta Teste 02"},
+        {idQuestion: 3, flag: true, descriptionQuestion: "Pergunta Teste 03"},
+      ]
     };
+
+    
   },
 
   props: {
