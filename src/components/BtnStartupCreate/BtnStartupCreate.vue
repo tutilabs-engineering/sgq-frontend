@@ -42,16 +42,28 @@ export default {
                 timerProgressBar: true
             })
 
+            
+            if (this.$store.getters.$GETQTDEPERGUNTASPADROES != 16) {
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'Verifique se todas as Perguntas Padrões foram respondidas',
+                    background: "#E8EB7C",
+                })
+            }else {
+                console.log("Deu tudo certo")
+            }
 
-            this.$store.getters.$GETQTDEPERGUNTASPADROES != 16 ? 
-            
-            Toast.fire({
-              icon: 'warning',
-              title: 'Verifique se todas as Perguntas Padrões foram respondidas',
-              background: "#E8EB7C",
-            })
-            
-            : console.log("Tudo certo");
+            if (this.$store.getters.$GETQTDEPERGUNTASESPECIFICAS != 4) {
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'Verifique se todas as Perguntas Especificas foram respondidas',
+                    background: "#E8EB7C",
+                })
+            }else {
+                console.log("Deu tudo certo")
+            }
+           
+
           
         }
     },

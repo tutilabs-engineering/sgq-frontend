@@ -8,6 +8,7 @@ export default createStore({
     dataOP: {},
     isLoading: false,
     qtdePerguntasPadroesRespondidas: 0,
+    qtdePerguntasEspecificasRespondidas: 0
   },
   mutations: {
     $SETUSER (state, newName) {
@@ -21,6 +22,12 @@ export default createStore({
     },
     $SETQTDEPERGUNTASPADROES(state){
       state.qtdePerguntasPadroesRespondidas += 1
+    },
+
+    $SETQTDEPERGUNTASESPECIFICAS(state){
+      
+      state.qtdePerguntasEspecificasRespondidas += 1
+      console.log(state.qtdePerguntasEspecificasRespondidas)
     }
   },
   actions: {
@@ -34,6 +41,9 @@ export default createStore({
     },
     $GETQTDEPERGUNTASPADROES (state){
       return state.qtdePerguntasPadroesRespondidas
+    },
+    $GETQTDEPERGUNTASESPECIFICAS(state){
+      return state.qtdePerguntasEspecificasRespondidas
     }
   }
 })

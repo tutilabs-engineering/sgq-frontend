@@ -17,9 +17,11 @@
 
     <fieldset class="content-tablePerguntas">
       <legend class="legenda">Tabela de Análise</legend>
-      <PerguntaAnalise :flag="true" />
-      <PerguntaAnalise :flag="false" />
-      <PerguntaAnalise :flag="false" />
+      <div v-for="opQuestion in opQuestions" :key="opQuestion.id">
+        <PerguntaAnalise :flag="opQuestion.flag" :description="opQuestion.descriptionQuestion"
+        @returnSpecificAnswered="ReturnSpecificAnswered" />
+      </div>
+      
     </fieldset>
 
     <fieldset>
@@ -47,10 +49,11 @@ export default {
       defaultQuestions: [],
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
-      opQuestios: [
+      opQuestions: [
         {idQuestion: 1, flag: false, descriptionQuestion: "Pergunta Teste 01"},
         {idQuestion: 2, flag: false, descriptionQuestion: "Pergunta Teste 02"},
         {idQuestion: 3, flag: true, descriptionQuestion: "Pergunta Teste 03"},
+        {idQuestion: 4, flag: true, descriptionQuestion: "Pergunta Teste 04"},
       ]
     };
 
@@ -75,7 +78,12 @@ export default {
     ReturnAnswered: async function(answered){
       this.$store.commit("$SETQTDEPERGUNTASPADROES"); 
       console.log(answered)
-  },
+    },
+
+    ReturnSpecificAnswered: async function(specificAnswered){
+      this.$store.commit("$SETQTDEPERGUNTASPADROES");
+      console.log(specificAnswered)
+    }
 
   },
 
