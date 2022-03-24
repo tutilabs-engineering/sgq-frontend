@@ -77,8 +77,9 @@
                   
 
                   <div class="delete" @click="deleteVariable(variable.id)">
-                    <i class="fas fa-times-circle"></i>
+                    <span>Deletar</span>
                   </div>
+
                 </div>
               </div>
 
@@ -528,9 +529,9 @@ export default {
 
 .modal_mask .modal_body .attributeVariable .inputUpLoad {
   width: 10%;
-  height: 40px;
+  height: 35px;
   background: var(--card_green);
-  border-radius: 10px;
+  border-radius: 5px;
   margin-top: 23px;
   display: flex;
   align-items: center;
@@ -566,10 +567,19 @@ export default {
 }
 
 .modal_mask .modal_body .variavel_increment .delete {
-  color: var(--card_red);
-  font-size: 1.5rem;
+  background-color: var(--card_red);
+  color: var(--main_primaryWhite);
+  width: 100px;
+  height: 35px;
   margin-top: 20px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 400;
 }
 
 @media (max-width: 770px) {
