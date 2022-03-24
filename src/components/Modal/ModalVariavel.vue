@@ -74,13 +74,7 @@
                     <p>{{ variable.min }}</p>
                   </div>
 
-                  <div class="inputUpLoad">
-                    <label for="inputImage"
-                      ><i class="fas fa-upload"></i
-                    ></label>
-                    
-                    <input ref="file" type="file" id="inputImage" />
-                  </div>
+                  
 
                   <div class="delete" @click="deleteVariable(variable.id)">
                     <i class="fas fa-times-circle"></i>
@@ -112,9 +106,18 @@
                   <input type="number" v-model="list.min" />
                 </div>
 
+                <div class="inputUpLoad">
+                    <label for="inputImage"
+                      ><i class="fas fa-upload"></i
+                    ></label>
+                    
+                    <input ref="file" type="file" id="inputImage" @change="insertImageFile"/>
+                </div>
+
                 <button type="submit" class="inputUpLoad">
                   <i class="fas fa-plus"></i>
                 </button>
+
                 <div class="alertMax" v-show="list.max < list.min">
                   <p>OBS: O campo máximo tem que ser maior que o mínimo</p>
                 </div>
@@ -168,6 +171,12 @@ export default {
   },
 
   methods: {
+
+    insertImageFile (e) {
+      this.list.file = e.target.files[0]
+      console.log(this.list.file)
+    },
+
     getComments(value) {
       this.comments = value;
     },
@@ -212,7 +221,9 @@ export default {
       formData.append("cota", this.list.cota)
       formData.append("max", this.list.max)
       formData.append("min", this.list.min)
+      formData.append("file", this.list.file)
 
+      console.log(this.list);
       await http
         .CreateVariable(formData)
         .then((res) => {
@@ -227,6 +238,7 @@ export default {
             this.list.max = "";
             this.list.min = "";
           }
+
         })
         .catch((error) => {
           if (!inputDescription || !inputCota || !inputMax || !inputMin) {
