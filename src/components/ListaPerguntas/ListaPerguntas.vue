@@ -42,11 +42,13 @@ import PerguntaPadrao from "../PerguntaPadrao/PerguntaPadrao.vue";
 import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
 import UploadImage from "../UploadImage/UploadImage.vue";
 import http from "../../services/startup/index";
+import httpAttributes from "../../services/productAnalysis/Attributes"
 
 export default {
   data() {
     return {
       defaultQuestions: [],
+      specificQuestions: [],
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
       opQuestions: [
@@ -62,6 +64,7 @@ export default {
 
   props: {
     qtdeCavidade: Number,
+    code_product: String,
   },
   components: {
     PerguntaPadrao,
@@ -70,8 +73,14 @@ export default {
     UploadImage,
   },
   created: async function () {
-    const response = await http.listAllDefaultQuestions();
-    this.defaultQuestions = response.data.defaultQuestions;
+    console.log(this.code_product)
+    
+    const responseDefaultQuestions = await http.listAllDefaultQuestions();
+    this.defaultQuestions = responseDefaultQuestions.data.defaultQuestions;
+
+    const responseSpecificQuestions = await httpAttributes.FindAttributesByCodeProduct(this.code_product);
+    
+    console.log(responseSpecificQuestions)
   },
 
   methods: {

@@ -5,7 +5,7 @@
     <TableComponentes :componentsInfo="componentsInfo"/>
 
     <div v-if="showQuestions">
-      <ListaPerguntas :qtdeCavidade="techniqueInfo.cavity"/>
+      <ListaPerguntas :qtdeCavidade="techniqueInfo.cavity" :code_product="headerInfo.codeProduct"/>
     </div>
     <BtnStartupCreate @returnFillStatus="changedShowQuestions"/>
   </div>
