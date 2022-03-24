@@ -205,9 +205,16 @@ export default {
       const inputMin = this.list.min;
 
       this.$store.commit("$SETISLOADING");
-      const variableRegister = this.list;
+
+      const formData = new FormData()
+      formData.append("description", this.list.description)
+      formData.append("cod_product", this.list.cod_product)
+      formData.append("cota", this.list.cota)
+      formData.append("max", this.list.max)
+      formData.append("min", this.list.min)
+
       await http
-        .CreateVariable(variableRegister)
+        .CreateVariable(formData)
         .then((res) => {
           if (res.status === 201) {
             Toast.fire({
