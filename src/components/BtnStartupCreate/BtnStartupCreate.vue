@@ -50,10 +50,10 @@ export default {
                     background: "#E8EB7C",
                 })
             }else {
-                console.log("Deu tudo certo")
+                console.log("Tudo foi respondido")
             }
 
-            if (this.$store.getters.$GETQTDEPERGUNTASESPECIFICAS != 4) {
+            if (this.$store.getters.$GETQTDEPERGUNTASESPECIFICAS != this.$store.getters.$GETQTDEESPECIFICAS) {
                 Toast.fire({
                     icon: 'warning',
                     title: 'Verifique se todas as Perguntas Especificas foram respondidas',

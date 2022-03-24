@@ -97,12 +97,12 @@ export default {
   data() {
     return {
       valueQuestion: 0,
+      specificAnswered: false,
       responsee: {
         id: this.idQuestion,
 
       },
       classCard: "",
-      specificAnswered: "",
     };
   },
 };
