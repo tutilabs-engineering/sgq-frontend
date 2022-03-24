@@ -78,6 +78,7 @@
                     <label for="inputImage"
                       ><i class="fas fa-upload"></i
                     ></label>
+                    
                     <input ref="file" type="file" id="inputImage" />
                   </div>
 
