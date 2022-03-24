@@ -55,22 +55,22 @@
                 >
                   <h4>{{ index + 1 }}</h4>
                   <div class="inputIdentificacao">
-                    <p>IDENTIFICAÇÃO:</p>
+                    <p class="idInput">Identificação</p>
                     <p>{{ variable.description }}</p>
                   </div>
 
                   <div class="inputCota">
-                    <p>COTA:</p>
+                    <p class="idCota">COTA:</p>
                     <p>{{ variable.cota }}</p>
                   </div>
 
                   <div class="inputCota">
-                    <p>MÁX:</p>
+                    <p class="idMax">MÁX:</p>
                     <p>{{ variable.max }}</p>
                   </div>
 
                   <div class="inputCota">
-                    <p>MIN:</p>
+                    <p class="idMin">MIN:</p>
                     <p>{{ variable.min }}</p>
                   </div>
 
@@ -372,9 +372,21 @@ export default {
   margin-top: 20px;
 }
 
+.idInput, .idMax, .idMin, .idCota {
+  color: var(--black_text);
+  font-weight: bold;
+  font-size: 13px;
+}
+
 .modal_mask .modal_body .inputsHeader h4 {
   margin-top: 20px;
   font-size: 1.5rem;
+  color: var(--black_text);
+}
+
+.input p {
+  font-weight: bold;
+  color: var(--black_text);
 }
 
 .modal_mask .modal_body .inputsHeader .input {
@@ -423,10 +435,10 @@ export default {
 }
 
 .modal_mask .modal_body .inputsHeader .inputUpLoad {
-  width: 10%;
+  width: 100px;
   height: 40px;
   background: var(--card_blue);
-  border-radius: 20px;
+  border-radius: 5px;
   margin-top: 23px;
   display: flex;
   align-items: center;
@@ -439,6 +451,7 @@ export default {
   cursor: pointer;
 }
 
+
 .modal_mask .modal_body .attributeVariable {
   width: 100%;
   display: flex;
@@ -447,7 +460,7 @@ export default {
   gap: 1rem;
   margin-top: 20px;
   flex-wrap: wrap;
-  border-top: 2px solid black;
+  border-top: 2px solid var(--black_text);
   padding-top: 20px;
 }
 
@@ -497,7 +510,7 @@ export default {
   width: 10%;
   height: 40px;
   background: var(--card_green);
-  border-radius: 20px;
+  border-radius: 10px;
   margin-top: 23px;
   display: flex;
   align-items: center;
@@ -521,6 +534,7 @@ export default {
 .modal_mask .modal_body .titleBody {
   margin: 1rem 0;
   text-align: start;
+  color: var(--black_text);
 }
 
 .modal_mask .modal_body .variavel_increment {

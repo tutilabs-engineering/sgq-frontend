@@ -16,5 +16,9 @@ export default {
 
   ChangeStatusByAttributes: async (id, state) => {
     return await http.patch(`attribute/status`, {id, state})
+  },
+
+  DeleteQuestionById: async (id) => {
+    return await http.delete(`attribute/${id}`)
   }
 }

@@ -7,6 +7,9 @@ export default createStore({
     },
     dataOP: {},
     isLoading: false,
+    qtdePerguntasPadroesRespondidas: 0,
+    qtdePerguntasEspecificasRespondidas: 0,
+    qtdeEspecificas: 0,
   },
   mutations: {
     $SETUSER (state, newName) {
@@ -17,6 +20,16 @@ export default createStore({
     },
     $SETDATAOP(state, data){
       state.dataOP = data
+    },
+    $SETQTDEPERGUNTASPADROES(state){
+      state.qtdePerguntasPadroesRespondidas += 1
+    },
+
+    $SETQTDEPERGUNTASESPECIFICAS(state){
+      state.qtdePerguntasEspecificasRespondidas += 1 
+    },
+    $SETQTDEESPECIFICAS (state) {
+      state.qtdeEspecificas += 1
     }
   },
   actions: {
@@ -27,6 +40,15 @@ export default createStore({
     },
     $GETDATAOP (state) {
       return state.dataOP
+    },
+    $GETQTDEPERGUNTASPADROES (state){
+      return state.qtdePerguntasPadroesRespondidas
+    },
+    $GETQTDEPERGUNTASESPECIFICAS (state){
+      return state.qtdePerguntasEspecificasRespondidas
+    },
+    $GETQTDEESPECIFICAS (state) {
+      return state.qtdeEspecificas
     }
   }
 })

@@ -15,11 +15,18 @@
       </div>
     </fieldset>
 
-    <fieldset class="content-tablePerguntas">
+    <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
+      <legend class="legenda-warning">Não há Perguntas Especificas para este Produto<br/><span>Verifique a tabela de análise</span></legend>
+    </fieldset>
+
+    <fieldset class="content-tablePerguntas" v-else>
       <legend class="legenda">Tabela de Análise</legend>
-      <PerguntaAnalise :flag="true" />
-      <PerguntaAnalise :flag="false" />
-      <PerguntaAnalise :flag="false" />
+
+      <div  v-for="specificQuestion in specificQuestions.slice().reverse()" :key="specificQuestion.id">
+        <PerguntaAnalise :flag="specificQuestion.attention" :description="specificQuestion.question" :idQuestion="specificQuestion.id"
+        @returnSpecificAnswered="ReturnSpecificAnswered" v-show="specificQuestion.is_enabled"/>
+      </div>
+      
     </fieldset>
 
     <fieldset>
@@ -40,18 +47,23 @@ import PerguntaPadrao from "../PerguntaPadrao/PerguntaPadrao.vue";
 import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
 import UploadImage from "../UploadImage/UploadImage.vue";
 import http from "../../services/startup/index";
+import httpAttributes from "../../services/productAnalysis/Attributes"
 
 export default {
   data() {
     return {
       defaultQuestions: [],
+      specificQuestions: [],
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
     };
+
+    
   },
 
   props: {
     qtdeCavidade: Number,
+    code_product: String,
   },
   components: {
     PerguntaPadrao,
@@ -60,17 +72,35 @@ export default {
     UploadImage,
   },
   created: async function () {
-    const response = await http.listAllDefaultQuestions();
-    this.defaultQuestions = response.data.defaultQuestions;
+    this.$store.commit("$SETISLOADING");
+    const responseDefaultQuestions = await http.listAllDefaultQuestions();
+    this.defaultQuestions = responseDefaultQuestions.data.defaultQuestions;
+
+    const responseSpecificQuestions = await httpAttributes.FindAttributesByCodeProduct(this.code_product);
+
+    if(responseSpecificQuestions) {
+      
+      await responseSpecificQuestions.data.list.map( (item) => {
+            if (item.is_enabled) {
+              this.specificQuestions.push(item)
+              this.$store.commit("$SETQTDEESPECIFICAS"); 
+            }
+      })
+      
+    }
+    this.$store.commit("$SETISLOADING");
   },
 
   methods: {
     ReturnAnswered: async function(answered){
-      this.qtdePerguntas.push(answered)
-      console.log(this.qtdePerguntas.length)
-  }
-  
-  
+      this.$store.commit("$SETQTDEPERGUNTASPADROES"); 
+      console.log(answered)
+    },
+
+    ReturnSpecificAnswered: async function(specificAnswered){
+      this.$store.commit("$SETQTDEPERGUNTASESPECIFICAS");
+      console.log(specificAnswered)
+    }
 
   },
 
@@ -103,6 +133,22 @@ export default {
   font-weight: 600;
   color: var(--black_text);
   padding: 20px;
+}
+
+.legenda-warning {
+  font-size: 25px;
+  text-align: center;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  color: var(--card_red);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.legenda-warning span {
+  font-size: 15px;
+  font-weight: 400;
 }
 
 @media (min-width: 1600px) {

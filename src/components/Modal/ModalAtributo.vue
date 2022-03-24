@@ -48,6 +48,7 @@
                   <div class="titleHeader">Pergunta</div>
                   <div class="titleHeader">Atenção</div>
                   <div class="titleHeader">Status</div>
+                  <div class="titleHeader">Opções</div>
                 </div>
 
                 <div class="headerPergunta">
@@ -89,6 +90,19 @@
                       >
              
                     </div>
+
+                    <div class="titleHeader">
+
+                      <input type="button"
+                        @click.prevent="deleteQuestion(todo.id)"
+                        :id="index"
+                        value="Deletar"
+                        class="btn-delete"
+                      >
+                      
+             
+                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -114,6 +128,7 @@
 </template>
 
 <script>
+
 
 import http from "../../services/productAnalysis/Attributes"
 
@@ -145,15 +160,93 @@ export default {
     dataProduct: Object,
   },
   methods: {
+
+    
+    renderListAttribute: async function () {
+      await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+      if(res) {
+         this.listQuestions = res.data.list 
+      }
+    })
+    },
+
+    deleteQuestion: async function(id){
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
+
+      this.$store.commit("$SETISLOADING");
+      await http.DeleteQuestionById(id);
+      this.renderListAttribute()
+      this.$store.commit("$SETISLOADING");
+      Toast.fire({
+              icon: "error",
+              title: "Pergunta deletada!",
+              background: "#FFA490",
+            });
+    },
+
     getComments(value) {
       this.comments = value;
     },
 
     CreateNewQuestion: async function() {
-      const newQuestion = await http.CreateAttribute(this.dataAttribute);
-      console.log(newQuestion)
-    },
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
 
+
+      this.$store.commit("$SETISLOADING");
+      
+      try {
+        const response = await http.CreateAttribute(this.dataAttribute);
+        
+        this.renderListAttribute()
+        this.dataAttribute.question = ""
+        Toast.fire({
+                icon: "success",
+                title: "Pergunta criada com sucesso!",
+                background: "#A8D4FF",
+              });
+        this.$store.commit("$SETISLOADING");
+        return response;
+      } catch {
+        Toast.fire({
+              icon: "error",
+              title: "Pergunta já existente!",
+              background: "#FFA490",
+            });
+        
+        this.$store.commit("$SETISLOADING");
+      }
+    },
+    
     trocaStatus() {
       this.textBtn = "Desabilitado";
       this.btnDesabilitado = true;
@@ -184,24 +277,20 @@ export default {
   },
 
   created: async function (){
+
+    
+
+
     this.$store.commit("$SETISLOADING");
     await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
-
       if(res) {
-     
-         this.listQuestions = res.data.list 
+         this.listQuestions = res.data.list
          
-     
         this.$store.commit("$SETISLOADING");
       }
        
     })
-    
-    
-      
-      
 
-    
   }
 
 
@@ -288,6 +377,11 @@ export default {
   cursor: pointer;
   font-weight: 600;
   transition: 1s;
+}
+
+.input p {
+  font-weight: bold;
+  color: var(--black_text);
 }
 
 .title_modal input:hover {
@@ -429,7 +523,7 @@ export default {
   cursor: pointer;
 }
 
-.btnH, .btnD {
+.btnH, .btnD, .btn-delete {
   width: 100px;
   border: none;
   height: 40px;
@@ -444,6 +538,10 @@ export default {
 }
 
 .btnD {
+  background-color: var(--card_red);
+}
+
+.btn-delete {
   background-color: var(--card_red);
 }
 

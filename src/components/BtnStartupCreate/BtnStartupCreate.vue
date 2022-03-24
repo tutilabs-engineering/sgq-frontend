@@ -1,11 +1,9 @@
 <template>
     <div class="btns">
-
-            <button class="btn-fill-save btn" v-on:click="fillValue">Preencher + Opções</button>
-
+        <button class="btn-fill-save btn" v-on:click="fillValue">Preencher + Opções</button>
         <div class="btns-options">
             <button class="btn-cancel btn">Cancelar</button>
-            <button class="btn-save btn">Salvar</button>
+            <button class="btn-save btn" @click="ValidateQtyAnsweredQuestions">Salvar</button>
         </div>
     </div>
 </template>
@@ -13,7 +11,6 @@
 <script>
 
 export default {
-
     name: "BtnStartupCreate",
     data () {
         return{
@@ -25,6 +22,49 @@ export default {
         fillValue (){
             this.fillStatus = !this.fillStatus
             this.$emit("returnFillStatus", this.fillStatus)
+        },
+
+        ValidateQtyAnsweredQuestions () {
+            const Toast = this.$swal.mixin({
+                toast: true,
+                position: 'top-right',
+                iconColor: 'white',
+                customClass: {
+                popup: 'colored-toast',
+                title: 'title-swal-text'
+                },
+                didOpen: (toast) => {
+                toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                },
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true
+            })
+
+            
+            if (this.$store.getters.$GETQTDEPERGUNTASPADROES != 16) {
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'Verifique se todas as Perguntas Padrões foram respondidas',
+                    background: "#E8EB7C",
+                })
+            }else {
+                console.log("Tudo foi respondido")
+            }
+
+            if (this.$store.getters.$GETQTDEPERGUNTASESPECIFICAS != this.$store.getters.$GETQTDEESPECIFICAS) {
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'Verifique se todas as Perguntas Especificas foram respondidas',
+                    background: "#E8EB7C",
+                })
+            }else {
+                console.log("Deu tudo certo")
+            }
+           
+
+          
         }
     },
 

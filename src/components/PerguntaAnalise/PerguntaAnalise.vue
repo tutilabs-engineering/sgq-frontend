@@ -30,24 +30,24 @@
 
       <div class="third-row">
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP" @change="changeIcon(1)"/>
+          <input type="radio" :name="idQuestion" id="AP" @change="changeIcon(1)" @click="isSpecificAnswerd"/>
           <label for="Ap">C</label>
         </div>
 
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(2)"/>
+          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(2)" @click="isSpecificAnswerd"/>
           <label for="Ap">NC</label>
         </div>
 
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(3)"/>
+          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(3)" @click="isSpecificAnswerd"/>
           <label for="Ap">NA</label>
         </div>
       </div>
 
       <div class="fourth-row">
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(4)"/>
+          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(4)" @click="isSpecificAnswerd"/>
           <label for="Ap">GM</label>
         </div>
         <label for="file" class="labelFile">Enviar Arquivo</label>
@@ -64,6 +64,7 @@ export default {
     description: String,
     idQuestion: String,
     flag: String,
+
   },
 
   created: async function () {
@@ -79,17 +80,24 @@ export default {
 
   methods: {
     changeIcon(e){
-      this.valueQuestion = e
-      console.log(this.valueQuestion)
-    
+      this.valueQuestion = e 
+    },
+
+    isSpecificAnswerd(){
+      this.specificAnswered = true
     }
-    
-    
+  },
+
+  watch: {
+    specificAnswered(newValor) {
+      this.$emit("returnSpecificAnswered", newValor)
+    }
   },
 
   data() {
     return {
       valueQuestion: 0,
+      specificAnswered: false,
       responsee: {
         id: this.idQuestion,
 
