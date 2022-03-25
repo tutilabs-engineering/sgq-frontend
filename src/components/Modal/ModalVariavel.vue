@@ -74,17 +74,12 @@
                     <p>{{ variable.min }}</p>
                   </div>
 
-                  <div class="inputUpLoad">
-                    <label for="inputImage"
-                      ><i class="fas fa-upload"></i
-                    ></label>
-                    
-                    <input ref="file" type="file" id="inputImage" />
-                  </div>
+                  
 
                   <div class="delete" @click="deleteVariable(variable.id)">
-                    <i class="fas fa-times-circle"></i>
+                    <span>Deletar</span>
                   </div>
+
                 </div>
               </div>
 
@@ -112,9 +107,21 @@
                   <input type="number" v-model="list.min" />
                 </div>
 
+                <div class="inputUpLoad" >
+                    <label for="inputImage" class="inputImage"
+                      ><i class="far fa-file-image"></i
+                    ></label>
+                    
+                    <input ref="file" type="file"  class="inputUpLoad" id="inputImage" @change="insertImageFile"/>
+
+                    
+                </div>
+
+
                 <button type="submit" class="inputUpLoad">
                   <i class="fas fa-plus"></i>
                 </button>
+
                 <div class="alertMax" v-show="list.max < list.min">
                   <p>OBS: O campo máximo tem que ser maior que o mínimo</p>
                 </div>
@@ -168,6 +175,12 @@ export default {
   },
 
   methods: {
+
+    insertImageFile (e) {
+      this.list.file = e.target.files[0]
+      console.log(this.list.file)
+    },
+
     getComments(value) {
       this.comments = value;
     },
@@ -205,9 +218,18 @@ export default {
       const inputMin = this.list.min;
 
       this.$store.commit("$SETISLOADING");
-      const variableRegister = this.list;
+
+      const formData = new FormData()
+      formData.append("description", this.list.description)
+      formData.append("cod_product", this.list.cod_product)
+      formData.append("cota", this.list.cota)
+      formData.append("max", this.list.max)
+      formData.append("min", this.list.min)
+      formData.append("file", this.list.file)
+
+      console.log(this.list);
       await http
-        .CreateVariable(variableRegister)
+        .CreateVariable(formData)
         .then((res) => {
           if (res.status === 201) {
             Toast.fire({
@@ -220,6 +242,7 @@ export default {
             this.list.max = "";
             this.list.min = "";
           }
+
         })
         .catch((error) => {
           if (!inputDescription || !inputCota || !inputMax || !inputMin) {
@@ -466,7 +489,7 @@ export default {
 }
 
 .modal_mask .modal_body .attributeVariable .inputIdentificacao {
-  width: 50%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -509,9 +532,9 @@ export default {
 
 .modal_mask .modal_body .attributeVariable .inputUpLoad {
   width: 10%;
-  height: 40px;
+  height: 35px;
   background: var(--card_green);
-  border-radius: 10px;
+  border-radius: 5px;
   margin-top: 23px;
   display: flex;
   align-items: center;
@@ -522,14 +545,19 @@ export default {
   border: none;
 }
 
-/* .modal_mask .modal_body .attributeVariable .inputUpLoad button {
-  background: transparent;
-  color: var(--bg_white);
-  font-size: 1rem;
-} */
-
-.modal_mask .modal_body .attributeVariable .inputUpLoad .fa-plus {
+.modal_mask .modal_body .attributeVariable .inputImage{
+  width: 100%;
+  height: 100%;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--card_blue);
+  border-radius: 5px;
+}
+
+.fa-file-image {
+  color: #fff;
 }
 
 .modal_mask .modal_body .titleBody {
@@ -547,10 +575,19 @@ export default {
 }
 
 .modal_mask .modal_body .variavel_increment .delete {
-  color: var(--card_red);
-  font-size: 1.5rem;
+  background-color: var(--card_red);
+  color: var(--main_primaryWhite);
+  width: 100px;
+  height: 35px;
   margin-top: 20px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 400;
 }
 
 @media (max-width: 770px) {

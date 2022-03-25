@@ -10,6 +10,7 @@ export default createStore({
     qtdePerguntasPadroesRespondidas: 0,
     qtdePerguntasEspecificasRespondidas: 0,
     qtdeEspecificas: 0,
+    code_op: "",
   },
   mutations: {
     $SETUSER (state, newName) {
@@ -30,6 +31,12 @@ export default createStore({
     },
     $SETQTDEESPECIFICAS (state) {
       state.qtdeEspecificas += 1
+    },
+
+    $SETCODEOP (state, data) {
+      console.log(state)
+      state.code_op = data
+      console.log(state.code_op)
     }
   },
   actions: {
@@ -49,6 +56,10 @@ export default createStore({
     },
     $GETQTDEESPECIFICAS (state) {
       return state.qtdeEspecificas
+    },
+
+    $GETCODEOP (state) {
+      return state.code_op
     }
   }
 })

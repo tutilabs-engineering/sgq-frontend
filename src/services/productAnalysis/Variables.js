@@ -13,4 +13,5 @@ export default {
     return await http.delete(`variable/${id}`)
   }
 
+
 }

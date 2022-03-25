@@ -80,6 +80,7 @@ export default {
   methods: {},
   watch: {
     code_op (newValor) {
+      this.$store.commit("$SETCODEOP", this.code_op);
       this.$emit("returnCodeOp", newValor)
     }
   }
