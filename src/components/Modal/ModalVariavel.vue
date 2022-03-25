@@ -107,13 +107,16 @@
                   <input type="number" v-model="list.min" />
                 </div>
 
-                <div class="inputUpLoad">
-                    <label for="inputImage"
-                      ><i class="fas fa-upload"></i
+                <div class="inputUpLoad" >
+                    <label for="inputImage" class="inputImage"
+                      ><i class="far fa-file-image"></i
                     ></label>
                     
-                    <input ref="file" type="file" id="inputImage" @change="insertImageFile"/>
+                    <input ref="file" type="file"  class="inputUpLoad" id="inputImage" @change="insertImageFile"/>
+
+                    
                 </div>
+
 
                 <button type="submit" class="inputUpLoad">
                   <i class="fas fa-plus"></i>
@@ -486,7 +489,7 @@ export default {
 }
 
 .modal_mask .modal_body .attributeVariable .inputIdentificacao {
-  width: 50%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -542,15 +545,22 @@ export default {
   border: none;
 }
 
+.modal_mask .modal_body .attributeVariable .inputImage{
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--card_blue);
+}
+
 /* .modal_mask .modal_body .attributeVariable .inputUpLoad button {
   background: transparent;
   color: var(--bg_white);
   font-size: 1rem;
 } */
 
-.modal_mask .modal_body .attributeVariable .inputUpLoad .fa-plus {
-  cursor: pointer;
-}
 
 .modal_mask .modal_body .titleBody {
   margin: 1rem 0;
