@@ -21,15 +21,26 @@ export default {
 
     methods: {
         fillValue (){
-            this.fillStatus = !this.fillStatus
-            this.$emit("returnFillStatus", this.fillStatus)
+            if(this.$store.getters.$GETCODEOP == ""){
+                console.log("Não foi possivel abrir o modal (Prencha a Startup)")
+            }else {
+                this.fillStatus = !this.fillStatus
+                this.$emit("returnFillStatus", this.fillStatus)
+            }
+            
         },
 
         saveNewStartup(){
-            if(this.fillStatus){
+
+            if(this.$store.getters.$GETCODEOP == ""){
+                console.log("Preencha o Código de Ordem de Produção")
+            }else { 
+                if(this.fillStatus){
                 // Campo de perguntas aberto
 
                 this.ValidateQtyAnsweredQuestions()
+
+
             }else {
                 const Toast = this.$swal.mixin({
                 toast: true,
@@ -55,8 +66,9 @@ export default {
                     
                 })
                 // Salvar nova Startup
-
             }
+            }
+            
         },
 
         ValidateQtyAnsweredQuestions () {
