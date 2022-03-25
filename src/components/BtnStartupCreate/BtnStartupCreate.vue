@@ -63,12 +63,10 @@ export default {
                     icon: 'success',
                     title: 'Salvo com sucesso',
                     background: "#fff",
-                    
                 })
                 // Salvar nova Startup
             }
             }
-            
         },
 
         ValidateQtyAnsweredQuestions () {
