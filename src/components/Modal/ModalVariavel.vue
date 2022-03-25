@@ -556,6 +556,10 @@ export default {
   border-radius: 5px;
 }
 
+.fa-file-image {
+  color: #fff;
+}
+
 .modal_mask .modal_body .titleBody {
   margin: 1rem 0;
   text-align: start;
