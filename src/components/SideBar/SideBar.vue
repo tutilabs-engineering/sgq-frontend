@@ -1,52 +1,93 @@
 <template>
-    <header class="header">
-        <a @click="() => this.$router.push({ name: 'Startup' })" class="logo"><i class="fas fa-vial"></i>SGQ</a>
-        <input class="menu-btn" type="checkbox" id="menu-btn" v-model="checkboxValue"/>
-        <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
-        <ul class="menu">
-            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Startup' }) "><i class="fas fa-check-circle"></i>Startup</a></li>
-            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Status' })"><i class="fas fa-clone"></i>Criar Startup</a></li>
-            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Dashboard' })"> <i class="fas fa-chart-bar"></i>Dashboard</a></li>
-            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'AnaliseDeProdutos' })"><i class="fas fa-desktop"></i>Análise</a></li>
-            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'metrologia' })"><i class="fas fa-ruler-combined"></i>Metrologia</a></li>
-            <li @click="changeCheckboxValue"><a @click="() => this.$router.push({ name: 'Configuracoes' })"><i class="fas fa-tools"></i>Configuracoes</a></li>
-            <li @click="changeCheckboxValue"><a @click="Exit"><i class="fas fa-door-open"></i>Sair</a></li>
-        </ul>
-    </header>
+  <header class="header">
+    <a @click="() => this.$router.push({ name: 'Startup' })" class="logo"
+      ><i class="fas fa-vial"></i>SGQ</a
+    >
+    <input
+      class="menu-btn"
+      type="checkbox"
+      id="menu-btn"
+      v-model="checkboxValue"
+    />
+    <label class="menu-icon" for="menu-btn"
+      ><span class="navicon"></span
+    ></label>
+    <ul class="menu">
+      <li @click="changeCheckboxValue">
+        <a @click="() => this.$router.push({ name: 'Home' })"
+          ><i class="fas fa-home"></i>Home</a
+        >
+      </li>
+      <li @click="changeCheckboxValue">
+        <a @click="() => this.$router.push({ name: 'Startup' })"
+          ><i class="fas fa-check-circle"></i>Startup</a
+        >
+      </li>
+      <li @click="changeCheckboxValue">
+        <a @click="() => this.$router.push({ name: 'Status' })"
+          ><i class="fas fa-clone"></i>Criar Startup</a
+        >
+      </li>
+      <li @click="changeCheckboxValue">
+        <a @click="() => this.$router.push({ name: 'Dashboard' })">
+          <i class="fas fa-chart-bar"></i>Dashboard</a
+        >
+      </li>
+      <li @click="changeCheckboxValue">
+        <a @click="() => this.$router.push({ name: 'AnaliseDeProdutos' })"
+          ><i class="fas fa-desktop"></i>Análise</a
+        >
+      </li>
+      <li @click="changeCheckboxValue">
+        <a @click="() => this.$router.push({ name: 'metrologia' })"
+          ><i class="fas fa-ruler-combined"></i>Metrologia</a
+        >
+      </li>
+      <li @click="changeCheckboxValue">
+        <a @click="() => this.$router.push({ name: 'Configuracoes' })"
+          ><i class="fas fa-tools"></i>Configuracoes</a
+        >
+      </li>
+      <li @click="changeCheckboxValue">
+        <a @click="Exit"><i class="fas fa-door-open"></i>Sair</a>
+      </li>
+    </ul>
+  </header>
 </template>
 
 <script>
-
 import jwt from "jsonwebtoken";
-import http from "../../services/account/Users"
+import http from "../../services/account/Users";
 
 export default {
-  created: async function() { 
-
+  created: async function () {
     // const secret = process.env.SECRET
 
-    const secretQuefunciona = "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
+    const secretQuefunciona =
+      "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
 
     const token = sessionStorage.getItem("token");
 
     if (token) {
       try {
-        const {sub} = await jwt.verify(token, secretQuefunciona);
-        await http.findUserById(sub).then((res) => {
-          return this.username = res.data.user.name
-        }).catch((error) => console.log("error", error))
-        
+        const { sub } = await jwt.verify(token, secretQuefunciona);
+        await http
+          .findUserById(sub)
+          .then((res) => {
+            return (this.username = res.data.user.name);
+          })
+          .catch((error) => console.log("error", error));
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
   },
 
   methods: {
-    changeCheckboxValue (){
-      this.checkboxValue = !this.checkboxValue
+    changeCheckboxValue() {
+      this.checkboxValue = !this.checkboxValue;
     },
-    
+
     Exit: function () {
       this.$swal
         .fire({
@@ -68,7 +109,7 @@ export default {
       checkboxValue: false,
     };
   },
-}
+};
 </script>
 
 <style scoped>
@@ -87,14 +128,13 @@ export default {
   list-style: none;
   overflow: hidden;
   cursor: pointer;
-  
 }
 .header li a {
-    font-weight: 400;
-    color: #fff;
-    display: block;
-    padding: 20px 20px;
-    text-decoration: none;
+  font-weight: 400;
+  color: #fff;
+  display: block;
+  padding: 20px 20px;
+  text-decoration: none;
 }
 
 .header li {
@@ -112,7 +152,7 @@ export default {
   color: #fff;
   font-size: 1.8rem;
   padding: 10px 20px;
-  margin-left: 10px; 
+  margin-left: 10px;
   text-decoration: none;
 }
 
@@ -123,7 +163,7 @@ export default {
 .header .menu {
   clear: both;
   max-height: 0;
-  transition: max-height .2s ease-out;
+  transition: max-height 0.2s ease-out;
 }
 /* menu icon */
 .header .menu-icon {
@@ -136,35 +176,33 @@ export default {
 }
 
 .menu {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--green_text);
-    width: 100%;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--green_text);
+  width: 100%;
+  height: 100vh;
 }
 
 .fas {
   margin-right: 10px;
 }
 
-
-
 .header .menu-icon .navicon {
   background: var(--main_primaryWhite);
   display: block;
   height: 3px;
   position: relative;
-  transition: background .2s ease-out;
+  transition: background 0.2s ease-out;
   width: 25px;
 }
 .header .menu-icon .navicon:before,
 .header .menu-icon .navicon:after {
   background: var(--main_primaryWhite);
-  content: '';
+  content: "";
   display: block;
   height: 100%;
   position: absolute;
-  transition: all .2s ease-out;
+  transition: all 0.2s ease-out;
   width: 100%;
 }
 .header .menu-icon .navicon:before {
@@ -196,16 +234,12 @@ export default {
 /* 48em = 768px */
 
 @media (max-width: 768px) {
-    .header {
-        width: 100vw;
-        height: 65px;
-    }
-
-    
-    
+  .header {
+    width: 100vw;
+    height: 65px;
+  }
 }
 @media (min-width: 769px) {
-
   .header li {
     float: left;
   }
@@ -222,9 +256,7 @@ export default {
   }
 
   .header .menu-btn:checked ~ .menu {
-      max-height: 100vw;
-    } 
-  
-
+    max-height: 100vw;
+  }
 }
 </style>

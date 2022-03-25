@@ -59,9 +59,9 @@ async function AuthAdmin(to, from, next) {
       const { sub } = jwt.verify(token, secret)
       await http.findUserById(sub).then((response) => {
         const role = response.data.user.role.id
-        if (role === 1 || role === 2 ) {
+        if (role === 1 || role === 2) {
           return next()
-          
+
         }
         return next("/errorPermission")
       })
@@ -108,6 +108,12 @@ const routes = [
   {
     path: '/',
     name: 'default',
+    beforeEnter: Auth
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: () => import('../views/Home.vue'),
     beforeEnter: Auth
   },
   {
