@@ -553,14 +553,8 @@ export default {
   justify-content: center;
   align-items: center;
   background: var(--card_blue);
+  border-radius: 5px;
 }
-
-/* .modal_mask .modal_body .attributeVariable .inputUpLoad button {
-  background: transparent;
-  color: var(--bg_white);
-  font-size: 1rem;
-} */
-
 
 .modal_mask .modal_body .titleBody {
   margin: 1rem 0;

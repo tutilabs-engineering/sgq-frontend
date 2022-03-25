@@ -3,7 +3,7 @@
         <button class="btn-fill-save btn" v-on:click="fillValue">Preencher + Opções</button>
         <div class="btns-options">
             <button class="btn-cancel btn">Cancelar</button>
-            <button class="btn-save btn" @click="ValidateQtyAnsweredQuestions">Salvar</button>
+            <button class="btn-save btn" @click="saveNewStartup">Salvar</button>
         </div>
     </div>
 </template>
@@ -15,6 +15,7 @@ export default {
     data () {
         return{
             fillStatus: false,
+            isQuestionOpen: false
         }
     },
 
@@ -22,6 +23,40 @@ export default {
         fillValue (){
             this.fillStatus = !this.fillStatus
             this.$emit("returnFillStatus", this.fillStatus)
+        },
+
+        saveNewStartup(){
+            if(this.fillStatus){
+                // Campo de perguntas aberto
+
+                this.ValidateQtyAnsweredQuestions()
+            }else {
+                const Toast = this.$swal.mixin({
+                toast: true,
+                position: 'top-right',
+                iconColor: '#3fc36d',
+                customClass: {
+                popup: 'colored-toast',
+                title: 'title-swal-text'
+                },
+                didOpen: (toast) => {
+                toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                },
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true
+            })
+
+            Toast.fire({
+                    icon: 'success',
+                    title: 'Salvo com sucesso',
+                    background: "#fff",
+                    
+                })
+                // Salvar nova Startup
+
+            }
         },
 
         ValidateQtyAnsweredQuestions () {
@@ -43,28 +78,21 @@ export default {
             })
 
             
-            if (this.$store.getters.$GETQTDEPERGUNTASPADROES != 16) {
+            if (this.$store.getters.$GETQTDEPERGUNTASPADROES != 16 || this.$store.getters.$GETQTDEPERGUNTASESPECIFICAS != this.$store.getters.$GETQTDEESPECIFICAS) {
                 Toast.fire({
                     icon: 'warning',
-                    title: 'Verifique se todas as Perguntas Padrões foram respondidas',
+                    title: 'Verifique se todas as Perguntas foram respondidas',
                     background: "#E8EB7C",
                 })
             }else {
-                console.log("Tudo foi respondido")
-            }
-
-            if (this.$store.getters.$GETQTDEPERGUNTASESPECIFICAS != this.$store.getters.$GETQTDEESPECIFICAS) {
                 Toast.fire({
-                    icon: 'warning',
-                    title: 'Verifique se todas as Perguntas Especificas foram respondidas',
-                    background: "#E8EB7C",
+                    icon: 'sucess',
+                    title: 'Verifique se todas as Perguntas foram respondidas',
+                    background: "#3fc36d",
+                    color: "#fff"
                 })
-            }else {
-                console.log("Deu tudo certo")
             }
-           
 
-          
         }
     },
 
