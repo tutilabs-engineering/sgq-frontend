@@ -11,7 +11,7 @@
     <div class="stopwatch">
       <label for="">Cronômetro</label>
       <i class="fas fa-stopwatch"></i>
-      <input type="number" v-model="dataStopwatch" @click="barProgess" />
+      <input type="text" readonly v-model="dataStopwatch" @click="barProgess" />
     </div>
     <div class="statusProgress">
       <label for="">Status de progresso (máx. 45min)</label>
@@ -35,7 +35,7 @@ export default {
   name: "Home",
   data() {
     return {
-      dataStopwatch: 0,
+      dataStopwatch: 45,
       estilo: {
         background: "blue",
         outline: "none",
@@ -126,5 +126,20 @@ export default {
   background: var(--bg_white);
   border-radius: 0.5rem;
   padding: 0.3rem;
+}
+
+@media (max-width: 425px) {
+  .home {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home .iconIdentification .top {
+    width: 20vw;
+  }
+
+  .home .iconIdentification .bottom {
+    width: 20vw;
+  }
 }
 </style>
