@@ -114,7 +114,7 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: () => import('../views/Home.vue'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
   {
     path: '/startup',
@@ -131,25 +131,25 @@ const routes = [
     path: '/create-startup',
     name: 'Status',
     component: () => import('../views/NovaStartup.vue'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
   {
     path: '/startups-aprovadas',
     name: 'TabelaAprovados',
     component: () => import('../views/TabelaAprovados'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
   {
     path: '/startups-reprovadas',
     name: 'TabelaReprovados',
     component: () => import('../views/TabelaReprovados'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
   {
     path: '/startups-andamentos',
     name: 'TabelaAndamento',
     component: () => import('../views/TabelaAndamento'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
   {
     path: '/analise_produtos',
@@ -162,7 +162,7 @@ const routes = [
     path: '/metrologia',
     name: 'metrologia',
     component: () => import('../views/Metrologia.vue'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
 
   {
@@ -182,7 +182,7 @@ const routes = [
     path: '/modal_base',
     name: 'ModalBase',
     component: () => import('../components/Modal/ModalBase.vue'),
-    beforeEnter: Auth
+    beforeEnter: EmManutencao
   },
 
 
@@ -228,7 +228,8 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import('../views/Dashboard.vue')
+    component: () => import('../views/Dashboard.vue'),
+    beforeEnter: EmManutencao
   }
 
 ]
