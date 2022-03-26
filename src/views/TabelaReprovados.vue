@@ -1,7 +1,6 @@
 <template>
-  <div className="tableContent">
-    <h2 class="titleTable">Análise de Startups</h2>
-    <h3>Reprovadas</h3>
+  <fieldset className="tableContent">
+    <legend>Análise de Startup - Reprovadas</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cód.Startup</th>
@@ -23,15 +22,18 @@
           <td data-title="Data">{{ item.data }}</td>
           <td data-title="Inspetor">{{ item.inspetor }}</td>
           <td class="lastTd" data-title="Opcoes">
-            <button className="btn_visualizar">
+            <div class="opcoes">
+              <button className="btn_visualizar">
               <i class="fas fa-eye"></i>
               Visualizar
             </button>
+            </div>
+            
           </td>
         </tr>
       </tbody>
     </table>
-  </div>
+  </fieldset>
 </template>
 
 <script>
@@ -108,10 +110,10 @@ export default {
 .tableContent {
   position: relative;
   width: 100%;
-  padding: 0px 25px 0px 25px;
-  margin-top: 50px;
-  overflow-x: auto;
-  padding: 0 40px 40px 40px;
+  background-color: var(--bg_white);
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  border-radius: 10px 10px 10px 10px;
+  padding: 20px;
 }
 
 .tableContent h2 {
@@ -127,26 +129,36 @@ export default {
 
 .dropdown-content {
   display: none;
-  justify-content: center;
-  align-items: center;
   background-color: #fff;
   border-radius: 10px;
   min-width: 50px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(37, 36, 36, 0.281);  
   padding: 15px 5px;
   z-index: 1;
+  position: absolute;
+}
+
+legend {
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--black_text);
 }
 
 .opcoes:hover .dropdown-content {
   display: block;
 }
 
+.opcoes {
+  display: flex;
+  justify-content:center;
+  width: 100%;
+  gap: 0.5rem;
+}
+
 .tableContent table {
   background-color: var(--bg_white);
   width: 100%;
   border-radius: 10px 10px 10px 10px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
-  overflow-x: scroll;
 }
 
 table th {
@@ -198,12 +210,12 @@ table td {
   cursor: pointer;
 }
 
-.btn_visualizar .fa-eye {
+.btn_visualizar, .fa-eye {
   font-size: 20px;
   color: var(--main_primaryWhite);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 960px) {
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
@@ -214,6 +226,21 @@ table td {
 
   .tableButton {
     display: block;
+  }
+
+  .opcoes {
+    justify-content: end;
+    width: 40%;
+  }
+
+  .opcoes button {
+    height: 40px;
+    padding: 10px;
+    font-size: 15px;
+  }
+  .fas {
+    font-size: 15px;
+    margin-right: 5px;
   }
 
   .tableContent td {
@@ -237,7 +264,13 @@ table td {
   }
 
   .lastTd {
+    
     border-bottom: 3px dotted var(--font-color);
+  }
+
+
+  legend {
+    text-align: center;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="modalAtributo">
+  <div>
     <transition name="model">
       <form action="">
         <div class="modal_mask">
@@ -11,7 +11,7 @@
                   type="button"
                   value="X"
                   colorButton="red"
-                  @click="$emit('openModalAtributo')"
+                  @click="$emit('changeStatus')"
                 />
               </div>
             </div>
@@ -19,23 +19,27 @@
             <div class="modal_body">
               <div class="inputsHeader">
                 <div class="input">
-                  <p>CODIGO PRODUTO:</p>
-                  <input type="text" readonly />
+                  <p>Cód. Produto</p>
+                  <input
+                    type="text"
+                    readonly
+                    :value="dataProduct.codigo_produto"
+                  />
                 </div>
 
                 <div class="input">
-                  <p>PRODUTO:</p>
-                  <input type="text" readonly />
+                  <p>Produto</p>
+                  <input type="text" readonly :value="dataProduct.descricao" />
                 </div>
 
                 <div class="input">
-                  <p>CLIENTE:</p>
-                  <input type="text" readonly />
+                  <p>Cód. Cliente</p>
+                  <input type="text" readonly value="xxxxxx-xxx" />
                 </div>
 
                 <div class="input">
-                  <p>DESCRIÇÃO DO CLIENTE:</p>
-                  <input type="text" readonly />
+                  <p>Descrição Cliente</p>
+                  <input type="text" readonly :value="dataProduct.cliente" />
                 </div>
               </div>
 
@@ -44,46 +48,69 @@
                   <div class="titleHeader">Pergunta</div>
                   <div class="titleHeader">Atenção</div>
                   <div class="titleHeader">Status</div>
+                  <div class="titleHeader">Opções</div>
                 </div>
 
                 <div class="headerPergunta">
                   <div
                     v-show="index !== 0"
-                    v-for="(todo, index) in todos"
-                    v-bind:key="todo.id"
-                    v-on:remove="todos.splice(index, 1)"
+                    v-for="todo in listQuestions"
+                    :key="todo.id"
                     class="testeLi"
                     :id="index"
                   >
                     <div class="titleHeader">
-                      {{ todo.title }}
+                      {{ todo.question }}
                     </div>
 
                     <div class="titleHeader">
                       <input
-                        @click="trocaStatus"
-                        type="radio"
+                        @click="changeAttention(todo.id, !todo.attention)"
+                        type="checkbox"
                         :name="index"
-                        id=""
+                        v-model="todo.attention"
                       />
+                      
                     </div>
                     <div class="titleHeader">
-                      <button
+                 
+                      <input type="button"
+                        @click.prevent="changeStatus($event, todo.id)"
                         :id="index"
-                        class="btnHabilitar"
-                        :class="{ btnDesabilitar: btnDesabilitado }"
+                        value="Habilitado"
+                        class="btnH"
+                        v-if="todo.is_enabled"
                       >
-                        {{ textBtn }}
-                      </button>
+                        <input type="button"
+                        v-else
+                        @click.prevent="changeStatus($event, todo.id)"
+                        :id="index"
+                        value="Desabilitado"
+                        class="btnD"
+                      >
+             
                     </div>
+
+                    <div class="titleHeader">
+
+                      <input type="button"
+                        @click.prevent="deleteQuestion(todo.id)"
+                        :id="index"
+                        value="Deletar"
+                        class="btn-delete"
+                      >
+                      
+             
+                    </div>
+                    
                   </div>
                 </div>
               </div>
               <div class="incrementAtributo">
-                <form action="" @submit.prevent="addNovaPergunta">
+                <form action="" @submit.prevent="CreateNewQuestion">
                   <h3>ADICIONAR PERGUNTA:</h3>
                   <div class="inputAdd">
-                    <input type="text" v-model="newTodoText" />
+                    <input type="text" v-model="dataAttribute.question"/>
                     <button class="btnHabilitar">
                       <i class="fas fa-plus"></i>
                     </button>
@@ -97,61 +124,176 @@
     </transition>
   </div>
 
-  <button class="btnAt" @click="$emit('openModalAtributo')">AT</button>
+  <button class="btnAt" @click="$emit('changeStatus')">AT</button>
 </template>
 
 <script>
-import { useToast } from "vue-toastification";
+
+
+import http from "../../services/productAnalysis/Attributes"
+
 export default {
   components: {},
   name: "Modal",
-  emits: ["openModalAtributo"],
+  emits: ["changeStatus"],
   data() {
     return {
       actionButton: "Insert",
       dynamicTitle: "Add Data",
       comments: "",
       count: 0,
-      newTodoText: "",
+      listQuestions: [],
       todos: [{}],
       nextTodoId: 0,
       textBtn: "Habilitar",
       btnDesabilitado: false,
+      dataAttribute: {
+        cod_sap: "(Remover isso do back-end)",
+        cod_product: this.dataProduct.codigo_produto,
+        attention: true,
+        question: "",
+        is_enabled: true
+      }
     };
   },
   props: {
-    titleModal: String,
-    id: Number,
-    modalAtributo: String,
+    dataProduct: Object,
   },
   methods: {
+
+    
+    renderListAttribute: async function () {
+      await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+      if(res) {
+         this.listQuestions = res.data.list 
+      }
+    })
+    },
+
+    deleteQuestion: async function(id){
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
+
+      this.$store.commit("$SETISLOADING");
+      await http.DeleteQuestionById(id);
+      this.renderListAttribute()
+      this.$store.commit("$SETISLOADING");
+      Toast.fire({
+              icon: "error",
+              title: "Pergunta deletada!",
+              background: "#FFA490",
+            });
+    },
+
     getComments(value) {
       this.comments = value;
     },
 
-    addNovaPergunta() {
-      if (this.newTodoText === "") {
-        const toast = useToast();
-        toast.error("Adicione ao menos uma pergunta");
-      } else if (this.count < 10) {
-        this.count++;
-        this.todos.push({
-          id: this.nextTodoId++,
-          title: this.newTodoText,
-        });
-        this.newTodoText = "";
-      }
-      if (this.count === 10) {
-        const toast = useToast();
-        toast.error("Número máximo de perguntas atingidas.");
+    CreateNewQuestion: async function() {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
+
+
+      this.$store.commit("$SETISLOADING");
+      
+      try {
+        const response = await http.CreateAttribute(this.dataAttribute);
+        
+        this.renderListAttribute()
+        this.dataAttribute.question = ""
+        Toast.fire({
+                icon: "success",
+                title: "Pergunta criada com sucesso!",
+                background: "#A8D4FF",
+              });
+        this.$store.commit("$SETISLOADING");
+        return response;
+      } catch {
+        Toast.fire({
+              icon: "error",
+              title: "Pergunta já existente!",
+              background: "#FFA490",
+            });
+        
+        this.$store.commit("$SETISLOADING");
       }
     },
-
+    
     trocaStatus() {
       this.textBtn = "Desabilitado";
       this.btnDesabilitado = true;
     },
+
+    async changeAttention(id, attentionValue) {
+      this.$store.commit("$SETISLOADING");
+      await http.ChangeAttentionByAttributes(id, attentionValue)
+      this.$store.commit("$SETISLOADING");
+    },
+
+    async changeStatus($event,id) {
+      this.$store.commit("$SETISLOADING");
+        var btnTarget =$event.target;
+        if(btnTarget.value === "Habilitado"){
+          btnTarget.value="Desabilitado"
+          btnTarget.className="btnD"
+          await http.ChangeStatusByAttributes(id,  false)
+          this.$store.commit("$SETISLOADING");
+      
+      }else{
+        btnTarget.value="Habilitado"
+        btnTarget.className="btnH"
+        await http.ChangeStatusByAttributes(id,  true)
+        this.$store.commit("$SETISLOADING");
+      }
+    }
   },
+
+  created: async function (){
+
+    
+
+
+    this.$store.commit("$SETISLOADING");
+    await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+      if(res) {
+         this.listQuestions = res.data.list
+         
+        this.$store.commit("$SETISLOADING");
+      }
+       
+    })
+
+  }
+
+
 };
 </script>
 
@@ -160,7 +302,7 @@ export default {
 .modal_mask {
   position: fixed;
   display: table;
-  z-index: 1;
+  z-index: 1000;
   top: 0;
   left: 0;
   width: 100%;
@@ -175,7 +317,7 @@ export default {
   height: 90%;
   margin: 30px auto;
   background: var(--bg_white);
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -188,13 +330,12 @@ export default {
   height: 3.5rem;
   line-height: 3.5rem;
   background: var(--bg_green);
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
 }
 
 .modal_mask .modal_content .modal_header .title_modal {
-  width: 90%;
+  width: 100%;
   margin: auto;
+  padding: 0 2%;
   color: var(--main_primaryWhite);
   font-size: 1.5rem;
   display: flex;
@@ -225,39 +366,28 @@ export default {
 }
 
 .title_modal input {
-  width: 2vw;
-  height: 2vw;
-  border-radius: 8px;
-  background: red;
-  color: white;
+  width: 40px;
+  height: 40px;
+  padding: 5px 5px;
+  border-radius: 10px;
   border: none;
-  font-size: 0.8vw;
+  font-size: 20px;
+  color: var(--white);
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 1s;
+}
+
+.input p {
+  font-weight: bold;
+  color: var(--black_text);
 }
 
 .title_modal input:hover {
-  width: 2vw;
-  height: 2vw;
-  border-radius: 8px;
-  background: rgb(158, 3, 3);
-  color: white;
-  border: none;
-  font-size: 0.8vw;
+  transform: rotate(180deg);
 }
 
-/* Style ScrollBar -------- */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgb(182, 181, 181);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--bg_green);
-  border-radius: 15px;
-}
 
 /* -------- Style Atributo ------- */
 #inputImage {
@@ -296,8 +426,10 @@ export default {
 
 .perguntas {
   width: 100%;
+  overflow-y: auto;
   position: relative;
   padding: 1rem 0;
+  height: 60%;
 }
 
 .perguntas .headerPerguntas {
@@ -317,6 +449,7 @@ export default {
   width: 100%;
   display: flex;
   gap: 0.5rem;
+  text-align: center;
 }
 .perguntas .headerPergunta .titleHeader {
   position: relative;
@@ -328,6 +461,7 @@ export default {
   position: relative;
   width: 33%;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .perguntas .headerPergunta .titleHeader .btnHabilitar {
@@ -387,5 +521,62 @@ export default {
   border-radius: 0 10px 10px 0;
   border: none;
   cursor: pointer;
+}
+
+.btnH, .btnD, .btn-delete {
+  width: 100px;
+  border: none;
+  height: 40px;
+  border-radius: 5px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+}
+
+.btnH {
+  background-color: var(--card_blue);
+}
+
+.btnD {
+  background-color: var(--card_red);
+}
+
+.btn-delete {
+  background-color: var(--card_red);
+}
+
+
+
+@media (max-width: 768px) {
+  .modal_mask .modal_body .inputsHeader .input {
+    width: 49%;
+  }
+
+  .title_modal input {
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .incrementAtributo .inputAdd input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 425px) {
+  .title_modal input {
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .modal_mask .modal_body .inputsHeader .input {
+    width: 100%;
+  }
+
+  .perguntas .headerPerguntas .titleHeader {
+    width: 100%;
+    font-weight: bold;
+  }
 }
 </style>

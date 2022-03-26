@@ -30,10 +30,7 @@
 </template>
 
 <script>
-//import NavBar from "./components/NavBar";
 
-import SideBar from "./components/SideBar/SideBar.vue";
-import { sidebarWidth } from "./components/SideBar/state";
 import Login from "./views/Login.vue";
 import Routes from "./router/index";
 import Header from "./components/Header/Header.vue";
@@ -41,8 +38,8 @@ import ModalNotFound from "./components/ModalError/RouteNotFoundError.vue"
 import ModalErrorPermission from "./components/ModalError/AccessError.vue"
 import EmConstrucao from "./components/ModalError/EmConstrucao.vue"
 import Loading from "./components/Loading/Loading.vue";
+import SideBar from "./components/SideBar/SideBar.vue"
 
-//axios
 
 export default {
   data() {
@@ -59,9 +56,7 @@ export default {
     Login,
     Header,
   },
-  setup() {
-    return { sidebarWidth };
-  },
+
   computed: {
     telaLogin() {
       return this.$route.name === "Login";
@@ -173,5 +168,13 @@ body {
   width: calc(100% - 60px);
   margin-left: 60px;
   transition: 0.5s;
+}
+
+@media (max-width: 48em){
+  .content {
+    width: 100vw;
+    margin-left: 0;
+    padding: 100px 4%;
+  }
 }
 </style>

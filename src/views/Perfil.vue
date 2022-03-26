@@ -49,11 +49,13 @@
             </select>
           </div>
 
-          <div class="btns btn-edit-false">
+          <div class="btns btn-edit-false" v-if="btnEdit">
             <button class="btn btn-edit" @click="editStatus = false">
               Editar
             </button>
           </div>
+
+          
         </div>
       </form>
     </div>
@@ -105,8 +107,6 @@
               v-model="user.cpf"
             />
           </div>
-
-          
         </div>
 
         <div class="footer-user-data">
@@ -165,6 +165,7 @@ export default {
 
       isDisable: true,
       editStatus: true,
+      btnEdit: false,
 
       options: [
         { text: "Escolha", value: "" },
@@ -181,21 +182,20 @@ export default {
     UpdateUser: async function () {
       const Toast = this.$swal.mixin({
         toast: true,
-        position: 'top-right',
-        iconColor: 'white',
+        position: "top-right",
+        iconColor: "white",
         customClass: {
-          popup: 'colored-toast',
-          title: 'title-swal-text'
+          popup: "colored-toast",
+          title: "title-swal-text",
         },
         didOpen: (toast) => {
-          toast.addEventListener('mouseenter', this.$swal.stopTimer)
-          toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
         },
         showConfirmButton: false,
         timer: 2500,
-        timerProgressBar: true
-      })
-
+        timerProgressBar: true,
+      });
 
       this.$store.commit("$SETISLOADING");
       const userUpdated = {
@@ -213,21 +213,21 @@ export default {
           if (response.status === 200) {
             this.$store.commit("$SETISLOADING");
             Toast.fire({
-              icon: 'success',
-              title: 'Usuário atualizado com sucesso',
+              icon: "success",
+              title: "Usuário atualizado com sucesso",
               background: "#A8D4FF",
-            })
+            });
             this.editStatus = !this.editStatus;
           }
         })
         .catch((error) => {
           this.$store.commit("$SETISLOADING");
           return Toast.fire({
-            icon: 'warning',
+            icon: "warning",
             title: `Verifique se todos os campos estão corretos!, error: ${error.response.data.message}`,
             background: "#E8EB7C",
-            iconColor: "#545454"
-          })  
+            iconColor: "#545454",
+          });
         });
     },
   },
@@ -252,6 +252,11 @@ export default {
             this.user.cpf = res.data.user.cpf;
             this.user.cargo = res.data.user.role.description;
             this.user.lvAccess = res.data.user.role.id;
+
+            const role = res.data.user.role.id
+                    if(role === 1 || role === 2) {
+                        this.btnEdit = true
+                    }
           })
           .catch((error) => console.log("error", error));
         this.$store.commit("$SETISLOADING");
@@ -259,14 +264,16 @@ export default {
         console.log(error);
       }
     }
+
   },
+
+  
 };
 </script>
 
 <style scoped>
 .content-perfil {
   width: 100%;
-  height: calc(90vh - 90px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -397,13 +404,17 @@ export default {
   color: var(--main_primaryWhite);
 }
 
-@media (max-width: 765px) {
+@media (max-width: 768px) {
+  .content-perfil {
+    display: block;
+  }
+
   .inputs {
     grid-template-columns: 1fr;
   }
 
   .perfil {
-    width: 80%;
+    width: 100%;
   }
 
   .btn {

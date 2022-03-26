@@ -36,12 +36,12 @@ export default {
     transition: 0.5s;
     padding: 20px;
     margin: 100px;
+    border: 1px solid rgba(37, 36, 36, 0.281); 
 }
 
 .cardConfiguracao:hover {
     background-color: var(--card_green);
     color: var(--main_primaryWhite);
-    transform: scale(1.1);
 }
 
 

@@ -3,17 +3,17 @@ import http from "../services/account/Users"
 import jwt from "jsonwebtoken"
 
 async function Auth(to, from, next) {
-  
+
   const token = sessionStorage.getItem("token")
-  
-  if(!token) {
+
+  if (!token) {
     return next("/login")
   }
 
   await http.validate().then((response) => {
-    if(response.status === 200) {
+    if (response.status === 200) {
       return next()
-    } 
+    }
     return next("/login")
   }).catch(() => {
     return next("/login")
@@ -25,16 +25,16 @@ async function AuthAdmin(to, from, next) {
 
   async function IsAuth() {
     const token = sessionStorage.getItem("token")
-  
-    if(!token) {
+
+    if (!token) {
       next("/login")
       return false
     }
-  
+
     await http.validate().then((response) => {
-      if(response.status === 200) {
+      if (response.status === 200) {
         return true
-      } 
+      }
       next("/login")
       return false
     }).catch(() => {
@@ -46,25 +46,26 @@ async function AuthAdmin(to, from, next) {
 
   const auth = IsAuth();
 
-  if(!auth) {
+  if (!auth) {
     return next("/login")
   }
 
   const secret = "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
 
   const token = sessionStorage.getItem("token");
-  
-  if(token) {
+
+  if (token) {
     try {
       const { sub } = jwt.verify(token, secret)
       await http.findUserById(sub).then((response) => {
         const role = response.data.user.role.id
-        if(role !== 1) {
-          return next("/errorPermission")
+        if (role === 1 || role === 2) {
+          return next()
+
         }
-        return next()
+        return next("/errorPermission")
       })
-    }catch(error){
+    } catch (error) {
       console.log(error)
     }
   }
@@ -74,16 +75,16 @@ async function EmManutencao(to, from, next) {
 
   async function IsAuth() {
     const token = sessionStorage.getItem("token")
-  
-    if(!token) {
+
+    if (!token) {
       next("/login")
       return false
     }
-  
+
     await http.validate().then((response) => {
-      if(response.status === 200) {
+      if (response.status === 200) {
         return true
-      } 
+      }
       next("/login")
       return false
     }).catch(() => {
@@ -95,7 +96,7 @@ async function EmManutencao(to, from, next) {
 
   const auth = IsAuth();
 
-  if(!auth) {
+  if (!auth) {
     return next("/login")
   }
 
@@ -108,6 +109,12 @@ const routes = [
     path: '/',
     name: 'default',
     beforeEnter: Auth
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: () => import('../views/Home.vue'),
+    beforeEnter: EmManutencao
   },
   {
     path: '/startup',
@@ -145,10 +152,10 @@ const routes = [
     beforeEnter: EmManutencao
   },
   {
-    path: '/attributes',
-    name: 'attributes',
-    component: () => import('../views/Atributos.vue'),
-    beforeEnter: EmManutencao
+    path: '/analise_produtos',
+    name: 'AnaliseDeProdutos',
+    component: () => import('../views/AnaliseDeProdutos.vue'),
+    beforeEnter: Auth
   },
 
   {
@@ -169,6 +176,13 @@ const routes = [
     path: '/notFound',
     name: 'NotFound',
     component: () => import('../components/ModalError/RouteNotFoundError.vue')
+  },
+
+  {
+    path: '/modal_base',
+    name: 'ModalBase',
+    component: () => import('../components/Modal/ModalBase.vue'),
+    beforeEnter: EmManutencao
   },
 
 
@@ -210,6 +224,13 @@ const routes = [
     component: () => import('../components/ModalError/EmConstrucao.vue'),
     beforeEnter: AuthAdmin
   },
+
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('../views/Dashboard.vue'),
+    beforeEnter: EmManutencao
+  }
 
 ]
 

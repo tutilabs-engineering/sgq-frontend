@@ -1,11 +1,11 @@
 <template>
   <div class="header">
-    <span
+    <!-- <span
       class="collapse-icon"
       @click="toggleSidebar"
       :class="{ 'rotate-180': collapsed }"
       ><i class="fas fa-bars"></i
-    ></span>
+    ></span> -->
     <h2 class="title">{{ titlePage }}</h2>
   </div>
 </template>
@@ -46,7 +46,7 @@ export default {
   align-items: center;
   padding: 0 20px;
   background-color: var(--bg_white);
-  box-shadow: 0 0.1rem 0.2rem rgb(156 156 156);
+  border-bottom: 1px solid rgba(37, 36, 36, 0.281);
   z-index: 10;
 }
 
@@ -70,10 +70,16 @@ export default {
 }
 
 .title {
-  font-size: max(1.3rem, 1rem);
+  font-size: max(1.5rem, 1rem);
   color: var(--black_text);
   margin-left: 5px;
   line-height: 25px;
+}
+
+@media (max-width: 768px){
+  .header {
+    display: none;
+  }
 }
 </style>
 

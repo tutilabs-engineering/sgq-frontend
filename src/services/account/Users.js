@@ -4,36 +4,36 @@ import { http } from "../config";
 
 export default {
 
-    sessions: async (dataLogin) => {
-        return await http.post("sessions", dataLogin)
-    },
+  sessions: async (dataLogin) => {
+    return await http.post("sessions", dataLogin)
+  },
 
-    findUserById: (id) => {
-        return http.get(`users/${id}`)
-    },
+  findUserById: (id) => {
+    return http.get(`users/${id}`)
+  },
 
-    listUsers: () => {
-        return http.get('users')
-    },
+  listUsers: () => {
+    return http.get('users')
+  },
 
-    registerUser: async (data) => {
-        return await http.post('users', data)
-    },
+  registerUser: async (data) => {
+    return await http.post('users', data)
+  },
+  
+  validate: () => {
+    return http.get("validateToken")
+  },
 
-    validate: () => {
-        return http.get("validateToken")
-    },
+  updateUserById: (dataUpdateUser) => {
+    return http.put("users", dataUpdateUser)
+  },
 
-    updateUserById: (dataUpdateUser) => {
-        return http.put("users", dataUpdateUser)
-    },
+  changeStatus: (userStatus) => {
+    return http.patch("users", userStatus)
+  },
 
-    changeStatus: (userStatus) => {
-      return http.patch("users", userStatus)
-    },
-
-    deleteUser: async (id) => {
-      return await http.delete(`users/${id}`)
-    }
+  deleteUser: async (id) => {
+    return await http.delete(`users/${id}`)
+  }
 
 }

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="modalVariavel">
+  <div>
     <transition name="model">
       <form action="">
         <div class="modal_mask">
@@ -11,7 +11,7 @@
                   type="button"
                   value="X"
                   colorButton="red"
-                  @click="$emit('openModalVariavel')"
+                  @click="$emit('changeStatus')"
                 />
               </div>
             </div>
@@ -19,23 +19,27 @@
             <div class="modal_body">
               <div class="inputsHeader">
                 <div class="input">
-                  <p>SAP:</p>
-                  <input type="text" readonly />
+                  <p>Cód. Produto</p>
+                  <input
+                    type="text"
+                    readonly
+                    :value="dataProduct.codigo_produto"
+                  />
                 </div>
 
                 <div class="input">
-                  <p>PRODUTO:</p>
-                  <input type="text" readonly />
+                  <p>Produto</p>
+                  <input type="text" readonly :value="dataProduct.descricao" />
                 </div>
 
                 <div class="input">
-                  <p>CLIENTE:</p>
-                  <input type="text" readonly />
+                  <p>Cód. Cliente</p>
+                  <input type="text" readonly value="XXXXXXXX-XX" />
                 </div>
 
                 <div class="input">
-                  <p>DESCRIÇÃO DO CLIENTE:</p>
-                  <input type="text" readonly />
+                  <p>Descrição Cliente</p>
+                  <input type="text" readonly :value="dataProduct.cliente" />
                 </div>
               </div>
 
@@ -43,113 +47,249 @@
                 <h3>VARIÁVEL</h3>
               </div>
 
-              <div class="inputsHeader" v-for="index in count" :key="index">
-                <h4>{{ index }}</h4>
+              <div class="variavel_increment">
+                <div
+                  class="inputsHeader"
+                  v-for="(variable, index) in variables"
+                  :key="index"
+                >
+                  <h4>{{ index + 1 }}</h4>
+                  <div class="inputIdentificacao">
+                    <p class="idInput">Identificação</p>
+                    <p>{{ variable.description }}</p>
+                  </div>
+
+                  <div class="inputCota">
+                    <p class="idCota">COTA:</p>
+                    <p>{{ variable.cota }}</p>
+                  </div>
+
+                  <div class="inputCota">
+                    <p class="idMax">MÁX:</p>
+                    <p>{{ variable.max }}</p>
+                  </div>
+
+                  <div class="inputCota">
+                    <p class="idMin">MIN:</p>
+                    <p>{{ variable.min }}</p>
+                  </div>
+
+                  
+
+                  <div class="delete" @click="deleteVariable(variable.id)">
+                    <span>Deletar</span>
+                  </div>
+
+                </div>
+              </div>
+
+              <form
+                class="attributeVariable"
+                @submit.prevent="RegisterVariable"
+              >
                 <div class="inputIdentificacao">
                   <p>IDENTIFICAÇÃO:</p>
-                  <input type="text" />
+                  <input type="text" v-model="list.description" placeholder="Identificação 01"/>
                 </div>
 
                 <div class="inputCota">
                   <p>COTA:</p>
-                  <input type="text" />
+                  <input type="number" v-model="list.cota" step="any" placeholder="12.5"/>
                 </div>
 
                 <div class="inputCota">
                   <p>MÁX:</p>
-                  <input type="text" />
+                  <input type="number" v-model="list.max" step="any" placeholder="12.6"/>
                 </div>
 
                 <div class="inputCota">
                   <p>MIN:</p>
-                  <input type="text" />
+                  <input type="number" v-model="list.min" step="any" placeholder="12.3"/>
                 </div>
 
-                <div class="inputUpLoad">
-                  <label for="inputImage"><i class="fas fa-upload"></i></label>
-                  <input ref="file" type="file" id="inputImage" />
-                </div>
-              </div>
+                <div class="inputUpLoad" >
+                    <label for="inputImage" class="inputImage"
+                      ><i class="far fa-file-image"></i
+                    ></label>
+                    
+                    <input ref="file" type="file"  class="inputUpLoad" id="inputImage" @change="insertImageFile"/>
 
-              <div class="attributeVariable">
-                <div class="inputIdentificacao">
-                  <p>IDENTIFICAÇÃO:</p>
-                  <input type="text" v-model="variavel.identificacao" />
+                    
                 </div>
 
-                <div class="inputCota">
-                  <p>COTA:</p>
-                  <input type="text" v-model="variavel.cota" />
-                </div>
 
-                <div class="inputCota">
-                  <p>MÁX:</p>
-                  <input type="text" v-model="variavel.max" />
-                </div>
+                <button type="submit" class="inputUpLoad">
+                  <i class="fas fa-plus"></i>
+                </button>
 
-                <div class="inputCota">
-                  <p>MIN:</p>
-                  <input type="text" v-model="variavel.min" />
+                <div class="alertMax" v-show="list.max < list.min">
+                  <p>OBS: O campo máximo tem que ser maior que o mínimo</p>
                 </div>
-
-                <div class="inputUpLoad" @click="incrementVariable">
-                  <label><i class="fas fa-plus"></i></label>
-                </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
       </form>
     </transition>
   </div>
-  <button class="btnVa" @click="$emit('openModalVariavel')">VA</button>
+  <button class="btnVa" @click="$emit('changeStatus')">VA</button>
 </template>
 
 <script>
-import { useToast } from "vue-toastification";
+import http from "../../services/productAnalysis/Variables";
+
 export default {
   components: {},
   name: "Modal",
-  emits: ["openModalVariavel"],
+  emits: ["changeStatus"],
   data() {
     return {
+      variables: [{}],
       actionButton: "Insert",
       dynamicTitle: "Add Data",
       comments: "",
       count: 0,
-      variavel: {
-        identificacao: "",
-        cota: "",
-        max: "",
-        min: "",
+      list: {
+        cod_sap: this.dataProduct.codigo_produto,
+        cod_product: this.dataProduct.codigo_produto,
+        description: "",
+        cota: 0,
+        max: 0,
+        min: 0,
+        file: "sadfa",
       },
     };
   },
   props: {
-    titleModal: String,
-    id: Number,
-    modalVariavel: String,
+    dataProduct: Object,
   },
+
+  created: async function () {
+    this.$store.commit("$SETISLOADING");
+    await http
+      .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
+      .then((res) => {
+        this.variables = res.data.list;
+      });
+    this.$store.commit("$SETISLOADING");
+  },
+
   methods: {
+
+    insertImageFile (e) {
+      this.list.file = e.target.files[0]
+      console.log(this.list.file)
+    },
+
     getComments(value) {
       this.comments = value;
     },
-    incrementVariable() {
-      if (
-        this.variavel.identificacao === "" ||
-        this.variavel.cota === "" ||
-        this.variavel.max === "" ||
-        this.variavel.min === ""
-      ) {
-        const toast = useToast();
-        toast.error("Preencha todos os campos!");
-      } else if (this.count < 10) {
-        this.count++;
-        this.variavel.identificacao = "";
-        this.variavel.cota = "";
-        this.variavel.max = "";
-        this.variavel.min = "";
-      }
+
+    async reloadList() {
+      await http
+        .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
+        .then((res) => {
+          this.variables = res.data.list;
+        });
+    },
+
+    /* Register Variable */
+    async RegisterVariable() {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
+
+      const inputDescription = this.list.description;
+      const inputCota = this.list.cota;
+      const inputMax = this.list.max;
+      const inputMin = this.list.min;
+
+      this.$store.commit("$SETISLOADING");
+
+      const formData = new FormData()
+      formData.append("description", this.list.description)
+      formData.append("cod_product", this.list.cod_product)
+      formData.append("cota", this.list.cota)
+      formData.append("max", this.list.max)
+      formData.append("min", this.list.min)
+      formData.append("file", this.list.file)
+
+      console.log(this.list);
+      await http
+        .CreateVariable(formData)
+        .then((res) => {
+          if (res.status === 201) {
+            Toast.fire({
+              icon: "success",
+              title: "Variável criada com sucesso!",
+              background: "#A8D4FF",
+            });
+            this.list.description = "";
+            this.list.cota = "";
+            this.list.max = "";
+            this.list.min = "";
+          }
+
+        })
+        .catch((error) => {
+          if (!inputDescription || !inputCota || !inputMax || !inputMin) {
+            Toast.fire({
+              icon: "error",
+              title: "Preencha todos os campos!",
+              background: "#FFA490",
+            });
+          }
+          return error;
+        });
+      this.reloadList();
+      this.$store.commit("$SETISLOADING");
+    },
+
+    /* Delete Variable */
+    async deleteVariable(id) {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
+      this.$store.commit("$SETISLOADING");
+      await http.DeleteVariable(id).then((res) => {
+        if (res.data.message === "Deleted") {
+          Toast.fire({
+            icon: "success",
+            title: "Variável deletada com sucesso!",
+            background: "#A8D4FF",
+          });
+        }
+        console.log(res.data);
+      });
+
+      this.reloadList();
+      this.$store.commit("$SETISLOADING");
     },
   },
 };
@@ -160,7 +300,7 @@ export default {
 .modal_mask {
   position: fixed;
   display: table;
-  z-index: 1;
+  z-index: 1000;
   top: 0;
   left: 0;
   width: 100%;
@@ -175,7 +315,7 @@ export default {
   height: 90%;
   margin: 30px auto;
   background: var(--bg_white);
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -188,13 +328,12 @@ export default {
   height: 3.5rem;
   line-height: 3.5rem;
   background: var(--bg_green);
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
 }
 
 .modal_mask .modal_content .modal_header .title_modal {
-  width: 90%;
+  width: 100%;
   margin: auto;
+  padding: 0 2%;
   color: var(--main_primaryWhite);
   font-size: 1.5rem;
   display: flex;
@@ -215,38 +354,21 @@ export default {
 }
 
 .title_modal input {
-  width: 2vw;
-  height: 2vw;
-  border-radius: 8px;
-  background: red;
-  color: white;
+  width: 40px;
+  height: 40px;
+  padding: 5px 5px;
+  border-radius: 10px;
   border: none;
-  font-size: 0.8vw;
+  font-size: 20px;
+  color: var(--white);
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 1s;
 }
 
 .title_modal input:hover {
-  width: 2vw;
-  height: 2vw;
-  border-radius: 8px;
-  background: rgb(158, 3, 3);
-  color: white;
-  border: none;
-  font-size: 0.8vw;
-}
-
-/* Style ScrollBar -------- */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgb(182, 181, 181);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--bg_green);
-  border-radius: 15px;
+  transform: rotate(180deg);
 }
 
 /* -------- Style Variavel ------- */
@@ -274,9 +396,21 @@ export default {
   margin-top: 20px;
 }
 
+.idInput, .idMax, .idMin, .idCota {
+  color: var(--black_text);
+  font-weight: bold;
+  font-size: 13px;
+}
+
 .modal_mask .modal_body .inputsHeader h4 {
   margin-top: 20px;
   font-size: 1.5rem;
+  color: var(--black_text);
+}
+
+.input p {
+  font-weight: bold;
+  color: var(--black_text);
 }
 
 .modal_mask .modal_body .inputsHeader .input {
@@ -325,10 +459,10 @@ export default {
 }
 
 .modal_mask .modal_body .inputsHeader .inputUpLoad {
-  width: 10%;
+  width: 100px;
   height: 40px;
   background: var(--card_blue);
-  border-radius: 20px;
+  border-radius: 5px;
   margin-top: 23px;
   display: flex;
   align-items: center;
@@ -341,6 +475,7 @@ export default {
   cursor: pointer;
 }
 
+
 .modal_mask .modal_body .attributeVariable {
   width: 100%;
   display: flex;
@@ -349,12 +484,12 @@ export default {
   gap: 1rem;
   margin-top: 20px;
   flex-wrap: wrap;
-  border-top: 2px solid black;
+  border-top: 2px solid var(--black_text);
   padding-top: 20px;
 }
 
 .modal_mask .modal_body .attributeVariable .inputIdentificacao {
-  width: 50%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -383,11 +518,23 @@ export default {
   outline: none;
 }
 
+.modal_mask .modal_body .attributeVariable .alertMax {
+  background: var(--card_red);
+  color: var(--bg_white);
+  font-size: 1rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
 .modal_mask .modal_body .attributeVariable .inputUpLoad {
   width: 10%;
-  height: 40px;
+  height: 35px;
   background: var(--card_green);
-  border-radius: 20px;
+  border-radius: 5px;
   margin-top: 23px;
   display: flex;
   align-items: center;
@@ -395,22 +542,59 @@ export default {
   color: var(--main_primaryWhite);
   cursor: pointer;
   font-size: 1.4rem;
+  border: none;
 }
 
-.modal_mask .modal_body .attributeVariable .inputUpLoad .fa-plus {
+.modal_mask .modal_body .attributeVariable .inputImage{
+  width: 100%;
+  height: 100%;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--card_blue);
+  border-radius: 5px;
+}
+
+.fa-file-image {
+  color: #fff;
 }
 
 .modal_mask .modal_body .titleBody {
   margin: 1rem 0;
   text-align: start;
+  color: var(--black_text);
+}
+
+.modal_mask .modal_body .variavel_increment {
+  width: 100%;
+  height: 45%;
+  overflow-y: auto;
+  position: relative;
+  padding: 0 0.5rem;
+}
+
+.modal_mask .modal_body .variavel_increment .delete {
+  background-color: var(--card_red);
+  color: var(--main_primaryWhite);
+  width: 100px;
+  height: 35px;
+  margin-top: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 400;
 }
 
 @media (max-width: 770px) {
   .title_modal input {
-    width: 25px;
-    height: 25px;
-    font-size: 10px;
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
   }
 
   .modal_mask .modal_body .titleBody {

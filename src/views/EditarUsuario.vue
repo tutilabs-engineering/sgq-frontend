@@ -179,7 +179,9 @@ export default {
 
   created: async function() {
       try {
+        
         this.$store.commit("$SETISLOADING");
+        
         await http
           .findUserById(this.userId)
           .then((res) => {
@@ -190,6 +192,7 @@ export default {
             this.user.cpf = res.data.user.cpf;
             this.user.cargo = res.data.user.role.description;
             this.user.lvAccess = res.data.user.role.id;
+
           })
           .catch((error) => console.log("error", error));
         this.$store.commit("$SETISLOADING");
@@ -200,6 +203,7 @@ export default {
 
   methods: {
       UpdateUser: async function () {
+      window.location.reload(true);
       const Toast = this.$swal.mixin({
         toast: true,
         position: 'top-right',
@@ -232,7 +236,6 @@ export default {
         .updateUserById(userUpdated)
         .then((response) => {
           if (response.status === 200) {
-            this.$store.commit("$SETISLOADING");
             Toast.fire({
               icon: 'success',
               title: 'Usuário atualizado com sucesso',
@@ -240,6 +243,7 @@ export default {
             })
             this.editStatus = !this.editStatus;
           }
+          
         })
         .catch((error) => {
           this.$store.commit("$SETISLOADING");

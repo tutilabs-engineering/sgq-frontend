@@ -1,109 +1,96 @@
 <template>
   <div class="content-startupCadastro">
-    <div class="form">
-      <div class="form-col">
-        <label>OP</label>
-        <input
-          type="text"
-          @change="ReturnDataOp"
-          v-model="code_op"
-          name=""
-          id=""
-        />
+    
+    <fieldset class="form">
 
-        <label>Cliente</label>
-        <input type="text" name="" id="" v-model="autoReturn.client" />
+      
+      <legend>Start-Injeção</legend>
 
-        <label>Código Cliente</label>
-        <input type="text" name="" id="" v-model="autoReturn.codeClient" />
+      <div class="input">
+        <label for="op">Ordem de Produção</label>
+        <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+      </div>
+      
+      <div class="input">
+        <label for="client">Cliente</label>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="headerInfo.client">
       </div>
 
-      <div class="form-col">
-        <label>Produto</label>
-        <input type="text" name="" id="" v-model="autoReturn.product" />
-
-        <label>Código Produto</label>
-        <input type="text" name="" id="" v-model="autoReturn.codeProduct" />
-
-        <label>Quantidade</label>
-        <input type="number" name="" id="" />
+      <div class="input">
+        <label for="client">Código cliente</label>
+        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient">
       </div>
 
-      <div class="form-col">
-        <label>Data</label>
-        <input type="date" name="" id="" v-model="autoReturn.date" />
-
-        <label>Hora inicial</label>
-        <input type="time" name="" id="" v-model="autoReturn.startTime" />
-
-        <label>Hora Final</label>
-        <input type="time" name="" id="" />
+      <div class="input">
+        <label for="client">Produto</label>
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.product">
       </div>
-    </div>
+
+      <div class="input">
+        <label for="client">Código Produto</label>
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.codeProduct">
+      </div>
+
+      <div class="input">
+        <label for="client">Quantidade</label>
+        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.quantity">
+      </div>
+
+      <div class="input">
+        <label for="client">Máquina</label>
+        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.quantity">
+      </div>
+
+      <div class="input">
+        <label for="client">Molde</label>
+        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.quantity">
+      </div>
+
+      <div class="input">
+        <label for="client">Data</label>
+        <input type="date" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.date">
+      </div>
+
+      <div class="input">
+        <label for="client">Hora inicial</label>
+        <input type="time" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.startTime">
+      </div>
+
+      <div class="input">
+        <label for="client">Hora final</label>
+        <input type="time" name="client" id="client" placeholder="type qualquer coisa">
+      </div>
+
+    </fieldset>
   </div>
 </template>
 
 <script>
-import http from "../../services/startup";
+// import http from "../../services/startup";
+
 export default {
   data() {
     return {
       code_op: "",
-      autoReturn: {
-        client: "",
-        codeClient: "",
-        product: "",
-        codeProduct: "",
-        date: "",
-        startTime: "",
-      },
     };
   },
-  methods: {
-    ReturnDataOp: async function () {
-      function GetDate() {
-        const date = new Date();
-        let day = date.getDay();
-        let month = date.getMonth() + 1;
-        const year = date.getFullYear();
-
-        if (day !== 1) {
-          day = day - 1;
-        }
-        if (day.toString().length === 1) {
-          day = `0${day}`;
-        }
-        if (month < 10) {
-          month = `0${month}`;
-        }
-
-        return `${year}-${month}-${day}`;
-      }
-      function GetHour() {
-        const date = new Date();
-
-        let hour = date.getHours();
-        let minutes = date.getMinutes();
-
-        return `${hour}:${minutes}`;
-      }
-
-      const opData = await http.listDataByCodeOp(this.code_op);
-      this.autoReturn.client = opData.data.data_op.client;
-      this.autoReturn.codeClient = opData.data.data_op.code_client;
-      this.autoReturn.product = opData.data.data_op.product;
-      this.autoReturn.codeProduct = opData.data.data_op.code_product;
-      this.autoReturn.date = GetDate();
-      this.autoReturn.startTime = GetHour();
-    },
+  props: {
+    headerInfo: Object
   },
+  methods: {},
+  watch: {
+    code_op (newValor) {
+      this.$store.commit("$SETCODEOP", this.code_op);
+      this.$emit("returnCodeOp", newValor)
+    }
+  }
 };
+
 </script>
 
 <style scoped>
 .content-startupCadastro {
   padding: 20px;
-  margin-top: 1vh;
   width: 100%;
   height: auto;
   display: flex;
@@ -111,44 +98,63 @@ export default {
 }
 
 .form {
-  background-color: var(--card-color);
-  padding: 20px 0 20px 0;
-  width: 85%;
+  padding: 20px;
+  width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
+  background-color: white;
   border-radius: 10px 10px 10px 10px;
-  border-right: 7px solid var(--button-color-01);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
 }
 
-.form-col {
-  margin: 0px 30px 0 30px;
+.input {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  height: 70px;
+  padding: 5px;
+  border-radius: 5px 5px 0 0;
 }
 
-.form-col label {
+.input label {
   font-weight: 600;
-  font-size: 17px;
-  margin-bottom: 5px;
+  font-size: 18px;
+  color: var(--black_text);
 }
 
-.form-col input {
-  padding: 0 5px 0 5px;
-  width: auto;
-  border: 1px solid rgba(0, 0, 0, 0.514);
-  border-radius: 5px;
-  height: 30px;
+.input input {
+  background-color: transparent;
+  border: none;
+  transition: 1s;
   outline: none;
-  margin-bottom: 10px;
+  font-size: 15px;
+  height: 52px;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.39);
 }
 
-@media (max-width: 1017px) {
+fieldset {
+  border: 1px solid rgba(37, 36, 36, 0.281);
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
+@media (max-width: 965px) {
+
+  .content-startupCadastro {
+    padding: 0;
+  }
   .form {
     padding: 12px;
-    max-width: 80%;
-    flex-direction: column;
+    grid-template-columns: auto;
+  }
+
+  legend {
+    text-align: center;
   }
 }
 </style>
