@@ -89,22 +89,22 @@
               >
                 <div class="inputIdentificacao">
                   <p>IDENTIFICAÇÃO:</p>
-                  <input type="text" v-model="list.description" />
+                  <input type="text" v-model="list.description" placeholder="Identificação 01"/>
                 </div>
 
                 <div class="inputCota">
                   <p>COTA:</p>
-                  <input type="number" v-model="list.cota" />
+                  <input type="number" v-model="list.cota" step="any" placeholder="12.5"/>
                 </div>
 
                 <div class="inputCota">
                   <p>MÁX:</p>
-                  <input type="number" v-model="list.max" />
+                  <input type="number" v-model="list.max" step="any" placeholder="12.6"/>
                 </div>
 
                 <div class="inputCota">
                   <p>MIN:</p>
-                  <input type="number" v-model="list.min" />
+                  <input type="number" v-model="list.min" step="any" placeholder="12.3"/>
                 </div>
 
                 <div class="inputUpLoad" >
