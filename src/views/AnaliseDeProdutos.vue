@@ -198,8 +198,11 @@ table td {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    min-height: 70px;
     
   }
+
+  
 
   .tableContent td:first-of-type {
     font-weight: bold;
@@ -207,7 +210,6 @@ table td {
     text-align: center;
     display: flex;
     justify-content: center;
-    color: blue;
     
   }
 
@@ -219,7 +221,7 @@ table td {
   }
 
   .lastTd {
-    border-bottom: 3px dotted var(--font-color);
+    border-bottom: 1.6px solid var(--green_text);
   }
 
  

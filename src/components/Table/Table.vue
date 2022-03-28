@@ -382,17 +382,12 @@ table td {
     content: attr(data-title);
     display: block;
     font-weight: bold;
-    
   }
 
   .lastTd {
-    border-bottom: 1px solid var(--green_text);
+    border-bottom: 1.6px solid var(--card_green);
   }
 
 
-  .codeStartup {
-    font-weight: 600;
-    font-size: 20px;
-  }
 }
 </style>
