@@ -216,7 +216,7 @@ export default {
   display: none;
 }
 .header .menu-btn:checked ~ .menu {
-  max-height: 450px;
+  max-height: 520px;
 }
 .header .menu-btn:checked ~ .menu-icon .navicon {
   background: transparent;
