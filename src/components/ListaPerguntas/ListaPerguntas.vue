@@ -72,6 +72,7 @@ export default {
     UploadImage,
   },
   created: async function () {
+    this.$store.commit("$SETISLOADING");
     const responseDefaultQuestions = await http.listAllDefaultQuestions();
     this.defaultQuestions = responseDefaultQuestions.data.defaultQuestions;
 
@@ -87,7 +88,7 @@ export default {
       })
       
     }
-
+    this.$store.commit("$SETISLOADING");
   },
 
   methods: {

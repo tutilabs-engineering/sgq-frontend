@@ -191,12 +191,14 @@ table td {
 
   [data-title] {
     color: var(--black_text);
+    
   }
 
   .tableContent td {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    
   }
 
   .tableContent td:first-of-type {
@@ -205,12 +207,15 @@ table td {
     text-align: center;
     display: flex;
     justify-content: center;
+    color: blue;
+    
   }
 
   .tableContent td:not(:first-of-type):before {
     content: attr(data-title);
     display: block;
     font-weight: bold;
+    
   }
 
   .lastTd {
