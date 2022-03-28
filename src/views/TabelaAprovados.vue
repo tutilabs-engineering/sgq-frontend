@@ -259,6 +259,7 @@ table td {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color: var(--black_text);
   }
 
   .tableContent td:first-of-type {
@@ -276,7 +277,7 @@ table td {
   }
 
   .lastTd {
-    border-bottom: 3px dotted var(--font-color);
+    border-bottom: 1.6px solid var(--card_green);
   }
 
   legend {

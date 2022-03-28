@@ -17,7 +17,7 @@
           <td data-title="Produto">{{ product.descricao }}</td>
           <td data-title="Cód. Cli.">xxxxxxxxxxxxxxxxx</td>
           <td data-title="Cliente">{{ product.cliente }}</td>
-          <td class="lastTd" data-title="Opcoes">
+          <td class="lastTd" data-title="Opções">
             <div class="opcoes">
               <button class="btn btn-at" @click="StartComponentAttribute(product)">AT</button>
               <button class="btn btn-va" @click="StartComponentVariable(product)">VA</button>
