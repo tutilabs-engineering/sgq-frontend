@@ -199,6 +199,7 @@ table td {
     align-items: center;
     justify-content: space-between;
     min-height: 70px;
+    color: var(--black_text);
     
   }
 
