@@ -5,13 +5,13 @@
 
         <thead>
           <th>Identificação</th>
-          <th v-for="cavidade in qtdeCavidade" :key="cavidade">{{ "Cavidade " + cavidade}}</th>
+          <th v-for="variable in variables" :key="variable.id">{{ "Cavidade"}}</th>
         </thead>
 
         <tbody>
-          <tr v-for="i in 3" :key="i">
-            <td>{{"Identificador " + i}}</td>
-            <td v-for="cavidade in qtdeCavidade" :key="cavidade"><input  class="inputdataCav" type="text" placeholder="Informe o valor"></td>
+          <tr v-for="variable in variables" :key="variable.id">
+            <td>{{variable.description}}</td>
+            <td v-for="variableCota in variables" :key="variableCota.id"><input  class="inputdataCav" type="text" placeholder="Informe o valor"></td>
           </tr>
         </tbody>
       </table>
@@ -20,16 +20,33 @@
 </template>
 
 <script>
+
+import http from "../../services/productAnalysis/Variables";
+
 export default {
     props: {
         numberCavidade: Number,
+        codProd: String,
     },
 
     data() {
         return {
-            qtdeCavidade: parseInt( this.numberCavidade)
+            variables: [{}],
+            qtdeCavidade: this.numberCavidade
         }
+    },
+
+    created: async function (){
+      await http
+        .FindVariableByCodeProduct(this.codProd)
+        .then((res) => {
+          this.variables = res.data.list;
+          console.log(this.variables)
+        }).catch ((error) => {
+          console.log(error)
+        });
     }
+  
 };
 
 </script>
