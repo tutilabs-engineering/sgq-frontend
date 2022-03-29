@@ -45,7 +45,6 @@
           />
         </div>
 
-      
         <div class="input-acessLevel">
           <label for="user-name">Nível de Acesso</label>
           <select
@@ -100,9 +99,9 @@ export default {
         { text: "Escolha", value: "" },
         { text: "ADM", value: 1 },
         { text: "Gestor", value: 2 },
-        { text: "Inspetor", value: 3 },
-        { text: "Analista", value: 4 },
-        { text: "Metrologista", value: 5 },
+        { text: "Analista", value: 3 },
+        { text: "Metrologista", value: 4 },
+        { text: "Inspetor", value: 5 },
       ],
     };
   },
@@ -119,20 +118,20 @@ export default {
     RegisterUser: async function () {
       const Toast = this.$swal.mixin({
         toast: true,
-        position: 'top-right',
-        iconColor: 'white',
+        position: "top-right",
+        iconColor: "white",
         customClass: {
-          popup: 'colored-toast',
-          title: 'title-swal-text'
+          popup: "colored-toast",
+          title: "title-swal-text",
         },
         didOpen: (toast) => {
-          toast.addEventListener('mouseenter', this.$swal.stopTimer)
-          toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
         },
         showConfirmButton: false,
         timer: 2500,
-        timerProgressBar: true
-      })
+        timerProgressBar: true,
+      });
 
       const name = this.userRegister.name;
       const email = this.userRegister.email;
@@ -142,10 +141,10 @@ export default {
 
       if (!name || !email || !cpf || !register || !role) {
         return Toast.fire({
-          icon: 'error',
+          icon: "error",
           title: "Necessário preencher todos os campos!",
           background: "#FFA490",
-        })
+        });
       }
 
       this.$store.commit("$SETISLOADING");
@@ -155,20 +154,20 @@ export default {
         .then((response) => {
           if (response.status === 201) {
             Toast.fire({
-              icon: 'success',
-              title: 'Usuário cadastrado com sucesso',
+              icon: "success",
+              title: "Usuário cadastrado com sucesso",
               background: "#A8D4FF",
-            })
+            });
             window.location.reload(true);
           }
         })
         .catch((error) => {
           return Toast.fire({
-            icon: 'warning',
+            icon: "warning",
             title: `Verifique se todos os campos estão corretos!, error: ${error.response.data.message}`,
             background: "#E8EB7C",
-            iconColor: "#545454"
-          })  
+            iconColor: "#545454",
+          });
         });
 
       this.$store.commit("$SETISLOADING");
@@ -318,7 +317,6 @@ input:-webkit-autofill {
 }
 
 @media (max-width: 765px) {
-  
   .cadastro-user-data {
     grid-template-columns: 1fr;
   }
