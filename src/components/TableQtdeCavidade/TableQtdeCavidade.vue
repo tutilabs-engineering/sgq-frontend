@@ -2,7 +2,7 @@
 <div class="tableContent">
  
       <table cellpadding="0" cellspacing="0">
-
+        {{variable}}
         <thead>
           <th>Identificação</th>
           <th v-for="cavidade in qtdeCavidade" :key="cavidade">{{ "Cavidade " + cavidade}}</th>
@@ -11,7 +11,11 @@
         <tbody>
           <tr v-for="variable in variables" :key="variable.id">
             <td>{{variable.description}}</td>
-            <td v-for="cavidade in qtdeCavidade" :key="cavidade"><input  class="inputdataCav" type="text" placeholder="Informe o valor"></td>
+            <td v-for="cavidade in qtdeCavidade" :key="cavidade">
+
+              <input  class="inputdataCav" type="text" placeholder="Informe o valor" value="" @change="teste(value, variable.max, variable.min)">
+            
+            </td>
           </tr>
         </tbody>
       </table>
@@ -32,9 +36,22 @@ export default {
     data() {
         return {
             variables: [{}],
-            qtdeCavidade: parseInt( this.numberCavidade)
+            qtdeCavidade: parseInt( this.numberCavidade),
+            inputValue: ""
         }
     },
+
+    methods: {
+      teste: function (inputValue, max, min) {
+        if(inputValue > max || inputValue < min) {
+          console.log("inválido");
+        }else {
+          console.log("tá válido");
+        }
+      }
+    },
+
+    
 
     created: async function (){
       await http
