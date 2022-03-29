@@ -5,13 +5,13 @@
 
         <thead>
           <th>Identificação</th>
-          <th v-for="variable in variables" :key="variable.id">{{ "Cavidade"}}</th>
+          <th v-for="cavidade in qtdeCavidade" :key="cavidade">{{ "Cavidade " + cavidade}}</th>
         </thead>
 
         <tbody>
           <tr v-for="variable in variables" :key="variable.id">
             <td>{{variable.description}}</td>
-            <td v-for="variableCota in variables" :key="variableCota.id"><input  class="inputdataCav" type="text" placeholder="Informe o valor"></td>
+            <td v-for="cavidade in qtdeCavidade" :key="cavidade"><input  class="inputdataCav" type="text" placeholder="Informe o valor"></td>
           </tr>
         </tbody>
       </table>
@@ -32,7 +32,7 @@ export default {
     data() {
         return {
             variables: [{}],
-            qtdeCavidade: this.numberCavidade
+            qtdeCavidade: parseInt( this.numberCavidade)
         }
     },
 
