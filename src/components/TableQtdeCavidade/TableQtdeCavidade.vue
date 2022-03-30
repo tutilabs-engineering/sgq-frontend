@@ -11,15 +11,12 @@
         <tbody>
           <tr v-for="variable in variables" :key="variable.id">
             <td>{{variable.description}}</td>
-            <td v-for="cavidade in qtdeCavidade" :key="cavidade">
-
-              <input  class="inputdataCav" type="text" placeholder="Informe o valor" value="" @change="teste(value, variable.max, variable.min)">
-            
+            <td v-for="(cavidade) in qtdeCavidade" :key="cavidade">
+              <input  class="inputdataCav" :id="variable.id" type="text" placeholder="Informe o valor" v-model="inputValue[id]" @change="teste(inputValue, variable.max, variable.min)">
             </td>
           </tr>
         </tbody>
       </table>
- 
   </div>
 </template>
 
@@ -37,32 +34,42 @@ export default {
         return {
             variables: [{}],
             qtdeCavidade: parseInt( this.numberCavidade),
-            inputValue: ""
+            inputValue: "",
+            matriz: []
         }
     },
 
-    methods: {
-      teste: function (inputValue, max, min) {
-        if(inputValue > max || inputValue < min) {
-          console.log("inválido");
-        }else {
-          console.log("tá válido");
-        }
-      }
-    },
-
-    
 
     created: async function (){
       await http
         .FindVariableByCodeProduct(this.codProd)
         .then((res) => {
           this.variables = res.data.list;
-          console.log(this.variables)
         }).catch ((error) => {
           console.log(error)
         });
-    }
+        
+        console.log(this.variables);
+        this.variables.map( (item) => {
+          this.matriz.push(item.id)
+        })
+
+        console.log(this.matriz)
+
+    },
+
+    
+    methods: {
+      teste: function (inputValue, max, min) {
+        console.log(inputValue)
+        if(inputValue > max || inputValue < min) {
+          console.log("inválido");
+          // efeitos pipi
+        }else {
+          console.log("tá válido");
+        }
+      }
+    },
   
 };
 
