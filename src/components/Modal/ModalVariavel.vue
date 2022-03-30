@@ -94,17 +94,17 @@
 
                 <div class="inputCota">
                   <p>COTA:</p>
-                  <input type="number" v-model="list.cota" step="any" placeholder="12.5"/>
+                  <input type="text" v-model="list.cota" step="any" placeholder="12.5"/>
                 </div>
 
                 <div class="inputCota">
                   <p>MÁX:</p>
-                  <input type="number" v-model="list.max" step="any" placeholder="12.6"/>
+                  <input type="text" v-model="list.max" step="any" placeholder="12.6"/>
                 </div>
 
                 <div class="inputCota">
                   <p>MIN:</p>
-                  <input type="number" v-model="list.min" step="any" placeholder="12.3"/>
+                  <input type="text" v-model="list.min" step="any" placeholder="12.3"/>
                 </div>
 
                 <div class="inputUpLoad" >
