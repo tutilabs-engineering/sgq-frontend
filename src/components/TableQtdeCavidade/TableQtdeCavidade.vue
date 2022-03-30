@@ -12,7 +12,7 @@
           <tr v-for="variable in variables" :key="variable.id">
             <td>{{variable.description}}</td>
             <td v-for="(cavidade) in qtdeCavidade" :key="cavidade">
-              <input  class="inputdataCav" :id="variable.id" type="text" placeholder="Informe o valor" v-model="inputValue[id]" @change="teste(inputValue, variable.max, variable.min)">
+              <input  class="inputdataCav" :id="variable.id" type="text" placeholder="Informe o valor" v-model="inputValue[variable.id]" @change="teste(inputValue, variable.max, variable.min)">
             </td>
           </tr>
         </tbody>
