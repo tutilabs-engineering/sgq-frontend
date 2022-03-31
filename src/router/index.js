@@ -203,7 +203,7 @@ const routes = [
     path: '/metrologiaDetalhes',
     name: 'MetrologiaDetalhes',
     component: () => import('../views/MetrologiaDetalhes.vue'),
-    beforeEnter: EmManutencao
+    beforeEnter: Auth
   },
 
   {
