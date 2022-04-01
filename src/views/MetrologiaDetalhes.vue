@@ -8,22 +8,22 @@
 
       <div class="input">
         <label for="op">Código Produto</label>
-        <input type="text" name="client" id="op" placeholder="Digite o código OP">
+        <input type="text" name="client" id="op" placeholder="Digite o código OP" value="Aqui será o Código do Produto" disabled>
       </div>
 
       <div class="input">
         <label for="client">Código Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha">
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  value="Teste" disabled>
       </div>
 
       <div class="input">
         <label for="client">Produto</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha">
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  value="Teste" disabled>
       </div>
 
       <div class="input">
         <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha">
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" value="Teste" disabled> 
       </div>
 
      </fieldset>
@@ -49,8 +49,6 @@ export default {
     data(){
         return {};
     }
-
-
 }
 </script>
 
