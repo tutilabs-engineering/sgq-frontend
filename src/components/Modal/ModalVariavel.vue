@@ -107,19 +107,29 @@
                   <input type="text" v-model="list.min" step="any" placeholder="12.3"/>
                 </div>
 
-                <div class="inputUpLoad" >
+                <div class="inputUpLoad" v-if="statusButtonImage">
+
                     <label for="inputImage" class="inputImage"
                       ><i class="far fa-file-image"></i
-                    ></label>
+                    > <span>Anexar</span></label>
                     
                     <input ref="file" type="file"  class="inputUpLoad" id="inputImage" @change="insertImageFile"/>
+ 
+                </div>
 
+                <div class="inputUpLoad" v-else>
+
+                    <label for="inputImage" class="inputImage"
+                      ><i class="far fa-file-image"></i
+                    > <span>Remover</span></label>
                     
+                    <input ref="file" type="text"  class="inputUpLoad" id="inputImage" @change="changeStatusButtonImage"/>
+ 
                 </div>
 
 
                 <button type="submit" class="inputUpLoad">
-                  <i class="fas fa-plus"></i>
+                  <span>Enviar</span>
                 </button>
 
                 <div class="alertMax" v-show="list.max < list.min">
@@ -156,8 +166,9 @@ export default {
         cota: 0,
         max: 0,
         min: 0,
-        file: "sadfa",
+        file: "",
       },
+      statusButtonImage: true
     };
   },
   props: {
@@ -170,6 +181,8 @@ export default {
       .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
       .then((res) => {
         this.variables = res.data.list;
+
+        console.log(this.variables)
       });
     this.$store.commit("$SETISLOADING");
   },
@@ -178,7 +191,14 @@ export default {
 
     insertImageFile (e) {
       this.list.file = e.target.files[0]
-      console.log(this.list.file)
+      if(this.list.file != "") {
+         this.statusButtonImage = false
+        console.log("tem algo dentro dessa porra");
+      }
+    },
+
+    changeStatusButtonImage() {
+      this.statusButtonImage = true
     },
 
     getComments(value) {
@@ -471,7 +491,7 @@ export default {
 
 .modal_mask .modal_body .inputsHeader .inputUpLoad .fa-upload {
   color: var(--main_primaryWhite);
-  font-size: 1.4rem;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -541,7 +561,7 @@ export default {
   justify-content: center;
   color: var(--main_primaryWhite);
   cursor: pointer;
-  font-size: 1.4rem;
+  font-size: 15px;
   border: none;
 }
 
@@ -554,6 +574,7 @@ export default {
   align-items: center;
   background: var(--card_blue);
   border-radius: 5px;
+  
 }
 
 .fa-file-image {
@@ -588,6 +609,10 @@ export default {
   border-radius: 5px;
   font-size: 15px;
   font-weight: 400;
+}
+
+.far {
+  margin-right: 10px;
 }
 
 @media (max-width: 770px) {

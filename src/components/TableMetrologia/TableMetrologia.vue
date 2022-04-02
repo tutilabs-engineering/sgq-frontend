@@ -96,7 +96,7 @@
           <td data-title="Produto">{{ item.produto }}</td>
           <td data-title="Data de Abertura">{{ item.data }}</td>
           <td class="lastTd" data-title="Opção">
-            <button class="btn-preencher">Preencher</button>
+            <button class="btn-preencher" @click="() => this.$router.push({ name: 'MetrologiaDetalhes' })">Preencher</button>
           </td>
         </tr>
       </tbody>
