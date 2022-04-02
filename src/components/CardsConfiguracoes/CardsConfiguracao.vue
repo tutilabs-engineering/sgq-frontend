@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cardSettings">
     <router-link :to="link">
       <div class="cardConfiguracao">
         <i :class="icon"></i>
@@ -20,6 +20,9 @@ export default {
 </script>
 
 <style scoped>
+.cardSettings {
+  width: 35%;
+}
 .cardConfiguracao {
   cursor: pointer;
   background-color: var(--main_primaryWhite);
@@ -33,7 +36,7 @@ export default {
   justify-content: space-around;
   transition: 0.5s;
   padding: 20px;
-  margin: 100px;
+  /* margin: 100px; */
   border: 1px solid rgba(37, 36, 36, 0.281);
 }
 
@@ -51,23 +54,26 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 500px;
+  width: 100%;
 }
-
-@media (max-width: 1200px) {
+/* 
+@media (max-width: 1024px) {
   a {
     width: 100%;
   }
   .cardConfiguracao {
     margin: 10px;
   }
-}
+} */
 
-@media (max-width: 765px) {
-  a {
+@media (max-width: 425px) {
+  .cardSettings {
+    width: 80%;
+  }
+  /* a {
     padding: 0;
     margin-bottom: 30px;
     width: 100%;
-  }
+  } */
 }
 </style>
