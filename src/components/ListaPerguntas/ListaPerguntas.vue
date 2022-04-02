@@ -30,7 +30,7 @@
     </fieldset>
 
     <fieldset>
-      <TableQtdeCavidade :numberCavidade="numberCavidade" />
+      <TableQtdeCavidade :numberCavidade="numberCavidade" :codProd="code_product"/>
     </fieldset>
 
     <fieldset class="content-imgs">
