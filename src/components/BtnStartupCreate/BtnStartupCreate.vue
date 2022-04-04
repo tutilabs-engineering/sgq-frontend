@@ -22,7 +22,28 @@ export default {
     methods: {
         fillValue (){
             if(this.$store.getters.$GETCODEOP == ""){
-                console.log("Não foi possivel abrir o modal (Prencha a Startup)")
+                const Toast = this.$swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: '#ff5349',
+                    customClass: {
+                    popup: 'colored-toast',
+                    title: 'title-swal-text'
+                    },
+                    didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                    },
+                    showConfirmButton: false,
+                    timer: 2500,
+                    timerProgressBar: true
+                })
+                Toast.fire({
+                        icon: 'warning',
+                        title: 'Informe a Ordem de Produção',
+                        background: "#fff",
+                    })
+                
             }else {
                 this.fillStatus = !this.fillStatus
                 this.$emit("returnFillStatus", this.fillStatus)
