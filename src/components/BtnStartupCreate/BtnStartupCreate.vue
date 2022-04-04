@@ -117,10 +117,9 @@ export default {
                 })
             }else {
                 Toast.fire({
-                    icon: 'sucess',
+                    icon: 'success',
                     title: 'Preenchimento realizado com sucesso',
-                    background: "#3fc36d",
-                    color: "#fff"
+                    background: "#fff",
                 })
             }
 
