@@ -41,6 +41,7 @@
                   <p>Descrição Cliente</p>
                   <input type="text" readonly :value="dataProduct.cliente" />
                 </div>
+                
               </div>
 
               <div class="titleBody">
@@ -106,9 +107,9 @@
                   <p>MIN:</p>
                   <input type="text" v-model="list.min" step="any" placeholder="12.3"/>
                 </div>
-
+                
                 <div class="inputUpLoad" v-if="statusButtonImage">
-
+                    
                     <label for="inputImage" class="inputImage"
                       ><i class="far fa-file-image"></i
                     > <span>Anexar</span></label>
