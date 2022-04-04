@@ -42,7 +42,6 @@ export default {
       this.image = ""
       this.preview = this.imgDefault
       this.changeImgStatus()
-
     },
 
     previewImage: function(e) {
