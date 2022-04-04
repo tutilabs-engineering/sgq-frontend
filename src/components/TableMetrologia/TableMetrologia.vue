@@ -4,22 +4,22 @@
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
-          Histórico
+          Solicitações
         </button>
         <button @click="statusTable = false" class="btn startup">
-          Solicitações
+          Histórico
         </button>
       </div>
 
       <thead>
         <th>
           <button @click="statusTable = true" class="btn startup-opened">
-            Histórico
+            Solicitações
           </button>
         </th>
         <th>
           <button @click="statusTable = false" class="btn startup">
-            Solicitações
+            Histórico
           </button>
         </th>
         <th></th>
@@ -33,22 +33,24 @@
         <th>Cod. Produto</th>
         <th>Produto</th>
         <th>Técnico</th>
-        <th>Data de Abertura</th>
         <th>Opção</th>
       </thead>
 
       <tbody>
-        <tr v-for="item in itemsAbertos" :key="item.id">
+
+        <tr v-for="item in itemsFechados" :key="item.id">
           <td style="display: none"></td>
           <td class="codeStartup" data-title="O.P">{{ item.op}}</td>
           <td data-title="Cod. Produto">{{ item.codProd }}</td>
           <td data-title="Produto">{{ item.produto }}</td>
-          <td data-title="Técnico">{{ item.tecnico }}</td>
           <td data-title="Data de Abertura">{{ item.data }}</td>
           <td class="lastTd" data-title="Opção">
-            <button class="btn-view">Visualizar</button>
+            <button class="btn-preencher" @click="() => this.$router.push({ name: 'MetrologiaDetalhes' })">Preencher</button>
           </td>
         </tr>
+
+
+        
       </tbody>
     </table>
 
@@ -65,12 +67,13 @@
       <thead>
         <th>
           <button @click="statusTable = true" class="btn startup">
-            Histórico
+            Solicitações
           </button>
         </th>
         <th>
           <button @click="statusTable = false" class="btn startup-closed">
-            Solicitações
+            
+            Histórico
           </button>
         </th>
         <th></th>
@@ -85,18 +88,20 @@
         <th>Cod. Produto</th>
         <th>Produto</th>
         <th>Data de Envio</th>
+        <th>Data de Abertura</th>
         <th>Opção</th>
       </thead>
 
       <tbody>
-        <tr v-for="item in itemsFechados" :key="item.id">
+        <tr v-for="item in itemsAbertos" :key="item.id">
           <td style="display: none"></td>
           <td class="codeStartup" data-title="O.P">{{ item.op}}</td>
           <td data-title="Cod. Produto">{{ item.codProd }}</td>
           <td data-title="Produto">{{ item.produto }}</td>
+          <td data-title="Técnico">{{ item.tecnico }}</td>
           <td data-title="Data de Abertura">{{ item.data }}</td>
           <td class="lastTd" data-title="Opção">
-            <button class="btn-preencher" @click="() => this.$router.push({ name: 'MetrologiaDetalhes' })">Preencher</button>
+            <button class="btn-view">Visualizar</button>
           </td>
         </tr>
       </tbody>
