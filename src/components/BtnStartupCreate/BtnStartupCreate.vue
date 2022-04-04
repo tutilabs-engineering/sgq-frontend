@@ -73,7 +73,7 @@ export default {
             const Toast = this.$swal.mixin({
                 toast: true,
                 position: 'top-right',
-                iconColor: 'white',
+                iconColor: '#3fc36d',
                 customClass: {
                 popup: 'colored-toast',
                 title: 'title-swal-text'
@@ -97,7 +97,7 @@ export default {
             }else {
                 Toast.fire({
                     icon: 'sucess',
-                    title: 'Verifique se todas as Perguntas foram respondidas',
+                    title: 'Preenchimento realizado com sucesso',
                     background: "#3fc36d",
                     color: "#fff"
                 })
