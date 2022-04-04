@@ -6,12 +6,11 @@
 
     <div v-if="imgStatus">
       <label :for="myFile" class="selectImg">Selecione a Imagem</label>
-      <input type="file"  @change="previewImage" @click="changeImgStatus" class="form-control-file" :id="myFile">
+      <input type="file"  @change="previewImage" class="form-control-file" :id="myFile">
     </div>
 
     <div v-else>
-      <label  class="selectImg">Remover Imagem</label>
-      <input type="file"  @change="removeImage" class="form-control-file">
+      <button class="selectImg" @click="removeImage">Remover imagem</button>
     </div>
 
   </div>
@@ -40,7 +39,9 @@ export default {
     },
 
     removeImage: function(){
-      console.log(this.image)
+      this.image = ""
+      this.preview = this.imgDefault
+      this.changeImgStatus()
 
     },
 
@@ -53,6 +54,7 @@ export default {
         }
       this.image=imgInput.files[0];
       reader.readAsDataURL(this.image);
+      this.changeImgStatus()
       }
     }
   },
@@ -98,5 +100,6 @@ export default {
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
+    border: none;
   }
 </style>
