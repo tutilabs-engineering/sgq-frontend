@@ -44,8 +44,8 @@
           <td data-title="Cod. Produto">{{ metrologySolicitation.startup.op.code_product}}</td>
           <td data-title="Produto">{{ metrologySolicitation.startup.op.desc_product}}</td>
           <td data-title="Técnico">
-            <button class="btn-ingressar" v-if="!userAssociated" @click="ingressar(metrologySolicitation.startup.id)">Ingressar</button>
-            <span v-else>{{metrologySolicitation.associatedUser.user.name}}</span>
+            <button class="btn-ingressar" v-if="metrologySolicitation.metrologyHistory === null" @click="ingressar(metrologySolicitation.startup.id)">Ingressar</button>
+            <span v-else>{{metrologySolicitation.metrologyHistory.user.name}}</span>
             
          </td>
           <td class="lastTd" data-title="Opção">
@@ -162,16 +162,8 @@ export default {
     },
 
     ingressar: async function(fk_startup){
-      await http.JoinMetrologyByUserId(this.user_id, fk_startup).then( (res) => {
-        console.log(this.user_id, fk_startup);
-        console.log("Deu certo", res);
-        this.hasAnUser()
-      })
+      await http.JoinMetrologyByUserId(this.user_id, fk_startup)
     },
-
-    hasAnUser: async function () {
-      this.userAssociated = true
-    }
 
   }
       
