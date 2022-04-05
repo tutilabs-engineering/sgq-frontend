@@ -43,10 +43,9 @@
           <td class="codeStartup" data-title="O.P">{{ metrologySolicitation.startup.op.code_op}}</td>
           <td data-title="Cod. Produto">{{ metrologySolicitation.startup.op.code_product}}</td>
           <td data-title="Produto">{{ metrologySolicitation.startup.op.desc_product}}</td>
-          
           <td data-title="Técnico">
-            <button class="btn-ingressar" v-if="userAssociated" @click="ingressar(metrologySolicitation.startup.op.code_op)">Ingressar</button>
-            <span v-else>{{metrologySolicitation.associatedUser}}</span>
+            <button class="btn-ingressar" v-if="userAssociated" @click="ingressar(metrologySolicitation.startup.id)">Ingressar</button>
+            <span v-else>{{metrologySolicitation.associatedUser.user.name}}</span>
             
          </td>
           <td class="lastTd" data-title="Opção">
@@ -54,8 +53,6 @@
           </td>
         </tr>
 
-
-        
       </tbody>
     </table>
 
@@ -126,7 +123,7 @@ export default {
       metrologyHistoryList: [],
       metrologySolicitationsList: [],
       statusTable: true,
-      userAssociated: true,
+      userAssociated: false,
       day: "",
       month: "",
       year: "",
@@ -138,7 +135,7 @@ export default {
 
     // this.user_id = dataUser().user.id
          await userId.DataUser().then((res)=>{
-           console.log(res.data.user.id);
+           this.user_id = res.data.user.id
          })
 
 
@@ -151,12 +148,6 @@ export default {
         //Lista solictações
         await http.ListMetrologySolicitations().then( (res) => {
           this.metrologySolicitationsList = res.data.list
-
-          if(this.metrologySolicitation.associatedUser === null){
-            this.userAssociated = true
-          }else {
-            this.userAssociated = false
-          }
         })
 
 
@@ -171,12 +162,15 @@ export default {
       return date = `${this.day}/${this.month}/${this.year}`
     },
 
-    ingressar: async function(code_op){
-      await http.JoinMetrologyByUserId(this.user_id, code_op).then( (res) => {
-        console.log(this.user_id, code_op);
+    ingressar: async function(fk_startup){
+      await http.JoinMetrologyByUserId(this.user_id, fk_startup).then( (res) => {
+        console.log(this.user_id, fk_startup);
         console.log("Deu certo", res);
       })
     }
+
+    
+    
   }
       
 };

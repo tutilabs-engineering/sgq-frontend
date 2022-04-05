@@ -13,8 +13,9 @@ export default {
         return await http.get(`metrology/${id}`)
     },
 
-    JoinMetrologyByUserId: async (id, code_startup) => {
-        return await http.patch(`metrology/join/${code_startup}`, {id})
+    JoinMetrologyByUserId: async (user, startup) => {
+        console.log(user, startup);
+        return await http.patch(`metrology/join/${startup}`, {user})
     }
 
 
