@@ -44,7 +44,7 @@
           <td data-title="Cod. Produto">{{ metrologySolicitation.startup.op.code_product}}</td>
           <td data-title="Produto">{{ metrologySolicitation.startup.op.desc_product}}</td>
           <td data-title="Técnico">
-            <button class="btn-ingressar" v-if="userAssociated" @click="ingressar(metrologySolicitation.startup.id)">Ingressar</button>
+            <button class="btn-ingressar" v-if="!userAssociated" @click="ingressar(metrologySolicitation.startup.id)">Ingressar</button>
             <span v-else>{{metrologySolicitation.associatedUser.user.name}}</span>
             
          </td>
@@ -123,7 +123,7 @@ export default {
       metrologyHistoryList: [],
       metrologySolicitationsList: [],
       statusTable: true,
-      userAssociated: false,
+      userAssociated: "",
       day: "",
       month: "",
       year: "",
@@ -145,9 +145,12 @@ export default {
           console.log(this.metrologyHistoryList)
           
         })
+
+
         //Lista solictações
         await http.ListMetrologySolicitations().then( (res) => {
           this.metrologySolicitationsList = res.data.list
+          console.log(this.metrologyHistoryList)
         })
 
 
@@ -166,10 +169,15 @@ export default {
       await http.JoinMetrologyByUserId(this.user_id, fk_startup).then( (res) => {
         console.log(this.user_id, fk_startup);
         console.log("Deu certo", res);
+        this.hasAnUser()
       })
+    },
+
+    hasAnUser: async function () {
+      this.userAssociated = true
     }
 
-    
+   
     
   }
       
