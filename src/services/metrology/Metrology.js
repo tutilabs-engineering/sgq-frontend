@@ -11,5 +11,6 @@ export default {
 
     FindMetrologyById: async (id) => {
         return await http.get(`metrology/${id}`)
-    }
+    },
+
 }

@@ -118,6 +118,7 @@
 
 <script>
 import  http  from '../../services/metrology/Metrology'
+import  userId  from '../../utils/dataUser'
 export default {
   data() {
     return {
@@ -128,6 +129,7 @@ export default {
       day: "",
       month: "",
       year: "",
+      user_id: "",
     };
   },
 
@@ -138,7 +140,7 @@ export default {
           console.log(this.metrologyHistoryList)
           
         })
-        //Lista solictações
+        // Lista solictações
         await http.ListMetrologySolicitations().then( (res) => {
           this.metrologySolicitationsList = res.data.list
 
@@ -148,6 +150,14 @@ export default {
             this.userAssociated = false
           }
         })
+
+         await userId.DataUser().then((res)=>{
+           console.log(res.data.user.id);
+         })
+      
+        
+
+
   },
 
   methods: {
