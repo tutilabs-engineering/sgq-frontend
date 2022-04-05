@@ -104,9 +104,9 @@
           <td class="codeStartup" data-title="O.P">{{ metrologyHistory.startup.op.code_op}}</td>
           <td data-title="Cod. Produto">{{metrologyHistory.startup.op.code_product}}</td>
           <td data-title="Produto">{{metrologyHistory.startup.op.desc_product}}</td>
-          <td data-title="Data de Envio">{{metrologyHistory.sendToMetrology}}</td>
-          <td data-title="Data de Abertura">{{metrologyHistory.metrologyHistory.startDate}}</td>
-          <td data-title="Data de Finalização">{{metrologyHistory.metrologyHistory.endDate}}</td>
+          <td data-title="Data de Envio">{{formatDate(metrologyHistory.sendToMetrology) }}</td>
+          <td data-title="Data de Abertura">{{formatDate(metrologyHistory.metrologyHistory.startDate)}}</td>
+          <td data-title="Data de Finalização">{{formatDate(metrologyHistory.metrologyHistory.endDate)}}</td>
           <td class="lastTd" data-title="Opção">
             <button class="btn-view">Visualizar</button>
           </td>
@@ -125,17 +125,20 @@ export default {
       metrologySolicitationsList: [],
       statusTable: true,
       userAssociated: true,
+      day: "",
+      month: "",
+      year: "",
     };
   },
 
   created: async function() {
-        
+        //Lista histórico de Metrologia
         await http.ListMetrologyHistory().then( (res) => {
           this.metrologyHistoryList = res.data.list
           console.log(this.metrologyHistoryList)
+          
         })
-  
-
+        //Lista solictações
         await http.ListMetrologySolicitations().then( (res) => {
           this.metrologySolicitationsList = res.data.list
 
@@ -145,8 +148,17 @@ export default {
             this.userAssociated = false
           }
         })
-
   },
+
+  methods: {
+    formatDate(date) {
+      date = date.slice(0, -14);
+      this.year = date.slice(0, -6)
+      this.month = date.slice(5, -3)
+      this.day = date.slice(-2)
+      return date = `${this.day}/${this.month}/${this.year}`
+    }
+  }
       
 };
 </script>
