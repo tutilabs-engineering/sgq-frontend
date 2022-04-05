@@ -45,7 +45,7 @@
           <td data-title="Produto">{{ metrologySolicitation.startup.op.desc_product}}</td>
           
           <td data-title="Técnico">
-            <button class="btn-ingressar" v-if="userAssociated">Ingressar</button>
+            <button class="btn-ingressar" v-if="userAssociated" @click="ingressar(metrologySolicitation.startup.op.code_op)">Ingressar</button>
             <span v-else>{{metrologySolicitation.associatedUser}}</span>
             
          </td>
@@ -117,6 +117,7 @@
 </template>
 
 <script>
+
 import  http  from '../../services/metrology/Metrology'
 import  userId  from '../../utils/dataUser'
 export default {
@@ -134,13 +135,20 @@ export default {
   },
 
   created: async function() {
+
+    // this.user_id = dataUser().user.id
+         await userId.DataUser().then((res)=>{
+           console.log(res.data.user.id);
+         })
+
+
         //Lista histórico de Metrologia
         await http.ListMetrologyHistory().then( (res) => {
           this.metrologyHistoryList = res.data.list
           console.log(this.metrologyHistoryList)
           
         })
-        // Lista solictações
+        //Lista solictações
         await http.ListMetrologySolicitations().then( (res) => {
           this.metrologySolicitationsList = res.data.list
 
@@ -150,12 +158,6 @@ export default {
             this.userAssociated = false
           }
         })
-
-         await userId.DataUser().then((res)=>{
-           console.log(res.data.user.id);
-         })
-      
-        
 
 
   },
@@ -167,6 +169,13 @@ export default {
       this.month = date.slice(5, -3)
       this.day = date.slice(-2)
       return date = `${this.day}/${this.month}/${this.year}`
+    },
+
+    ingressar: async function(code_op){
+      await http.JoinMetrologyByUserId(this.user_id, code_op).then( (res) => {
+        console.log(this.user_id, code_op);
+        console.log("Deu certo", res);
+      })
     }
   }
       
