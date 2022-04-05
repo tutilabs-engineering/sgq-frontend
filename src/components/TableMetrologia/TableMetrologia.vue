@@ -138,21 +138,17 @@ export default {
            this.user_id = res.data.user.id
          })
 
-
         //Lista histórico de Metrologia
         await http.ListMetrologyHistory().then( (res) => {
           this.metrologyHistoryList = res.data.list
           console.log(this.metrologyHistoryList)
-          
         })
-
 
         //Lista solictações
         await http.ListMetrologySolicitations().then( (res) => {
           this.metrologySolicitationsList = res.data.list
           console.log(this.metrologyHistoryList)
         })
-
 
   },
 
@@ -177,8 +173,6 @@ export default {
       this.userAssociated = true
     }
 
-   
-    
   }
       
 };
