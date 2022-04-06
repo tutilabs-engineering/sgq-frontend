@@ -8,22 +8,22 @@
 
       <div class="input">
         <label for="op">Código Produto</label>
-        <input type="text" name="client" id="op" placeholder="Digite o código OP" value="Aqui será o Código do Produto" disabled>
+        <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="opById[0].startup.op.code_product" disabled>
       </div>
 
       <div class="input">
         <label for="client">Código Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  value="Teste" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="opById[0].startup.op.code_client" disabled>
       </div>
 
       <div class="input">
         <label for="client">Produto</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  value="Teste" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="opById[0].startup.op.desc_product" disabled>
       </div>
 
       <div class="input">
         <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" value="Teste" disabled> 
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="opById[0].startup.op.client" disabled> 
       </div>
 
      </fieldset>
@@ -45,14 +45,29 @@
 </template>
 
 <script>
-
+import  http  from '../services/metrology/Metrology'
 import TableMetrologiaDetalhes from '../components/TableMetrologiaDetalhes/TableMetrologiaDetalhes.vue'
 
 export default {
     components: { TableMetrologiaDetalhes},
     name: "MetrologiaDetalhes",
     data(){
-        return {};
+        return {
+          opById: []
+        };
+    },
+
+    created: async function(){
+      const id = this.$route.params.id
+      console.log(id);
+
+      http.FindMetrologyById(id).then( (res) => {
+        this.opById = res.data.list
+        console.log(this.opById);
+      })
+      
+
+
     }
 }
 </script>
