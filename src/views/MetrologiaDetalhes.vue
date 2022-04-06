@@ -35,6 +35,11 @@
 
     </fieldset>
 
+    <div class="btn">
+      <button class="btn-save">SALVAR</button>
+    </div>
+    
+
 </div>
   
 </template>
@@ -106,6 +111,24 @@ fieldset {
   font-size: 15px;
   height: 52px;
   border-bottom: 2px solid rgba(128, 128, 128, 0.39);
+}
+
+.btn {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-save {
+  width: 120px;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  color: var(--main_primaryWhite);
+  background-color: var(--card_green);
 }
 
 @media (max-width: 1114px) and (min-width: 766px){

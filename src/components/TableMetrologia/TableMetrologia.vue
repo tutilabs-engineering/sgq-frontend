@@ -128,6 +128,7 @@ export default {
       month: "",
       year: "",
       user_id: "",
+      dataHeader: Object
     };
   },
 
