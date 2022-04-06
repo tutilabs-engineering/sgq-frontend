@@ -139,16 +139,10 @@ export default {
          })
 
         //Lista histórico de Metrologia
-        await http.ListMetrologyHistory().then( (res) => {
-          this.metrologyHistoryList = res.data.list
-          console.log(this.metrologyHistoryList)
-        })
+        this.listMetrologyHistory()
 
         //Lista solictações
-        await http.ListMetrologySolicitations().then( (res) => {
-          this.metrologySolicitationsList = res.data.list
-          console.log(this.metrologyHistoryList)
-        })
+        this.listMetrologySolicitations()
 
   },
 
@@ -161,8 +155,27 @@ export default {
       return date = `${this.day}/${this.month}/${this.year}`
     },
 
+    listMetrologyHistory: async function(){
+      this.$store.commit("$SETISLOADING");
+      await http.ListMetrologyHistory().then( (res) => {
+                this.metrologyHistoryList = res.data.list
+                console.log(this.metrologyHistoryList)
+      })
+      this.$store.commit("$SETISLOADING");
+    },
+
+    listMetrologySolicitations: async function(){
+      this.$store.commit("$SETISLOADING");
+      await http.ListMetrologySolicitations().then( (res) => {
+                this.metrologySolicitationsList = res.data.list
+                console.log(this.metrologyHistoryList)
+      })
+      this.$store.commit("$SETISLOADING");
+    },
+
     ingressar: async function(fk_startup){
       await http.JoinMetrologyByUserId(this.user_id, fk_startup)
+      this.listMetrologySolicitations()
     },
 
   }
