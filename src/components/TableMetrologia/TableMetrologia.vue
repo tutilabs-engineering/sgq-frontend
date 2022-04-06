@@ -174,8 +174,10 @@ export default {
     },
 
     ingressar: async function(fk_startup){
+      this.$store.commit("$SETISLOADING");
       await http.JoinMetrologyByUserId(this.user_id, fk_startup)
       this.listMetrologySolicitations()
+      this.$store.commit("$SETISLOADING");
     },
 
   }
