@@ -3,12 +3,13 @@
         <button class="btn-fill-save btn" v-on:click="fillValue">Preencher + Opções</button>
         <div class="btns-options">
             <button class="btn-cancel btn">Cancelar</button>
-            <button class="btn-save btn" @click="saveNewStartup">Salvar</button>
+            <button class="btn-save btn" @click="saveNewStartup">Criar Startup</button>
         </div>
     </div>
 </template>
 
 <script>
+import  http  from '../../services/startup/index'
 
 export default {
     name: "BtnStartupCreate",
@@ -51,42 +52,43 @@ export default {
             
         },
 
-        saveNewStartup(){
+        saveNewStartup: async function (){
 
             if(this.$store.getters.$GETCODEOP == ""){
                 console.log("Preencha o Código de Ordem de Produção")
             }else { 
                 if(this.fillStatus){
                 // Campo de perguntas aberto
-
                 this.ValidateQtyAnsweredQuestions()
+                }else {
+                    const Toast = this.$swal.mixin({
+                      toast: true,
+                      position: 'top-right',
+                      iconColor: '#3fc36d',
+                      customClass: {
+                      popup: 'colored-toast',
+                      title: 'title-swal-text'
+                      },
+                      didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                      toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                      },
+                      showConfirmButton: false,
+                      timer: 2500,
+                      timerProgressBar: true
+                    })
 
+                    Toast.fire({
+                      icon: 'success',
+                      title: 'Salvo com sucesso',
+                      background: "#fff",
+                    })
 
-            }else {
-                const Toast = this.$swal.mixin({
-                toast: true,
-                position: 'top-right',
-                iconColor: '#3fc36d',
-                customClass: {
-                popup: 'colored-toast',
-                title: 'title-swal-text'
-                },
-                didOpen: (toast) => {
-                toast.addEventListener('mouseenter', this.$swal.stopTimer)
-                toast.addEventListener('mouseleave', this.$swal.resumeTimer)
-                },
-                showConfirmButton: false,
-                timer: 2500,
-                timerProgressBar: true
-            })
-
-            Toast.fire({
-                    icon: 'success',
-                    title: 'Salvo com sucesso',
-                    background: "#fff",
-                })
-                // Salvar nova Startup
-            }
+                    await http.createNewStartup(this.$store.getters.$GETDATACREATESTARTUP).then( (res) => {
+                      console.log("deu certo", res);
+                    })
+                    // Salvar nova Startup sem preenchimento
+                }
             }
         },
 

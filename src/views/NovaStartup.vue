@@ -7,7 +7,7 @@
     <div v-if="showQuestions">
       <ListaPerguntas :qtdeCavidade="techniqueInfo.cavity" :code_product="headerInfo.codeProduct"/>
     </div>
-    <BtnStartupCreate @returnFillStatus="changedShowQuestions"/>
+    <BtnStartupCreate @returnFillStatus="changedShowQuestions" />
   </div>
 </template>
 
@@ -29,18 +29,28 @@ export default {
         product: "",
         codeProduct: "",
         quantity: "",
+        machine: "",
+        product_mold: "",
         date: "",
         startTime: "",
-        endTime: "",
       },
       techniqueInfo: {
         cavity: "",
         cycle: "",
       },
+      dataInfo: {
+        code_op: "",
+        user_id: ""
+      },
+  
+      data_startup: {},
+
       componentsInfo: [],
       showQuestions: false,
     };
   },
+
+
   components: {
     StartupCadastro,
     TableCavidade,
@@ -54,6 +64,7 @@ export default {
     },
 
     ReturnCodeOp: async function(code_op) {
+      this.dataInfo.code_op = code_op
       function GetDateTime(){
         function GetDate() {
           const date = new Date();
@@ -101,8 +112,24 @@ export default {
       this.techniqueInfo.cavity = data.cavity;
       this.techniqueInfo.cycle = data.cycle;
 
-      //componentsInfo
-      this.componentsInfo = [...data.components]
+      // //componentsInfo
+      // this.componentsInfo = [...data.components]
+
+      data.components.map( (item) => {
+        this.componentsInfo.push( {
+          description: item.description,
+          item_number: item.ItemCode,
+          planned: item.PlannedQty,
+          um: item.UM
+        })
+      })
+
+
+      
+      this.data_startup = {...this.dataInfo, ...this.headerInfo, ...this.techniqueInfo}
+
+      this.$store.commit("$SETDATACREATESTARTUP", {techniqueData: this.techniqueInfo, components: this.componentsInfo});
+
     }
   } 
 };

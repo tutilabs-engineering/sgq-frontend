@@ -7,5 +7,9 @@ export default {
 
   listAllDefaultQuestions: async () => {
     return http.get(`/reportStartup/defaultQuestions`)
+  },
+
+  createNewStartup: async (data) => {
+    return http.post(`/reportStartup/`, data)
   }
 }
