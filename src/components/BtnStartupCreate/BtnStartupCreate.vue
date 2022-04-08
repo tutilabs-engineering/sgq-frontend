@@ -54,14 +54,7 @@ export default {
 
         saveNewStartup: async function (){
 
-            if(this.$store.getters.$GETCODEOP == ""){
-                console.log("Preencha o Código de Ordem de Produção")
-            }else { 
-                if(this.fillStatus){
-                // Campo de perguntas aberto
-                this.ValidateQtyAnsweredQuestions()
-                }else {
-                    const Toast = this.$swal.mixin({
+            const Toast = this.$swal.mixin({
                       toast: true,
                       position: 'top-right',
                       iconColor: '#3fc36d',
@@ -78,22 +71,54 @@ export default {
                       timerProgressBar: true
                     })
 
-                    Toast.fire({
-                      icon: 'success',
-                      title: 'Salvo com sucesso',
-                      background: "#fff",
-                    })
+
+            this.$store.commit("$SETISLOADING");
+            if(this.$store.getters.$GETCODEOP == ""){
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'Informe a Ordem de Produção',
+                    background: "#fff",
+                })
+            }else { 
+                if(this.fillStatus){
+                // Campo de perguntas aberto
+                this.ValidateQtyAnsweredQuestions()
+                }else {
+                    
+
+                    
                     const data = await this.$store.getters.$GETDATACREATESTARTUP
-                    console.log('aqui',data);
                     if(data){ 
                     await http.createNewStartup(data).then( (res) => {
-                      console.log("deu certo", res);
-
+                        
+                        console.log("Nova Startup Salva", res);
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Salvo com sucesso',
+                            background: "#fff",
+                        })
+                    }).catch ( (error) => {
+                        console.log(error.response);
+                        if(error.response.status === 400) {
+                            Toast.fire({
+                            icon: 'warning',
+                            title: 'Não foi possível cadastrar esta Startup, ela já está em Andamento',
+                            background: "#e3e745",
+                        })
+                        }else if(error.response.status === 401) {
+                            Toast.fire({
+                            icon: 'warning',
+                            title: 'Apenas Analista, Metrologista e Inspetor podem cadastrar uma Startup',
+                            background: "#e3e745",
+                        })
+                        }
+                  
                     })
-                     }
-                    // Salvar nova Startup sem preenchimento
+                    }
+              
                 }
             }
+            this.$store.commit("$SETISLOADING");
         },
 
         ValidateQtyAnsweredQuestions () {
