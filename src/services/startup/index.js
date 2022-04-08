@@ -10,6 +10,7 @@ export default {
   },
 
   createNewStartup: async (data) => {
+    console.log(data);
     return http.post(`/reportStartup/`, data)
   }
 }

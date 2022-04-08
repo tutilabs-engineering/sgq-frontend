@@ -1,11 +1,9 @@
 <template>
 
 <div class="content-metrologiaDetalhes">
-    
-
       <fieldset class="form">
         <legend>Metrologia</legend>
-
+        
       <div class="input">
         <label for="op">Código Produto</label>
         <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="opById[0].startup.op.code_product" disabled>

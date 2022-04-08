@@ -58,10 +58,7 @@ export default createStore({
     },
 
     async $SETDATACREATESTARTUP(state, {header, techniqueData, components}) {
-      
-      state.createDataStartup.user_id = await userId.DataUser().then((res)=>{
-        return res.data.user.id
-      })
+     
       state.createDataStartup.code_op = state.code_op
       state.createDataStartup.header = header || state.createDataStartup.header
       state.createDataStartup.techniqueData = techniqueData || state.createDataStartup.techniqueData
@@ -94,7 +91,11 @@ export default createStore({
       return state.code_op
     },
     
-    $GETDATACREATESTARTUP(state){
+    async $GETDATACREATESTARTUP(state){
+       
+      state.createDataStartup.user_id = await userId.DataUser().then((res)=>{
+        return res.data.user.id
+      })
       console.log(state.createDataStartup);
       return state.createDataStartup
     }

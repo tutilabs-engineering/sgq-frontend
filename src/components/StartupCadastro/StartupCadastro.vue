@@ -98,14 +98,15 @@ export default {
       immediate: true,
       handler(){
         this.$store.commit("$SETDATACREATESTARTUP", {header: {
+        client: this.headerInfo.client,
         code_client: this.headerInfo.codeClient,
         code_product: this.headerInfo.codeProduct,
         desc_product: this.headerInfo.product,
         quantity: this.headerInput.quantity,
         product_mold: this.headerInput.product_mold,
         machine: this.headerInput.machine,
-        day: this.headerInput.day,
-        start_time: this.headerInput.start_time,
+        day: new Date(this.headerInput.day),
+        start_time: new Date(),
 
       }}
       );

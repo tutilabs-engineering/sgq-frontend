@@ -83,10 +83,14 @@ export default {
                       title: 'Salvo com sucesso',
                       background: "#fff",
                     })
-
-                    await http.createNewStartup(this.$store.getters.$GETDATACREATESTARTUP).then( (res) => {
+                    const data = await this.$store.getters.$GETDATACREATESTARTUP
+                    console.log('aqui',data);
+                    if(data){ 
+                    await http.createNewStartup(data).then( (res) => {
                       console.log("deu certo", res);
+
                     })
+                     }
                     // Salvar nova Startup sem preenchimento
                 }
             }

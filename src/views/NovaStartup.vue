@@ -112,8 +112,8 @@ export default {
       this.techniqueInfo.cavity = data.cavity;
       this.techniqueInfo.cycle = data.cycle;
 
-      // //componentsInfo
-      // this.componentsInfo = [...data.components]
+      // //componentsInfoa
+     console.log(data.components);
 
       data.components.map( (item) => {
         this.componentsInfo.push( {
@@ -124,9 +124,6 @@ export default {
         })
       })
 
-
-      
-      this.data_startup = {...this.dataInfo, ...this.headerInfo, ...this.techniqueInfo}
 
       this.$store.commit("$SETDATACREATESTARTUP", {techniqueData: this.techniqueInfo, components: this.componentsInfo});
 

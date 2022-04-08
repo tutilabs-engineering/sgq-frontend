@@ -16,7 +16,7 @@
           <td data-title="#">{{ component.DocEntry }}</td>
           <td data-title="N° item">{{ component.ItemCode }}</td>
           <td data-title="Descrição">{{ component.description }}</td>
-          <td data-title="UM">{{ component.um }}</td>
+          <td data-title="UM">{{ component.UM }}</td>
           <td data-title="Planejado">{{ component.PlannedQty }}</td>
         </tr>
       </tbody>
