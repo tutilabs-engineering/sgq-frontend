@@ -56,11 +56,13 @@ export default {
     },
 
     created: async function(){
+
       const id = this.$route.params.id
       console.log(id);
 
-      http.FindMetrologyById(id).then( (res) => {
+      await http.FindMetrologyById(id).then( (res) => {
         this.opById = res.data.list
+        console.log("oi");
         console.log(this.opById);
       })
       
