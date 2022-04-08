@@ -113,7 +113,7 @@ export default {
       this.techniqueInfo.cycle = data.cycle;
 
       // //componentsInfoa
-     console.log(data.components);
+     
 
       data.components.map( (item) => {
         this.componentsInfo.push( {
@@ -123,6 +123,8 @@ export default {
           um: item.UM
         })
       })
+
+      console.log(this.componentsInfo);
 
 
       this.$store.commit("$SETDATACREATESTARTUP", {techniqueData: this.techniqueInfo, components: this.componentsInfo});

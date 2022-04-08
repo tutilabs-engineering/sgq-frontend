@@ -4,7 +4,6 @@
       <legend>Componentes</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
-        <th>#</th>
         <th>N° do Item</th>
         <th>Descrição</th>
         <th>UM</th>
@@ -13,11 +12,10 @@
 
       <tbody>
         <tr v-for="component in componentsInfo" :key="component.DocEntry">
-          <td data-title="#">{{ component.DocEntry }}</td>
-          <td data-title="N° item">{{ component.ItemCode }}</td>
+          <td data-title="N° item">{{ component.item_number }}</td>
           <td data-title="Descrição">{{ component.description }}</td>
-          <td data-title="UM">{{ component.UM }}</td>
-          <td data-title="Planejado">{{ component.PlannedQty }}</td>
+          <td data-title="UM">{{ component.um }}</td>
+          <td data-title="Planejado">{{ component.planned }}</td>
         </tr>
       </tbody>
     </table>
