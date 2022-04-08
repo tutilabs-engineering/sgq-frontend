@@ -133,7 +133,7 @@ export default {
   },
 
   created: async function() {
-
+    this.$store.commit("$SETISLOADING");
     // this.user_id = dataUser().user.id
          await userId.DataUser().then((res)=>{
            this.user_id = res.data.user.id
@@ -144,7 +144,7 @@ export default {
 
         //Lista solictações
         this.listMetrologySolicitations()
-
+    this.$store.commit("$SETISLOADING");
   },
 
   methods: {

@@ -5,17 +5,19 @@
 
         <thead>
           <th>Identificação</th>
-          <th v-for="cavidade in qtdeCavidade" :key="cavidade">{{ "Cavidade " + cavidade}}</th>
+          <th v-for="x in variables" :key="x.id">{{ "Cavidade " + x.position_cavity}}</th>
         </thead>
 
         <tbody>
           
           <td>Ola</td>
-          {{variables}}
            
           <td v-for="t in variables" :key="t" >
                
-                {{ t.variable_id  }}
+                {{ t.position_cavity}}
+
+                <input type="text" value="">
+
              
           </td>
              
@@ -28,6 +30,7 @@
 
 <script>
 export default {
+
     props: {
         numberCavidade: Number,
         variables: Object,
@@ -37,7 +40,10 @@ export default {
         return {
             qtdeCavidade: parseInt( this.numberCavidade)
         }
-    }
+    },
+
+
+    
 };
 
 </script>
