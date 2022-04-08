@@ -9,10 +9,15 @@
         </thead>
 
         <tbody>
-          <tr v-for="i in 3" :key="i">
-            <td>{{"Identificador " + i}}</td>
-            <td v-for="cavidade in qtdeCavidade" :key="cavidade"><input  class="inputdataCav" type="text" placeholder="Informe o valor"></td>
-          </tr>
+   
+           
+          <td v-for="t in variables" :key="t" >
+               
+                {{ t.variable_id  }}
+                {{ t.position_cavity }}
+          </td>
+             
+          
         </tbody>
       </table>
  
@@ -23,6 +28,7 @@
 export default {
     props: {
         numberCavidade: Number,
+        variables: Object,
     },
 
     data() {
