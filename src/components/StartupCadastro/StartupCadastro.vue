@@ -56,11 +56,6 @@
         <input type="time" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.start_time">
       </div>
 
-      <!-- <div class="input">
-        <label for="client">Hora final</label>
-        <input type="time" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInfo.endTime">
-      </div> -->
-
     </fieldset>
   </div>
 </template>
