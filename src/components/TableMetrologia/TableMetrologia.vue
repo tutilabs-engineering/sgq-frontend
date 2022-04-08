@@ -49,7 +49,7 @@
             
          </td>
           <td class="lastTd" data-title="Opção">
-            <button class="btn-preencher" @click="() => this.$router.push({ name: 'MetrologiaDetalhes', params: {id: metrologySolicitation.id} })">Preencher</button>
+            <button class="btn-preencher" @click="() => this.$router.push({ name: 'MetrologiaDetalhes', params: {id: metrologySolicitation.startup.id} })">Preencher</button>
           </td>
         </tr>
 

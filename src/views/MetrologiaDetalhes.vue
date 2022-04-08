@@ -29,7 +29,7 @@
      <fieldset>
        <legend>Preenchimento</legend>
 
-      <TableMetrologiaDetalhes />
+      <TableMetrologiaDetalhes :numberCavidade="qtdeCavidade"/>
 
     </fieldset>
 
@@ -51,7 +51,8 @@ export default {
     name: "MetrologiaDetalhes",
     data(){
         return {
-          opById: []
+          opById: [],
+          qtdeCavidade: 3,
         };
     },
 

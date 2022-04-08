@@ -9,8 +9,8 @@ export default {
         return await http.get("metrology/solicitations")
     },
 
-    FindMetrologyById: async (startup) => {
-        return await http.get(`metrology/${startup}`)
+    FindMetrologyById: async (id) => {
+        return await http.get(`metrology/${id}`)
     },
 
     JoinMetrologyByUserId: async (user, startup) => {
