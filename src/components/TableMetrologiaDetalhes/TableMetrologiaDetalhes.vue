@@ -9,12 +9,14 @@
         </thead>
 
         <tbody>
-   
+          
+          <td>Ola</td>
+          {{variables}}
            
           <td v-for="t in variables" :key="t" >
                
                 {{ t.variable_id  }}
-                {{ t.position_cavity }}
+             
           </td>
              
           

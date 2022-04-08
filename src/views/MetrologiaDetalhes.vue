@@ -6,22 +6,22 @@
         
       <div class="input">
         <label for="op">Código Produto</label>
-        <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="opById[0].startup.op.code_product" disabled>
+        <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="opById.header.code_product" disabled>
       </div>
 
       <div class="input">
         <label for="client">Código Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="opById[0].startup.op.code_client" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="opById.header.code_client" disabled>
       </div>
 
       <div class="input">
         <label for="client">Produto</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="opById[0].startup.op.desc_product" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="opById.header.desc_product" disabled>
       </div>
 
       <div class="input">
         <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="opById[0].startup.op.client" disabled> 
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="opById.header.client" disabled> 
       </div>
 
      </fieldset>
@@ -29,7 +29,7 @@
      <fieldset>
        <legend>Preenchimento</legend>
 
-      <TableMetrologiaDetalhes :numberCavidade="qtdeCavidade"/>
+      <TableMetrologiaDetalhes :numberCavidade="opById.header.cavity" :variables="opById.metrology_items"/>
 
     </fieldset>
 
