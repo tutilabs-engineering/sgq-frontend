@@ -156,6 +156,7 @@ export default {
 
 
   created: async function() {
+    
     this.$store.commit("$SETISLOADING");
     const allStartups = await http.listAllStartups()
     let openedStartups = [];
