@@ -5,26 +5,26 @@
 
         <thead>
           <th>Identificação</th>
-          <th v-for="x in variables" :key="x.id">{{ "Cavidade " + x.position_cavity}}</th>
+          <th v-for="x in arrayFilter(variables[0].items)" :key="x.id">{{ "Cavidade " + x.position_cavity}}</th>
         </thead>
 
         <tbody>
           
-          <td>Ola</td>
-           
-          <td v-for="t in variables" :key="t" >
+          <tr v-for="i in variables" :key="i" >
                
-                {{ t.position_cavity}}
-
-                <input type="text" value="">
-
+               <td> {{ i.variable}} </td>
+               <td v-for="item in arrayFilter(i.items)" :key="item">
+                <div v-if="item !== null">
+                   {{item}}
+                   <input type="number" v-model="item.value" >
+                </div>
+               </td>   
+          </tr>
              
-          </td>
-             
-          
+           
         </tbody>
       </table>
- 
+
   </div>
 </template>
 
@@ -32,15 +32,28 @@
 export default {
 
     props: {
-        numberCavidade: Number,
         variables: Object,
     },
+    methods : {
+        arrayFilter(arr){
+         var arraySemVazios = arr.filter(function (i) {
+         return i;
+       });
 
-    data() {
-        return {
-            qtdeCavidade: parseInt( this.numberCavidade)
-        }
+       return arraySemVazios
+
+       }
     },
+    watch : {
+      variables : {
+            deep: true,
+            immediate:true,
+            handler(newValue){
+             this.$emit("variablesModification",newValue)
+            }
+      }
+    }
+  
 
 
     
