@@ -1,29 +1,27 @@
 <template>
 
 <div class="content-metrologiaDetalhes">
-    
-
       <fieldset class="form">
         <legend>Metrologia</legend>
-
+        
       <div class="input">
         <label for="op">Código Produto</label>
-        <input type="text" name="client" id="op" placeholder="Digite o código OP" value="Aqui será o Código do Produto" disabled>
+        <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="opById.header.code_product" disabled>
       </div>
 
       <div class="input">
         <label for="client">Código Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  value="Teste" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="opById.header.code_client" disabled>
       </div>
 
       <div class="input">
         <label for="client">Produto</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  value="Teste" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="opById.header.desc_product" disabled>
       </div>
 
       <div class="input">
         <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" value="Teste" disabled> 
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="opById.header.client" disabled> 
       </div>
 
      </fieldset>
@@ -31,24 +29,48 @@
      <fieldset>
        <legend>Preenchimento</legend>
 
-      <TableMetrologiaDetalhes />
+      <TableMetrologiaDetalhes :numberCavidade="opById.header.cavity" :variables="opById.metrology_items"/>
 
     </fieldset>
+
+    <div class="btn">
+      <button class="btn-save">SALVAR</button>
+    </div>
+    
 
 </div>
   
 </template>
 
 <script>
-
+import  http  from '../services/metrology/Metrology'
 import TableMetrologiaDetalhes from '../components/TableMetrologiaDetalhes/TableMetrologiaDetalhes.vue'
 
 export default {
     components: { TableMetrologiaDetalhes},
     name: "MetrologiaDetalhes",
     data(){
-        return {};
-    }
+        return {
+          opById: [],
+          qtdeCavidade: 3,
+        };
+    },
+
+    created: async function(){
+      
+
+      const id = this.$route.params.id
+      console.log(id);
+
+      await http.FindMetrologyById(id).then( (res) => {
+        this.opById = res.data.list
+      })
+      
+     
+    },
+
+
+    
 }
 </script>
 
@@ -106,6 +128,24 @@ fieldset {
   font-size: 15px;
   height: 52px;
   border-bottom: 2px solid rgba(128, 128, 128, 0.39);
+}
+
+.btn {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-save {
+  width: 120px;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  color: var(--main_primaryWhite);
+  background-color: var(--card_green);
 }
 
 @media (max-width: 1114px) and (min-width: 766px){

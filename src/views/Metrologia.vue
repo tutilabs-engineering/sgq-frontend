@@ -1,7 +1,6 @@
 <template>
 	<div class="title">
 		<TableMetrologia />
-
 	</div>
 </template>
 

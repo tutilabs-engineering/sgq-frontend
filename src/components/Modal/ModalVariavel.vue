@@ -41,6 +41,7 @@
                   <p>Descrição Cliente</p>
                   <input type="text" readonly :value="dataProduct.cliente" />
                 </div>
+                
               </div>
 
               <div class="titleBody">
@@ -106,9 +107,9 @@
                   <p>MIN:</p>
                   <input type="text" v-model="list.min" step="any" placeholder="12.3"/>
                 </div>
-
+                
                 <div class="inputUpLoad" v-if="statusButtonImage">
-
+                    
                     <label for="inputImage" class="inputImage"
                       ><i class="far fa-file-image"></i
                     > <span>Anexar</span></label>
@@ -116,17 +117,7 @@
                     <input ref="file" type="file"  class="inputUpLoad" id="inputImage" @change="insertImageFile"/>
  
                 </div>
-
-                <div class="inputUpLoad" v-else>
-
-                    <label for="inputImage" class="inputImage"
-                      ><i class="far fa-file-image"></i
-                    > <span>Remover</span></label>
-                    
-                    <input ref="file" type="text"  class="inputUpLoad" id="inputImage" @change="changeStatusButtonImage"/>
- 
-                </div>
-
+                <button class="inputUpLoad inputImageDelete" @click="changeStatusButtonImage" v-else>Remover</button>
 
                 <button type="submit" class="inputUpLoad">
                   <span>Enviar</span>
@@ -193,12 +184,14 @@ export default {
       this.list.file = e.target.files[0]
       if(this.list.file != "") {
          this.statusButtonImage = false
-        console.log("tem algo dentro dessa porra");
+         console.log(this.list.file)
       }
     },
 
     changeStatusButtonImage() {
       this.statusButtonImage = true
+      this.list.file = "";
+      console.log(this.list.file)
     },
 
     getComments(value) {
@@ -261,6 +254,7 @@ export default {
             this.list.cota = "";
             this.list.max = "";
             this.list.min = "";
+            this.changeStatusButtonImage()
           }
 
         })
@@ -305,7 +299,15 @@ export default {
             background: "#A8D4FF",
           });
         }
-        console.log(res.data);
+      }).catch( (error) => {
+        if(error.response.status === 401){
+            Toast.fire({
+            icon: "warning",
+            title: "Esta variável está sendo utilizada. Não será possível deleta-la!",
+            background: "#e3e745",
+          });
+        }
+
       });
 
       this.reloadList();
@@ -572,9 +574,13 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--card_blue);
   border-radius: 5px;
   
+}
+
+.inputImageDelete {
+  color: #fff;
+  background-color: var(--card_red) !important;
 }
 
 .fa-file-image {

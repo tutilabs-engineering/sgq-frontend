@@ -33,32 +33,27 @@
 
       <div class="input">
         <label for="client">Quantidade</label>
-        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.quantity">
+        <input type="number" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.quantity">
       </div>
 
       <div class="input">
         <label for="client">Máquina</label>
-        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.quantity">
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.machine">
       </div>
 
       <div class="input">
         <label for="client">Molde</label>
-        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.quantity">
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.product_mold">
       </div>
 
       <div class="input">
         <label for="client">Data</label>
-        <input type="date" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.date">
+        <input type="date" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.day">
       </div>
 
       <div class="input">
         <label for="client">Hora inicial</label>
-        <input type="time" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.startTime">
-      </div>
-
-      <div class="input">
-        <label for="client">Hora final</label>
-        <input type="time" name="client" id="client" placeholder="type qualquer coisa">
+        <input type="time" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.start_time">
       </div>
 
     </fieldset>
@@ -72,6 +67,14 @@ export default {
   data() {
     return {
       code_op: "",
+      headerInput: {
+        machine: "",
+        product_mold: "",
+        day: "",
+        start_time: "",
+        quantity: ""
+      }
+      
     };
   },
   props: {
@@ -82,7 +85,29 @@ export default {
     code_op (newValor) {
       this.$store.commit("$SETCODEOP", this.code_op);
       this.$emit("returnCodeOp", newValor)
+
+    },
+
+    headerInput: {
+      deep: true,
+      immediate: true,
+      handler(){
+        this.$store.commit("$SETDATACREATESTARTUP", {header: {
+        client: this.headerInfo.client,
+        code_client: this.headerInfo.codeClient,
+        code_product: this.headerInfo.codeProduct,
+        desc_product: this.headerInfo.product,
+        quantity: this.headerInput.quantity,
+        product_mold: this.headerInput.product_mold,
+        machine: this.headerInput.machine,
+        day: new Date(this.headerInput.day),
+        start_time: new Date(),
+
+      }}
+      );
+      }
     }
+
   }
 };
 
