@@ -5,8 +5,8 @@
         <legend>Metrologia</legend>
         
       <div class="input">
-        <label for="op">Código Produto</label>
-        <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="opById.header.code_product" disabled>
+        <label for="code_product">Código Produto</label>
+        <input type="text" name="code_product" id="code_product" placeholder="Digite o código OP" :value="opById.header.code_product" disabled>
       </div>
 
       <div class="input">
@@ -29,12 +29,12 @@
      <fieldset>
        <legend>Preenchimento</legend>
 
-      <TableMetrologiaDetalhes :numberCavidade="opById.header.cavity" :variables="opById.metrology_items"/>
+      <TableMetrologiaDetalhes @variablesModification="captureDataFromVariables" :variables="opById.metrology_items"/>
 
     </fieldset>
 
     <div class="btn">
-      <button class="btn-save">SALVAR</button>
+      <button class="btn-save" @click="saveData">SALVAR</button>
     </div>
     
 
@@ -45,29 +45,88 @@
 <script>
 import  http  from '../services/metrology/Metrology'
 import TableMetrologiaDetalhes from '../components/TableMetrologiaDetalhes/TableMetrologiaDetalhes.vue'
+import  userId  from '../utils/dataUser'
 
 export default {
     components: { TableMetrologiaDetalhes},
     name: "MetrologiaDetalhes",
     data(){
         return {
+          newDataVariables : [],
+          dataVariables: [],
           opById: [],
-          qtdeCavidade: 3,
+          qtdeCavidade: 0,
         };
     },
 
     created: async function(){
       
-
-      const id = this.$route.params.id
-      console.log(id);
-
-      await http.FindMetrologyById(id).then( (res) => {
+       const id = this.$route.query.id
+       await http.FindMetrologyById(id).then( (res) => {
         this.opById = res.data.list
       })
       
      
     },
+    methods : {
+      captureDataFromVariables(val){
+        // Capture data in table details metrology to salve(this.$emit)
+         this.dataVariables = val
+      }, 
+
+      async saveData(){
+         //Loading Construct Data Metrology to save in database
+        this.constructDataMetrology();
+   
+      const startup = this.$route.query.id
+      const user = await userId.DataUser().then((res)=>{
+        return res.data.user.id
+      })
+       const data = {
+          user,
+          metrology : this.newDataVariables
+        }
+         
+      const Toast = this.$swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: '#ff5349',
+                    customClass: {
+                    popup: 'colored-toast',
+                    title: 'title-swal-text'
+                    },
+                    didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                    },
+                    showConfirmButton: false,
+                    timer: 2500,
+                    timerProgressBar: true
+                })
+               
+                
+         await http.UpdateDataMetrologyOfStartup(startup, data).then((res)=>{
+           console.log(res);
+         }).catch((error)=>{
+           Toast.fire({
+                        icon: 'warning',
+                        title: error.response.data.message,
+                        background: "#fff",
+                    })
+         })
+      },
+      constructDataMetrology(){
+         
+          this.dataVariables.map((element)=>{
+             element.items.map((item)=>{
+               if(item != null){
+                 this.newDataVariables.push({id: item.metrology_id, value: item.value})
+               }
+             })
+         })
+        
+      }
+    }
 
 
     
