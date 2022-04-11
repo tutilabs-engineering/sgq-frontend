@@ -10,6 +10,16 @@ const http = axios.create({
     }
 })
 
+// API SAP
+
+const httpSAP = axios.create({
+  baseURL: "http://192.168.7.212:3300/api/v1/sap/tutilabs/ops",
+  headers: {
+      "Accept": "application/json",
+      "Content": "application/json"
+  }
+})
+
 // SERVER
 
 // const http = axios.create({
@@ -34,4 +44,4 @@ http.interceptors.request.use(function (config) {
     console.log(error)  
     return Promise.reject(error)} 
 )
-export { http };
+export { http, httpSAP };

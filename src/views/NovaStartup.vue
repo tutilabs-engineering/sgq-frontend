@@ -23,6 +23,8 @@ import http from "../services/startup";
 export default {
   data() {
     return {
+      id_startup: this.$route.query.id,
+      itsCreation: true,
       headerInfo: {
         client: "",
         codeClient: "",
@@ -49,14 +51,18 @@ export default {
       showQuestions: false,
     };
   },
-
-
   components: {
     StartupCadastro,
     TableCavidade,
     TableComponentes,
     ListaPerguntas,
     BtnStartupCreate,
+  },
+  created: async function() {
+    if(this.id_startup) {
+      this.itsCreation = false
+    }
+    console.log(this.itsCreation)
   },
   methods: {
     changedShowQuestions(e) {
@@ -112,7 +118,7 @@ export default {
       this.techniqueInfo.cavity = data.cavity;
       this.techniqueInfo.cycle = data.cycle;
 
-      // //componentsInfoa
+      // //componentsInfo
      
 
       data.components.map( (item) => {
@@ -123,8 +129,6 @@ export default {
           um: item.UM
         })
       })
-
-      console.log(this.componentsInfo);
 
 
       this.$store.commit("$SETDATACREATESTARTUP", {techniqueData: this.techniqueInfo, components: this.componentsInfo});
