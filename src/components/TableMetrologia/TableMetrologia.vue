@@ -59,10 +59,10 @@
     <table v-else cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup">
-          Histórico
+          Solicitações
         </button>
         <button @click="statusTable = false" class="btn startup-closed">
-          Solicitações
+          Histórico
         </button>
       </div>
 
