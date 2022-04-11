@@ -54,7 +54,7 @@ export default {
 
   created: async function() {
     const listCount = await http.listCountOfStartupsByStatus()
-    const allStartups = await http.listAllStartups()
+    // const allStartups = await http.listAllStartups()
     
     console.log(listCount.data.reportStartups.approved);
   },
