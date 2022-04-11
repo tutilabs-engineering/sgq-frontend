@@ -36,7 +36,7 @@
 </template>
 
 <script>
-
+import http from "../services/startup/"
 import ModalNovaOp from '../components/Modal/ModalNovaOp.vue'
 
 export default {
@@ -51,6 +51,15 @@ export default {
       this.modalNovaOp = !this.modalNovaOp;
     }
   },
+
+  created: async function() {
+    const listCount = await http.listCountOfStartupsByStatus()
+    const allStartups = await http.listAllStartups()
+    
+    console.log(listCount.data.reportStartups.approved);
+  },
+
+
   data() {
     return {
       modalNovaOp:false,
