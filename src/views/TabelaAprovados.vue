@@ -11,7 +11,7 @@
         <th>Opções</th>
       </thead>
 
-      <tbody v-if="isOP">
+      <tbody >
         <tr v-for="item in listAproveds" :key="item.id" >
           <td style="display: none"></td>
           <td data-title="Cod.OP">{{ item.op.code_product }}</td>
@@ -30,14 +30,12 @@
         </tr>
       </tbody>
 
-      <tbody v-else>
-        <tr>
-          <td>ola</td>
-        </tr>
-  
-      </tbody>
     </table>
   </fieldset>
+
+  <!-- <fieldset class="tableContent"  v-else>
+      <h2 class="legenda-warning">Não há Startups Aprovadas para serem listadas<br/><span>Verifique a tabela xxxxxxx</span></h2>
+    </fieldset> -->
 </template>
 
 <script>
@@ -64,11 +62,12 @@ export default {
       return date = `${this.day}/${this.month}/${this.year}`
     },
 
-    verifyOP(list_op){
-      if(list_op.length === 0){
-        this.isOp = false
+    verifyOP: async function (list_op){
+      console.log(list_op);
+      if(list_op === 0){
+        return false
       }else {
-        this.isOp = true
+        return true
       }
     }
   },
@@ -77,7 +76,7 @@ export default {
     this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus()
     this.listAproveds = listCount.data.reportStartups.approved
-    this.verifyOP(this.listAproveds)
+    this.isOp = await this.verifyOP(this.listAproveds.length)
     console.log(this.isOp);
     this.$store.commit("$SETISLOADING");
   },
@@ -87,13 +86,30 @@ export default {
     return {
       listAproveds: [],
       modalNovaOp:false,
-      isOp: false,
+      isOp: true,
     };
   },
 };
 </script>
 
 <style scoped>
+
+.legenda-warning {
+  font-size: 25px;
+  text-align: center;
+  width: 100%;
+  border-radius: 10px;
+  color: var(--card_red);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.legenda-warning span {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+
 .tableContent {
   position: relative;
   width: 100%;
@@ -155,6 +171,12 @@ table th {
 
 table td {
   border-top: 0.4px solid rgba(0, 0, 0, 0.199);
+}
+
+.lineWarning {
+  width: 100%;
+  background-color: red;
+  text-align: center;
 }
 
 .tableContent td {
