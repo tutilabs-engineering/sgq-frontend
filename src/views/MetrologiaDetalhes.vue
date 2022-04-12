@@ -34,10 +34,12 @@
     </fieldset>
 
     <div class="btn">
-      <button type="submit" class="btn-save" @click.prevent="saveData">SALVAR</button>
+      <button type="submit" class="btn-save" @click.prevent="saveData">Salvar</button>
+      <button type="button" class="btn-close" @click="finishMetrology">Finalizar</button>
     </div>
  </form>
-
+ 
+ 
 </div>
   
 </template>
@@ -106,8 +108,9 @@ export default {
                
                 
          await http.UpdateDataMetrologyOfStartup(startup, data).then((res)=>{
-      
-          console.log(res);
+           console.log(res);
+
+            
 
          }).catch((error)=>{
            Toast.fire({
@@ -127,11 +130,68 @@ export default {
              })
          })
         
-      }
+      },
+async finishMetrology(){
+      const startup = this.$route.query.id
+      const user = await userId.DataUser().then((res)=>{
+        return res.data.user.id
+      })
+
+           
+      const Toast = this.$swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: '#ff5349',
+                    customClass: {
+                    popup: 'colored-toast',
+                    title: 'title-swal-text'
+                    },
+                    didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                    },
+                    showConfirmButton: false,
+                    timer: 2500,
+                    timerProgressBar: true
+                })
+
+ await this.$swal.fire({
+  title: 'Você realmente quer terminar esta revisão de metrologia?',
+  text: "Depois de concluído, será associado a Startup",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Concluir'
+}).then(async (result) => {
+  if (result.isConfirmed) {
+   
+   await http.FinishMetrologyByUserId(startup,user).then((res)=>{
+
+    Toast.fire({
+     icon : "success",
+     title :  res.data.message,
+      
+   });
+
+   }).catch((error)=>{
+
+   Toast.fire({
+     icon : "error",
+     title :  error.response.data.message,
+      
+   }
+    )
+   })
+    
+ 
+  }
+})
+
     }
 
+},
 
-    
 }
 </script>
 
@@ -196,6 +256,7 @@ fieldset {
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  gap:3px;
 }
 
 .btn-save {
@@ -207,6 +268,17 @@ fieldset {
   font-size: 1.1rem;
   color: var(--main_primaryWhite);
   background-color: var(--card_green);
+}
+
+.btn-close {
+  width: 120px;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  color: var(--main_primaryWhite);
+   background-color: var(--card_blue);
 }
 
 @media (max-width: 1114px) and (min-width: 766px){
