@@ -15,8 +15,7 @@
                <td> {{ i.variable}} </td>
                <td v-for="item in arrayFilter(i.items)" :key="item">
                 <div v-if="item !== null">
-                   {{item}}
-                   <input type="number" v-model="item.value" >
+                   <input class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required >
                 </div>
                </td>   
           </tr>
@@ -119,6 +118,14 @@ table th {
   height: 30px;
   padding: 0 10px 0 10px;
 }
+
+.input-test{       
+  
+  width: 40%;
+  height: 40px;
+  text-align: center;
+}
+
 
 @media (max-width: 965px) {
   .tableContent {
