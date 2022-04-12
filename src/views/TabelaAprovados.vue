@@ -3,24 +3,22 @@
     <legend>Análise de Startup - Aprovadas</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
-        <th>Cód.Startup</th>
-        <th>Produtos</th>
-        <th>Cliente</th>
+        <th>Cod. OP</th>
+        <th>Cod. Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
         <th>Inspetor</th>
         <th>Opções</th>
       </thead>
 
-      <tbody>
-        <tr v-for="item in itemsFechados" :key="item.id">
+      <tbody v-if="isOP">
+        <tr v-for="item in listAproveds" :key="item.id" >
           <td style="display: none"></td>
-          <td data-title="Codigo">{{ item.codigo }}</td>
-          <td data-title="Produto">{{ item.produto }}</td>
-          <td data-title="Cliente">{{ item.cliente }}</td>
-          <td data-title="Maquina">{{ item.maquina }}</td>
-          <td data-title="Data">{{ item.data }}</td>
-          <td data-title="Inspetor">{{ item.inspetor }}</td>
+          <td data-title="Cod.OP">{{ item.op.code_product }}</td>
+          <td data-title="Cod. Cliente">{{ item.op.code_client }}</td>
+          <td data-title="Maquina">{{ item.op.machine }}</td>
+          <td data-title="Data">{{ formatDate(item.day) }}</td>
+          <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
               <ModalNovaOp :modalNovaOp="modalNovaOp"
@@ -30,6 +28,13 @@
             </div>
           </td>
         </tr>
+      </tbody>
+
+      <tbody v-else>
+        <tr>
+          <td>ola</td>
+        </tr>
+  
       </tbody>
     </table>
   </fieldset>
@@ -49,79 +54,40 @@ export default {
   methods: {
     openModalNovaOp() {
       this.modalNovaOp = !this.modalNovaOp;
+    },
+
+    formatDate(date) {
+      date = date.slice(0, -14);
+      this.year = date.slice(0, -6)
+      this.month = date.slice(5, -3)
+      this.day = date.slice(-2)
+      return date = `${this.day}/${this.month}/${this.year}`
+    },
+
+    verifyOP(list_op){
+      if(list_op.length === 0){
+        this.isOp = false
+      }else {
+        this.isOp = true
+      }
     }
   },
 
   created: async function() {
+    this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus()
-    // const allStartups = await http.listAllStartups()
-    
-    
-    console.log(listCount.data.reportStartups.approved);
+    this.listAproveds = listCount.data.reportStartups.approved
+    this.verifyOP(this.listAproveds)
+    console.log(this.isOp);
+    this.$store.commit("$SETISLOADING");
   },
 
 
   data() {
     return {
+      listAproveds: [],
       modalNovaOp:false,
-      itemsAbertos: [
-        {
-          id: 1,
-          produto: "produto D",
-          codigo: "521",
-          cliente: "Honda",
-          maquina: "Injetora",
-          data: "22-03-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 2,
-          produto: "produto E",
-          codigo: "523",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "23-03-2022",
-          inspetor: "Renato",
-        },
-        {
-          id: 3,
-          produto: "produto F",
-          codigo: "242",
-          cliente: "Tutu",
-          maquina: "Injetora",
-          data: "24-03-2022",
-          inspetor: "Guilherme",
-        },
-      ],
-      itemsFechados: [
-        {
-          id: 1,
-          produto: "produto A",
-          codigo: "241",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "21-02-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 2,
-          produto: "produto B",
-          codigo: "598",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "21-03-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 3,
-          produto: "produto C",
-          codigo: "242",
-          cliente: "Tutu",
-          maquina: "Injetora",
-          data: "22-01-2022",
-          inspetor: "Guilherme",
-        },
-      ],
+      isOp: false,
     };
   },
 };

@@ -178,7 +178,7 @@ export default {
   },
   methods: {
     OpenReportStartup: function(id_startup) {
-      this.$router.push({path: "/create-startup", query: {id: id_startup}})
+      this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})
     },
 
     formatDate(date) {
