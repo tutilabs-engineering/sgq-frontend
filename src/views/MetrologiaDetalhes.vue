@@ -25,7 +25,7 @@
       </div>
 
      </fieldset>
-
+ <form>
      <fieldset>
        <legend>Preenchimento</legend>
 
@@ -34,9 +34,9 @@
     </fieldset>
 
     <div class="btn">
-      <button class="btn-save" @click="saveData">SALVAR</button>
+      <button type="submit" class="btn-save" @click.prevent="saveData">SALVAR</button>
     </div>
-    
+ </form>
 
 </div>
   
@@ -106,7 +106,9 @@ export default {
                
                 
          await http.UpdateDataMetrologyOfStartup(startup, data).then((res)=>{
-           console.log(res);
+      
+          console.log(res);
+
          }).catch((error)=>{
            Toast.fire({
                         icon: 'warning',
@@ -116,7 +118,7 @@ export default {
          })
       },
       constructDataMetrology(){
-         
+          this.newDataVariables = []
           this.dataVariables.map((element)=>{
              element.items.map((item)=>{
                if(item != null){
