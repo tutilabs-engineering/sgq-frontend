@@ -4,7 +4,7 @@
     <TableCavidadePreenchido :techniqueInfo="techniqueInfo" />
     <TableComponentesPreenchido :componentsInfo="componentsInfo"/>
     
-    <ListaPerguntasPreenchida :qtdeCavidade="techniqueInfo.cavity" :code_product="data_startup.op.code_product"/>
+    <ListaPerguntasPreenchida :id_startup="id_startup" :qtdeCavidade="techniqueInfo.cavity" :code_product="data_startup.op.code_product"/>
     
     <BtnStartupCreate @returnFillStatus="changedShowQuestions" />
   </div>

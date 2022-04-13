@@ -47,15 +47,17 @@ import PerguntaPadrao from "../PerguntaPadrao/PerguntaPadrao.vue";
 import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
 import UploadImage from "../UploadImage/UploadImage.vue";
 import http from "../../services/startup/index";
-import httpAttributes from "../../services/productAnalysis/Attributes"
+// import httpAttributes from "../../services/productAnalysis/Attributes"
 
 export default {
   data() {
     return {
       defaultQuestions: [],
       specificQuestions: [],
+
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
+      // id_startup: this.id_startup
     };
 
     
@@ -64,6 +66,7 @@ export default {
   props: {
     qtdeCavidade: Number,
     code_product: String,
+    id_startup: Number,
   },
   components: {
     PerguntaPadrao,
@@ -72,23 +75,30 @@ export default {
     UploadImage,
   },
   created: async function () {
+    // Lista de perguntas especificas
+    await http.findReportStartupById(this.id_startup).then( (res) => {
+      this.specificQuestions = res.data.specific_questions_in_product
+    })
+
+
+
     const responseDefaultQuestions = await http.listAllDefaultQuestions();
     this.defaultQuestions = responseDefaultQuestions.data.defaultQuestions;
 
 
-    console.log("aaaaaaaaaaaa", this.code_product);
-    const responseSpecificQuestions = await httpAttributes.FindAttributesByCodeProduct(this.code_product);
+    // console.log("aaaaaaaaaaaa", this.code_product);
+    // const responseSpecificQuestions = await httpAttributes.FindAttributesByCodeProduct(this.code_product);
 
-    if(responseSpecificQuestions) {
+    // if(responseSpecificQuestions) {
       
-      await responseSpecificQuestions.data.list.map( (item) => {
-            if (item.is_enabled) {
-              this.specificQuestions.push(item)
-              this.$store.commit("$SETQTDEESPECIFICAS"); 
-            }
-      })
+    //   await responseSpecificQuestions.data.list.map( (item) => {
+    //         if (item.is_enabled) {
+    //           this.specificQuestions.push(item)
+    //           this.$store.commit("$SETQTDEESPECIFICAS"); 
+    //         }
+    //   })
       
-    }
+    // }
 
   },
 
