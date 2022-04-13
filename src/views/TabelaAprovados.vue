@@ -1,5 +1,5 @@
 <template>
-  <fieldset className="tableContent">
+  <fieldset className="tableContent" v-if="isOp === true">
     <legend>Análise de Startup - Aprovadas</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
@@ -33,9 +33,11 @@
     </table>
   </fieldset>
 
-  <!-- <fieldset class="tableContent"  v-else>
-      <h2 class="legenda-warning">Não há Startups Aprovadas para serem listadas<br/><span>Verifique a tabela xxxxxxx</span></h2>
-    </fieldset> -->
+  <fieldset class="tableContent"  v-else>
+      <h2 class="legenda-warning">Não há Startups para serem listadas<br/><button @click="() => this.$router.push({ name: 'Startup' })" class="btn-back">Voltar</button></h2>
+  </fieldset>
+
+
 </template>
 
 <script>
@@ -64,7 +66,7 @@ export default {
 
     verifyOP: async function (list_op){
       console.log(list_op);
-      if(list_op === 0){
+      if(list_op == 0){
         return false
       }else {
         return true
@@ -77,7 +79,6 @@ export default {
     const listCount = await http.listCountOfStartupsByStatus()
     this.listAproveds = listCount.data.reportStartups.approved
     this.isOp = await this.verifyOP(this.listAproveds.length)
-    console.log(this.isOp);
     this.$store.commit("$SETISLOADING");
   },
 
@@ -86,7 +87,7 @@ export default {
     return {
       listAproveds: [],
       modalNovaOp:false,
-      isOp: true,
+      isOp: false,
     };
   },
 };
@@ -217,6 +218,19 @@ table td {
   font-weight: bold;
   border: none;
   font-weight: 300px;
+}
+
+.btn-back {
+  margin-top: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--main_primaryWhite);
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  width: 90px;
+  background-color: var(--card_green);;
 }
 
 .startup-opened,

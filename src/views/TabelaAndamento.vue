@@ -1,5 +1,5 @@
 <template>
-  <fieldset className="tableContent">
+  <fieldset className="tableContent" v-if="isOp === true">
     <legend>Análise de Startup - Em Andamento</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
@@ -36,6 +36,12 @@
       </tbody>
     </table>
   </fieldset>
+
+  <fieldset class="tableContent"  v-else>
+      <h2 class="legenda-warning">Não há Startups para serem listadas<br/><button @click="() => this.$router.push({ name: 'Startup' })" class="btn-back">Voltar</button></h2>
+  </fieldset>
+
+
 </template>
 
 <script>
@@ -45,6 +51,15 @@ export default {
   name: "Table",
 
   methods: {
+    verifyOP: async function (list_op){
+      console.log(list_op);
+      if(list_op == 0){
+        return false
+      }else {
+        return true
+      }
+    },
+
   formatDate(date) {
       date = date.slice(0, -14);
       this.year = date.slice(0, -6)
@@ -57,18 +72,51 @@ export default {
     this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus()
     this.listConditional = listCount.data.reportStartups.conditional
+    this.isOp = await this.verifyOP(this.listConditional.length)
     this.$store.commit("$SETISLOADING");
   },
 
   data() {
     return {
       listConditional: [],
+      isOp: false,
     };
   },
 };
 </script>
 
 <style scoped>
+
+.legenda-warning {
+  font-size: 25px;
+  text-align: center;
+  width: 100%;
+  border-radius: 10px;
+  color: var(--card_red);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.legenda-warning span {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.btn-back {
+  margin-top: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--main_primaryWhite);
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  width: 90px;
+  background-color: var(--card_green);;
+}
+
+
+
 .tableContent {
   position: relative;
   width: 100%;

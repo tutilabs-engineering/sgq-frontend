@@ -1,5 +1,5 @@
 <template>
-  <fieldset className="tableContent">
+  <fieldset className="tableContent" v-if="isOp === true">
     <legend>Análise de Startup - Reprovadas</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
@@ -32,6 +32,12 @@
       </tbody>
     </table>
   </fieldset>
+
+  <fieldset class="tableContent"  v-else>
+      <h2 class="legenda-warning">Não há Startups para serem listadas<br/><button @click="() => this.$router.push({ name: 'Startup' })" class="btn-back">Voltar</button></h2>
+  </fieldset>
+
+
 </template>
 
 <script>
@@ -42,7 +48,8 @@ export default {
   props: ["titleTable", "iconeAdicionar", "iconeFile", "iconeEdit"],
   data() {
     return {
-      listDisapproved: []
+      listDisapproved: [],
+      isOp: false,
     };
   },
 
@@ -54,19 +61,49 @@ export default {
       this.day = date.slice(-2)
       return date = `${this.day}/${this.month}/${this.year}`
     },
+
+    verifyOP: async function (list_op){
+      console.log(list_op);
+      if(list_op == 0){
+        return false
+      }else {
+        return true
+      }
+    },
+
   },
 
   created: async function() {
     this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus()
     this.listDisapproved = listCount.data.reportStartups.disapproved
+    this.isOp = await this.verifyOP(this.listDisapproved.length)
     this.$store.commit("$SETISLOADING");
+    
   },
 
 };
 </script>
 
 <style scoped>
+
+.legenda-warning {
+  font-size: 25px;
+  text-align: center;
+  width: 100%;
+  border-radius: 10px;
+  color: var(--card_red);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.legenda-warning span {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+
+
 .tableContent {
   position: relative;
   width: 100%;
@@ -173,6 +210,19 @@ table td {
 .btn_visualizar, .fa-eye {
   font-size: 20px;
   color: var(--main_primaryWhite);
+}
+
+.btn-back {
+  margin-top: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--main_primaryWhite);
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  width: 90px;
+  background-color: var(--card_green);;
 }
 
 @media (max-width: 960px) {
