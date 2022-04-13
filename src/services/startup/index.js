@@ -20,5 +20,9 @@ export default {
 
   listCountOfStartupsByStatus: async () => {
     return http.get(`/reportStartup/management/count`)
+  },
+
+  findReportStartupById: async (id) => {
+    return http.get(`/reportStartup/${id}`)
   }
 }

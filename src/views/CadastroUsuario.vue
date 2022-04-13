@@ -94,6 +94,7 @@ export default {
         cpf: "",
         register: "",
         fk_role: "",
+        fk_unity: "1",
       },
       options: [
         { text: "Escolha", value: "" },
