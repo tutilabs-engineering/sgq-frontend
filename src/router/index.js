@@ -194,6 +194,13 @@ const routes = [
   },
 
   {
+    path: '/create-startup-by-id',
+    name: 'NovaStartupById',
+    component: () => import('../views/NovaStartupById.vue'),
+    beforeEnter: Auth
+  },
+
+  {
     path: '/cadastroUsuario',
     name: 'CadastroUsuario',
     component: () => import('../views/CadastroUsuario.vue'),

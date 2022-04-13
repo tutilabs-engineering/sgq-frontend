@@ -1,11 +1,10 @@
 <template>
-  <fieldset className="tableContent">
+  <fieldset className="tableContent" v-if="isOp === true">
     <legend>Análise de Startup - Em Andamento</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
-        <th>Cód.Startup</th>
-        <th>Produtos</th>
-        <th>Cliente</th>
+        <th>Cod. OP</th>
+        <th>Cod. Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
         <th>Inspetor</th>
@@ -13,14 +12,13 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in itemsFechados" :key="item.id">
+        <tr v-for="item in listConditional" :key="item.id">
           <td style="display: none"></td>
-          <td data-title="Codigo">{{ item.codigo }}</td>
-          <td data-title="Produto">{{ item.produto }}</td>
-          <td data-title="Cliente">{{ item.cliente }}</td>
-          <td data-title="Maquina">{{ item.maquina }}</td>
-          <td data-title="Data">{{ item.data }}</td>
-          <td data-title="Inspetor">{{ item.inspetor }}</td>
+           <td data-title="Cod.OP">{{ item.op.code_product }}</td>
+          <td data-title="Cod. Cliente">{{ item.op.code_client }}</td>
+          <td data-title="Maquina">{{ item.op.machine }}</td>
+          <td data-title="Data">{{ formatDate(item.day) }}</td>
+          <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
               <i class="fas fa-ellipsis-h"></i>
@@ -38,78 +36,87 @@
       </tbody>
     </table>
   </fieldset>
+
+  <fieldset class="tableContent"  v-else>
+      <h2 class="legenda-warning">Não há Startups para serem listadas<br/><button @click="() => this.$router.push({ name: 'Startup' })" class="btn-back">Voltar</button></h2>
+  </fieldset>
+
+
 </template>
 
 <script>
+import http from "../services/startup/"
 export default {
   setup() {},
   name: "Table",
+
+  methods: {
+    verifyOP: async function (list_op){
+      console.log(list_op);
+      if(list_op == 0){
+        return false
+      }else {
+        return true
+      }
+    },
+
+  formatDate(date) {
+      date = date.slice(0, -14);
+      this.year = date.slice(0, -6)
+      this.month = date.slice(5, -3)
+      this.day = date.slice(-2)
+      return date = `${this.day}/${this.month}/${this.year}`
+    },
+  },
+    created: async function() {
+    this.$store.commit("$SETISLOADING");
+    const listCount = await http.listCountOfStartupsByStatus()
+    this.listConditional = listCount.data.reportStartups.conditional
+    this.isOp = await this.verifyOP(this.listConditional.length)
+    this.$store.commit("$SETISLOADING");
+  },
+
   data() {
     return {
-      itemsAbertos: [
-        {
-          id: 1,
-          produto: "produto D",
-          codigo: "521",
-          cliente: "Honda",
-          maquina: "Injetora",
-          data: "22-03-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 2,
-          produto: "produto E",
-          codigo: "523",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "23-03-2022",
-          inspetor: "Renato",
-        },
-        {
-          id: 3,
-          produto: "produto F",
-          codigo: "242",
-          cliente: "Tutu",
-          maquina: "Injetora",
-          data: "24-03-2022",
-          inspetor: "Guilherme",
-        },
-      ],
-      itemsFechados: [
-        {
-          id: 1,
-          produto: "produto A",
-          codigo: "241",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "21-02-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 2,
-          produto: "produto B",
-          codigo: "598",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "21-03-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 3,
-          produto: "produto C",
-          codigo: "242",
-          cliente: "Tutu",
-          maquina: "Injetora",
-          data: "22-01-2022",
-          inspetor: "Guilherme",
-        },
-      ],
+      listConditional: [],
+      isOp: false,
     };
   },
 };
 </script>
 
 <style scoped>
+
+.legenda-warning {
+  font-size: 25px;
+  text-align: center;
+  width: 100%;
+  border-radius: 10px;
+  color: var(--card_red);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.legenda-warning span {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.btn-back {
+  margin-top: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--main_primaryWhite);
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  width: 90px;
+  background-color: var(--card_green);;
+}
+
+
+
 .tableContent {
   position: relative;
   width: 100%;

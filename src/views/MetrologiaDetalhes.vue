@@ -24,6 +24,16 @@
         <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="opById.header.client" disabled> 
       </div>
 
+      <div class="input">
+        <label for="client">Técnico Agregado</label>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="opById.header.user.name" disabled> 
+      </div>
+
+      <div class="input">
+        <label for="client">Horário Inicial</label>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="formatDate(opById.header.user.startDate)" disabled> 
+      </div>
+
      </fieldset>
  <form>
      <fieldset>
@@ -65,12 +75,24 @@ export default {
       
        const id = this.$route.query.id
        await http.FindMetrologyById(id).then( (res) => {
+        
         this.opById = res.data.list
+        console.log(this.opById);
       })
       
      
     },
     methods : {
+
+    formatDate(date) {
+      date = date.slice(0, -14);
+      this.year = date.slice(0, -6)
+      this.month = date.slice(5, -3)
+      this.day = date.slice(-2)
+      return date = `${this.day}/${this.month}/${this.year}`
+    },
+
+
       captureDataFromVariables(val){
         // Capture data in table details metrology to salve(this.$emit)
          this.dataVariables = val

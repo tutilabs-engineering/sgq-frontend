@@ -151,12 +151,19 @@ export default {
       statusTable: true,
     };
   },
+
+  
+
+
   created: async function() {
+    
+    this.$store.commit("$SETISLOADING");
     const allStartups = await http.listAllStartups()
     let openedStartups = [];
     let closedStartups = [];
     allStartups.data.forEach((startup) => {
       startup.day = startup.day.split("T")[0]
+      startup.day = this.formatDate(startup.day)
       startup.start_time = startup.start_time.split("T")[1].split(".")[0]
       if(startup.open === true) {
         openedStartups.push(startup)
@@ -166,11 +173,21 @@ export default {
     });
     this.itemsAbertos = openedStartups
     this.itemsFechados = closedStartups
+
+    this.$store.commit("$SETISLOADING");
   },
   methods: {
     OpenReportStartup: function(id_startup) {
-      this.$router.push({path: "/create-startup", query: {id: id_startup}})
-    }
+      this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})
+    },
+
+    formatDate(date) {
+      console.log(date);
+      this.year = date.slice(0, -6)
+      this.month = date.slice(5, -3)
+      this.day = date.slice(-2)
+      return date = `${this.day}/${this.month}/${this.year}`
+    },
   }
 };
 </script>

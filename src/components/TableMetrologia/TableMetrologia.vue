@@ -135,15 +135,16 @@ export default {
   created: async function() {
     this.$store.commit("$SETISLOADING");
     // this.user_id = dataUser().user.id
-         await userId.DataUser().then((res)=>{
-           this.user_id = res.data.user.id
-         })
-
+         
         //Lista histórico de Metrologia
         this.listMetrologyHistory()
 
         //Lista solictações
         this.listMetrologySolicitations()
+
+        await userId.DataUser().then((res)=>{
+           this.user_id = res.data.user.id
+         })
     this.$store.commit("$SETISLOADING");
   },
 
@@ -157,21 +158,17 @@ export default {
     },
 
     listMetrologyHistory: async function(){
-      this.$store.commit("$SETISLOADING");
       await http.ListMetrologyHistory().then( (res) => {
                 this.metrologyHistoryList = res.data.list
                 console.log(this.metrologyHistoryList)
       })
-      this.$store.commit("$SETISLOADING");
     },
 
     listMetrologySolicitations: async function(){
-      this.$store.commit("$SETISLOADING");
       await http.ListMetrologySolicitations().then( (res) => {
                 this.metrologySolicitationsList = res.data.list
                 console.log(this.metrologyHistoryList)
       })
-      this.$store.commit("$SETISLOADING");
     },
 
     ingressar: async function(fk_startup){
