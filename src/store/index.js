@@ -16,7 +16,7 @@ export default createStore({
       code_op: "",
       user_id: "",
       header: {
-        client: "",
+          client: "",
           code_client: "",
           code_product: "",
           desc_product: "",
