@@ -1,5 +1,5 @@
 <template>
-  <div class="content-novaStartup">
+  <div class="content-novaStartup" v-if="!isFilled">
     <StartupCadastroPreenchido @returnCodeOp="ReturnCodeOp" :headerPreenchida="headerPreenchida"/>
     <TableCavidadePreenchido :techniqueInfo="techniqueInfo" />
     <TableComponentesPreenchido :componentsInfo="componentsInfo"/>
@@ -7,6 +7,12 @@
     <ListaPerguntasPreenchida :id_startup="id_startup" :qtdeCavidade="techniqueInfo.cavity" :code_product="data_startup.op.code_product"/>
     
     <BtnStartupCreate @returnFillStatus="changedShowQuestions" />
+  </div>
+
+  <div class="content-novaStartup"  v-else>
+    <StartupCadastroPreenchido @returnCodeOp="ReturnCodeOp" :headerPreenchida="headerPreenchida"/>
+    <TableCavidadePreenchido :techniqueInfo="techniqueInfo" />
+    <TableComponentesPreenchido :componentsInfo="componentsInfo"/>
   </div>
 </template>
 
@@ -46,6 +52,7 @@ export default {
         user_id: ""
       },
   
+      isFilled: false,
       data_startup: {},
 
       componentsInfo: [],
@@ -77,11 +84,12 @@ export default {
        this.headerPreenchida.day = this.data_startup.day
        this.headerPreenchida.start_time = this.data_startup.created_at
 
-       
-      this.techniqueInfo.cavity = this.data_startup.op.cavity;
-      this.techniqueInfo.cycle = this.data_startup.op.cycle;
+       this.techniqueInfo.cavity = this.data_startup.op.cavity;
+       this.techniqueInfo.cycle = this.data_startup.op.cycle;
 
-      this.componentsInfo = this.data_startup.op.components
+       this.componentsInfo = this.data_startup.op.components
+
+       this.isFilled = this.data_startup.filled
 
      })
 

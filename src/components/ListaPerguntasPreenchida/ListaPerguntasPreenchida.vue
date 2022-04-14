@@ -15,7 +15,7 @@
       </div>
     </fieldset>
 
-    <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
+  <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
       <legend class="legenda-warning">Não há Perguntas Especificas para este Produto<br/><span>Verifique a tabela de análise</span></legend>
     </fieldset>
 
@@ -75,42 +75,27 @@ export default {
     UploadImage,
   },
   created: async function () {
-    // Lista de perguntas especificas
+    this.$store.commit("$SETISLOADING");
+
     await http.findReportStartupById(this.id_startup).then( (res) => {
       this.specificQuestions = res.data.specific_questions_in_product
     })
 
-
-
     const responseDefaultQuestions = await http.listAllDefaultQuestions();
     this.defaultQuestions = responseDefaultQuestions.data.defaultQuestions;
 
-
-    // console.log("aaaaaaaaaaaa", this.code_product);
-    // const responseSpecificQuestions = await httpAttributes.FindAttributesByCodeProduct(this.code_product);
-
-    // if(responseSpecificQuestions) {
-      
-    //   await responseSpecificQuestions.data.list.map( (item) => {
-    //         if (item.is_enabled) {
-    //           this.specificQuestions.push(item)
-    //           this.$store.commit("$SETQTDEESPECIFICAS"); 
-    //         }
-    //   })
-      
-    // }
-
+    this.$store.commit("$SETISLOADING");
   },
 
   methods: {
-    ReturnAnswered: async function(answered){
+    ReturnAnswered: async function(){
       this.$store.commit("$SETQTDEPERGUNTASPADROES"); 
-      console.log(answered)
+    
     },
 
-    ReturnSpecificAnswered: async function(specificAnswered){
+    ReturnSpecificAnswered: async function(){
       this.$store.commit("$SETQTDEPERGUNTASESPECIFICAS");
-      console.log(specificAnswered)
+   
     }
 
   },
