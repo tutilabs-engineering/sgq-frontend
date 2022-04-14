@@ -1,22 +1,23 @@
 <template>
-  <div class="question"  v-for="(defaultQuestion,index) in defaultQuestions"  :key="defaultQuestion.id">
+<div v-for="(defaultQuestion,index) in defaultQuestions"  :key="defaultQuestion.fk_default_question">
+  <div class="question"  >
     <fieldset>
       <div class="first-row">
 
-        <div v-if="valueQuestion == 0">
+        <div v-if="defaultQuestion.status == 0">
           <i class="far fa-circle" aria-hidden="true"></i>
         </div>
 
-        <div v-if="valueQuestion == 1">
+        <div v-if="defaultQuestion.status == 1">
           <i class="fa fa-check-circle" aria-hidden="true"></i>
         </div>
-        <div v-if="valueQuestion == 2">
+        <div v-if="defaultQuestion.status == 2">
           <i class="fa fa-times-circle"></i>
         </div>
-        <div v-if="valueQuestion == 3">
+        <div v-if="defaultQuestion.status == 3">
           <i class="fa fa-exclamation-circle"></i>
         </div>
-        <div v-if="valueQuestion == 4">
+        <div v-if="defaultQuestion.status == 4">
           <i class="fa fa-check-circle fa-blue" aria-hidden="true"></i>
         </div>
 
@@ -49,15 +50,14 @@
           <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP"  value="4" @change="changeIcon(4)" @click="isAnswerd"/>
           <label for="Ap">GM</label>
         </div>
-        <label for="file" class="labelFile">Enviar Arquivo</label>
+        <label :for="defaultQuestion.fk_default_question" class="labelFile">Enviar Arquivo</label>
      
-       {{defaultQuestion.file}}
-        <input type="file" name="file" id="file" class="input_file" @change="addFile($event,index)"/>
-       {{index}}   
+  
+        <input type="file" :name="defaultQuestion.fk_default_question" :id="defaultQuestion.fk_default_question" class="input_file" @change="addFile($event,index)" />
       </div>
       
     </fieldset>
-
+   </div>
   </div>
 </template>
 
@@ -79,9 +79,8 @@ export default {
       
     },
      addFile(event,index){
-      console.log( index)
       // eslint-disable-next-line vue/no-mutating-props
-      // this.defaultQuestions[index].file = event.target.files[0] 
+      this.defaultQuestions[index].file = event.target.files[0] 
    
     }
   },
@@ -92,7 +91,7 @@ export default {
       immediate:true,
       handler(newvalue){
          this.$emit("returnAnswered", newvalue)
-         console.log(newvalue);
+      
       }
     }
   },
