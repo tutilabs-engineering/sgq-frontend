@@ -17,6 +17,9 @@ export default {
   createNewStartup: async (data) => {
     return http.post(`/reportStartup/`, data)
   },
+  fillReportStartup: async (id_startup,data) => {
+    return http.post(`/reportStartup/fill/${id_startup}`, data)
+  },
 
   listCountOfStartupsByStatus: async () => {
     return http.get(`/reportStartup/management/count`)

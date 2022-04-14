@@ -1,5 +1,5 @@
 <template>
-  <div class="question">
+  <div class="question"  v-for="(defaultQuestion,index) in defaultQuestions"  :key="defaultQuestion.id">
     <fieldset>
       <div class="first-row">
 
@@ -20,48 +20,53 @@
           <i class="fa fa-check-circle fa-blue" aria-hidden="true"></i>
         </div>
 
-        <label for="res">{{ description }}</label>
+        <label for="res">{{ defaultQuestion.title }}</label>
       </div>
 
       <div class="second-row">
-        <input type="text" placeholder="Aguardando Resposta" />
+        <input type="text" v-model="defaultQuestion.description" placeholder="Aguardando Resposta" />
       </div>
 
       <div class="third-row">
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP" @change="changeIcon(1)" @click="isAnswerd"/>
+          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP" value="1" @change="changeIcon(1)" @click="isAnswerd"/>
           <label for="Ap">C</label>
         </div>
 
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(2)" @click="isAnswerd"/>
+          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP"  value="2" @change="changeIcon(2)" @click="isAnswerd"/>
           <label for="Ap">NC</label>
         </div>
 
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(3)" @click="isAnswerd"/>
+          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP"  value="3" @change="changeIcon(3)" @click="isAnswerd"/>
           <label for="Ap">NA</label>
         </div>
       </div>
 
       <div class="fourth-row">
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(4)" @click="isAnswerd"/>
+          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP"  value="4" @change="changeIcon(4)" @click="isAnswerd"/>
           <label for="Ap">GM</label>
         </div>
         <label for="file" class="labelFile">Enviar Arquivo</label>
-        <input type="file" name="file" id="file" class="input_file" />
+     
+       {{defaultQuestion.file}}
+        <input type="file" name="file" id="file" class="input_file" @change="addFile($event,index)"/>
+       {{index}}   
       </div>
       
     </fieldset>
+
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    description: String,
-    idQuestion: String,
+    defaultQuestions: Array,
+  idQuestion: String,
+
   },
 
   methods: {
@@ -72,12 +77,23 @@ export default {
     isAnswerd(){
       this.answered = true
       
+    },
+     addFile(event,index){
+      console.log( index)
+      // eslint-disable-next-line vue/no-mutating-props
+      // this.defaultQuestions[index].file = event.target.files[0] 
+   
     }
   },
 
   watch: {
-    answered(newValor) {
-      this.$emit("returnAnswered", newValor)
+    defaultQuestions : {
+      deep:true,
+      immediate:true,
+      handler(newvalue){
+         this.$emit("returnAnswered", newvalue)
+         console.log(newvalue);
+      }
     }
   },
 
@@ -88,7 +104,8 @@ export default {
       response: {
         id: this.idQuestion,
 
-      }
+      },
+
     };
   },
 };

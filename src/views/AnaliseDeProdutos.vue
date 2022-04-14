@@ -203,8 +203,6 @@ table td {
     
   }
 
-  
-
   .tableContent td:first-of-type {
     font-weight: bold;
     font-size: 1.2rem;

@@ -2,19 +2,16 @@
   <div class="content-questions">
     <fieldset class="content-tablePerguntas">
       <legend class="legenda">Perguntas Padrões</legend>
-      <div
-        class="defaultQuestion"
-        v-for="defaultQuestion in defaultQuestions"
-        :key="defaultQuestion.id"
-      >
+   
         <PerguntaPadrao
-          :description="defaultQuestion.description"
-          :idQuestion="defaultQuestion.id"
-          @returnAnswered="ReturnAnswered"
+          :defaultQuestions="defaultQuestions"
+        
         />
-      </div>
-    </fieldset>
+     
 
+
+    </fieldset>
+   {{defaultQuestionsResp }}
   <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
       <legend class="legenda-warning">Não há Perguntas Especificas para este Produto<br/><span>Verifique a tabela de análise</span></legend>
     </fieldset>
@@ -54,10 +51,11 @@ export default {
     return {
       defaultQuestions: [],
       specificQuestions: [],
-
+      
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
       // id_startup: this.id_startup
+      defaultQuestionsResp : [],
     };
 
     
@@ -83,19 +81,23 @@ export default {
 
     const responseDefaultQuestions = await http.listAllDefaultQuestions();
     this.defaultQuestions = responseDefaultQuestions.data.defaultQuestions;
-
+    this.defaultQuestions = this.defaultQuestions.map((item) => {
+      return { fk_default_question:item.id, title: item.description, description:'',status:0,file: '' }
+    })
+    
     this.$store.commit("$SETISLOADING");
   },
 
   methods: {
     ReturnAnswered: async function(){
-      this.$store.commit("$SETQTDEPERGUNTASPADROES"); 
+   
     
     },
 
-    ReturnSpecificAnswered: async function(){
+
+    ReturnSpecificAnswered: async function(specificAnswered){
       this.$store.commit("$SETQTDEPERGUNTASESPECIFICAS");
-   
+      console.log(specificAnswered)
     }
 
   },

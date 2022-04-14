@@ -90,6 +90,7 @@ export default {
        this.componentsInfo = this.data_startup.op.components
 
        this.isFilled = this.data_startup.filled
+       console.log(this.isFilled);
 
      })
 
