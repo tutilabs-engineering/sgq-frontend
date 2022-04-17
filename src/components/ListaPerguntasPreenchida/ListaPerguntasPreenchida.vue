@@ -3,10 +3,7 @@
     <fieldset class="content-tablePerguntas">
       <legend class="legenda">Perguntas Padrões</legend>
    
-        <PerguntaPadrao
-          :defaultQuestions="defaultQuestions"
-        
-        />
+        <PerguntaPadrao :defaultQuestions="defaultQuestions" @returnAnswered="getAnswered"    />
     </fieldset>
     
   <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
@@ -17,7 +14,7 @@
       <legend class="legenda">Tabela de Análise</legend>
 
    
-        <PerguntaAnalise :specificQuestions="specificQuestions"   />
+        <PerguntaAnalise :specificQuestions="specificQuestions" @returnSpecificAnswered="getSpecificAnswered"  />
    
       
     </fieldset>
@@ -27,9 +24,9 @@
     </fieldset>
 
     <fieldset class="content-imgs">
-      <UploadImage :id="1" />
-      <UploadImage :id="2" />
-      <UploadImage :id="3" />
+      <UploadImage :id="1" @setImage="getImg_1" />
+      <UploadImage :id="2" @setImage="getImg_2"/>
+      <UploadImage :id="3" @setImage="getImg_3"/>
     </fieldset>
   </div>
 </template>
@@ -52,6 +49,7 @@ export default {
       qtdePerguntas: [],
       // id_startup: this.id_startup
       defaultQuestionsResp : [],
+      specificQuestionsResp: [],
     };
 
     
@@ -95,14 +93,25 @@ export default {
   },
 
   methods: {
-    ReturnAnswered: async function(res){
-     this.defaultQuestionsResp = res
+
+
+    getSpecificAnswered: async function(specificAnswered){
+          this.$store.commit("$SETDATAFILLSTARTUP",{ specific_questions : specificAnswered})
+      console.log(specificAnswered)
     },
 
+    getAnswered: async function(res){
+     this.$store.commit("$SETDATAFILLSTARTUP",{ default_question : res})
+    },
+    getImg_1:async function(res){
+      this.$store.commit("$SETDATAFILLSTARTUP",{ img_1 : res})
+    },
+    getImg_2:async function(res){
+      this.$store.commit("$SETDATAFILLSTARTUP",{ img_2 : res})
+    },
+    getImg_3:async function(res){
+      this.$store.commit("$SETDATAFILLSTARTUP",{ img_3 : res})
 
-    ReturnSpecificAnswered: async function(specificAnswered){
-      this.$store.commit("$SETQTDEPERGUNTASESPECIFICAS");
-      console.log(specificAnswered)
     }
 
   },

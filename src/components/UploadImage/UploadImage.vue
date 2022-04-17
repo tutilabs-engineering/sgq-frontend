@@ -42,6 +42,8 @@ export default {
       this.image = ""
       this.preview = this.imgDefault
       this.changeImgStatus()
+      this.$emit("setImage", null)
+    
     },
 
     previewImage: function(e) {
@@ -52,6 +54,7 @@ export default {
           this.preview = e.target.result;
         }
       this.image=imgInput.files[0];
+      this.$emit("setImage",imgInput.files[0])
       reader.readAsDataURL(this.image);
       this.changeImgStatus()
       }

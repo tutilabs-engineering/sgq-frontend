@@ -6,9 +6,14 @@
     
     <ListaPerguntasPreenchida :id_startup="id_startup" :qtdeCavidade="techniqueInfo.cavity" :code_product="data_startup.op.code_product"/>
     
-    <BtnStartupCreate @returnFillStatus="changedShowQuestions" />
+    <!-- <BtnStartupCreate @returnFillStatus="changedShowQuestions" /> -->
+   <div class="group-buttons">
+  <div class="btns-options">
+      <button class="btn-cancel btn">Cancelar</button>
+      <button class="btn-save btn" @click="saveFillReportStartup">Preencher</button>
   </div>
-
+  </div>
+  </div>
   <div class="content-novaStartup"  v-else>
     <StartupCadastroPreenchido @returnCodeOp="ReturnCodeOp" :headerPreenchida="headerPreenchida"/>
     <TableCavidadePreenchido :techniqueInfo="techniqueInfo" />
@@ -21,7 +26,7 @@ import TableCavidadePreenchido from "../components/TableCavidadePreenchido/Table
 import TableComponentesPreenchido from "../components/TableComponentesPreenchido/TableComponentesPreenchido.vue";
 import StartupCadastroPreenchido from "../components/StartupCadastroPreenchido/StartupCadastroPreenchido.vue";
 import ListaPerguntasPreenchida from "../components/ListaPerguntasPreenchida/ListaPerguntasPreenchida.vue";
-import BtnStartupCreate from "../components/BtnStartupCreate/BtnStartupCreate.vue";
+// import BtnStartupCreate from "../components/BtnStartupCreate/BtnStartupCreate.vue";
 
 import http from "../services/startup";
 
@@ -64,7 +69,7 @@ export default {
     TableCavidadePreenchido,
     TableComponentesPreenchido,
     ListaPerguntasPreenchida,
-    BtnStartupCreate,
+    // BtnStartupCreate,
   },
   created: async function() {
     this.$store.commit("$SETISLOADING");
@@ -97,6 +102,43 @@ export default {
      this.$store.commit("$SETISLOADING");
   },
   methods: {
+
+   async saveFillReportStartup(){
+    //
+     this.$store.commit("$SETISLOADING");
+
+    const data =  this.$store.getters.$GETDATAFILLREPORTSTARTUP
+    const form = new FormData()
+ 
+    data.default_question.map((item)=>{
+    if(item.file != null){
+      form.append(`${item.fk_default_question}`,item.file)
+            item.file = ""
+      }
+    })
+    
+    data.specific_questions.map((item)=>{
+      if(item.file != null){
+        form.append(`${item.fk_specific_question}`,item.file)
+        item.file = ""
+        }
+    })
+
+    form.append("img_1",data.img_1)
+    form.append("img_2",data.img_2)
+    form.append("img_3",data.img_3)
+    form.append("default_questions",JSON.stringify(data.default_question))
+    form.append("specific_questions",JSON.stringify(data.specific_questions))
+  
+   await http.fillReportStartup(this.id_startup,form).then((res)=>{
+     console.log(res);
+   }).catch((error)=>{
+     console.log(error.response);
+   })
+     this.$store.commit("$SETISLOADING");
+   
+   },
+
     changedShowQuestions(e) {
       this.showQuestions = e;
     },
@@ -172,4 +214,73 @@ export default {
 .content-novaStartup {
   width: 100%;
 }
+
+.group-buttons{
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+
+    .btns {
+        padding: 20px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr ;
+        grid-gap: 10px;
+    }
+
+    .btn-fill-save, .btns-options {
+        grid-column: 4;
+   
+    }
+
+    .btns-options {
+        display: flex;
+        gap: 10px;
+        /* justify-content: space-between; */
+    }
+
+    .btn-save, .btn-cancel {
+        width: 79%;
+    }
+
+    .btn {
+        height: 50px;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        color: var(--main_primaryWhite);
+    }
+
+    .btn-save {
+        background-color: var(--card_green);
+    }
+
+    .btn-fill-save {
+        background-color: var(--card_blue);
+    }
+
+    .btn-cancel {
+        background-color: var(--card_red);
+    }
+
+    @media (max-width: 48em){
+        .btns {
+            display: grid;
+            grid-template-columns: 1fr;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .btn-fill-save, .btns-options {
+            grid-column: 1;
+        }
+    }
+    
+
+
 </style>
