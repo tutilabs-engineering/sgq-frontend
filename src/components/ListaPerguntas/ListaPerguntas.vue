@@ -2,17 +2,21 @@
   <div class="content-questions">
     
     <fieldset class="content-tablePerguntas">
+
       <legend class="legenda">Perguntas Padrões</legend>
       
       <div
         class="defaultQuestion"
-        v-for="defaultQuestion in defaultQuestions"
-        :key="defaultQuestion.id"
+        v-for="data in datastartup"
+
+
+        :key="data.id"
       >
-        <PerguntaPadrao
-          :description="defaultQuestion.description"
-          :idQuestion="defaultQuestion.id"
-          @returnAnswered="ReturnAnswered"
+
+      {{data.title}}
+    
+        <PerguntaRespondida
+          :description="data.description" :title="data.title" :response="data.status"
         />
       </div>
     </fieldset>
@@ -36,7 +40,7 @@
     </fieldset> -->
 
     <fieldset class="content-imgs">
-      <UploadImage :id="1" :img="this.startupData.img_1"/>
+      <UploadImage :id="1" />
       <UploadImage :id="2" />
       <UploadImage :id="3" />
     </fieldset>
@@ -45,7 +49,7 @@
 
 <script>
 import PerguntaAnalise from "../PerguntaAnalise/PerguntaAnalise.vue";
-import PerguntaPadrao from "../PerguntaPadrao/PerguntaPadrao.vue";
+import PerguntaRespondida from "../PerguntaRespondida/PerguntaRespondida.vue";
 // import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
 import UploadImage from "../UploadImage/UploadImage.vue";
 import http from "../../services/startup/index";
@@ -58,7 +62,7 @@ export default {
       specificQuestions: [],
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
-      datastartip: this.startupData,
+      datastartup: this.startupData.report_startup_fill.default_questions_responses.default_questions,
     };
 
     
@@ -70,7 +74,7 @@ export default {
     startupData: Array,
   },
   components: {
-    PerguntaPadrao,
+    PerguntaRespondida,
     PerguntaAnalise,
     // TableQtdeCavidade,
     UploadImage,

@@ -13,7 +13,6 @@
     <fieldset class="content-tablePerguntas" v-else>
       <legend class="legenda">Tabela de Análise</legend>
 
-   
         <PerguntaAnalise :specificQuestions="specificQuestions" @returnSpecificAnswered="getSpecificAnswered"  />
    
       
