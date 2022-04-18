@@ -4,7 +4,7 @@
     <fieldset class="content-tablePerguntas">
 
       <legend class="legenda">Perguntas Padrões</legend>
-      
+<!--       
       <div
         class="defaultQuestion"
         v-for="data in datastartup"
@@ -18,7 +18,7 @@
         <PerguntaRespondida
           :description="data.description" :title="data.title" :response="data.status"
         />
-      </div>
+      </div> -->
     </fieldset>
 
     <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
@@ -49,7 +49,7 @@
 
 <script>
 import PerguntaAnalise from "../PerguntaAnalise/PerguntaAnalise.vue";
-import PerguntaRespondida from "../PerguntaRespondida/PerguntaRespondida.vue";
+// import PerguntaRespondida from "../PerguntaRespondida/PerguntaRespondida.vue";
 // import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
 import UploadImage from "../UploadImage/UploadImage.vue";
 import http from "../../services/startup/index";
@@ -74,7 +74,7 @@ export default {
     startupData: Array,
   },
   components: {
-    PerguntaRespondida,
+    // PerguntaRespondida,
     PerguntaAnalise,
     // TableQtdeCavidade,
     UploadImage,

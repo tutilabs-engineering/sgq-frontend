@@ -15,11 +15,12 @@
   </div>
   </div>
   <div class="content-novaStartup"  v-else>
+
     <StartupCadastroPreenchido @returnCodeOp="ReturnCodeOp" :headerPreenchida="headerPreenchida"/>
     <TableCavidadePreenchido :techniqueInfo="techniqueInfo" />
     <TableComponentesPreenchido :componentsInfo="componentsInfo"/>
 
-    <ListaPerguntas :startupData="data_startup" />
+    <!-- <ListaPerguntas :startupData="data_startup" /> -->
   </div>
 </template>
 
@@ -28,7 +29,7 @@ import TableCavidadePreenchido from "../components/TableCavidadePreenchido/Table
 import TableComponentesPreenchido from "../components/TableComponentesPreenchido/TableComponentesPreenchido.vue";
 import StartupCadastroPreenchido from "../components/StartupCadastroPreenchido/StartupCadastroPreenchido.vue";
 import ListaPerguntasPreenchida from "../components/ListaPerguntasPreenchida/ListaPerguntasPreenchida.vue";
-import ListaPerguntas from '../components/ListaPerguntas/ListaPerguntas.vue'
+// import ListaPerguntas from '../components/ListaPerguntas/ListaPerguntas.vue'
 // import BtnStartupCreate from "../components/BtnStartupCreate/BtnStartupCreate.vue";
 
 import http from "../services/startup";
@@ -74,10 +75,12 @@ export default {
     TableCavidadePreenchido,
     TableComponentesPreenchido,
     ListaPerguntasPreenchida,
-    ListaPerguntas,
+    // ListaPerguntas,
     // BtnStartupCreate,
   },
   created: async function() {
+
+    
     this.$store.commit("$SETISLOADING");
     console.log(this.itsCreation)
 
@@ -103,11 +106,21 @@ export default {
        this.isFilled = this.data_startup.filled
        console.log(this.isFilled);
 
-
+       
 
      })
 
+     
+
      this.$store.commit("$SETISLOADING");
+
+     if(this.isFilled) {
+         
+        this.$router.push({ name: 'EmConstrucao' })
+        
+       }
+
+     
   },
   methods: {
 
