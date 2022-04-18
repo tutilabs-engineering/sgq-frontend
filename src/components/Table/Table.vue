@@ -1,5 +1,6 @@
 <template>
   <fieldset className="tableContent">
+    
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
@@ -29,28 +30,30 @@
 
       <thead>
         <th>Código</th>
-        <th>Produtos</th>
+        <th>Produto</th>
         <th>Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
-        <th>Inspetor</th>
+        <th>Hora</th>
+        <th>Criador</th>
         <th>Opções</th>
       </thead>
 
       <tbody>
         <tr v-for="item in itemsAbertos" :key="item.id">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="Código">{{ item.codigo }}</td>
-          <td data-title="Produto">{{ item.produto }}</td>
-          <td data-title="Cliente">{{ item.cliente }}</td>
-          <td data-title="Maquina">{{ item.maquina }}</td>
-          <td data-title="Data">{{ item.data }}</td>
-          <td data-title="Inspetor">{{ item.inspetor }}</td>
+          <td class="codeStartup" data-title="Código">{{ item.code_startup }}</td>
+          <td data-title="Produto">{{ item.op.code_product }}</td>
+          <td data-title="Cliente">{{ item.op.code_client }}</td>
+          <td data-title="Maquina">{{ item.op.machine }}</td>
+          <td data-title="Data">{{ item.day }}</td>
+          <td data-title="Hora">{{ item.start_time }}</td>
+          <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
               <i class="fas fa-ellipsis-h"></i>
               <div class="dropdown-content">
-                <button className="btnOpcoes">
+                <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
                   <i class="fas fa-edit"></i>
                 </button>
                 <button className="btnOpcoes">
@@ -94,23 +97,25 @@
       </thead>
       <thead>
         <th>Código</th>
-        <th>Produtos</th>
+        <th>Produto</th>
         <th>Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
-        <th>Inspetor</th>
+        <th>Hora</th>
+        <th>Criador</th>
         <th>Opções</th>
       </thead>
 
       <tbody>
         <tr v-for="item in itemsFechados" :key="item.id">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="Código">{{ item.codigo }}</td>
-          <td data-title="Produto">{{ item.produto }}</td>
-          <td data-title="Cliente">{{ item.cliente }}</td>
-          <td data-title="Maquina">{{ item.maquina }}</td>
-          <td data-title="Data">{{ item.data }}</td>
-          <td data-title="Inspetor">{{ item.inspetor }}</td>
+          <td class="codeStartup" data-title="Código">{{ item.code_startup }}</td>
+          <td data-title="Produto">{{ item.op.code_product }}</td>
+          <td data-title="Cliente">{{ item.op.code_client }}</td>
+          <td data-title="Maquina">{{ item.op.machine }}</td>
+          <td data-title="Data">{{ item.day }}</td>
+          <td data-title="Hora">{{ item.start_time }}</td>
+          <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
               <i class="fas fa-ellipsis-h"></i>
@@ -134,72 +139,57 @@
 </template>
 
 <script>
+
+import http from "../../services/startup/"
+
 export default {
   setup() {},
   name: "Table",
   data() {
     return {
-      itemsAbertos: [
-        {
-          id: 1,
-          produto: "produto D",
-          codigo: "521",
-          cliente: "Honda",
-          maquina: "Injetora",
-          data: "22-03-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 2,
-          produto: "produto E",
-          codigo: "523",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "23-03-2022",
-          inspetor: "Renato",
-        },
-        {
-          id: 3,
-          produto: "produto F",
-          codigo: "242",
-          cliente: "Tutu",
-          maquina: "Injetora",
-          data: "24-03-2022",
-          inspetor: "Guilherme",
-        },
-      ],
-      itemsFechados: [
-        {
-          id: 1,
-          produto: "produto A",
-          codigo: "241",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "21-02-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 2,
-          produto: "produto B",
-          codigo: "598",
-          cliente: "Yamaha",
-          maquina: "Injetora",
-          data: "21-03-2022",
-          inspetor: "Jorge",
-        },
-        {
-          id: 3,
-          produto: "produto C",
-          codigo: "242",
-          cliente: "Tutu",
-          maquina: "Injetora",
-          data: "22-01-2022",
-          inspetor: "Guilherme",
-        },
-      ],
+      itemsAbertos: Array,
+      itemsFechados: Array,
       statusTable: true,
     };
   },
+
+  
+
+
+  created: async function() {
+    
+    this.$store.commit("$SETISLOADING");
+    const allStartups = await http.listAllStartups()
+    let openedStartups = [];
+    let closedStartups = [];
+    allStartups.data.forEach((startup) => {
+      startup.day = startup.day.split("T")[0]
+      startup.day = this.formatDate(startup.day)
+      startup.start_time = startup.start_time.split("T")[1].split(".")[0]
+      if(startup.open === true) {
+        openedStartups.push(startup)
+      }else {
+        closedStartups.push(startup)
+      }
+    });
+    this.itemsAbertos = openedStartups
+    this.itemsFechados = closedStartups
+
+    this.$store.commit("$SETISLOADING");
+  },
+  methods: {
+    OpenReportStartup: function(id_startup) {
+      this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})
+    },
+
+    formatDate(date) {
+      console.log(date);
+      this.year = date.slice(0, -6)
+      this.month = date.slice(5, -3)
+      this.day = date.slice(-2)
+      return date = `${this.day}/${this.month}/${this.year}`
+    },
+  }
 };
 </script>
 
@@ -382,17 +372,12 @@ table td {
     content: attr(data-title);
     display: block;
     font-weight: bold;
-    
   }
 
   .lastTd {
-    border-bottom: 1px solid var(--green_text);
+    border-bottom: 1.6px solid var(--card_green);
   }
 
 
-  .codeStartup {
-    font-weight: 600;
-    font-size: 20px;
-  }
 }
 </style>

@@ -1,60 +1,63 @@
 <template>
-  <div class="question">
+<div v-for="(specificQuestion, index) in specificQuestionsFormat" :key="specificQuestion.fk_specific_question">
+
+  <div class="question" v-show="specificQuestion.is_enabled" >
     <fieldset v-bind:class="classCard">
 
       <div class="first-row">
 
-        <div v-if="valueQuestion == 0">
+        <div v-if="specificQuestion.status == 0">
           <i class="far fa-circle" aria-hidden="true"></i>
         </div>
 
-        <div v-if="valueQuestion == 1">
+        <div v-if="specificQuestion.status == 1">
           <i class="fa fa-check-circle" aria-hidden="true"></i>
         </div>
-        <div v-if="valueQuestion == 2">
+        <div v-if="specificQuestion.status == 2">
           <i class="fa fa-times-circle"></i>
         </div>
-        <div v-if="valueQuestion == 3">
+        <div v-if="specificQuestion.status == 3">
           <i class="fa fa-exclamation-circle"></i>
         </div>
-        <div v-if="valueQuestion == 4">
+        <div v-if="specificQuestion.status == 4">
           <i class="fa fa-check-circle fa-blue" aria-hidden="true"></i>
         </div>
 
-        <label for="res">{{ description }}</label>
+        <label for="res">{{ specificQuestion.question }}</label>
       </div>
 
       <div class="second-row">
-        <input type="text" placeholder="Aguardando Resposta" />
+        <input type="text" v-model="specificQuestion.description" placeholder="Aguardando Resposta" />
       </div>
 
       <div class="third-row">
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP" @change="changeIcon(1)" @click="isSpecificAnswerd"/>
+          <input type="radio" :name="specificQuestion.status" v-model="specificQuestion.status" :value="1" id="AP" @change="changeIcon(1)" @click="isSpecificAnswerd"/>
           <label for="Ap">C</label>
         </div>
 
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(2)" @click="isSpecificAnswerd"/>
+          <input type="radio" :name="specificQuestion.status" v-model="specificQuestion.status" :value="2"  id="AP"  @change="changeIcon(2)" @click="isSpecificAnswerd"/>
           <label for="Ap">NC</label>
         </div>
 
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(3)" @click="isSpecificAnswerd"/>
+          <input type="radio" :name="specificQuestion.status" v-model="specificQuestion.status" id="AP" :value="3"   @change="changeIcon(3)" @click="isSpecificAnswerd"/>
           <label for="Ap">NA</label>
         </div>
       </div>
 
       <div class="fourth-row">
         <div class="input">
-          <input type="radio" :name="idQuestion" id="AP"  @change="changeIcon(4)" @click="isSpecificAnswerd"/>
+          <input type="radio" :name="specificQuestion.status" v-model="specificQuestion.status" id="AP" :value="4"   @change="changeIcon(4)" @click="isSpecificAnswerd"/>
           <label for="Ap">GM</label>
         </div>
-        <label for="file" class="labelFile">Enviar Arquivo</label>
-        <input type="file" name="file" id="file" class="input_file" />
+        <label :for="specificQuestion.fk_specific_question" class="labelFile">Enviar Arquivo</label>
+        <input type="file" :name="specificQuestion.fk_specific_question" :id="specificQuestion.fk_specific_question" class="input_file"  @change="addFile($event,index)" />
       </div>
 
     </fieldset>
+  </div>
   </div>
 </template>
 
@@ -64,18 +67,32 @@ export default {
     description: String,
     idQuestion: String,
     flag: String,
+    specificQuestions: Array,
+ 
 
   },
 
   created: async function () {
+     
+    this.specificQuestionsFormat = await this.specificQuestions.map((item) => {
+      return { 
+      attention: item.attention,
+      is_enabled: item.is_enabled, 
+      question: item.question,
+      fk_specific_question: item.id,
+      description:'',
+      status:0,
+      file: ""
+      }
+    })
+
     if(this.flag === true){
         this.classCard = "card-flag"
         return this.classCard
     }else {
         this.classCard = "card"
         return this.classCard
-    }
-        
+    }        
   },
 
   methods: {
@@ -85,12 +102,22 @@ export default {
 
     isSpecificAnswerd(){
       this.specificAnswered = true
+    },
+     addFile(event,index){
+      // eslint-disable-next-line vue/no-mutating-props
+      this.specificQuestionsFormat[index].file = event.target.files[0]
     }
   },
 
   watch: {
-    specificAnswered(newValor) {
-      this.$emit("returnSpecificAnswered", newValor)
+    specificQuestionsFormat: {
+      deep:true,
+      immediate:true,
+      handler(newValue){
+      //  console.log(newValue);
+      this.$emit("returnSpecificAnswered", newValue)
+
+      }
     }
   },
 
@@ -98,6 +125,7 @@ export default {
     return {
       valueQuestion: 0,
       specificAnswered: false,
+      specificQuestionsFormat: [],
       responsee: {
         id: this.idQuestion,
 

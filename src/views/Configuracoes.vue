@@ -77,17 +77,19 @@ export default {
 .cardsConfiguracao {
   width: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  gap: 2rem;
 }
 
-@media (max-width: 765px) {
-  .content-configuracao {
+@media (max-width: 425px) {
+  /* .content-configuracao {
     margin-top: 60px;
-  }
+  } */
 
   .cardsConfiguracao {
     flex-direction: column;
+    margin-top: 15rem;
   }
 }
 </style>

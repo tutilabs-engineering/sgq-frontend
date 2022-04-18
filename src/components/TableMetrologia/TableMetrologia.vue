@@ -4,22 +4,22 @@
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
-          Histórico
+          Solicitações
         </button>
         <button @click="statusTable = false" class="btn startup">
-          Solicitações
+          Histórico
         </button>
       </div>
 
       <thead>
         <th>
           <button @click="statusTable = true" class="btn startup-opened">
-            Histórico
+            Solicitações
           </button>
         </th>
         <th>
           <button @click="statusTable = false" class="btn startup">
-            Solicitações
+            Histórico
           </button>
         </th>
         <th></th>
@@ -33,44 +33,49 @@
         <th>Cod. Produto</th>
         <th>Produto</th>
         <th>Técnico</th>
-        <th>Data de Abertura</th>
         <th>Opção</th>
       </thead>
 
       <tbody>
-        <tr v-for="item in itemsAbertos" :key="item.id">
+
+        <tr v-for="metrologySolicitation in metrologySolicitationsList" :key="metrologySolicitation.id">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="O.P">{{ item.op}}</td>
-          <td data-title="Cod. Produto">{{ item.codProd }}</td>
-          <td data-title="Produto">{{ item.produto }}</td>
-          <td data-title="Técnico">{{ item.tecnico }}</td>
-          <td data-title="Data de Abertura">{{ item.data }}</td>
+          <td class="codeStartup" data-title="O.P">{{ metrologySolicitation.startup.op.code_op}}</td>
+          <td data-title="Cod. Produto">{{ metrologySolicitation.startup.op.code_product}}</td>
+          <td data-title="Produto">{{ metrologySolicitation.startup.op.desc_product}}</td>
+          <td data-title="Técnico">
+            <button class="btn-ingressar" v-if="metrologySolicitation.metrologyHistory === null" @click="ingressar(metrologySolicitation.startup.id)">Ingressar</button>
+            <span v-else>{{metrologySolicitation.metrologyHistory.user.name}}</span>
+            
+         </td>
           <td class="lastTd" data-title="Opção">
-            <button class="btn-view">Visualizar</button>
+            <button class="btn-preencher" @click="() => this.$router.push({ name: 'MetrologiaDetalhes', query: {id: metrologySolicitation.startup.id} })">Preencher</button>
           </td>
         </tr>
+
       </tbody>
     </table>
 
     <table v-else cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup">
-          Histórico
+          Solicitações
         </button>
         <button @click="statusTable = false" class="btn startup-closed">
-          Solicitações
+          Histórico
         </button>
       </div>
 
       <thead>
         <th>
           <button @click="statusTable = true" class="btn startup">
-            Histórico
+            Solicitações
           </button>
         </th>
         <th>
           <button @click="statusTable = false" class="btn startup-closed">
-            Solicitações
+            
+            Histórico
           </button>
         </th>
         <th></th>
@@ -85,18 +90,22 @@
         <th>Cod. Produto</th>
         <th>Produto</th>
         <th>Data de Envio</th>
+        <th>Data de Abertura</th>
+        <th>Data de Finalização</th>
         <th>Opção</th>
       </thead>
 
       <tbody>
-        <tr v-for="item in itemsFechados" :key="item.id">
+        <tr v-for="metrologyHistory in metrologyHistoryList" :key="metrologyHistory.id">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="O.P">{{ item.op}}</td>
-          <td data-title="Cod. Produto">{{ item.codProd }}</td>
-          <td data-title="Produto">{{ item.produto }}</td>
-          <td data-title="Data de Abertura">{{ item.data }}</td>
+          <td class="codeStartup" data-title="O.P">{{ metrologyHistory.startup.op.code_op}}</td>
+          <td data-title="Cod. Produto">{{metrologyHistory.startup.op.code_product}}</td>
+          <td data-title="Produto">{{metrologyHistory.startup.op.desc_product}}</td>
+          <td data-title="Data de Envio">{{formatDate(metrologyHistory.sendToMetrology) }}</td>
+          <td data-title="Data de Abertura">{{formatDate(metrologyHistory.metrologyHistory.startDate)}}</td>
+          <td data-title="Data de Finalização">{{formatDate(metrologyHistory.metrologyHistory.endDate)}}</td>
           <td class="lastTd" data-title="Opção">
-            <button class="btn-preencher">Preencher</button>
+            <button class="btn-view">Visualizar</button>
           </td>
         </tr>
       </tbody>
@@ -105,83 +114,72 @@
 </template>
 
 <script>
+
+import  http  from '../../services/metrology/Metrology'
+import  userId  from '../../utils/dataUser'
 export default {
-  setup() {},
-  name: "Table",
   data() {
     return {
-      itemsAbertos: [
-        {
-          id: 1,
-          op: "001525",
-          codProd: "00.1548/01",
-          produto: "Maquineta",
-          tecnico: "Luan Pablo",
-          data: "22/03/2022",
-        },
-        {
-          id: 2,
-          op: "001526",
-          codProd: "00.1548/01",
-          produto: "Maquineta",
-          tecnico: "Luan Pablo",
-          data: "22/03/2022",
-        },
-        {
-          id: 3,
-          op: "001527",
-          codProd: "00.1698/02",
-          produto: "Maquineta",
-          tecnico: "Luan Pablo",
-          data: "22/03/2022",
-        },
-        {
-          id: 4,
-          op: "001528",
-          codProd: "00.1818/01",
-          produto: "Maquineta",
-          tecnico: "Luan Pablo",
-          data: "22/03/2022",
-        },
-        {
-          id: 5,
-          op: "001529",
-          codProd: "00.1345/01",
-          produto: "Maquineta",
-          tecnico: "Luan Pablo",
-          data: "22/03/2022",
-        },
-        {
-          id: 6,
-          op: "001530",
-          codProd: "00.1978/01",
-          produto: "Maquineta",
-          tecnico: "Luan Pablo",
-          data: "22/03/2022",
-        },
-       
-      ],
-
-
-      itemsFechados: [
-        {
-          id: 1,
-          op: "001531",
-          codProd: "00.1590/02",
-          produto: "Maquineta",
-          data: "23/04/2022",
-        },
-        {
-          id: 2,
-          op: "001532",
-          codProd: "00.1588/02",
-          produto: "Maquineta",
-          data: "22/04/2022",
-        },
-      ],
+      metrologyHistoryList: [],
+      metrologySolicitationsList: [],
       statusTable: true,
+      userAssociated: "",
+      day: "",
+      month: "",
+      year: "",
+      user_id: "",
+      dataHeader: Object
     };
   },
+
+  created: async function() {
+    this.$store.commit("$SETISLOADING");
+    // this.user_id = dataUser().user.id
+         
+        //Lista histórico de Metrologia
+        this.listMetrologyHistory()
+
+        //Lista solictações
+        this.listMetrologySolicitations()
+
+        await userId.DataUser().then((res)=>{
+           this.user_id = res.data.user.id
+         })
+    this.$store.commit("$SETISLOADING");
+  },
+
+  methods: {
+    formatDate(date) {
+      date = date.slice(0, -14);
+      this.year = date.slice(0, -6)
+      this.month = date.slice(5, -3)
+      this.day = date.slice(-2)
+      return date = `${this.day}/${this.month}/${this.year}`
+    },
+
+    listMetrologyHistory: async function(){
+      await http.ListMetrologyHistory().then( (res) => {
+                this.metrologyHistoryList = res.data.list
+                console.log(this.metrologyHistoryList)
+      })
+    },
+
+    listMetrologySolicitations: async function(){
+      await http.ListMetrologySolicitations().then( (res) => {
+                this.metrologySolicitationsList = res.data.list
+                console.log(this.metrologyHistoryList)
+      })
+    },
+
+    ingressar: async function(fk_startup){
+      this.$store.commit("$SETISLOADING");
+      await http.JoinMetrologyByUserId(this.user_id, fk_startup)
+      this.listMetrologySolicitations()
+      this.$store.commit("$SETISLOADING");
+    },
+
+  }
+      
 };
 </script>
 
@@ -286,7 +284,7 @@ table td {
   flex-direction: column;
 }
 
-.btn-view, .btn-preencher {
+.btn-view, .btn-preencher, .btn-ingressar {
     cursor: pointer;
     color: var(--main_primaryWhite);
     border: none;
@@ -298,6 +296,10 @@ table td {
 
 .btn-preencher {
     background-color: var(--card_orange);
+}
+
+.btn-ingressar {
+  background-color: var(--card_green);;
 }
 
 .btns {

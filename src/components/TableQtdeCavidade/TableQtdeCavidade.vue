@@ -2,34 +2,75 @@
 <div class="tableContent">
  
       <table cellpadding="0" cellspacing="0">
-
+        {{variable}}
         <thead>
           <th>Identificação</th>
           <th v-for="cavidade in qtdeCavidade" :key="cavidade">{{ "Cavidade " + cavidade}}</th>
         </thead>
 
         <tbody>
-          <tr v-for="i in 3" :key="i">
-            <td>{{"Identificador " + i}}</td>
-            <td v-for="cavidade in qtdeCavidade" :key="cavidade"><input  class="inputdataCav" type="text" placeholder="Informe o valor"></td>
+          <tr v-for="variable in variables" :key="variable.id">
+            <td>{{variable.description}}</td>
+            <td v-for="(cavidade) in qtdeCavidade" :key="cavidade">
+              <input  class="inputdataCav" :id="variable.id" type="text" placeholder="Informe o valor" v-model="inputValue[variable.id]" @change="teste(inputValue, variable.max, variable.min)">
+            </td>
           </tr>
         </tbody>
       </table>
- 
   </div>
 </template>
 
 <script>
+
+import http from "../../services/productAnalysis/Variables";
+
 export default {
     props: {
         numberCavidade: Number,
+        codProd: String,
     },
 
     data() {
         return {
-            qtdeCavidade: parseInt( this.numberCavidade)
+            variables: [{}],
+            qtdeCavidade: parseInt( this.numberCavidade),
+            inputValue: "",
+            matriz: []
         }
-    }
+    },
+
+
+    created: async function (){
+      await http
+        .FindVariableByCodeProduct(this.codProd)
+        .then((res) => {
+          this.variables = res.data.list;
+        }).catch ((error) => {
+          console.log(error)
+        });
+        
+        console.log(this.variables);
+        this.variables.map( (item) => {
+          this.matriz.push(item.id)
+        })
+
+        console.log(this.matriz)
+
+    },
+
+    
+    methods: {
+      teste: function (inputValue, max, min) {
+        console.log(inputValue)
+        if(inputValue > max || inputValue < min) {
+          console.log("inválido");
+          // efeitos pipi
+        }else {
+          console.log("tá válido");
+        }
+      }
+    },
+  
 };
 
 </script>

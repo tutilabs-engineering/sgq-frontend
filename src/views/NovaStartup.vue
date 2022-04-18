@@ -7,7 +7,7 @@
     <div v-if="showQuestions">
       <ListaPerguntas :qtdeCavidade="techniqueInfo.cavity" :code_product="headerInfo.codeProduct"/>
     </div>
-    <BtnStartupCreate @returnFillStatus="changedShowQuestions"/>
+    <BtnStartupCreate @returnFillStatus="changedShowQuestions" />
   </div>
 </template>
 
@@ -23,20 +23,30 @@ import http from "../services/startup";
 export default {
   data() {
     return {
+      id_startup: this.$route.query.id,
+      itsCreation: true,
       headerInfo: {
         client: "",
         codeClient: "",
         product: "",
         codeProduct: "",
         quantity: "",
+        machine: "",
+        product_mold: "",
         date: "",
         startTime: "",
-        endTime: "",
       },
       techniqueInfo: {
         cavity: "",
         cycle: "",
       },
+      dataInfo: {
+        code_op: "",
+        user_id: ""
+      },
+  
+      data_startup: {},
+
       componentsInfo: [],
       showQuestions: false,
     };
@@ -48,12 +58,19 @@ export default {
     ListaPerguntas,
     BtnStartupCreate,
   },
+  created: async function() {
+    if(this.id_startup) {
+      this.itsCreation = false
+    }
+    console.log(this.itsCreation)
+  },
   methods: {
     changedShowQuestions(e) {
       this.showQuestions = e;
     },
 
     ReturnCodeOp: async function(code_op) {
+      this.dataInfo.code_op = code_op
       function GetDateTime(){
         function GetDate() {
           const date = new Date();
@@ -88,22 +105,36 @@ export default {
       }
 
       const dataOp = await http.listDataByCodeOp(code_op);
-      const data = dataOp.data.data_op;
-      this.headerInfo.client = data.client;
-      this.headerInfo.codeClient = data.code_client;
-      this.headerInfo.product = data.product;
-      this.headerInfo.codeProduct = data.code_product;
+      const data = dataOp.data.results[0];
+      this.headerInfo.client = data.CardName;
+      this.headerInfo.codeClient = data.U_Cliente;
+      this.headerInfo.product = data.ProdName;
+      this.headerInfo.codeProduct = data.ItemCode;
       this.headerInfo.date = GetDateTime().GetDate();
       this.headerInfo.startTime = GetDateTime().GetStartHour();
 
       //techniqueData
 
-      this.techniqueInfo.cavity = data.cavity;
-      this.techniqueInfo.cycle = data.cycle;
+      this.techniqueInfo.cavity = data.U_EP_Cav;
+      this.techniqueInfo.cycle = data.U_EP_CIC;
 
-      //componentsInfo
-      this.componentsInfo = [...data.components]
-    }
+      // //componentsInfo
+     
+
+      data.Itens.map( (item) => {
+        this.componentsInfo.push( {
+          description: item.Descrição,
+          item_number: item.ItemCode,
+          planned: item.PlannedQty,
+          um: item.InvntryUom
+        })
+      })
+
+
+      this.$store.commit("$SETDATACREATESTARTUP", {techniqueData: this.techniqueInfo, components: this.componentsInfo});
+
+    },
+
   } 
 };
 </script>

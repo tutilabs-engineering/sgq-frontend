@@ -17,7 +17,7 @@
           <td data-title="Produto">{{ product.descricao }}</td>
           <td data-title="Cód. Cli.">xxxxxxxxxxxxxxxxx</td>
           <td data-title="Cliente">{{ product.cliente }}</td>
-          <td class="lastTd" data-title="Opcoes">
+          <td class="lastTd" data-title="Opções">
             <div class="opcoes">
               <button class="btn btn-at" @click="StartComponentAttribute(product)">AT</button>
               <button class="btn btn-va" @click="StartComponentVariable(product)">VA</button>
@@ -191,12 +191,16 @@ table td {
 
   [data-title] {
     color: var(--black_text);
+    
   }
 
   .tableContent td {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    min-height: 70px;
+    color: var(--black_text);
+    
   }
 
   .tableContent td:first-of-type {
@@ -205,16 +209,18 @@ table td {
     text-align: center;
     display: flex;
     justify-content: center;
+    
   }
 
   .tableContent td:not(:first-of-type):before {
     content: attr(data-title);
     display: block;
     font-weight: bold;
+    
   }
 
   .lastTd {
-    border-bottom: 3px dotted var(--font-color);
+    border-bottom: 1.6px solid var(--green_text);
   }
 
  

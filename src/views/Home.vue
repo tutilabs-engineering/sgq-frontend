@@ -111,13 +111,6 @@ export default {
   outline: none;
   padding-left: 2rem;
 }
-/* .home .statusProgress .progress {
-  width: 0%;
-  border: none;
-  outline: none;
-  background: var(--card_blue);
-  border-radius: 0.2rem;
-} */
 
 .home .statusProgress .barProgress {
   border: 1px solid var(--btn_gray);

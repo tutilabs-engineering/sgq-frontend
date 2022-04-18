@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import  userId  from '../utils/dataUser'
 
 export default createStore({
   state: {
@@ -11,6 +12,32 @@ export default createStore({
     qtdePerguntasEspecificasRespondidas: 0,
     qtdeEspecificas: 0,
     code_op: "",
+    createDataStartup: {
+      code_op: "",
+      user_id: "",
+      header: {
+          client: "",
+          code_client: "",
+          code_product: "",
+          desc_product: "",
+          product_mold: "",
+          machine: "",
+          day: "",
+          start_time:"",
+      },
+      techniqueData: {
+          cavity: 0,
+          cycle: 0,
+      },
+      components:[],
+    },
+    fillReportStartup : {
+      specific_questions: [],
+      default_question:[],
+      img_1 : "",
+      img_2 : "",
+      img_3 : ""
+    }
   },
   mutations: {
     $SETUSER (state, newName) {
@@ -34,10 +61,29 @@ export default createStore({
     },
 
     $SETCODEOP (state, data) {
-      console.log(state)
       state.code_op = data
-      console.log(state.code_op)
+    },
+
+    async $SETDATACREATESTARTUP(state, {header, techniqueData, components}) {
+     
+      state.createDataStartup.code_op = state.code_op
+      state.createDataStartup.header = header || state.createDataStartup.header
+      state.createDataStartup.techniqueData = techniqueData || state.createDataStartup.techniqueData
+      state.createDataStartup.components = components || state.createDataStartup.components
+     
+    
+    },
+    
+   $SETDATAFILLSTARTUP(state, {specific_questions, default_question, img_1,img_2,img_3}) {
+     
+      state.fillReportStartup.specific_questions = specific_questions ||  state.fillReportStartup.specific_questions
+      state.fillReportStartup.default_question = default_question ||  state.fillReportStartup.default_question
+      state.fillReportStartup.img_1 = img_1 ||  state.fillReportStartup.img_1
+      state.fillReportStartup.img_2 = img_2 ||  state.fillReportStartup.img_2
+      state.fillReportStartup.img_3 = img_3 ||  state.fillReportStartup.img_3
+    // console.log(state.fillReportStartup);
     }
+
   },
   actions: {
   },
@@ -60,6 +106,20 @@ export default createStore({
 
     $GETCODEOP (state) {
       return state.code_op
+    },
+    
+    async $GETDATACREATESTARTUP(state){
+       
+      state.createDataStartup.user_id = await userId.DataUser().then((res)=>{
+        return res.data.user.id
+      })
+      console.log(state.createDataStartup);
+      return state.createDataStartup
+    },
+    $GETDATAFILLREPORTSTARTUP(state){
+      return state.fillReportStartup
     }
+
+    
   }
 })

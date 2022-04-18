@@ -1,37 +1,20 @@
 <template>
   <div class="content-questions">
-    
     <fieldset class="content-tablePerguntas">
-
       <legend class="legenda">Perguntas Padrões</legend>
-<!--       
-      <div
-        class="defaultQuestion"
-        v-for="data in datastartup"
-
-
-        :key="data.id"
-      >
-
-      {{data.title}}
-    
-        <PerguntaRespondida
-          :description="data.description" :title="data.title" :response="data.status"
-        />
-      </div> -->
+   
+        <PerguntaPadrao :defaultQuestions="defaultQuestions" @returnAnswered="getAnswered"    />
     </fieldset>
-
-    <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
+    
+  <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
       <legend class="legenda-warning">Não há Perguntas Especificas para este Produto<br/><span>Verifique a tabela de análise</span></legend>
     </fieldset>
 
     <fieldset class="content-tablePerguntas" v-else>
       <legend class="legenda">Tabela de Análise</legend>
 
-      <div  v-for="specificQuestion in specificQuestions.slice().reverse()" :key="specificQuestion.id">
-        <PerguntaAnalise :flag="specificQuestion.attention" :description="specificQuestion.question" :idQuestion="specificQuestion.id"
-        @returnSpecificAnswered="ReturnSpecificAnswered" v-show="specificQuestion.is_enabled"/>
-      </div>
+        <PerguntaAnalise :specificQuestions="specificQuestions" @returnSpecificAnswered="getSpecificAnswered"  />
+   
       
     </fieldset>
 
@@ -40,29 +23,32 @@
     </fieldset> -->
 
     <fieldset class="content-imgs">
-      <UploadImage :id="1" />
-      <UploadImage :id="2" />
-      <UploadImage :id="3" />
+      <UploadImage :id="1" @setImage="getImg_1" />
+      <UploadImage :id="2" @setImage="getImg_2"/>
+      <UploadImage :id="3" @setImage="getImg_3"/>
     </fieldset>
   </div>
 </template>
 
 <script>
 import PerguntaAnalise from "../PerguntaAnalise/PerguntaAnalise.vue";
-// import PerguntaRespondida from "../PerguntaRespondida/PerguntaRespondida.vue";
+import PerguntaPadrao from "../PerguntaPadrao/PerguntaPadrao.vue";
 // import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
 import UploadImage from "../UploadImage/UploadImage.vue";
 import http from "../../services/startup/index";
-import httpAttributes from "../../services/productAnalysis/Attributes"
+// import httpAttributes from "../../services/productAnalysis/Attributes"
 
 export default {
   data() {
     return {
       defaultQuestions: [],
       specificQuestions: [],
+      
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
-      datastartup: this.startupData.report_startup_fill.default_questions_responses.default_questions,
+      // id_startup: this.id_startup
+      defaultQuestionsResp : [],
+      specificQuestionsResp: [],
     };
 
     
@@ -71,43 +57,60 @@ export default {
   props: {
     qtdeCavidade: Number,
     code_product: String,
-    startupData: Array,
+    id_startup: Number,
   },
   components: {
-    // PerguntaRespondida,
+    PerguntaPadrao,
     PerguntaAnalise,
     // TableQtdeCavidade,
     UploadImage,
   },
   created: async function () {
     this.$store.commit("$SETISLOADING");
+
+    await http.findReportStartupById(this.id_startup).then( (res) => {
+      this.specificQuestions = res.data.specific_questions_in_product
+    })
+
     const responseDefaultQuestions = await http.listAllDefaultQuestions();
     this.defaultQuestions = responseDefaultQuestions.data.defaultQuestions;
+   
+  
 
-    const responseSpecificQuestions = await httpAttributes.FindAttributesByCodeProduct(this.startupData.op.code_product);
-
-    if(responseSpecificQuestions) {
-      
-      await responseSpecificQuestions.data.list.map( (item) => {
-            if (item.is_enabled) {
-              this.specificQuestions.push(item)
-              this.$store.commit("$SETQTDEESPECIFICAS"); 
-            }
-      })
-      
-    }
+    this.defaultQuestions = await this.defaultQuestions.map((item) => {
+      return { 
+      fk_default_question:item.id, 
+      title: item.description, 
+      description:'',
+      status:0,
+      file: ''
+     }
+    })
+     
+     console.log( this.specificQuestions);
     this.$store.commit("$SETISLOADING");
   },
 
   methods: {
-    ReturnAnswered: async function(answered){
-      this.$store.commit("$SETQTDEPERGUNTASPADROES"); 
-      console.log(answered)
+
+
+    getSpecificAnswered: async function(specificAnswered){
+          this.$store.commit("$SETDATAFILLSTARTUP",{ specific_questions : specificAnswered})
+      console.log(specificAnswered)
     },
 
-    ReturnSpecificAnswered: async function(specificAnswered){
-      this.$store.commit("$SETQTDEPERGUNTASESPECIFICAS");
-      console.log(specificAnswered)
+    getAnswered: async function(res){
+     this.$store.commit("$SETDATAFILLSTARTUP",{ default_question : res})
+    },
+    getImg_1:async function(res){
+      this.$store.commit("$SETDATAFILLSTARTUP",{ img_1 : res})
+    },
+    getImg_2:async function(res){
+      this.$store.commit("$SETDATAFILLSTARTUP",{ img_2 : res})
+    },
+    getImg_3:async function(res){
+      this.$store.commit("$SETDATAFILLSTARTUP",{ img_3 : res})
+
     }
 
   },

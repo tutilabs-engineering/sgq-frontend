@@ -131,25 +131,25 @@ const routes = [
     path: '/create-startup',
     name: 'Status',
     component: () => import('../views/NovaStartup.vue'),
-    beforeEnter: EmManutencao
+    beforeEnter: Auth
   },
   {
     path: '/startups-aprovadas',
     name: 'TabelaAprovados',
     component: () => import('../views/TabelaAprovados'),
-    beforeEnter: EmManutencao
+    beforeEnter: Auth
   },
   {
     path: '/startups-reprovadas',
     name: 'TabelaReprovados',
     component: () => import('../views/TabelaReprovados'),
-    beforeEnter: EmManutencao
+    beforeEnter: Auth
   },
   {
     path: '/startups-andamentos',
     name: 'TabelaAndamento',
     component: () => import('../views/TabelaAndamento'),
-    beforeEnter: EmManutencao
+    beforeEnter: Auth
   },
   {
     path: '/analise_produtos',
@@ -162,7 +162,7 @@ const routes = [
     path: '/metrologia',
     name: 'metrologia',
     component: () => import('../views/Metrologia.vue'),
-    beforeEnter: EmManutencao
+    beforeEnter: Auth
   },
 
   {
@@ -194,6 +194,13 @@ const routes = [
   },
 
   {
+    path: '/create-startup-by-id',
+    name: 'NovaStartupById',
+    component: () => import('../views/NovaStartupById.vue'),
+    beforeEnter: Auth
+  },
+
+  {
     path: '/cadastroUsuario',
     name: 'CadastroUsuario',
     component: () => import('../views/CadastroUsuario.vue'),
@@ -203,7 +210,7 @@ const routes = [
     path: '/metrologiaDetalhes',
     name: 'MetrologiaDetalhes',
     component: () => import('../views/MetrologiaDetalhes.vue'),
-    beforeEnter: EmManutencao
+    beforeEnter: Auth
   },
 
   {

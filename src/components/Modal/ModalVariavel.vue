@@ -41,6 +41,7 @@
                   <p>Descrição Cliente</p>
                   <input type="text" readonly :value="dataProduct.cliente" />
                 </div>
+                
               </div>
 
               <div class="titleBody">
@@ -94,32 +95,32 @@
 
                 <div class="inputCota">
                   <p>COTA:</p>
-                  <input type="number" v-model="list.cota" step="any" placeholder="12.5"/>
+                  <input type="text" v-model="list.cota" step="any" placeholder="12.5"/>
                 </div>
 
                 <div class="inputCota">
                   <p>MÁX:</p>
-                  <input type="number" v-model="list.max" step="any" placeholder="12.6"/>
+                  <input type="text" v-model="list.max" step="any" placeholder="12.6"/>
                 </div>
 
                 <div class="inputCota">
                   <p>MIN:</p>
-                  <input type="number" v-model="list.min" step="any" placeholder="12.3"/>
+                  <input type="text" v-model="list.min" step="any" placeholder="12.3"/>
                 </div>
-
-                <div class="inputUpLoad" >
+                
+                <div class="inputUpLoad" v-if="statusButtonImage">
+                    
                     <label for="inputImage" class="inputImage"
                       ><i class="far fa-file-image"></i
-                    ></label>
+                    > <span>Anexar</span></label>
                     
                     <input ref="file" type="file"  class="inputUpLoad" id="inputImage" @change="insertImageFile"/>
-
-                    
+ 
                 </div>
-
+                <button class="inputUpLoad inputImageDelete" @click="changeStatusButtonImage" v-else>Remover</button>
 
                 <button type="submit" class="inputUpLoad">
-                  <i class="fas fa-plus"></i>
+                  <span>Enviar</span>
                 </button>
 
                 <div class="alertMax" v-show="list.max < list.min">
@@ -156,8 +157,9 @@ export default {
         cota: 0,
         max: 0,
         min: 0,
-        file: "sadfa",
+        file: "",
       },
+      statusButtonImage: true
     };
   },
   props: {
@@ -170,6 +172,8 @@ export default {
       .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
       .then((res) => {
         this.variables = res.data.list;
+
+        console.log(this.variables)
       });
     this.$store.commit("$SETISLOADING");
   },
@@ -178,6 +182,15 @@ export default {
 
     insertImageFile (e) {
       this.list.file = e.target.files[0]
+      if(this.list.file != "") {
+         this.statusButtonImage = false
+         console.log(this.list.file)
+      }
+    },
+
+    changeStatusButtonImage() {
+      this.statusButtonImage = true
+      this.list.file = "";
       console.log(this.list.file)
     },
 
@@ -241,6 +254,7 @@ export default {
             this.list.cota = "";
             this.list.max = "";
             this.list.min = "";
+            this.changeStatusButtonImage()
           }
 
         })
@@ -285,7 +299,15 @@ export default {
             background: "#A8D4FF",
           });
         }
-        console.log(res.data);
+      }).catch( (error) => {
+        if(error.response.status === 401){
+            Toast.fire({
+            icon: "warning",
+            title: "Esta variável está sendo utilizada. Não será possível deleta-la!",
+            background: "#e3e745",
+          });
+        }
+
       });
 
       this.reloadList();
@@ -471,7 +493,7 @@ export default {
 
 .modal_mask .modal_body .inputsHeader .inputUpLoad .fa-upload {
   color: var(--main_primaryWhite);
-  font-size: 1.4rem;
+  font-size: 1rem;
   cursor: pointer;
 }
 
@@ -541,7 +563,7 @@ export default {
   justify-content: center;
   color: var(--main_primaryWhite);
   cursor: pointer;
-  font-size: 1.4rem;
+  font-size: 15px;
   border: none;
 }
 
@@ -552,8 +574,13 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--card_blue);
   border-radius: 5px;
+  
+}
+
+.inputImageDelete {
+  color: #fff;
+  background-color: var(--card_red) !important;
 }
 
 .fa-file-image {
@@ -588,6 +615,10 @@ export default {
   border-radius: 5px;
   font-size: 15px;
   font-weight: 400;
+}
+
+.far {
+  margin-right: 10px;
 }
 
 @media (max-width: 770px) {

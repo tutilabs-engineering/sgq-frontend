@@ -1,14 +1,15 @@
 <template>
     <div class="btns">
-        <button class="btn-fill-save btn" v-on:click="fillValue">Preencher + Opções</button>
+        <!-- <button class="btn-fill-save btn" v-on:click="fillValue">Preencher + Opções</button> -->
         <div class="btns-options">
             <button class="btn-cancel btn">Cancelar</button>
-            <button class="btn-save btn" @click="saveNewStartup">Salvar</button>
+            <button class="btn-save btn" @click="saveNewStartup">Criar Startup</button>
         </div>
     </div>
 </template>
 
 <script>
+import  http  from '../../services/startup/index'
 
 export default {
     name: "BtnStartupCreate",
@@ -22,7 +23,28 @@ export default {
     methods: {
         fillValue (){
             if(this.$store.getters.$GETCODEOP == ""){
-                console.log("Não foi possivel abrir o modal (Prencha a Startup)")
+                const Toast = this.$swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: '#ff5349',
+                    customClass: {
+                    popup: 'colored-toast',
+                    title: 'title-swal-text'
+                    },
+                    didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                    },
+                    showConfirmButton: false,
+                    timer: 2500,
+                    timerProgressBar: true
+                })
+                Toast.fire({
+                        icon: 'warning',
+                        title: 'Informe a Ordem de Produção',
+                        background: "#fff",
+                    })
+                
             }else {
                 this.fillStatus = !this.fillStatus
                 this.$emit("returnFillStatus", this.fillStatus)
@@ -30,50 +52,80 @@ export default {
             
         },
 
-        saveNewStartup(){
+        saveNewStartup: async function (){
 
+            const Toast = this.$swal.mixin({
+                      toast: true,
+                      position: 'top-right',
+                      iconColor: '#3fc36d',
+                      customClass: {
+                      popup: 'colored-toast',
+                      title: 'title-swal-text'
+                      },
+                      didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                      toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                      },
+                      showConfirmButton: false,
+                      timer: 2500,
+                      timerProgressBar: true
+                    })
+
+
+            this.$store.commit("$SETISLOADING");
             if(this.$store.getters.$GETCODEOP == ""){
-                console.log("Preencha o Código de Ordem de Produção")
+                Toast.fire({
+                    icon: 'warning',
+                    title: 'Informe a Ordem de Produção',
+                    background: "#fff",
+                })
             }else { 
                 if(this.fillStatus){
                 // Campo de perguntas aberto
-
                 this.ValidateQtyAnsweredQuestions()
+                }else {
+                    
 
-
-            }else {
-                const Toast = this.$swal.mixin({
-                toast: true,
-                position: 'top-right',
-                iconColor: '#3fc36d',
-                customClass: {
-                popup: 'colored-toast',
-                title: 'title-swal-text'
-                },
-                didOpen: (toast) => {
-                toast.addEventListener('mouseenter', this.$swal.stopTimer)
-                toast.addEventListener('mouseleave', this.$swal.resumeTimer)
-                },
-                showConfirmButton: false,
-                timer: 2500,
-                timerProgressBar: true
-            })
-
-            Toast.fire({
-                    icon: 'success',
-                    title: 'Salvo com sucesso',
-                    background: "#fff",
-                })
-                // Salvar nova Startup
+                    
+                    const data = await this.$store.getters.$GETDATACREATESTARTUP
+                    if(data){ 
+                    await http.createNewStartup(data).then( (res) => {
+                        
+                        console.log("Nova Startup Salva", res);
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Salvo com sucesso',
+                            background: "#fff",
+                        })
+                    }).catch ( (error) => {
+                        console.log(error.response);
+                        if(error.response.status === 400) {
+                            Toast.fire({
+                            icon: 'warning',
+                            title: 'Não foi possível cadastrar esta Startup, ela já está em Andamento',
+                            background: "#e3e745",
+                        })
+                        }else if(error.response.status === 401) {
+                            Toast.fire({
+                            icon: 'warning',
+                            title: 'Apenas Analista, Metrologista e Inspetor podem cadastrar uma Startup',
+                            background: "#e3e745",
+                        })
+                        }
+                  
+                    })
+                    }
+              
+                }
             }
-            }
+            this.$store.commit("$SETISLOADING");
         },
 
         ValidateQtyAnsweredQuestions () {
             const Toast = this.$swal.mixin({
                 toast: true,
                 position: 'top-right',
-                iconColor: 'white',
+                iconColor: '#3fc36d',
                 customClass: {
                 popup: 'colored-toast',
                 title: 'title-swal-text'
@@ -96,10 +148,9 @@ export default {
                 })
             }else {
                 Toast.fire({
-                    icon: 'sucess',
-                    title: 'Verifique se todas as Perguntas foram respondidas',
-                    background: "#3fc36d",
-                    color: "#fff"
+                    icon: 'success',
+                    title: 'Preenchimento realizado com sucesso',
+                    background: "#fff",
                 })
             }
 

@@ -3,9 +3,16 @@
     <div class="container-img">
       <img :src="preview" class="img-fluid" />
     </div>
-    <label :for="myFile" class="selectImg">Selecione a Imagem</label>
-    <input type="file"  @change="previewImage" class="form-control-file" :id="myFile">
-    
+
+    <div v-if="imgStatus">
+      <label :for="myFile" class="selectImg">Selecione a Imagem</label>
+      <input type="file"  @change="previewImage" class="form-control-file" :id="myFile">
+    </div>
+
+    <div v-else>
+      <button class="selectImg" @click="removeImage">Remover imagem</button>
+    </div>
+
   </div>
 </template>
 
@@ -13,19 +20,31 @@
 export default {
   data () {
     return {
+      imgDefault: "https://i.fbcd.co/products/resized/resized-750-500/563d0201e4359c2e890569e254ea14790eb370b71d08b6de5052511cc0352313.jpg",
       preview: "https://i.fbcd.co/products/resized/resized-750-500/563d0201e4359c2e890569e254ea14790eb370b71d08b6de5052511cc0352313.jpg",
       image: null,
-      myFile: "my-file" + this.id
+      myFile: "my-file" + this.id,
+      imgStatus: true,
     };
   },
 
   props: {
     id: Number,
+    img: String,
   },
 
   methods: {
-    showModalImg () {
-      console.log("Mostrando imagem em tela cheia")
+
+    changeImgStatus: function() {
+      this.imgStatus = !this.imgStatus
+    },
+
+    removeImage: function(){
+      this.image = ""
+      this.preview = this.imgDefault
+      this.changeImgStatus()
+      this.$emit("setImage", null)
+    
     },
 
     previewImage: function(e) {
@@ -36,7 +55,9 @@ export default {
           this.preview = e.target.result;
         }
       this.image=imgInput.files[0];
+      this.$emit("setImage",imgInput.files[0])
       reader.readAsDataURL(this.image);
+      this.changeImgStatus()
       }
     }
   },
@@ -82,5 +103,6 @@ export default {
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
+    border: none;
   }
 </style>

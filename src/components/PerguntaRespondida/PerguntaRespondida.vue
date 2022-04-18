@@ -21,11 +21,11 @@
           <i class="fa fa-check-circle fa-blue" aria-hidden="true"></i>
         </div>
 
-        <label for="res">{{ defaultQuestion.title }}</label>
+        <label for="res">{{ title }}</label>
       </div>
 
       <div class="second-row">
-        <input type="text" v-model="defaultQuestion.description" placeholder="Aguardando Resposta" />
+        <input type="text" v-model="response" placeholder="Aguardando Resposta" />
       </div>
 
       <div class="third-row">
@@ -64,8 +64,10 @@
 <script>
 export default {
   props: {
-    defaultQuestions: Array,
-  idQuestion: String,
+    description: String,
+    title: String,
+    response: String
+
 
   },
 
@@ -100,10 +102,10 @@ export default {
     return {
       valueQuestion: 0,
       answered: false,
-      response: {
-        id: this.idQuestion,
+      // response: {
+      //   id: this.idQuestion,
 
-      },
+      // },
 
     };
   },

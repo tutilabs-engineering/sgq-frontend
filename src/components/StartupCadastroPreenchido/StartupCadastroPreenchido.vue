@@ -8,52 +8,52 @@
 
       <div class="input">
         <label for="op">Ordem de Produção</label>
-        <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+        <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="headerPreenchida.code_op" disabled>
       </div>
       
       <div class="input">
         <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="headerInfo.client">
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="headerPreenchida.client" disabled>
       </div>
 
       <div class="input">
         <label for="client">Código cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient">
+        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerPreenchida.codeClient" disabled>
       </div>
 
       <div class="input">
         <label for="client">Produto</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.product">
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.product" disabled>
       </div>
 
       <div class="input">
         <label for="client">Código Produto</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.codeProduct">
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.codeProduct" disabled>
       </div>
 
       <div class="input">
         <label for="client">Quantidade</label>
-        <input type="number" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.quantity">
+        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.quantity" disabled>
       </div>
 
       <div class="input">
         <label for="client">Máquina</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.machine">
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.machine" disabled>
       </div>
 
       <div class="input">
         <label for="client">Molde</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.product_mold">
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.product_mold" disabled>
       </div>
 
       <div class="input">
         <label for="client">Data</label>
-        <input type="date" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.day">
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.day" disabled>
       </div>
 
       <div class="input">
         <label for="client">Hora inicial</label>
-        <input type="time" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.start_time">
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.start_time" disabled>
       </div>
 
     </fieldset>
@@ -67,18 +67,12 @@ export default {
   data() {
     return {
       code_op: "",
-      headerInput: {
-        machine: "",
-        product_mold: "",
-        day: "",
-        start_time: "",
-        quantity: ""
-      }
+
       
     };
   },
   props: {
-    headerInfo: Object
+    headerPreenchida: Object
   },
   methods: {},
   watch: {
@@ -88,25 +82,6 @@ export default {
 
     },
 
-    headerInput: {
-      deep: true,
-      immediate: true,
-      handler(){
-        this.$store.commit("$SETDATACREATESTARTUP", {header: {
-        client: this.headerInfo.client,
-        code_client: this.headerInfo.codeClient,
-        code_product: this.headerInfo.codeProduct,
-        desc_product: this.headerInfo.product,
-        quantity: this.headerInput.quantity,
-        product_mold: this.headerInput.product_mold,
-        machine: this.headerInput.machine,
-        day: new Date(this.headerInput.day),
-        start_time: new Date(),
-
-      }}
-      );
-      }
-    }
 
   }
 };
