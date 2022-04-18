@@ -1,6 +1,5 @@
 <template>
-{{specificQuestionsFormat}}
-<div v-for="specificQuestion in specificQuestionsFormat" :key="specificQuestion.fk_specific_question">
+<div v-for="(specificQuestion, index) in specificQuestionsFormat" :key="specificQuestion.fk_specific_question">
 
   <div class="question" v-show="specificQuestion.is_enabled" >
     <fieldset v-bind:class="classCard">
@@ -83,11 +82,9 @@ export default {
       fk_specific_question: item.id,
       description:'',
       status:0,
-      file:''
+      file: ""
       }
     })
-
-    console.log(this.specificQuestionsFormat);
 
     if(this.flag === true){
         this.classCard = "card-flag"
@@ -108,14 +105,19 @@ export default {
     },
      addFile(event,index){
       // eslint-disable-next-line vue/no-mutating-props
-      console.log(index);
       this.specificQuestionsFormat[index].file = event.target.files[0]
     }
   },
 
   watch: {
-    specificAnswered() {
-      // this.$emit("returnSpecificAnswered", newValor)
+    specificQuestionsFormat: {
+      deep:true,
+      immediate:true,
+      handler(newValue){
+      //  console.log(newValue);
+      this.$emit("returnSpecificAnswered", newValue)
+
+      }
     }
   },
 

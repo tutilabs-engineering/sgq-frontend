@@ -30,6 +30,13 @@ export default createStore({
           cycle: 0,
       },
       components:[],
+    },
+    fillReportStartup : {
+      specific_questions: [],
+      default_question:[],
+      img_1 : "",
+      img_2 : "",
+      img_3 : ""
     }
   },
   mutations: {
@@ -63,9 +70,19 @@ export default createStore({
       state.createDataStartup.header = header || state.createDataStartup.header
       state.createDataStartup.techniqueData = techniqueData || state.createDataStartup.techniqueData
       state.createDataStartup.components = components || state.createDataStartup.components
-      
-      console.log(state.createDataStartup);
+     
+    
     },
+    
+   $SETDATAFILLSTARTUP(state, {specific_questions, default_question, img_1,img_2,img_3}) {
+     
+      state.fillReportStartup.specific_questions = specific_questions ||  state.fillReportStartup.specific_questions
+      state.fillReportStartup.default_question = default_question ||  state.fillReportStartup.default_question
+      state.fillReportStartup.img_1 = img_1 ||  state.fillReportStartup.img_1
+      state.fillReportStartup.img_2 = img_2 ||  state.fillReportStartup.img_2
+      state.fillReportStartup.img_3 = img_3 ||  state.fillReportStartup.img_3
+    // console.log(state.fillReportStartup);
+    }
 
   },
   actions: {
@@ -98,6 +115,11 @@ export default createStore({
       })
       console.log(state.createDataStartup);
       return state.createDataStartup
+    },
+    $GETDATAFILLREPORTSTARTUP(state){
+      return state.fillReportStartup
     }
+
+    
   }
 })
