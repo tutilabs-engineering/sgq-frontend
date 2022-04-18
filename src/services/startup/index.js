@@ -4,7 +4,6 @@ import { http} from "../config"
 export default {
   listDataByCodeOp: async (code_op) => {
     const response = await axios.get(`http://192.168.7.212:3300/api/v1/sap/tutilabs/ops/${code_op}`)
-
     console.log(response);
     return response
 

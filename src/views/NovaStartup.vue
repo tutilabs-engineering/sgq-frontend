@@ -18,8 +18,6 @@ import StartupCadastro from "../components/StartupCadastro/StartupCadastro.vue";
 import ListaPerguntas from "../components/ListaPerguntas/ListaPerguntas.vue";
 import BtnStartupCreate from "../components/BtnStartupCreate/BtnStartupCreate.vue";
 
-import axios from "axios"
-
 import http from "../services/startup";
 
 export default {
