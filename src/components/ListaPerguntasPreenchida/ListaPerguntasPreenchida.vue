@@ -19,9 +19,9 @@
       
     </fieldset>
 
-    <fieldset>
+    <!-- <fieldset>
       <TableQtdeCavidade :numberCavidade="numberCavidade" :codProd="code_product"/>
-    </fieldset>
+    </fieldset> -->
 
     <fieldset class="content-imgs">
       <UploadImage :id="1" @setImage="getImg_1" />
@@ -34,7 +34,7 @@
 <script>
 import PerguntaAnalise from "../PerguntaAnalise/PerguntaAnalise.vue";
 import PerguntaPadrao from "../PerguntaPadrao/PerguntaPadrao.vue";
-import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
+// import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
 import UploadImage from "../UploadImage/UploadImage.vue";
 import http from "../../services/startup/index";
 // import httpAttributes from "../../services/productAnalysis/Attributes"
@@ -63,7 +63,7 @@ export default {
   components: {
     PerguntaPadrao,
     PerguntaAnalise,
-    TableQtdeCavidade,
+    // TableQtdeCavidade,
     UploadImage,
   },
   created: async function () {

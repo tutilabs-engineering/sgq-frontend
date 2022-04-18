@@ -1,6 +1,6 @@
 <template>
     <div class="btns">
-        <button class="btn-fill-save btn" v-on:click="fillValue">Preencher + Opções</button>
+        <!-- <button class="btn-fill-save btn" v-on:click="fillValue">Preencher + Opções</button> -->
         <div class="btns-options">
             <button class="btn-cancel btn">Cancelar</button>
             <button class="btn-save btn" @click="saveNewStartup">Criar Startup</button>

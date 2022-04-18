@@ -37,7 +37,7 @@
     </table>
   </fieldset>
 
-  <fieldset class="tableContent"  v-else>
+  <fieldset class="tableContent" v-else>
       <h2 class="legenda-warning">Não há Startups para serem listadas<br/><button @click="() => this.$router.push({ name: 'Startup' })" class="btn-back">Voltar</button></h2>
   </fieldset>
 
