@@ -1,10 +1,15 @@
-import { http } from "../config"
+import axios from "axios"
+import { http} from "../config"
 
 export default {
   listDataByCodeOp: async (code_op) => {
-    return await http.get(`/reportStartup/dataOp/${code_op}`)
-    // return await httpSAP.get(`/${code_op}`)
+    const response = await axios.get(`http://192.168.7.212:3300/api/v1/sap/tutilabs/ops/${code_op}`)
+
+    console.log(response);
+    return response
+
   },
+
 
   listAllStartups: async () => {
     return await http.get(`/reportStartup`)

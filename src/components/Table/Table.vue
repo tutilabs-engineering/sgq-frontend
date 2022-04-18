@@ -1,5 +1,6 @@
 <template>
   <fieldset className="tableContent">
+    
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">

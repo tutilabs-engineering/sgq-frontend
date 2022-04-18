@@ -18,6 +18,8 @@ import StartupCadastro from "../components/StartupCadastro/StartupCadastro.vue";
 import ListaPerguntas from "../components/ListaPerguntas/ListaPerguntas.vue";
 import BtnStartupCreate from "../components/BtnStartupCreate/BtnStartupCreate.vue";
 
+import axios from "axios"
+
 import http from "../services/startup";
 
 export default {
@@ -105,35 +107,36 @@ export default {
       }
 
       const dataOp = await http.listDataByCodeOp(code_op);
-      const data = dataOp.data.data_op;
-      this.headerInfo.client = data.client;
-      this.headerInfo.codeClient = data.code_client;
-      this.headerInfo.product = data.product;
-      this.headerInfo.codeProduct = data.code_product;
+      const data = dataOp.data.results[0];
+      this.headerInfo.client = data.CardName;
+      this.headerInfo.codeClient = data.U_Cliente;
+      this.headerInfo.product = data.ProdName;
+      this.headerInfo.codeProduct = data.ItemCode;
       this.headerInfo.date = GetDateTime().GetDate();
       this.headerInfo.startTime = GetDateTime().GetStartHour();
 
       //techniqueData
 
-      this.techniqueInfo.cavity = data.cavity;
-      this.techniqueInfo.cycle = data.cycle;
+      this.techniqueInfo.cavity = data.U_EP_Cav;
+      this.techniqueInfo.cycle = data.U_EP_CIC;
 
       // //componentsInfo
      
 
-      data.components.map( (item) => {
+      data.Itens.map( (item) => {
         this.componentsInfo.push( {
-          description: item.description,
+          description: item.Descrição,
           item_number: item.ItemCode,
           planned: item.PlannedQty,
-          um: item.UM
+          um: item.InvntryUom
         })
       })
 
 
       this.$store.commit("$SETDATACREATESTARTUP", {techniqueData: this.techniqueInfo, components: this.componentsInfo});
 
-    }
+    },
+
   } 
 };
 </script>
