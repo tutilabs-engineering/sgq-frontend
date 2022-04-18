@@ -1,7 +1,9 @@
 <template>
   <div class="content-questions">
+    
     <fieldset class="content-tablePerguntas">
       <legend class="legenda">Perguntas Padrões</legend>
+      
       <div
         class="defaultQuestion"
         v-for="defaultQuestion in defaultQuestions"
@@ -29,12 +31,12 @@
       
     </fieldset>
 
-    <fieldset>
+    <!-- <fieldset>
       <TableQtdeCavidade :numberCavidade="numberCavidade" :codProd="code_product"/>
-    </fieldset>
+    </fieldset> -->
 
     <fieldset class="content-imgs">
-      <UploadImage :id="1" />
+      <UploadImage :id="1" :img="this.startupData.img_1"/>
       <UploadImage :id="2" />
       <UploadImage :id="3" />
     </fieldset>
@@ -44,7 +46,7 @@
 <script>
 import PerguntaAnalise from "../PerguntaAnalise/PerguntaAnalise.vue";
 import PerguntaPadrao from "../PerguntaPadrao/PerguntaPadrao.vue";
-import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
+// import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
 import UploadImage from "../UploadImage/UploadImage.vue";
 import http from "../../services/startup/index";
 import httpAttributes from "../../services/productAnalysis/Attributes"
@@ -56,6 +58,7 @@ export default {
       specificQuestions: [],
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
+      datastartip: this.startupData,
     };
 
     
@@ -64,11 +67,12 @@ export default {
   props: {
     qtdeCavidade: Number,
     code_product: String,
+    startupData: Array,
   },
   components: {
     PerguntaPadrao,
     PerguntaAnalise,
-    TableQtdeCavidade,
+    // TableQtdeCavidade,
     UploadImage,
   },
   created: async function () {
@@ -76,7 +80,7 @@ export default {
     const responseDefaultQuestions = await http.listAllDefaultQuestions();
     this.defaultQuestions = responseDefaultQuestions.data.defaultQuestions;
 
-    const responseSpecificQuestions = await httpAttributes.FindAttributesByCodeProduct(this.code_product);
+    const responseSpecificQuestions = await httpAttributes.FindAttributesByCodeProduct(this.startupData.op.code_product);
 
     if(responseSpecificQuestions) {
       
