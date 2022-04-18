@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "start": "vue-cli-service serve",
-    "production": "serve -s -p 2500 ./dist"
+    "production": "serve -s -p 3000 ./dist"
   },
   "dependencies": {
     "apexcharts": "^3.33.2",
