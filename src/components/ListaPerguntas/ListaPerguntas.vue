@@ -1,18 +1,24 @@
 <template>
   <div class="content-questions">
+    
     <fieldset class="content-tablePerguntas">
+
       <legend class="legenda">Perguntas Padrões</legend>
+<!--       
       <div
         class="defaultQuestion"
-        v-for="defaultQuestion in defaultQuestions"
-        :key="defaultQuestion.id"
+        v-for="data in datastartup"
+
+
+        :key="data.id"
       >
-        <PerguntaPadrao
-          :description="defaultQuestion.description"
-          :idQuestion="defaultQuestion.id"
-          @returnAnswered="ReturnAnswered"
+
+      {{data.title}}
+    
+        <PerguntaRespondida
+          :description="data.description" :title="data.title" :response="data.status"
         />
-      </div>
+      </div> -->
     </fieldset>
 
     <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
@@ -29,9 +35,9 @@
       
     </fieldset>
 
-    <fieldset>
+    <!-- <fieldset>
       <TableQtdeCavidade :numberCavidade="numberCavidade" :codProd="code_product"/>
-    </fieldset>
+    </fieldset> -->
 
     <fieldset class="content-imgs">
       <UploadImage :id="1" />
@@ -43,8 +49,8 @@
 
 <script>
 import PerguntaAnalise from "../PerguntaAnalise/PerguntaAnalise.vue";
-import PerguntaPadrao from "../PerguntaPadrao/PerguntaPadrao.vue";
-import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
+// import PerguntaRespondida from "../PerguntaRespondida/PerguntaRespondida.vue";
+// import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
 import UploadImage from "../UploadImage/UploadImage.vue";
 import http from "../../services/startup/index";
 import httpAttributes from "../../services/productAnalysis/Attributes"
@@ -56,6 +62,7 @@ export default {
       specificQuestions: [],
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
+      datastartup: this.startupData.report_startup_fill.default_questions_responses.default_questions,
     };
 
     
@@ -64,11 +71,12 @@ export default {
   props: {
     qtdeCavidade: Number,
     code_product: String,
+    startupData: Array,
   },
   components: {
-    PerguntaPadrao,
+    // PerguntaRespondida,
     PerguntaAnalise,
-    TableQtdeCavidade,
+    // TableQtdeCavidade,
     UploadImage,
   },
   created: async function () {
@@ -76,7 +84,7 @@ export default {
     const responseDefaultQuestions = await http.listAllDefaultQuestions();
     this.defaultQuestions = responseDefaultQuestions.data.defaultQuestions;
 
-    const responseSpecificQuestions = await httpAttributes.FindAttributesByCodeProduct(this.code_product);
+    const responseSpecificQuestions = await httpAttributes.FindAttributesByCodeProduct(this.startupData.op.code_product);
 
     if(responseSpecificQuestions) {
       

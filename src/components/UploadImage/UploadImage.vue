@@ -30,6 +30,7 @@ export default {
 
   props: {
     id: Number,
+    img: String,
   },
 
   methods: {
