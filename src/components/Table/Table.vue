@@ -183,7 +183,6 @@ export default {
     },
 
     formatDate(date) {
-      console.log(date);
       this.year = date.slice(0, -6)
       this.month = date.slice(5, -3)
       this.day = date.slice(-2)

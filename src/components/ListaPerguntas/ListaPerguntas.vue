@@ -63,6 +63,7 @@ export default {
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
       datastartup: this.startupData.report_startup_fill.default_questions_responses.default_questions,
+      exit: ""
     };
 
     
@@ -102,12 +103,12 @@ export default {
   methods: {
     ReturnAnswered: async function(answered){
       this.$store.commit("$SETQTDEPERGUNTASPADROES"); 
-      console.log(answered)
+      this.exit = answered
     },
 
     ReturnSpecificAnswered: async function(specificAnswered){
       this.$store.commit("$SETQTDEPERGUNTASESPECIFICAS");
-      console.log(specificAnswered)
+      this.exit = specificAnswered
     }
 
   },

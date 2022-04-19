@@ -86,17 +86,14 @@ export default {
       file: ''
      }
     })
-     
-     console.log( this.specificQuestions);
+  
     this.$store.commit("$SETISLOADING");
   },
 
   methods: {
 
-
     getSpecificAnswered: async function(specificAnswered){
-          this.$store.commit("$SETDATAFILLSTARTUP",{ specific_questions : specificAnswered})
-      console.log(specificAnswered)
+      this.$store.commit("$SETDATAFILLSTARTUP",{ specific_questions : specificAnswered})
     },
 
     getAnswered: async function(res){

@@ -1,17 +1,16 @@
 <template>
   <div class="content-novaStartup" v-if="!isFilled">
-    <StartupCadastroPreenchido @returnCodeOp="ReturnCodeOp" :headerPreenchida="headerPreenchida"/>
+    <StartupCadastroPreenchido @returnCodeOp="ReturnCodeOp" :headerPreenchida="headerPreenchida" />
     <TableCavidadePreenchido :techniqueInfo="techniqueInfo" />
     <TableComponentesPreenchido :componentsInfo="componentsInfo"/>
-    
     <ListaPerguntasPreenchida :id_startup="id_startup" :qtdeCavidade="techniqueInfo.cavity" :code_product="data_startup.op.code_product"/>
     
     <!-- <BtnStartupCreate @returnFillStatus="changedShowQuestions" /> -->
    <div class="group-buttons">
-  <div class="btns-options">
-      <button class="btn-cancel btn">Cancelar</button>
-      <button class="btn-save btn" @click="saveFillReportStartup">Preencher</button>
-  </div>
+    <div class="btns-options">
+        <button class="btn-cancel btn">Cancelar</button>
+        <button class="btn-save btn" @click="saveFillReportStartup">Preencher</button>
+    </div>
   </div>
   </div>
   <div class="content-novaStartup"  v-else>
@@ -82,11 +81,9 @@ export default {
 
     
     this.$store.commit("$SETISLOADING");
-    console.log(this.itsCreation)
 
      await http.findReportStartupById(this.id_startup).then( (res) => {
        this.data_startup = res.data;
-       console.log(this.data_startup);
        this.headerPreenchida.code_op = this.data_startup.op.code_op
        this.headerPreenchida.client = this.data_startup.op.client
        this.headerPreenchida.codeClient = this.data_startup.op.code_client
@@ -104,9 +101,6 @@ export default {
        this.componentsInfo = this.data_startup.op.components
 
        this.isFilled = this.data_startup.filled
-       console.log(this.isFilled);
-
-       
 
      })
 
@@ -151,11 +145,7 @@ export default {
     form.append("default_questions",JSON.stringify(data.default_question))
     form.append("specific_questions",JSON.stringify(data.specific_questions))
   
-   await http.fillReportStartup(this.id_startup,form).then((res)=>{
-     console.log(res);
-   }).catch((error)=>{
-     console.log(error.response);
-   })
+   await http.fillReportStartup(this.id_startup,form)
      this.$store.commit("$SETISLOADING");
    
    },

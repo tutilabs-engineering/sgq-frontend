@@ -81,7 +81,6 @@ export default createStore({
       state.fillReportStartup.img_1 = img_1 ||  state.fillReportStartup.img_1
       state.fillReportStartup.img_2 = img_2 ||  state.fillReportStartup.img_2
       state.fillReportStartup.img_3 = img_3 ||  state.fillReportStartup.img_3
-    // console.log(state.fillReportStartup);
     }
 
   },
@@ -113,7 +112,6 @@ export default createStore({
       state.createDataStartup.user_id = await userId.DataUser().then((res)=>{
         return res.data.user.id
       })
-      console.log(state.createDataStartup);
       return state.createDataStartup
     },
     $GETDATAFILLREPORTSTARTUP(state){

@@ -90,15 +90,12 @@ export default {
                     const data = await this.$store.getters.$GETDATACREATESTARTUP
                     if(data){ 
                     await http.createNewStartup(data).then( (res) => {
-                        
-                        console.log("Nova Startup Salva", res);
                         Toast.fire({
                             icon: 'success',
                             title: 'Salvo com sucesso',
                             background: "#fff",
                         })
                     }).catch ( (error) => {
-                        console.log(error.response);
                         if(error.response.status === 400) {
                             Toast.fire({
                             icon: 'warning',

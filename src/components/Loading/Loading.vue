@@ -18,7 +18,6 @@ export default {
     mostrarLoading() {
       if (this.isLoading === false) {
         this.displayLoading = false;
-        console.log(this.displayLoading);
       }
     },
   },

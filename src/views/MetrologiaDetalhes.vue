@@ -68,6 +68,7 @@ export default {
           dataVariables: [],
           opById: [],
           qtdeCavidade: 0,
+          exit: ""
         };
     },
 
@@ -77,7 +78,6 @@ export default {
        await http.FindMetrologyById(id).then( (res) => {
         
         this.opById = res.data.list
-        console.log(this.opById);
       })
       
      
@@ -130,9 +130,7 @@ export default {
                
                 
          await http.UpdateDataMetrologyOfStartup(startup, data).then((res)=>{
-           console.log(res);
-
-            
+           this.exit = res
 
          }).catch((error)=>{
            Toast.fire({

@@ -114,7 +114,6 @@ export default {
       deep:true,
       immediate:true,
       handler(newValue){
-      //  console.log(newValue);
       this.$emit("returnSpecificAnswered", newValue)
 
       }
