@@ -1,5 +1,21 @@
 <template>
-  <div class="content-imgPreview">
+  <div class="content-imgPreview" v-if="imgName">
+    <div class="container-img">
+      <img :src="preview" class="img-fluid" />
+    </div>
+
+    <div v-if="imgStatus">
+      <label :for="myFile" class="selectImg">Selecione a Imagem</label>
+      <input type="file"  @change="previewImage" class="form-control-file" :id="myFile">
+    </div>
+
+    <div v-else>
+      <button class="selectImg">Indisponivel</button>
+    </div>
+
+  </div>
+
+  <div class="content-imgPreview" v-else>
     <div class="container-img">
       <img :src="preview" class="img-fluid" />
     </div>
@@ -31,6 +47,15 @@ export default {
   props: {
     id: Number,
     img: String,
+    imgName: String,
+  },
+
+  created: async function (){
+    if(this.imgName){
+    const x = `${this.$store.state.urlImg}/startup/questionsUploads/${this.imgName}`
+    this.changeImgStatus()
+    this.preview = x  
+    }
   },
 
   methods: {

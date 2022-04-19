@@ -62,7 +62,6 @@ export default {
     if(this.id_startup) {
       this.itsCreation = false
     }
-    console.log(this.itsCreation)
   },
   methods: {
     changedShowQuestions(e) {

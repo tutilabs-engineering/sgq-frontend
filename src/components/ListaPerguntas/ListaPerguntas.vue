@@ -2,37 +2,20 @@
   <div class="content-questions">
     
     <fieldset class="content-tablePerguntas">
-
       <legend class="legenda">Perguntas Padrões</legend>
-<!--       
-      <div
-        class="defaultQuestion"
-        v-for="data in datastartup"
+      
+        <PerguntaRespondida :answeredQuestions="datastartup" />
 
-
-        :key="data.id"
-      >
-
-      {{data.title}}
-    
-        <PerguntaRespondida
-          :description="data.description" :title="data.title" :response="data.status"
-        />
-      </div> -->
     </fieldset>
 
-    <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
+    <fieldset class="content-tablePerguntas" v-if="datastartupSpecifcs.length == 0">
       <legend class="legenda-warning">Não há Perguntas Especificas para este Produto<br/><span>Verifique a tabela de análise</span></legend>
     </fieldset>
 
     <fieldset class="content-tablePerguntas" v-else>
       <legend class="legenda">Tabela de Análise</legend>
 
-      <div  v-for="specificQuestion in specificQuestions.slice().reverse()" :key="specificQuestion.id">
-        <PerguntaAnalise :flag="specificQuestion.attention" :description="specificQuestion.question" :idQuestion="specificQuestion.id"
-        @returnSpecificAnswered="ReturnSpecificAnswered" v-show="specificQuestion.is_enabled"/>
-      </div>
-      
+        <PerguntaAnaliseRespondida :answeredSpecficsQuestions="datastartupSpecifcs"/>
     </fieldset>
 
     <!-- <fieldset>
@@ -40,16 +23,16 @@
     </fieldset> -->
 
     <fieldset class="content-imgs">
-      <UploadImage :id="1" />
-      <UploadImage :id="2" />
-      <UploadImage :id="3" />
+      <UploadImage :id="1" :imgName="this.startupData.img_1" />
+      <UploadImage :id="2" :imgName="this.startupData.img_2"/>
+      <UploadImage :id="3" :imgName="this.startupData.img_3"/>
     </fieldset>
   </div>
 </template>
 
 <script>
-import PerguntaAnalise from "../PerguntaAnalise/PerguntaAnalise.vue";
-// import PerguntaRespondida from "../PerguntaRespondida/PerguntaRespondida.vue";
+import PerguntaAnaliseRespondida from "../PerguntaAnaliseRespondida/PerguntaAnaliseRespondida.vue";
+import PerguntaRespondida from "../PerguntaRespondida/PerguntaRespondida.vue";
 // import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
 import UploadImage from "../UploadImage/UploadImage.vue";
 import http from "../../services/startup/index";
@@ -58,11 +41,14 @@ import httpAttributes from "../../services/productAnalysis/Attributes"
 export default {
   data() {
     return {
+      
       defaultQuestions: [],
       specificQuestions: [],
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
       datastartup: this.startupData.report_startup_fill.default_questions_responses.default_questions,
+      datastartupSpecifcs: this.startupData.report_startup_fill.specific_questions_responses.specific_questions,
+      exit: ""
     };
 
     
@@ -74,8 +60,8 @@ export default {
     startupData: Array,
   },
   components: {
-    // PerguntaRespondida,
-    PerguntaAnalise,
+    PerguntaRespondida,
+    PerguntaAnaliseRespondida,
     // TableQtdeCavidade,
     UploadImage,
   },
@@ -102,12 +88,12 @@ export default {
   methods: {
     ReturnAnswered: async function(answered){
       this.$store.commit("$SETQTDEPERGUNTASPADROES"); 
-      console.log(answered)
+      this.exit = answered
     },
 
     ReturnSpecificAnswered: async function(specificAnswered){
       this.$store.commit("$SETQTDEPERGUNTASESPECIFICAS");
-      console.log(specificAnswered)
+      this.exit = specificAnswered
     }
 
   },
