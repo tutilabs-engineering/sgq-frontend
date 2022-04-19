@@ -31,6 +31,14 @@ export default {
   props: {
     id: Number,
     img: String,
+    imgName: String,
+  },
+
+  created: async function (){
+    if(this.imgName){
+    const x = `${this.$store.state.urlImg}/startup/questionsUploads/${this.imgName}`
+    this.preview = x  
+    }
   },
 
   methods: {

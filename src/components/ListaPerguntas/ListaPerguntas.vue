@@ -28,9 +28,9 @@
     </fieldset> -->
 
     <fieldset class="content-imgs">
-      <UploadImage :id="1" />
-      <UploadImage :id="2" />
-      <UploadImage :id="3" />
+      <UploadImage :id="1" :imgName="this.startupData.img_1" />
+      <UploadImage :id="2" :imgName="this.startupData.img_2"/>
+      <UploadImage :id="3" :imgName="this.startupData.img_3"/>
     </fieldset>
   </div>
 </template>

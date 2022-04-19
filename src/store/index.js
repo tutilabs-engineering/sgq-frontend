@@ -3,6 +3,7 @@ import  userId  from '../utils/dataUser'
 
 export default createStore({
   state: {
+    urlImg: 'http://localhost:8000/static',
     user: {
       name: ""
     },
