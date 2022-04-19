@@ -96,6 +96,19 @@ export default {
                             background: "#fff",
                         })
 
+                        this.$swal
+                        .fire({
+                            title: "Tudo certo!",
+                            text: "A Startup foi cadastrada com Sucesso!",
+                            imageUrl: "/img/allright.gif",
+                            imageWidth: 400,
+                            imageHeight: 200,
+                            imageAlt: "Custom image",
+                        })
+                        .then(() => {
+                            this.$router.push({ name: "Startup" });
+                        });
+
                         
                     }).catch ( (error) => {
                         if(error.response.data.message === "Already exists a startup open with this code_op"){
@@ -117,7 +130,6 @@ export default {
                             background: "#e3e745",
                         })
                         }
-                        console.log(error.response.data.message);
                        if(error.response.status === 401) {
                             Toast.fire({
                             icon: 'warning',

@@ -113,6 +113,10 @@ export default {
 
        this.componentsInfo = this.data_startup.op.components
 
+       console.log(this.data_startup);
+       console.log(this.componentsInfo)
+       console.log(this.data_startup.op.components);
+      
        this.isFilled = this.data_startup.filled
        console.log('Status Preenchido:', this.isFilled);
 
@@ -161,7 +165,7 @@ export default {
       .fire({
         title: "Tudo certo!",
         text: "A Startup foi preenchida com sucesso!",
-        imageUrl: "/img/emConstrucao.gif",
+        imageUrl: "/img/allright.gif",
         imageWidth: 400,
         imageHeight: 200,
         imageAlt: "Custom image",
