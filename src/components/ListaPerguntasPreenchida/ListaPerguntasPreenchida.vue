@@ -56,7 +56,6 @@ export default {
 
   props: {
     qtdeCavidade: Number,
-    code_product: String,
     id_startup: Number,
   },
   components: {
@@ -91,6 +90,7 @@ export default {
   },
 
   methods: {
+
 
     getSpecificAnswered: async function(specificAnswered){
       this.$store.commit("$SETDATAFILLSTARTUP",{ specific_questions : specificAnswered})

@@ -1,59 +1,59 @@
 <template>
-<div v-for="(defaultQuestion,index) in defaultQuestions"  :key="defaultQuestion.fk_default_question">
+<div v-for="(answeredQuestion,index) in answeredQuestions"  :key="answeredQuestion.fk_default_question">
   <div class="question"  >
     <fieldset>
       <div class="first-row">
 
-        <div v-if="defaultQuestion.status == 0">
+        <div v-if="answeredQuestion.status == 0">
           <i class="far fa-circle" aria-hidden="true"></i>
         </div>
 
-        <div v-if="defaultQuestion.status == 1">
+        <div v-if="answeredQuestion.status == 1">
           <i class="fa fa-check-circle" aria-hidden="true"></i>
         </div>
-        <div v-if="defaultQuestion.status == 2">
+        <div v-if="answeredQuestion.status == 2">
           <i class="fa fa-times-circle"></i>
         </div>
-        <div v-if="defaultQuestion.status == 3">
+        <div v-if="answeredQuestion.status == 3">
           <i class="fa fa-exclamation-circle"></i>
         </div>
-        <div v-if="defaultQuestion.status == 4">
+        <div v-if="answeredQuestion.status == 4">
           <i class="fa fa-check-circle fa-blue" aria-hidden="true"></i>
         </div>
 
-        <label for="res">{{ title }}</label>
+        <label for="res">{{ answeredQuestion.title }}</label>
       </div>
 
       <div class="second-row">
-        <input type="text" v-model="response" placeholder="Aguardando Resposta" />
+        <input type="text" v-model="answeredQuestion.description" placeholder="Aguardando Resposta" disabled/>
       </div>
 
       <div class="third-row">
         <div class="input">
-          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP" value="1" @change="changeIcon(1)" @click="isAnswerd"/>
+          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP" value="1" @change="changeIcon(1)" @click="isAnswerd" disabled/>
           <label for="Ap">C</label>
         </div>
 
         <div class="input">
-          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP"  value="2" @change="changeIcon(2)" @click="isAnswerd"/>
+          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="2" @change="changeIcon(2)" @click="isAnswerd" disabled/>
           <label for="Ap">NC</label>
         </div>
 
         <div class="input">
-          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP"  value="3" @change="changeIcon(3)" @click="isAnswerd"/>
+          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="3" @change="changeIcon(3)" @click="isAnswerd" disabled/>
           <label for="Ap">NA</label>
         </div>
       </div>
 
       <div class="fourth-row">
         <div class="input">
-          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP"  value="4" @change="changeIcon(4)" @click="isAnswerd"/>
+          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="4" @change="changeIcon(4)" @click="isAnswerd" disabled/>
           <label for="Ap">GM</label>
         </div>
-        <label :for="defaultQuestion.fk_default_question" class="labelFile">Enviar Arquivo</label>
+        <label :for="answeredQuestion.fk_default_question" class="labelFile">Enviar Arquivo</label>
      
   
-        <input type="file" :name="defaultQuestion.fk_default_question" :id="defaultQuestion.fk_default_question" class="input_file" @change="addFile($event,index)" />
+        <input type="file" :name="answeredQuestion.fk_default_question" :id="answeredQuestion.fk_default_question" class="input_file" @change="addFile($event,index)" />
       </div>
       
     </fieldset>
@@ -64,10 +64,8 @@
 <script>
 export default {
   props: {
-    description: String,
-    title: String,
-    response: String
-
+    answeredQuestions: Array,
+    idQuestion: String,
 
   },
 
@@ -82,13 +80,13 @@ export default {
     },
      addFile(event,index){
       // eslint-disable-next-line vue/no-mutating-props
-      this.defaultQuestions[index].file = event.target.files[0] 
+      this.answeredQuestions[index].file = event.target.files[0] 
    
     }
   },
 
   watch: {
-    defaultQuestions : {
+    answeredQuestions : {
       deep:true,
       immediate:true,
       handler(newvalue){
@@ -102,10 +100,10 @@ export default {
     return {
       valueQuestion: 0,
       answered: false,
-      // response: {
-      //   id: this.idQuestion,
+      response: {
+        id: this.idQuestion,
 
-      // },
+      },
 
     };
   },

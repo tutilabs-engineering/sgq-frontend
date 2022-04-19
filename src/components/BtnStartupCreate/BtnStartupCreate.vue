@@ -95,14 +95,30 @@ export default {
                             title: 'Salvo com sucesso',
                             background: "#fff",
                         })
+
+                        
                     }).catch ( (error) => {
-                        if(error.response.status === 400) {
+                        if(error.response.data.message === "Already exists a startup open with this code_op"){
+                            Toast.fire({
+                                icon: 'warning',
+                                title: 'Já existe uma Startup aberta com esta Ordem de Produção',
+                                background: "#e3e745",
+                            })
+                        } else if(error.response.data.message === "Does not exists variables in this product"){
+                            Toast.fire({
+                                icon: 'warning',
+                                title: 'Não existem variáveis cadastradas para este produto',
+                                background: "#e3e745",
+                            })
+                        }else {
                             Toast.fire({
                             icon: 'warning',
-                            title: 'Não foi possível cadastrar esta Startup, ela já está em Andamento',
+                            title: 'Verifique se todos os campos foram preenchidos',
                             background: "#e3e745",
                         })
-                        }else if(error.response.status === 401) {
+                        }
+                        console.log(error.response.data.message);
+                       if(error.response.status === 401) {
                             Toast.fire({
                             icon: 'warning',
                             title: 'Apenas Analista, Metrologista e Inspetor podem cadastrar uma Startup',
