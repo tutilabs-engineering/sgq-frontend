@@ -52,7 +52,6 @@ export default {
 
   methods: {
     verifyOP: async function (list_op){
-      console.log(list_op);
       if(list_op == 0){
         return false
       }else {

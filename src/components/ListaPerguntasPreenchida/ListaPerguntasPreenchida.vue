@@ -56,7 +56,6 @@ export default {
 
   props: {
     qtdeCavidade: Number,
-    code_product: String,
     id_startup: Number,
   },
   components: {
@@ -86,8 +85,7 @@ export default {
       file: ''
      }
     })
-     
-     console.log( this.specificQuestions);
+  
     this.$store.commit("$SETISLOADING");
   },
 
@@ -95,8 +93,7 @@ export default {
 
 
     getSpecificAnswered: async function(specificAnswered){
-          this.$store.commit("$SETDATAFILLSTARTUP",{ specific_questions : specificAnswered})
-      console.log(specificAnswered)
+      this.$store.commit("$SETDATAFILLSTARTUP",{ specific_questions : specificAnswered})
     },
 
     getAnswered: async function(res){

@@ -48,20 +48,16 @@ export default {
         }).catch ((error) => {
           console.log(error)
         });
-        
-        console.log(this.variables);
         this.variables.map( (item) => {
           this.matriz.push(item.id)
         })
 
-        console.log(this.matriz)
 
     },
 
     
     methods: {
       teste: function (inputValue, max, min) {
-        console.log(inputValue)
         if(inputValue > max || inputValue < min) {
           console.log("inválido");
           // efeitos pipi

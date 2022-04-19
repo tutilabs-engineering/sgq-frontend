@@ -1,7 +1,9 @@
 <template>
-<div v-for="(answeredQuestion,index) in answeredQuestions"  :key="answeredQuestion.fk_default_question">
-  <div class="question"  >
-    <fieldset>
+<div v-for="(answeredQuestion, index) in answeredQuestions" :key="answeredQuestion.fk_specific_question">
+
+  <div class="question" v-show="answeredQuestion.is_enabled" >
+    <fieldset v-bind:class="classCard">
+
       <div class="first-row">
 
         <div v-if="answeredQuestion.status == 0">
@@ -21,7 +23,7 @@
           <i class="fa fa-check-circle fa-blue" aria-hidden="true"></i>
         </div>
 
-        <label for="res">{{ answeredQuestion.title }}</label>
+        <label for="res">{{ answeredQuestion.question }}</label>
       </div>
 
       <div class="second-row">
@@ -30,68 +32,74 @@
 
       <div class="third-row">
         <div class="input">
-          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP" value="1" @change="changeIcon(1)" @click="isAnswerd" disabled/>
+          <input type="radio" :name="idQuestion" v-model="answeredQuestion.status" value="1" id="AP" @change="changeIcon(1)" @click="isSpecificAnswerd" disabled/>
           <label for="Ap">C</label>
         </div>
 
         <div class="input">
-          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="2" @change="changeIcon(2)" @click="isAnswerd" disabled/>
+          <input type="radio" :name="idQuestion" v-model="answeredQuestion.status" value="2"  id="AP"  @change="changeIcon(2)" @click="isSpecificAnswerd" disabled/>
           <label for="Ap">NC</label>
         </div>
 
         <div class="input">
-          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="3" @change="changeIcon(3)" @click="isAnswerd" disabled/>
+          <input type="radio" :name="idQuestion" v-model="answeredQuestion.status" id="AP" value="3"   @change="changeIcon(3)" @click="isSpecificAnswerd" disabled/>
           <label for="Ap">NA</label>
         </div>
       </div>
 
       <div class="fourth-row">
         <div class="input">
-          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="4" @change="changeIcon(4)" @click="isAnswerd" disabled/>
+          <input type="radio" :name="idQuestion" v-model="answeredQuestion.status" id="AP" value="4"   @change="changeIcon(4)" @click="isSpecificAnswerd"/>
           <label for="Ap">GM</label>
         </div>
-        <label :for="answeredQuestion.fk_default_question" class="labelFile">Enviar Arquivo</label>
-     
-  
-        <input type="file" :name="answeredQuestion.fk_default_question" :id="answeredQuestion.fk_default_question" class="input_file" @change="addFile($event,index)" />
+        <label :for="answeredQuestion.fk_specific_question" class="labelFile">Enviar Arquivo</label>
+        <input type="file" :name="answeredQuestion.fk_specific_question" :id="answeredQuestion.fk_specific_question" class="input_file"  @change="addFile($event,index)" />
       </div>
-      
+
     </fieldset>
-   </div>
+  </div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    answeredQuestions: Array,
+    answeredSpecficsQuestions: Object,
     idQuestion: String,
+  },
 
+  created: async function () {
+ 
+    if(this.flag === true){
+        this.classCard = "card-flag"
+        return this.classCard
+    }else {
+        this.classCard = "card"
+        return this.classCard
+    }        
   },
 
   methods: {
     changeIcon(e){
-      this.valueQuestion = e
+      this.valueQuestion = e 
     },
 
-    isAnswerd(){
-      this.answered = true
-      
+    isSpecificAnswerd(){
+      this.specificAnswered = true
     },
      addFile(event,index){
       // eslint-disable-next-line vue/no-mutating-props
-      this.answeredQuestions[index].file = event.target.files[0] 
-   
+      this.answeredSpecficsQuestions[index].file = event.target.files[0]
     }
   },
 
   watch: {
-    answeredQuestions : {
+    answeredQuestion: {
       deep:true,
       immediate:true,
-      handler(newvalue){
-         this.$emit("returnAnswered", newvalue)
-      
+      handler(newValue){
+      this.$emit("returnSpecificAnswered", newValue)
+
       }
     }
   },
@@ -99,12 +107,13 @@ export default {
   data() {
     return {
       valueQuestion: 0,
-      answered: false,
+      specificAnswered: false,
+      flag: this.answeredSpecficsQuestions.attention,
+      answeredQuestions: this.answeredSpecficsQuestions,
       response: {
         id: this.idQuestion,
-
       },
-
+      classCard: "",
     };
   },
 };
@@ -123,7 +132,19 @@ export default {
   margin-bottom: 20px;
 }
 
-fieldset {
+.card-flag {
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  border-right: 10px solid var(--flag_yellow);
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.card {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
   height: 100%;
@@ -200,6 +221,7 @@ input[type="radio"] {
   cursor: pointer;
 }
 
+
 .fa-times-circle {
   color: var(--card_red);
 }
@@ -209,7 +231,7 @@ input[type="radio"] {
 }
 
 .fa-blue {
-  color: var(--flag_yellow);
+  color: var(--card_blue);
 }
 
 .fa-circle {

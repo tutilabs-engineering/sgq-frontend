@@ -172,8 +172,6 @@ export default {
       .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
       .then((res) => {
         this.variables = res.data.list;
-
-        console.log(this.variables)
       });
     this.$store.commit("$SETISLOADING");
   },
@@ -184,14 +182,12 @@ export default {
       this.list.file = e.target.files[0]
       if(this.list.file != "") {
          this.statusButtonImage = false
-         console.log(this.list.file)
       }
     },
 
     changeStatusButtonImage() {
       this.statusButtonImage = true
       this.list.file = "";
-      console.log(this.list.file)
     },
 
     getComments(value) {
@@ -240,7 +236,6 @@ export default {
       formData.append("min", this.list.min)
       formData.append("file", this.list.file)
 
-      console.log(this.list);
       await http
         .CreateVariable(formData)
         .then((res) => {

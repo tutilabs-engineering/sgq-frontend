@@ -90,22 +90,47 @@ export default {
                     const data = await this.$store.getters.$GETDATACREATESTARTUP
                     if(data){ 
                     await http.createNewStartup(data).then( (res) => {
-                        
-                        console.log("Nova Startup Salva", res);
                         Toast.fire({
                             icon: 'success',
                             title: 'Salvo com sucesso',
                             background: "#fff",
                         })
+
+                        this.$swal
+                        .fire({
+                            title: "Tudo certo!",
+                            text: "A Startup foi cadastrada com Sucesso!",
+                            imageUrl: "/img/allright.gif",
+                            imageWidth: 400,
+                            imageHeight: 200,
+                            imageAlt: "Custom image",
+                        })
+                        .then(() => {
+                            this.$router.push({ name: "Startup" });
+                        });
+
+                        
                     }).catch ( (error) => {
-                        console.log(error.response);
-                        if(error.response.status === 400) {
+                        if(error.response.data.message === "Already exists a startup open with this code_op"){
+                            Toast.fire({
+                                icon: 'warning',
+                                title: 'Já existe uma Startup aberta com esta Ordem de Produção',
+                                background: "#e3e745",
+                            })
+                        } else if(error.response.data.message === "Does not exists variables in this product"){
+                            Toast.fire({
+                                icon: 'warning',
+                                title: 'Não existem variáveis cadastradas para este produto',
+                                background: "#e3e745",
+                            })
+                        }else {
                             Toast.fire({
                             icon: 'warning',
-                            title: 'Não foi possível cadastrar esta Startup, ela já está em Andamento',
+                            title: 'Verifique se todos os campos foram preenchidos',
                             background: "#e3e745",
                         })
-                        }else if(error.response.status === 401) {
+                        }
+                       if(error.response.status === 401) {
                             Toast.fire({
                             icon: 'warning',
                             title: 'Apenas Analista, Metrologista e Inspetor podem cadastrar uma Startup',

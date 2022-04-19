@@ -1,26 +1,37 @@
 <template>
   <div class="content-novaStartup" v-if="!isFilled">
-    <StartupCadastroPreenchido @returnCodeOp="ReturnCodeOp" :headerPreenchida="headerPreenchida"/>
+    <fieldset>
+      <legend>
+        Status
+      </legend>
+      <span class="startup-nao-preenchida">Startup NÃO Preenchida</span>
+    </fieldset>
+    <StartupCadastroPreenchido @returnCodeOp="ReturnCodeOp" :headerPreenchida="headerPreenchida" />
     <TableCavidadePreenchido :techniqueInfo="techniqueInfo" />
     <TableComponentesPreenchido :componentsInfo="componentsInfo"/>
-    
-    <ListaPerguntasPreenchida :id_startup="id_startup" :qtdeCavidade="techniqueInfo.cavity" :code_product="data_startup.op.code_product"/>
+    <ListaPerguntasPreenchida :id_startup="id_startup" :qtdeCavidade="techniqueInfo.cavity"/>
     
     <!-- <BtnStartupCreate @returnFillStatus="changedShowQuestions" /> -->
    <div class="group-buttons">
-  <div class="btns-options">
-      <button class="btn-cancel btn">Cancelar</button>
-      <button class="btn-save btn" @click="saveFillReportStartup">Preencher</button>
+    <div class="btns-options">
+        <button class="btn-cancel btn">Cancelar</button>
+        <button class="btn-save btn" @click="saveFillReportStartup">Preencher</button>
+    </div>
   </div>
   </div>
-  </div>
-  <div class="content-novaStartup"  v-else>
+  <div class="content-novaStartup" v-else>
+    <fieldset>
+      <legend>
+        Status
+      </legend>
+      <span class="startup-preenchida">Startup Preenchida</span>
+    </fieldset>
 
     <StartupCadastroPreenchido @returnCodeOp="ReturnCodeOp" :headerPreenchida="headerPreenchida"/>
     <TableCavidadePreenchido :techniqueInfo="techniqueInfo" />
     <TableComponentesPreenchido :componentsInfo="componentsInfo"/>
 
-    <!-- <ListaPerguntas :startupData="data_startup" /> -->
+    <ListaPerguntas :startupData="data_startup" />
   </div>
 </template>
 
@@ -29,8 +40,8 @@ import TableCavidadePreenchido from "../components/TableCavidadePreenchido/Table
 import TableComponentesPreenchido from "../components/TableComponentesPreenchido/TableComponentesPreenchido.vue";
 import StartupCadastroPreenchido from "../components/StartupCadastroPreenchido/StartupCadastroPreenchido.vue";
 import ListaPerguntasPreenchida from "../components/ListaPerguntasPreenchida/ListaPerguntasPreenchida.vue";
-// import ListaPerguntas from '../components/ListaPerguntas/ListaPerguntas.vue'
-// import BtnStartupCreate from "../components/BtnStartupCreate/BtnStartupCreate.vue";
+import ListaPerguntas from '../components/ListaPerguntas/ListaPerguntas.vue'
+
 
 import http from "../services/startup";
 
@@ -75,18 +86,17 @@ export default {
     TableCavidadePreenchido,
     TableComponentesPreenchido,
     ListaPerguntasPreenchida,
-    // ListaPerguntas,
-    // BtnStartupCreate,
+    ListaPerguntas,
   },
+
+  
   created: async function() {
 
     
-    this.$store.commit("$SETISLOADING");
-    console.log(this.itsCreation)
 
      await http.findReportStartupById(this.id_startup).then( (res) => {
+       this.$store.commit("$SETISLOADING");
        this.data_startup = res.data;
-       console.log(this.data_startup);
        this.headerPreenchida.code_op = this.data_startup.op.code_op
        this.headerPreenchida.client = this.data_startup.op.client
        this.headerPreenchida.codeClient = this.data_startup.op.code_client
@@ -103,24 +113,19 @@ export default {
 
        this.componentsInfo = this.data_startup.op.components
 
+       console.log(this.data_startup);
+       console.log(this.componentsInfo)
+       console.log(this.data_startup.op.components);
+      
        this.isFilled = this.data_startup.filled
-       console.log(this.isFilled);
+       console.log('Status Preenchido:', this.isFilled);
 
        
+      this.$store.commit("$SETISLOADING");
 
      })
 
-     
 
-     this.$store.commit("$SETISLOADING");
-
-     if(this.isFilled) {
-         
-        this.$router.push({ name: 'EmConstrucao' })
-        
-       }
-
-     
   },
   methods: {
 
@@ -151,12 +156,23 @@ export default {
     form.append("default_questions",JSON.stringify(data.default_question))
     form.append("specific_questions",JSON.stringify(data.specific_questions))
   
-   await http.fillReportStartup(this.id_startup,form).then((res)=>{
-     console.log(res);
-   }).catch((error)=>{
-     console.log(error.response);
-   })
-     this.$store.commit("$SETISLOADING");
+   await http.fillReportStartup(this.id_startup,form)
+    
+    
+    this.$store.commit("$SETISLOADING");
+
+    this.$swal
+      .fire({
+        title: "Tudo certo!",
+        text: "A Startup foi preenchida com sucesso!",
+        imageUrl: "/img/allright.gif",
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: "Custom image",
+      })
+      .then(() => {
+        this.$router.push({ name: "Startup" });
+      });
    
    },
 
@@ -232,6 +248,29 @@ export default {
 </script>
 
 <style scoped>
+
+fieldset {
+  margin-left: 20px;
+  width: 30%;
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
+.startup-nao-preenchida {
+  color: var(--card_red);
+}
+
+.startup-preenchida {
+  color: var(--card_green);
+}
+
 .content-novaStartup {
   width: 100%;
 }
@@ -290,6 +329,12 @@ export default {
     }
 
     @media (max-width: 48em){
+
+        fieldset {
+          margin-left: 0;
+           width: 100%;
+           text-align: center;
+        }
         .btns {
             display: grid;
             grid-template-columns: 1fr;

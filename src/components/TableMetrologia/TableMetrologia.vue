@@ -160,14 +160,12 @@ export default {
     listMetrologyHistory: async function(){
       await http.ListMetrologyHistory().then( (res) => {
                 this.metrologyHistoryList = res.data.list
-                console.log(this.metrologyHistoryList)
       })
     },
 
     listMetrologySolicitations: async function(){
       await http.ListMetrologySolicitations().then( (res) => {
                 this.metrologySolicitationsList = res.data.list
-                console.log(this.metrologyHistoryList)
       })
     },
 
