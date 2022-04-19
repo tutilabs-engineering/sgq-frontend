@@ -1,12 +1,24 @@
 <template>
-  <div class="cardSettings">
+  <!-- <div class="cardSettings">
     <router-link :to="link">
       <div class="cardConfiguracao">
         <i :class="icon"></i>
         <h2>{{ title }}</h2>
       </div>
     </router-link>
-  </div>
+  </div> -->
+
+
+  <router-link :to="link">
+    <fieldset class="cardSettings">
+      <legend>
+        {{title}}
+      </legend>
+          <i :class="icon"></i>
+    </fieldset>
+    
+  </router-link>
+
 </template>
 
 <script>
@@ -23,26 +35,21 @@ export default {
 .cardSettings {
   width: 35%;
 }
-.cardConfiguracao {
-  cursor: pointer;
-  background-color: var(--main_primaryWhite);
-  border-radius: 10px;
+
+
+.cardSettings {
   width: 100%;
-  height: 300px;
-  text-align: center;
-  color: var(--bg_green);
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  transition: 0.5s;
-  padding: 20px;
-  /* margin: 100px; */
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
   border: 1px solid rgba(37, 36, 36, 0.281);
+  background-color: #fff;
 }
 
 .cardConfiguracao:hover {
-  background-color: var(--card_green);
-  color: var(--main_primaryWhite);
+  border: 3px solid rgba(37, 36, 36, 0.281);
 }
 
 .fas {
@@ -50,21 +57,24 @@ export default {
 }
 
 a {
+  
+  height: 300px;
+  color: var(--card_green);
   text-decoration: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 300px;
+  text-align: center;
+  
 }
-/* 
-@media (max-width: 1024px) {
-  a {
-    width: 100%;
-  }
-  .cardConfiguracao {
-    margin: 10px;
-  }
-} */
+
+legend {
+  color: var(--black_text);
+  font-size: 25px;
+  font-weight: 600;
+}
+
 
 @media (max-width: 425px) {
   .cardSettings {

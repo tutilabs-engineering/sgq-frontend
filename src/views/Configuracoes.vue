@@ -4,7 +4,7 @@
       <CardsConfiguracao icon="fas fa-user-alt" title="Perfil" link="/perfil" />
       <CardsConfiguracao
         icon="fas fa-user-cog"
-        title="Gerenciamento de Usuário"
+        title="Configurações"
         link="/cadastroUsuario"
       />
     </div>
@@ -82,7 +82,7 @@ export default {
   gap: 2rem;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 650px) {
   /* .content-configuracao {
     margin-top: 60px;
   } */
