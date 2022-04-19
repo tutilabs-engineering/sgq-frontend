@@ -19,7 +19,7 @@
     </div>
   </div>
   </div>
-  <div class="content-novaStartup"  v-else>
+  <div class="content-novaStartup" v-else>
     <fieldset>
       <legend>
         Status

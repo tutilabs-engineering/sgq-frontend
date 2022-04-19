@@ -2,25 +2,20 @@
   <div class="content-questions">
     
     <fieldset class="content-tablePerguntas">
-
       <legend class="legenda">Perguntas Padrões</legend>
-
+      
         <PerguntaRespondida :answeredQuestions="datastartup" />
 
     </fieldset>
 
-    <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
+    <fieldset class="content-tablePerguntas" v-if="datastartupSpecifcs.length == 0">
       <legend class="legenda-warning">Não há Perguntas Especificas para este Produto<br/><span>Verifique a tabela de análise</span></legend>
     </fieldset>
 
     <fieldset class="content-tablePerguntas" v-else>
       <legend class="legenda">Tabela de Análise</legend>
 
-      <div  v-for="specificQuestion in specificQuestions.slice().reverse()" :key="specificQuestion.id">
-        <PerguntaAnalise :flag="specificQuestion.attention" :description="specificQuestion.question" :idQuestion="specificQuestion.id"
-        @returnSpecificAnswered="ReturnSpecificAnswered" v-show="specificQuestion.is_enabled"/>
-      </div>
-      
+        <PerguntaAnaliseRespondida :answeredSpecficsQuestions="datastartupSpecifcs"/>
     </fieldset>
 
     <!-- <fieldset>
@@ -36,7 +31,7 @@
 </template>
 
 <script>
-import PerguntaAnalise from "../PerguntaAnalise/PerguntaAnalise.vue";
+import PerguntaAnaliseRespondida from "../PerguntaAnaliseRespondida/PerguntaAnaliseRespondida.vue";
 import PerguntaRespondida from "../PerguntaRespondida/PerguntaRespondida.vue";
 // import TableQtdeCavidade from "../TableQtdeCavidade/TableQtdeCavidade.vue";
 import UploadImage from "../UploadImage/UploadImage.vue";
@@ -52,6 +47,7 @@ export default {
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
       datastartup: this.startupData.report_startup_fill.default_questions_responses.default_questions,
+      datastartupSpecifcs: this.startupData.report_startup_fill.specific_questions_responses.specific_questions,
       exit: ""
     };
 
@@ -65,7 +61,7 @@ export default {
   },
   components: {
     PerguntaRespondida,
-    PerguntaAnalise,
+    PerguntaAnaliseRespondida,
     // TableQtdeCavidade,
     UploadImage,
   },
