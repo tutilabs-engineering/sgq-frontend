@@ -68,7 +68,6 @@ export default {
 <style scoped>
 .content-configuracao {
   width: 100%;
-  height: calc(90vh - 90px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,19 +76,15 @@ export default {
 .cardsConfiguracao {
   width: 100vw;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 2rem;
 }
 
 @media (max-width: 650px) {
-  /* .content-configuracao {
-    margin-top: 60px;
-  } */
-
   .cardsConfiguracao {
     flex-direction: column;
-    margin-top: 15rem;
   }
 }
 </style>

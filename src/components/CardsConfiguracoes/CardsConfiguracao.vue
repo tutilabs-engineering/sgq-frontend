@@ -3,7 +3,7 @@
     <router-link :to="link">
       <div class="cardConfiguracao">
         <i :class="icon"></i>
-        <h2>{{ title }}</h2>
+        <h1>{{ title }}</h1>
       </div>
     </router-link>
   </div> -->
@@ -11,9 +11,9 @@
 
   <router-link :to="link">
     <fieldset class="cardSettings">
-      <legend>
+      <h1>
         {{title}}
-      </legend>
+      </h1>
           <i :class="icon"></i>
     </fieldset>
     
@@ -41,9 +41,10 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  padding: 0 50px 0 50px;
+  justify-content: space-between;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 10px;
   border: 1px solid rgba(37, 36, 36, 0.281);
   background-color: #fff;
 }
@@ -53,32 +54,49 @@ export default {
 }
 
 .fas {
-  font-size: 120px;
+  font-size: 100px;
 }
 
 a {
-  
-  height: 300px;
+  height: 200px;
   color: var(--card_green);
   text-decoration: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 300px;
+  width: 600px;
   text-align: center;
-  
+  transition: 0.5s;
+}
+a:hover {
+  transform: translateX(4%);
 }
 
-legend {
+h1 {
   color: var(--black_text);
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 600;
 }
 
 
-@media (max-width: 425px) {
+@media (max-width: 700px) {
   .cardSettings {
-    width: 80%;
+    width: 90%;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+  }
+
+  a {
+    width: 100%;
+    height: 150px;
+  }
+
+  .fas {
+    font-size: 50px;
+  }
+
+  h1 {
+    font-size: 20px;
   }
   /* a {
     padding: 0;
