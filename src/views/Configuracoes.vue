@@ -3,9 +3,15 @@
     <div class="cardsConfiguracao">
       <CardsConfiguracao icon="fas fa-user-alt" title="Perfil" link="/perfil" />
       <CardsConfiguracao
-        icon="fas fa-user-cog"
-        title="Configurações"
+        icon="fas fa-cogs"
+        title="Gerenciamento"
         link="/cadastroUsuario"
+      />
+
+      <CardsConfiguracao
+        icon="fas fa-book-reader"
+        title="Manual do Sistema"
+        link="/emConstrucao"
       />
     </div>
   </div>
@@ -13,6 +19,11 @@
   <div class="content-configuracao" v-else>
     <div class="cardsConfiguracao">
       <CardsConfiguracao icon="fas fa-user-alt" title="Perfil" link="/perfil" />
+      <CardsConfiguracao
+        icon="fas fa-book-reader"
+        title="Manual do Sistema"
+        link="/emConstrucao"
+      />
     </div>
   </div>
 </template>
