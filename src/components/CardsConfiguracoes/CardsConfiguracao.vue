@@ -1,6 +1,6 @@
 <template>
  
-  <div v-if="type=='local'">
+  <div v-if="type=='local'" class="card">
   <router-link :to="link">
     <fieldset class="cardSettings">
       <h1>
@@ -12,7 +12,7 @@
   </router-link>
   </div>
 
-  <div v-else>
+  <div v-else class="card">
   <a :href="link" target="_blank">
     <fieldset class="cardSettings">
       <h1>
@@ -41,6 +41,12 @@ export default {
 <style scoped>
 .cardSettings {
   width: 35%;
+}
+
+.card {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 
