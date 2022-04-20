@@ -1,29 +1,35 @@
 <template>
   <div class="content-configuracao" v-if="showManager">
     <div class="cardsConfiguracao">
-      <CardsConfiguracao icon="fas fa-user-alt" title="Perfil" link="/perfil" />
+      <CardsConfiguracao icon="fas fa-user-alt" title="Perfil" link="/perfil" type="local"/>
       <CardsConfiguracao
         icon="fas fa-cogs"
         title="Gerenciamento"
         link="/cadastroUsuario"
+        type="local"
       />
+
 
       <CardsConfiguracao
         icon="fas fa-book-reader"
         title="Manual do Sistema"
-        link="/emConstrucao"
+        link="../../docs/manual_sistema_sgq_v1.pdf"
+        type="ex"
       />
     </div>
   </div>
 
   <div class="content-configuracao" v-else>
     <div class="cardsConfiguracao">
-      <CardsConfiguracao icon="fas fa-user-alt" title="Perfil" link="/perfil" />
+      <CardsConfiguracao icon="fas fa-user-alt" title="Perfil" link="/perfil" type="local"/>
+
       <CardsConfiguracao
         icon="fas fa-book-reader"
         title="Manual do Sistema"
-        link="/emConstrucao"
+        link="../../docs/manual_sistema_sgq_v1.pdf"
+        type="ex"
       />
+
     </div>
   </div>
 </template>

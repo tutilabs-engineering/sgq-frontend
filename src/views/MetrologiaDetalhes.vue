@@ -180,8 +180,8 @@ async finishMetrology(){
   text: "Depois de concluído, será associado a Startup",
   icon: 'warning',
   showCancelButton: true,
-  confirmButtonColor: '#3085d6',
   cancelButtonColor: '#d33',
+  confirmButtonColor: '#3085d6',
   confirmButtonText: 'Concluir'
 }).then(async (result) => {
   if (result.isConfirmed) {

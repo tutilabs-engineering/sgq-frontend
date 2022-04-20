@@ -176,7 +176,6 @@ export default {
       await http.ListMetrologySolicitations().then( (res) => {
         this.metrologySolicitationsList = res.data.list
       })
-      console.log(this.metrologySolicitationsList);
     },
 
     ingressar: async function(fk_startup){

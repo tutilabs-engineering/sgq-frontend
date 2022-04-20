@@ -1,14 +1,6 @@
 <template>
-  <!-- <div class="cardSettings">
-    <router-link :to="link">
-      <div class="cardConfiguracao">
-        <i :class="icon"></i>
-        <h1>{{ title }}</h1>
-      </div>
-    </router-link>
-  </div> -->
-
-
+ 
+  <div v-if="type=='local'">
   <router-link :to="link">
     <fieldset class="cardSettings">
       <h1>
@@ -18,13 +10,28 @@
     </fieldset>
     
   </router-link>
+  </div>
+
+  <div v-else>
+  <a :href="link" target="_blank">
+    <fieldset class="cardSettings">
+      <h1>
+        {{title}}
+      </h1>
+          <i :class="icon"></i>
+    </fieldset>
+    
+  </a>
+  </div>
+
+  
 
 </template>
 
 <script>
 export default {
   name: "CardConfiguracao",
-  props: ["title", "icon", "link"],
+  props: ["title", "icon", "link", "type"],
   data() {
     return {};
   },
