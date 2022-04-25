@@ -21,7 +21,7 @@
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
-              <button className="btn_visualizar">
+              <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
               <i class="fas fa-eye"></i>
               Visualizar
             </button>
@@ -54,6 +54,11 @@ export default {
   },
 
   methods: {
+    OpenReportStartup: function(id_startup) {
+      this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})
+    },
+
+
     formatDate(date) {
       date = date.slice(0, -14);
       this.year = date.slice(0, -6)

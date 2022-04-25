@@ -94,6 +94,10 @@ export default {
     ReturnSpecificAnswered: async function(specificAnswered){
       this.$store.commit("$SETQTDEPERGUNTASESPECIFICAS");
       this.exit = specificAnswered
+    },
+
+    imgExist: async function() {
+      
     }
 
   },
