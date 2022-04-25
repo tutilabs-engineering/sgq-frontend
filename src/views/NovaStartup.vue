@@ -81,13 +81,14 @@ export default {
       this.techniqueInfo.cycle = "";
 
       this.componentsInfo = []
+      console.log(this.componentsInfo);
 
     },
 
     ReturnCodeOp: async function(code_op) {
       if(code_op === ""){
         this.resetStartup()
-      } else {
+      }
       this.dataInfo.code_op = code_op
       function GetDateTime(){
         function GetDate() {
@@ -138,6 +139,7 @@ export default {
 
       // //componentsInfo
      
+     this.componentsInfo = []
 
       data.Itens.map( (item) => {
         this.componentsInfo.push( {
@@ -148,8 +150,10 @@ export default {
         })
       })
 
+      console.log(this.componentsInfo);
+
       this.$store.commit("$SETDATACREATESTARTUP", {techniqueData: this.techniqueInfo, components: this.componentsInfo});
-      }
+      
     },
 
   } 

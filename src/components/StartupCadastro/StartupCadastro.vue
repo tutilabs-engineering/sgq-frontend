@@ -1,34 +1,41 @@
 <template>
   <div class="content-startupCadastro">
+
+    <fieldset class="form formOP">
+      <legend><i class="fas fa-filter"></i>Buscar OP</legend>
+      <div class="input inputOp">
+        <label for="client">Informe o código</label>
+        <input type="text" name="client" id="op" placeholder="ex: 2345" v-model="code_op">
+      </div>
+
+      <button type="submit" class="btn" @click="searchByCodeOp(code_op)"><i class="fas fa-search"></i> Buscar</button>
+    </fieldset>
     
     <fieldset class="form">
 
       
       <legend>Start-Injeção</legend>
 
-      <div class="input">
-        <label for="op">Ordem de Produção</label>
-        <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
-      </div>
+      
       
       <div class="input">
         <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="headerInfo.client">
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="headerInfo.client" disabled>
       </div>
 
       <div class="input">
         <label for="client">Código cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient">
+        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient" disabled>
       </div>
 
       <div class="input">
         <label for="client">Produto</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.product">
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.product" disabled>
       </div>
 
       <div class="input">
         <label for="client">Código Produto</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.codeProduct">
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.codeProduct" disabled>
       </div>
 
       <div class="input">
@@ -81,12 +88,17 @@ export default {
     headerInfo: Object
   },
   methods: {
-  },
-  watch: {
-    code_op (newValor) {
+    searchByCodeOp(newValor){
+      console.log(newValor);
       this.$store.commit("$SETCODEOP", this.code_op);
       this.$emit("returnCodeOp", newValor)
-    },
+    }
+  },
+  watch: {
+    // code_op (newValor) {
+    //   this.$store.commit("$SETCODEOP", this.code_op);
+    //   this.$emit("returnCodeOp", newValor)
+    // },
 
     headerInput: {
       deep: true,
@@ -119,6 +131,7 @@ export default {
   height: auto;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 .form {
@@ -132,6 +145,27 @@ export default {
   grid-gap: 20px;
 }
 
+.formOP {
+  margin-bottom: 30px;
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg_gray);
+}
+
+.btn {
+  height: 50px;
+  width: 120px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  color: #fff;
+  background-color: var(--card_blue);
+}
+
 .input {
   display: flex;
   flex-direction: column;
@@ -139,6 +173,17 @@ export default {
   height: 70px;
   padding: 5px;
   border-radius: 5px 5px 0 0;
+}
+.inputOp {
+  display: flex;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
+
+.inputOp input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px var(--bg_gray) inset;
 }
 
 .input label {
@@ -168,6 +213,14 @@ legend {
 }
 
 @media (max-width: 965px) {
+
+  .formOP {
+    width: 100%;
+  }
+
+  .inputOp {
+    width: 90%;
+  }
 
   .content-startupCadastro {
     padding: 0;
