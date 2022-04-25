@@ -92,10 +92,8 @@ export default {
   
   created: async function() {
 
-    
-
      await http.findReportStartupById(this.id_startup).then( (res) => {
-       this.$store.commit("$SETISLOADING");
+
        this.data_startup = res.data;
        this.headerPreenchida.code_op = this.data_startup.op.code_op
        this.headerPreenchida.client = this.data_startup.op.client
@@ -118,10 +116,6 @@ export default {
        console.log(this.data_startup.op.components);
       
        this.isFilled = this.data_startup.filled
-       console.log('Status Preenchido:', this.isFilled);
-
-       
-      this.$store.commit("$SETISLOADING");
 
      })
 

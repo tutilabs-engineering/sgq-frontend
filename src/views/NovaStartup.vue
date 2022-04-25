@@ -68,7 +68,25 @@ export default {
       this.showQuestions = e;
     },
 
+    resetStartup() {
+      this.headerInfo.client = "";
+      this.headerInfo.codeClient = "";
+      this.headerInfo.product = "";
+      this.headerInfo.codeProduct = "";
+      this.headerInfo.date = "";
+      this.headerInfo.startTime = "";
+
+
+      this.techniqueInfo.cavity = "";
+      this.techniqueInfo.cycle = "";
+
+      this.componentsInfo = []
+    },
+
     ReturnCodeOp: async function(code_op) {
+      if(code_op === ""){
+        this.resetStartup()
+      }
       this.dataInfo.code_op = code_op
       function GetDateTime(){
         function GetDate() {

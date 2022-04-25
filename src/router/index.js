@@ -114,7 +114,7 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: () => import('../views/Home.vue'),
-    beforeEnter: EmManutencao
+    beforeEnter: Auth
   },
   {
     path: '/startup',
@@ -236,7 +236,7 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
-    beforeEnter: EmManutencao
+    beforeEnter: Auth
   }
 
 ]

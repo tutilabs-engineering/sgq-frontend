@@ -80,12 +80,12 @@ export default {
   props: {
     headerInfo: Object
   },
-  methods: {},
+  methods: {
+  },
   watch: {
     code_op (newValor) {
       this.$store.commit("$SETCODEOP", this.code_op);
       this.$emit("returnCodeOp", newValor)
-
     },
 
     headerInput: {
@@ -102,7 +102,6 @@ export default {
         machine: this.headerInput.machine,
         day: new Date(this.headerInput.day),
         start_time: new Date(),
-
       }}
       );
       }
