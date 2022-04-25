@@ -22,7 +22,6 @@
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
               <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
-              <i class="fas fa-eye"></i>
               Visualizar
             </button>
             </div>
@@ -200,18 +199,18 @@ table td {
   background: var(--btn_blue);
   padding: 0.5rem;
   border: none;
-  border-radius: 10px;
-  font-size: 20px;
+  border-radius: 5px;
   font-weight: bold;
   color: var(--main_primaryWhite);
   align-items: center;
-  width: 80%;
+  height: 40px;
+  width: 90px;
   margin: auto;
   cursor: pointer;
 }
 
-.btn_visualizar, .fa-eye {
-  font-size: 20px;
+.btn_visualizar{
+  font-size: 14px;
   color: var(--main_primaryWhite);
 }
 
