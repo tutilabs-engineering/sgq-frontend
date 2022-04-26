@@ -83,7 +83,6 @@ export default {
       
     }
     this.$store.commit("$SETISLOADING");
-    console.log(this.startupData.img_3);
 
   },
 

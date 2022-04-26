@@ -111,10 +111,6 @@ export default {
 
        this.componentsInfo = this.data_startup.op.components
 
-       console.log(this.data_startup);
-       console.log(this.componentsInfo)
-       console.log(this.data_startup.op.components);
-      
        this.isFilled = this.data_startup.filled
 
      })
