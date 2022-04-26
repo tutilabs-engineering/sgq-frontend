@@ -20,7 +20,7 @@
       
       <div class="input">
         <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="headerInfo.client" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: Tutiplast" :value="headerInfo.client" disabled>
       </div>
 
       <div class="input">
@@ -30,27 +30,27 @@
 
       <div class="input">
         <label for="client">Produto</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.product" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: Visor Central Fan" :value="headerInfo.product" disabled>
       </div>
 
       <div class="input">
         <label for="client">Código Produto</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.codeProduct" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: xx.xxx.xxxxxx.xx-xx" :value="headerInfo.codeProduct" disabled>
       </div>
 
       <div class="input">
         <label for="client">Quantidade</label>
-        <input type="number" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.quantity">
+        <input type="number" name="client" id="client" placeholder="ex: 456" v-model="headerInput.quantity">
       </div>
 
       <div class="input">
         <label for="client">Máquina</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.machine">
+        <input type="text" name="client" id="client" placeholder="ex: MAQ01" v-model="headerInput.machine">
       </div>
 
       <div class="input">
         <label for="client">Molde</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.product_mold">
+        <input type="text" name="client" id="client" placeholder="ex: MOD04" v-model="headerInput.product_mold">
       </div>
 
       <div class="input">
@@ -200,6 +200,10 @@ input:-webkit-autofill {
   font-size: 15px;
   height: 52px;
   border-bottom: 2px solid rgba(128, 128, 128, 0.39);
+}
+
+input::placeholder {
+  font-size: 13px;
 }
 
 fieldset {
