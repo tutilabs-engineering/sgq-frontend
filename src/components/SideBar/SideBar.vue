@@ -13,11 +13,11 @@
       ><span class="navicon"></span
     ></label>
     <ul class="menu">
-      <li @click="changeCheckboxValue">
+      <!-- <li @click="changeCheckboxValue">
         <a @click="() => this.$router.push({ name: 'Home' })"
           ><i class="fas fa-home"></i>Home</a
         >
-      </li>
+      </li> -->
       <li @click="changeCheckboxValue">
         <a @click="() => this.$router.push({ name: 'Startup' })"
           ><i class="fas fa-check-circle"></i>Startup</a
