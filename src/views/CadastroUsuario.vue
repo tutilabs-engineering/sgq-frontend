@@ -325,7 +325,7 @@ input:-webkit-autofill {
 
 .save-btn {
   width: 100%;
-  grid-column: 4;
+  grid-column: 1;
   color: var(--main_primaryWhite);
   background-color: var(--btn_blue);
 }
