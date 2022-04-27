@@ -49,7 +49,8 @@
             
          </td>
           <td class="lastTd" data-title="Opção">
-            <button class="btn-preencher" @click="() => this.$router.push({ name: 'MetrologiaDetalhes', query: {id: metrologySolicitation.startup.id} })">Preencher</button>
+            <!-- <button class="btn-preencher" @click="() => this.$router.push({ name: 'MetrologiaDetalhes', query: {id: metrologySolicitation.startup.id} })">Preencher</button> -->
+            <button class="btn-preencher" @click="hasAnUser(metrologySolicitation.metrologyHistory, metrologySolicitation.startup.id)">Preencher</button>
           </td>
         </tr>
 
@@ -83,7 +84,6 @@
         <th></th>
         <th></th>
       </thead>
-
 
       <thead>
         <th>O.Produção</th>
@@ -149,6 +149,15 @@ export default {
   },
 
   methods: {
+
+    hasAnUser: async function(user, router) {
+      if(user == null){
+        console.log('não tem user');
+      }else {
+        console.log('tem user');
+        this.$router.push({ name: 'MetrologiaDetalhes', query: {id: router} })
+      }
+    },
     formatDate(date) {
       date = date.slice(0, -14);
       this.year = date.slice(0, -6)
@@ -159,13 +168,13 @@ export default {
 
     listMetrologyHistory: async function(){
       await http.ListMetrologyHistory().then( (res) => {
-                this.metrologyHistoryList = res.data.list
+        this.metrologyHistoryList = res.data.list
       })
     },
 
     listMetrologySolicitations: async function(){
       await http.ListMetrologySolicitations().then( (res) => {
-                this.metrologySolicitationsList = res.data.list
+        this.metrologySolicitationsList = res.data.list
       })
     },
 

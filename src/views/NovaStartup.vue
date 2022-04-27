@@ -68,7 +68,27 @@ export default {
       this.showQuestions = e;
     },
 
+    resetStartup() {
+      this.headerInfo.client = "";
+      this.headerInfo.codeClient = "";
+      this.headerInfo.product = "";
+      this.headerInfo.codeProduct = "";
+      this.headerInfo.date = "";
+      this.headerInfo.startTime = "";
+
+
+      this.techniqueInfo.cavity = "";
+      this.techniqueInfo.cycle = "";
+
+      this.componentsInfo = []
+      console.log(this.componentsInfo);
+
+    },
+
     ReturnCodeOp: async function(code_op) {
+      if(code_op === ""){
+        this.resetStartup()
+      }
       this.dataInfo.code_op = code_op
       function GetDateTime(){
         function GetDate() {
@@ -106,7 +126,7 @@ export default {
       const dataOp = await http.listDataByCodeOp(code_op);
       const data = dataOp.data.results[0];
       this.headerInfo.client = data.CardName;
-      this.headerInfo.codeClient = data.U_Cliente;
+      this.headerInfo.codeClient = data.U_CodCliente;
       this.headerInfo.product = data.ProdName;
       this.headerInfo.codeProduct = data.ItemCode;
       this.headerInfo.date = GetDateTime().GetDate();
@@ -119,6 +139,7 @@ export default {
 
       // //componentsInfo
      
+     this.componentsInfo = []
 
       data.Itens.map( (item) => {
         this.componentsInfo.push( {
@@ -129,9 +150,10 @@ export default {
         })
       })
 
+      console.log(this.componentsInfo);
 
       this.$store.commit("$SETDATACREATESTARTUP", {techniqueData: this.techniqueInfo, components: this.componentsInfo});
-
+      
     },
 
   } 

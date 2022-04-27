@@ -14,7 +14,6 @@
 
     <fieldset class="content-tablePerguntas" v-else>
       <legend class="legenda">Tabela de Análise</legend>
-
         <PerguntaAnaliseRespondida :answeredSpecficsQuestions="datastartupSpecifcs"/>
     </fieldset>
 
@@ -23,9 +22,10 @@
     </fieldset> -->
 
     <fieldset class="content-imgs">
-      <UploadImage :id="1" :imgName="this.startupData.img_1" />
-      <UploadImage :id="2" :imgName="this.startupData.img_2"/>
-      <UploadImage :id="3" :imgName="this.startupData.img_3"/>
+      
+      <UploadImage :id="1" v-if="this.startupData.img_1 !== null " :imgName="this.startupData.img_1"/>
+      <UploadImage :id="2" v-if="this.startupData.img_2 !== null " :imgName="this.startupData.img_2"/>
+      <UploadImage :id="3" v-if="this.startupData.img_3 !== null " :imgName="this.startupData.img_3"/>
     </fieldset>
   </div>
 </template>
@@ -83,6 +83,7 @@ export default {
       
     }
     this.$store.commit("$SETISLOADING");
+
   },
 
   methods: {
@@ -94,7 +95,7 @@ export default {
     ReturnSpecificAnswered: async function(specificAnswered){
       this.$store.commit("$SETQTDEPERGUNTASESPECIFICAS");
       this.exit = specificAnswered
-    }
+    },
 
   },
 

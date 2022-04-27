@@ -112,7 +112,7 @@
                   <div class="inputAdd">
                     <input type="text" v-model="dataAttribute.question"/>
                     <button class="btnHabilitar">
-                      <i class="fas fa-plus"></i>
+                      <i class="fas fa-plus"></i> Adicionar
                     </button>
                   </div>
                 </form>
@@ -418,7 +418,7 @@ export default {
 
 .modal_mask .modal_body .inputsHeader .input input {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid rgb(173, 173, 173);
   padding: 0.2rem 1rem;
   outline: none;
@@ -499,26 +499,26 @@ export default {
 .incrementAtributo .inputAdd {
   width: 100%;
   display: flex;
-  align-items: center;
   margin-top: 10px;
 }
 
 .incrementAtributo .inputAdd input {
   position: relative;
   width: 50%;
-  border-radius: 10px 0 0 10px;
+  border-radius: 5px 0 0 5px;
   border: 1px solid rgb(173, 173, 173);
   padding: 0.2rem 1rem;
   outline: none;
 }
 
 .incrementAtributo .inputAdd button {
-  width: 70px;
+  width: 100px;
+  height: 45px;
   color: var(--main_primaryWhite);
   background: var(--bg_green);
   padding: 0.25rem;
   text-align: center;
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 5px 5px 0;
   border: none;
   cursor: pointer;
 }
