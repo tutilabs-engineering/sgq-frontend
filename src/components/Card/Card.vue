@@ -54,7 +54,7 @@ a {
 
 .cardStatus {
   /* margin: 30px 10px 0px 10px; */
-  width: 250px;
+  width: 270px;
   height: 120px;
   background-color: var(--bg_white);
   border: 1px solid rgba(37, 36, 36, 0.281);
