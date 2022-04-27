@@ -439,7 +439,7 @@ export default {
 
 .modal_mask .modal_body .inputsHeader .input input {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid rgb(173, 173, 173);
   padding: 0.2rem 1rem;
   outline: none;
