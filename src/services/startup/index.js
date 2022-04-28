@@ -8,7 +8,6 @@ export default {
 
   },
 
-
   listAllStartups: async () => {
     return await http.get(`/reportStartup`)
   },
@@ -30,5 +29,11 @@ export default {
 
   findReportStartupById: async (id) => {
     return http.get(`/reportStartup/${id}`)
+  },
+
+  addOpInStartup: async (id_startup) => {
+    return http.post(`/reportStartup/addOp/${id_startup}`)
   }
+
+
 }
