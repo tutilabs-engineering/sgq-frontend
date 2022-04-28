@@ -40,7 +40,7 @@
 
       <div class="input">
         <label for="client">Quantidade</label>
-        <input type="number" name="client" id="client" placeholder="ex: 456" v-model="headerInput.quantity">
+        <input type="text" name="client" id="client" placeholder="ex: 456" v-model="headerInfo.quantity" disabled>
       </div>
 
       <div class="input">
@@ -79,7 +79,6 @@ export default {
         product_mold: "",
         day: "",
         start_time: "",
-        quantity: ""
       }
       
     };
@@ -95,11 +94,7 @@ export default {
     }
   },
   watch: {
-    // code_op (newValor) {
-    //   this.$store.commit("$SETCODEOP", this.code_op);
-    //   this.$emit("returnCodeOp", newValor)
-    // },
-
+ 
     headerInput: {
       deep: true,
       immediate: true,
@@ -109,7 +104,6 @@ export default {
         code_client: this.headerInfo.codeClient,
         code_product: this.headerInfo.codeProduct,
         desc_product: this.headerInfo.product,
-        quantity: this.headerInput.quantity,
         product_mold: this.headerInput.product_mold,
         machine: this.headerInput.machine,
         day: new Date(this.headerInput.day),

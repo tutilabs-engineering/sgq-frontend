@@ -3,54 +3,71 @@
     <transition name="model">
         <div class="modal_mask">
           <div class="modal_content">
-            <div class="modal_header">
-              <div class="title_modal">
-                <h4>Adicionar nova OP</h4>
-                <input
+         
+
+            <!-- <input
                   type="button"
                   value="X"
                   colorButton="red"
                   @click="$emit('openModalNovaOp')"
-                />
-              </div>
-            </div>
+                /> -->
             
             <div class="content-modal-op">
-              <div class="info-modal-op">
+              <fieldset class="info-modal-op">
+                <legend>Vincular Op a Startup</legend>
+                <div class="input">
+                  <label for="op">Código OP</label>
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+                </div>
+
 
                 <div class="input">
                   <label for="op">Cód. Startup</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model="code_op">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="startup.code_startup" disabled>
                 </div>
 
                 <div class="input">
                   <label for="op">Máquina</label>
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model="headerInfo.codeProduct">
+                </div>
+
+                <div class="input">
+                  <label for="op">Molde</label>
                   <input type="text" name="client" id="op" placeholder="Digite o código OP">
                 </div>
 
                 <div class="input">
-                  <label for="op">Cód. Produto</label>
+                  <label for="op">Cliente</label>
                   <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.codeProduct">
                 </div>
 
                 <div class="input">
-                  <label for="op">Nova OP</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+                  <label for="op">Código Cliente</label>
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.codeProduct">
                 </div>
 
-                <div class="save-btn">
-                  <button class="btn btn-cancel" @click="$emit('openModalNovaOp')">cancelar</button>
-                  <button class="btn btn-save">salvar</button>
-                </div>
+     
+              </fieldset>
 
+              <TableComponentes :componentsInfo="componentsInfo"/>
 
-              </div>
-              <div class="historic-op">
-                <span>Histórico de Op's desta startup</span>
+              <fieldset class="historic-op">
+                <legend>Histórico de Op's desta startup</legend>
                 <li><i class="fa fa-calendar-check"></i> <span>123-234-200-4322-01</span></li>
                 <li><i class="fa fa-calendar-check"></i> <span>123-234-200-4322-02</span></li>
 
-              </div>
+              </fieldset>
+
+              
+
+              <div class="save-btn">
+                  <button class="btn btn-cancel" @click="$emit('openModalNovaOp')">cancelar</button>
+                  <button class="btn btn-save" @click="returnInfoOp">salvar</button>
+                </div>
+
+              
+
+              
             </div>
 
           </div>
@@ -65,11 +82,14 @@
 
 <script>
 
+import TableComponentes from "../TableComponentes/TableComponentes.vue";
+
+
 import http from "../../services/startup/index";
 
 
 export default {
-  components: {},
+  components: {TableComponentes},
   name: "Modal",
   emits: ["openModalNovaOp"],
   data() {
@@ -85,6 +105,8 @@ export default {
         endTime: "",
       },
 
+      code_op: "",
+
       dataNewOpInStartup: {
         code_op: 48954,
         machine: "",
@@ -98,35 +120,50 @@ export default {
             planned: "",
             um: ""
           },
-
         ]
       }
 
     };
   },
-  
+
   props: {
+    startup: String,
     titleModal: String,
     id: Number,
     modalNovaOp: String,
   },
 
   methods: {
-    ReturnCodeOp: async function(code_op) {
-      const dataOp = await http.listDataByCodeOp(code_op);
-      const data = dataOp.data.data_op;
-      this.headerInfo.client = data.client;
-      this.headerInfo.codeClient = data.code_client;
-      this.headerInfo.product = data.product;
-      this.headerInfo.codeProduct = data.code_product;
+ 
+    returnInfoOp: async function() {
+      await http.listDataByCodeOp(this.code_op).then( (res) => {
+        console.log(res.data.results[0]);
+        this.headerInfo.client = res.data.results[0].CardName;
+        this.headerInfo.codeClient = res.data.results[0].U_CodCliente;
+        this.headerInfo.product = res.data.results[0].ProdName;
+        this.headerInfo.codeProduct = res.data.results[0].ItemCode;
+
+        this.componentsInfo = []
+
+        res.data.results[0].Itens.map( (item) => {
+          this.componentsInfo.push( {
+            description: item.Descrição,
+            item_number: item.ItemCode,
+            planned: item.PlannedQty,
+            um: item.InvntryUom
+          })
+        })
+
+      })
     },
 
     saveNewOpInStartup: async function(){
-      await http.addOpInStartup().then( (res) => {
-        console.log("deu certo", res);
-      }).catch( (error) => {
-        console.log(error);
-      })
+      console.log(this.startup);
+      // await http.addOpInStartup(id, this.dataNewOpInStartup).then( (res) => {
+      //   console.log("deu certo", res);
+      // }).catch( (error) => {
+      //   console.log(error);
+      // })
     }
   }
 };
@@ -148,8 +185,8 @@ export default {
 
 .modal_mask .modal_content {
   position: relative;
-  width: 80%;
-  height: 60%;
+  width: 95%;
+  height: 90vh;
   margin: 30px auto;
   background: var(--bg_white);
   border-radius: 10px;
@@ -157,11 +194,12 @@ export default {
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto;
+  overflow-y: auto;         
 }
 
 .modal_mask .modal_content .modal_header {
-  width: 100%;
+  width: 95%;
+  position: fixed;
   height: 3.5rem;
   line-height: 3.5rem;
   background: var(--bg_green);
@@ -193,7 +231,7 @@ export default {
 
 .title_modal input {
   padding: 5px 10px;
-  border-radius: 50%;
+  border-radius: 20%;
   border: none;
   color: var(--white);
   background-color: rgb(223, 97, 97);
@@ -205,7 +243,24 @@ export default {
   background-color: rgb(148, 7, 7);
 }
 
-/* Style ScrollBar -------- */
+fieldset {
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  width: 100%;
+  background-color: white;
+  border-radius: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
+/* Style ScrollBar --------
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -219,7 +274,7 @@ export default {
 ::-webkit-scrollbar-thumb {
   background: var(--bg_green);
   border-radius: 15px;
-}
+} */
 
 /* -------- Style Atributo ------- */
 #inputImage {
@@ -265,11 +320,12 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
 }
 .info-modal-op {
   padding: 20px;
-  width: 70%;
-  height: 200px;
+  width: 100%;
+  height: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
@@ -335,7 +391,7 @@ export default {
 
 .historic-op {
   padding-top: 20px;
-  width: 30%;
+  width: 100%;
   height: 100%;
   border-left: 1px solid rgba(0, 0, 0, 0.397);
   
