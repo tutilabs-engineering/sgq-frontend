@@ -28,10 +28,6 @@
 
               <fieldset class="info-modal-op">
 
-                <div class="input">
-                  <label for="op">Código OP</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
-                </div>
 
 
                 <div class="input">
@@ -148,7 +144,7 @@ export default {
 
   methods: {
  
-    returnInfoOp: async function() {
+    searchByCodeOp: async function() {
       await http.listDataByCodeOp(this.code_op).then( (res) => {
         console.log(res.data.results[0]);
         this.headerInfo.client = res.data.results[0].CardName;
