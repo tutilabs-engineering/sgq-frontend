@@ -3,6 +3,7 @@
 
     <fieldset class="form formOP">
       <legend><i class="fas fa-filter"></i>Buscar OP</legend>
+      
       <div class="input inputOp">
         <label for="client">Informe o código</label>
         <input type="text" name="client" id="op" placeholder="ex: 2345" v-model="code_op">

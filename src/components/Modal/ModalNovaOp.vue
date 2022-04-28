@@ -3,9 +3,8 @@
     <transition name="model" >
         <div class="modal_mask" >
           <div class="modal_content">
-         
             <div class="modal_header">
-
+              <h1>Adicionar nova Startup</h1>
               <input
                   type="button"
                   value="X"
@@ -14,11 +13,21 @@
                 />
 
             </div>
-            
-            
+          
             <div class="content-modal-op">
+
+              <div class="formOrdemProducao">
+
+                <div class="input inputOp">
+                  <label for="client"><i class="fas fa-filter"></i>Buscar OP</label>
+                  <input type="text" name="client" id="op" placeholder="ex: 2345" v-model="code_op">
+                </div>
+
+                <button type="submit" class="btn btn-search" @click="searchByCodeOp(code_op)"><i class="fas fa-search"></i> Buscar</button>
+              </div>
+
               <fieldset class="info-modal-op">
-                <legend>Adicionar nova OP</legend>
+
                 <div class="input">
                   <label for="op">Código OP</label>
                   <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
@@ -202,19 +211,27 @@ export default {
 }
 
 .modal_header {
-  width: 100%;
+  width: 95%;
   height: 10vh;
   display: flex;
-  justify-content: end;
+  position: fixed;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
   padding:20px;
+  z-index: 90;
+  border-radius: 10px;
+}
+
+.modal_header h1 {
+  color: var(--black_text);
+  line-height: 30px;
 }
 
 .modal_header input {
-  
   width: 30px;
   height: 30px;
   background-color: var(--card_red);
-  position: fixed;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -235,6 +252,7 @@ export default {
   width: 98%;
   height: 90%;
   margin: auto;
+  margin-top: 11vh;
   position: relative;
   top: 0;
   left: 0;
@@ -328,16 +346,25 @@ legend {
   display: flex;
   flex-direction: column;
 }
+
+.inputOp {
+  margin-top: 10vh;
+  width: 33%;
+}
+
+.formOrdemProducao {
+  padding-left: 20px;
+}
+
 .info-modal-op {
   padding: 20px;
   width: 100%;
   height: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
   justify-content: center;
   align-items: center;
-  
 }
 
 .input {
@@ -383,14 +410,18 @@ legend {
   height: 50px;
   max-width: 15vw;
   min-width: 15vw;
-  margin: 0 0 10px 10px;
+  margin: 5px;
   border-radius: 5px;
   border: none;
   grid-column-start: 4;
   display: flex;
- 
   justify-content: center;
   align-items: center;
+}
+
+.btn-search {
+  background-color: var(--card_green);
+  color: #fff;
 }
 
 .btn-save {
@@ -408,7 +439,6 @@ legend {
   width: 100%;
   height: 100%;
   border-left: 1px solid rgba(0, 0, 0, 0.397);
-  
 }
 
 .historic-op li {
@@ -422,6 +452,11 @@ legend {
 
 
 @media (max-width: 768px) {
+
+  .inputOp {
+      margin-top: 10vh;
+      width: 100%;
+  }
   .modal_mask .modal_body .inputsHeader .input {
     width: 49%;
   }
@@ -484,7 +519,6 @@ legend {
   }
 
   .input {
-    align-items: center;
     width: 100%;
   }
 
