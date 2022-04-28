@@ -2,7 +2,7 @@
     <div class="btns">
         <!-- <button class="btn-fill-save btn" v-on:click="fillValue">Preencher + Opções</button> -->
         <div class="btns-options">
-            <button class="btn-cancel btn">Cancelar</button>
+            <button class="btn-cancel btn" @click="cancelNewStartup">Cancelar</button>
             <button class="btn-save btn" @click="saveNewStartup">Criar Startup</button>
         </div>
     </div>
@@ -51,6 +51,25 @@ export default {
             }
             
         },
+
+        cancelNewStartup: async function () {
+          this.$swal.fire({
+            title: 'Você realmente deseja cancelar a criação desta Startup?',
+            text: "Você pode voltar depois",
+            icon: 'warning',
+            reverseButtons: true,
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Sim, desejo cancelar',
+            cancelButtonText: 'Não'
+          }).then( (result) => {
+            if(result.isConfirmed) {
+              this.$router.push({ name: "Startup" });
+            }
+          })
+        },
+
 
         saveNewStartup: async function (){
 

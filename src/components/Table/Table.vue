@@ -276,7 +276,7 @@ table td {
   cursor: pointer;
   width: 100%;
   height: 40px;
-  border-radius: 10px;
+  border-radius: 5px;
   color: var(--black_text);
   font-size: max(0.8rem, 1vw);
   font-weight: bold;

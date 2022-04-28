@@ -111,7 +111,7 @@
                 <div class="inputUpLoad" v-if="statusButtonImage">
                     
                     <label for="inputImage" class="inputImage"
-                      ><i class="far fa-file-image"></i
+                      ><i class="fas fa-paperclip"></i
                     > <span>Anexar</span></label>
                     
                     <input ref="file" type="file"  class="inputUpLoad" id="inputImage" @change="insertImageFile"/>
@@ -120,7 +120,7 @@
                 <button class="inputUpLoad inputImageDelete" @click="changeStatusButtonImage" v-else>Remover</button>
 
                 <button type="submit" class="inputUpLoad">
-                  <span>Enviar</span>
+                  <span> <i class="fas fa-plus"></i> Enviar</span>
                 </button>
 
                 <div class="alertMax" v-show="list.max < list.min">
@@ -514,7 +514,7 @@ export default {
 
 .modal_mask .modal_body .attributeVariable .inputIdentificacao input {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid rgb(173, 173, 173);
   padding: 0.2rem 1rem;
   outline: none;
@@ -529,7 +529,7 @@ export default {
 
 .modal_mask .modal_body .attributeVariable .inputCota input {
   width: 100%;
-  border-radius: 10px;
+  border-radius: px;
   border: 1px solid rgb(173, 173, 173);
   padding: 0.2rem 1rem;
   outline: none;
@@ -570,6 +570,7 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  background-color: var(--card_blue);
   
 }
 
@@ -578,7 +579,7 @@ export default {
   background-color: var(--card_red) !important;
 }
 
-.fa-file-image {
+.fa-paperclip {
   color: #fff;
 }
 
@@ -612,7 +613,7 @@ export default {
   font-weight: 400;
 }
 
-.far {
+.fas {
   margin-right: 10px;
 }
 
