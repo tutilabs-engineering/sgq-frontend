@@ -388,6 +388,11 @@ export default {
   transform: rotate(180deg);
 }
 
+/*   scroll */
+
+::-webkit-scrollbar {
+    width: 0px;
+}
 
 /* -------- Style Atributo ------- */
 #inputImage {

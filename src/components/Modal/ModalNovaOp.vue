@@ -1,20 +1,24 @@
 <template>
-  <div v-if="modalNovaOp">
-    <transition name="model">
-        <div class="modal_mask">
+  <div v-if="modalNovaOp" >
+    <transition name="model" >
+        <div class="modal_mask" >
           <div class="modal_content">
          
+            <div class="modal_header">
 
-            <!-- <input
+              <input
                   type="button"
                   value="X"
                   colorButton="red"
                   @click="$emit('openModalNovaOp')"
-                /> -->
+                />
+
+            </div>
+            
             
             <div class="content-modal-op">
               <fieldset class="info-modal-op">
-                <legend>Vincular Op a Startup</legend>
+                <legend>Adicionar nova OP</legend>
                 <div class="input">
                   <label for="op">Código OP</label>
                   <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
@@ -60,7 +64,7 @@
 
               
 
-              <div class="save-btn">
+              <div class="btns">
                   <button class="btn btn-cancel" @click="$emit('openModalNovaOp')">cancelar</button>
                   <button class="btn btn-save" @click="returnInfoOp">salvar</button>
                 </div>
@@ -197,26 +201,34 @@ export default {
   overflow-y: auto;         
 }
 
-.modal_mask .modal_content .modal_header {
-  width: 95%;
-  position: fixed;
-  height: 3.5rem;
-  line-height: 3.5rem;
-  background: var(--bg_green);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+.modal_header {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: end;
+  padding:20px;
 }
 
-.modal_mask .modal_content .modal_header .title_modal {
-  width: 100%;
-  margin: auto;
-  padding: 0 2%;
-  color: var(--main_primaryWhite);
-  font-size: 1.5rem;
-  display: flex;
-  text-align: start;
-  align-items: center;
-  justify-content: space-between;
+.modal_header input {
+  
+  width: 30px;
+  height: 30px;
+  background-color: var(--card_red);
+  position: fixed;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 20px;
+  color: #fff;
+  transition: 0.5s;
+}
+
+.modal_header input:hover {
+  background-color: var(--card_red);
+  transform: rotate(180deg);
+  border-radius: 50%;
+  color: #fff;
 }
 
 .modal_mask .modal_body {
@@ -244,13 +256,14 @@ export default {
 }
 
 fieldset {
-  border: 1px solid rgba(37, 36, 36, 0.281);
+  border: none;
   width: 100%;
   background-color: white;
   border-radius: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  margin-bottom: 30px;
 
 }
 
@@ -260,21 +273,14 @@ legend {
   color: var(--black_text);
 }
 
-/* Style ScrollBar --------
+
+
+/* Style ScrollBar -------- */
+
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+    width: 0px;
 }
 
-::-webkit-scrollbar-track {
-  background: rgb(182, 181, 181);
-  border-radius: 15px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--bg_green);
-  border-radius: 15px;
-} */
 
 /* -------- Style Atributo ------- */
 #inputImage {
@@ -360,12 +366,13 @@ legend {
   border-bottom: 2px solid rgba(128, 128, 128, 0.39);
 }
 
-.save-btn {
+.btns {
   width: 100%;
   grid-column-start: 2;
   margin-top: 30px;
   display: flex;
   justify-content: end;
+  padding: 40px;
 }
 
 .btn {
@@ -374,12 +381,14 @@ legend {
   font-weight: 600;
   cursor: pointer !important;
   height: 50px;
-  width: 50%;
-  margin: 0 0 0 10px;
-  border-radius: 10px;
+  max-width: 15vw;
+  min-width: 15vw;
+  margin: 0 0 10px 10px;
+  border-radius: 5px;
   border: none;
   grid-column-start: 4;
   display: flex;
+ 
   justify-content: center;
   align-items: center;
 }
@@ -387,6 +396,11 @@ legend {
 .btn-save {
   background-color: var(--card_blue);
   color: #fff;
+}
+
+.btn-cancel {
+  color: #fff;
+  background-color: var(--card_red);
 }
 
 .historic-op {
@@ -446,6 +460,16 @@ legend {
   .fa-plus-circle {
     margin: 20px;
   }
+
+  .btns {
+    justify-content: center;
+  }
+
+  .btn {
+    max-width: 90vw;
+    min-width: 15vw;
+    width: 100%;
+  }
 }
 
 @media (max-width: 425px) {
@@ -464,7 +488,7 @@ legend {
     width: 100%;
   }
 
-  .save-btn {
+  .btns {
     grid-column-start: auto;
     justify-content: center;
   }
