@@ -85,8 +85,26 @@ export default {
         endTime: "",
       },
 
+      dataNewOpInStartup: {
+        code_op: 48954,
+        machine: "",
+        product_mold: "",
+        client: "",
+        code_client: "",
+        components: [
+          {
+            description: "",
+            item_number: "",
+            planned: "",
+            um: ""
+          },
+
+        ]
+      }
+
     };
   },
+  
   props: {
     titleModal: String,
     id: Number,
@@ -101,8 +119,15 @@ export default {
       this.headerInfo.codeClient = data.code_client;
       this.headerInfo.product = data.product;
       this.headerInfo.codeProduct = data.code_product;
+    },
 
-  }
+    saveNewOpInStartup: async function(){
+      await http.addOpInStartup().then( (res) => {
+        console.log("deu certo", res);
+      }).catch( (error) => {
+        console.log(error);
+      })
+    }
   }
 };
 </script>

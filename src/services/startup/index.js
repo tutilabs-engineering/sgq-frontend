@@ -31,8 +31,8 @@ export default {
     return http.get(`/reportStartup/${id}`)
   },
 
-  addOpInStartup: async (id_startup) => {
-    return http.post(`/reportStartup/addOp/${id_startup}`)
+  addOpInStartup: async (id_startup, data) => {
+    return http.post(`/reportStartup/addOp/${id_startup}`, data)
   }
 
 
