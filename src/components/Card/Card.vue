@@ -80,6 +80,12 @@ a {
   font-size: 30px;
 }
 
+@media (max-width: 480px) {
+  .cardStatus {
+    width: 90vw;
+  }
+}
+
 
 </style>
 
