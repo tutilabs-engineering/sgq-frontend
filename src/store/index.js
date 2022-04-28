@@ -22,6 +22,7 @@ export default createStore({
           code_product: "",
           desc_product: "",
           product_mold: "",
+          quantity: "",
           machine: "",
           day: "",
           start_time:"",

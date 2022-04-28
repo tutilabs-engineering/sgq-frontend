@@ -40,7 +40,7 @@
 
       <div class="input">
         <label for="client">Quantidade</label>
-        <input type="text" name="client" id="client" placeholder="ex: 456" v-model="headerInfo.quantity" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: 456" :value="headerInfo.quantity" disabled>
       </div>
 
       <div class="input">
@@ -104,6 +104,7 @@ export default {
         code_client: this.headerInfo.codeClient,
         code_product: this.headerInfo.codeProduct,
         desc_product: this.headerInfo.product,
+        quantity: this.headerInfo.quantity,
         product_mold: this.headerInput.product_mold,
         machine: this.headerInput.machine,
         day: new Date(this.headerInput.day),
