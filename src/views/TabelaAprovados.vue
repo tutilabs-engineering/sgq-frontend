@@ -15,7 +15,7 @@
       <tbody >
         <tr v-for="item in listAproveds" :key="item.id" >
           <td style="display: none"></td>
- 
+          <td data-title="Cod. OP">{{item.op.code_op}}</td>
           <td data-title="Cod. Startup">{{item.code_startup}}</td>
           <td data-title="Cod. Produto">{{ item.op.code_product }}</td>   
           <td data-title="Cod. Cliente">{{ item.op.code_client }}</td>
@@ -83,6 +83,7 @@ export default {
     console.log(this.listAproveds);
     this.isOp = await this.verifyOP(this.listAproveds.length)
     this.$store.commit("$SETISLOADING");
+
   },
 
 

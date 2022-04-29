@@ -60,7 +60,7 @@
 
               <fieldset class="historic-op">
                 <legend>Histórico de Op's desta startup</legend>
-                <li><i class="fa fa-calendar-check"></i> <span>123-234-200-4322-01</span></li>
+                <li><i class="fa fa-calendar-check"></i> <span>{{startup.op.code_op}}</span></li>
                 <li><i class="fa fa-calendar-check"></i> <span>123-234-200-4322-02</span></li>
 
               </fieldset>
@@ -115,7 +115,7 @@ export default {
       code_op: "",
 
       dataNewOpInStartup: {
-        code_op: 48954,
+        code_op: "",
         machine: "",
         product_mold: "",
         client: "",
