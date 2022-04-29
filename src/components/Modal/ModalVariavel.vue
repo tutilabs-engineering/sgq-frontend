@@ -435,6 +435,7 @@ export default {
   height: 90%;
   margin: auto;
   position: relative;
+  margin-top: 10vh;
   top: 0;
   left: 0;
   padding: 0 15px;
