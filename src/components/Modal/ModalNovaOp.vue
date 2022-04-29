@@ -4,7 +4,7 @@
         <div class="modal_mask" >
           <div class="modal_content">
             <div class="modal_header">
-              <h1>Adicionar nova Startup</h1>
+              <h1>Vincular nova Ordem de Produção</h1>
               <input
                   type="button"
                   value="X"
@@ -28,8 +28,6 @@
 
               <fieldset class="info-modal-op">
 
-
-
                 <div class="input">
                   <label for="op">Cód. Startup</label>
                   <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="startup.code_startup" disabled>
@@ -37,22 +35,22 @@
 
                 <div class="input">
                   <label for="op">Máquina</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model="headerInfo.codeProduct">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" value="">
                 </div>
 
                 <div class="input">
                   <label for="op">Molde</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" value="">
                 </div>
 
                 <div class="input">
                   <label for="op">Cliente</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.codeProduct">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.client" disabled>
                 </div>
 
                 <div class="input">
                   <label for="op">Código Cliente</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.codeProduct">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.codeClient" disabled>
                 </div>
 
      

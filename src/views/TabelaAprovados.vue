@@ -4,7 +4,7 @@
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cod. Startup</th>
-        <th>Cod. OP</th>
+        <th>Cod. Produto</th>
         <th>Cod. Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
@@ -15,8 +15,9 @@
       <tbody >
         <tr v-for="item in listAproveds" :key="item.id" >
           <td style="display: none"></td>
+ 
           <td data-title="Cod. Startup">{{item.code_startup}}</td>
-          <td data-title="Cod.OP">{{ item.op.code_product }}</td>   
+          <td data-title="Cod. Produto">{{ item.op.code_product }}</td>   
           <td data-title="Cod. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Data">{{ formatDate(item.day) }}</td>
@@ -78,7 +79,6 @@ export default {
   created: async function() {
     this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus()
-    console.log(this.listCount);
     this.listAproveds = listCount.data.reportStartups.approved
     console.log(this.listAproveds);
     this.isOp = await this.verifyOP(this.listAproveds.length)
