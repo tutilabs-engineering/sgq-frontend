@@ -61,7 +61,9 @@
               <fieldset class="historic-op">
                 <legend>Histórico de Op's desta startup</legend>
                 <li><i class="fa fa-calendar-check"></i> <span>{{startup.op.code_op}}</span></li>
+                <div v-for="op in listOp" :key="op.id">
                 <li><i class="fa fa-calendar-check"></i> <span>123-234-200-4322-02</span></li>
+                </div>
 
               </fieldset>
 
@@ -69,7 +71,7 @@
 
               <div class="btns">
                   <button class="btn btn-cancel" @click="$emit('openModalNovaOp')">cancelar</button>
-                  <button class="btn btn-save" @click="returnInfoOp">salvar</button>
+                  <button class="btn btn-save" @click="saveNewOpInStartup">salvar</button>
                 </div>
 
               
@@ -112,7 +114,9 @@ export default {
         endTime: "",
       },
 
+      id_startup: this.startup_id,
       code_op: "",
+      listOp: [],
 
       dataNewOpInStartup: {
         code_op: "",
@@ -136,20 +140,24 @@ export default {
   props: {
     startup: String,
     titleModal: String,
-    id: Number,
+    startup_id: Number,
     modalNovaOp: String,
   },
 
   methods: {
  
     searchByCodeOp: async function() {
+      
+
       await http.listDataByCodeOp(this.code_op).then( (res) => {
         console.log(res.data.results[0]);
         this.headerInfo.client = res.data.results[0].CardName;
         this.headerInfo.codeClient = res.data.results[0].U_CodCliente;
         this.headerInfo.product = res.data.results[0].ProdName;
         this.headerInfo.codeProduct = res.data.results[0].ItemCode;
+        
 
+        console.log();
         this.componentsInfo = []
 
         res.data.results[0].Itens.map( (item) => {
@@ -162,10 +170,24 @@ export default {
         })
 
       })
+
+      await http.findReportStartupById(this.id_startup).then( (res) => {
+        console.log(res.data.op.added_op);
+         this.listOp = res.data.op.added_op
+      }).catch( (error) => {
+        console.log(error);
+      })
     },
 
     saveNewOpInStartup: async function(){
-      console.log(this.startup);
+
+      this.dataNewOpInStartup.client = this.headerInfo.client
+      this.dataNewOpInStartup.code_client = this.headerInfo.codeClient
+      this.dataNewOpInStartup.product_mold = this.headerInfo.codeProduct
+      this.dataNewOpInStartup.code_op = this.code_op
+
+
+      console.log(this.dataNewOpInStartup);
       // await http.addOpInStartup(id, this.dataNewOpInStartup).then( (res) => {
       //   console.log("deu certo", res);
       // }).catch( (error) => {

@@ -25,7 +25,7 @@
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
               <ModalNovaOp :modalNovaOp="modalNovaOp"
-                  @open-modal-novaOp="openModalNovaOp" :startup="item"/>
+                  @open-modal-novaOp="openModalNovaOp" :startup="item" :startup_id="item.id"/>
               <i class="fas fa-file-alt"></i>
              
             </div>
@@ -81,9 +81,12 @@ export default {
     const listCount = await http.listCountOfStartupsByStatus()
     this.listAproveds = listCount.data.reportStartups.approved
     console.log(this.listAproveds);
+    this.id_startup = this.listAproveds[0].id
     this.isOp = await this.verifyOP(this.listAproveds.length)
     this.$store.commit("$SETISLOADING");
 
+    console.log(this.id_startup);
+    
   },
 
 
@@ -92,6 +95,7 @@ export default {
       listAproveds: [],
       modalNovaOp:false,
       isOp: false,
+      id_startup: "",
     };
   },
 };
