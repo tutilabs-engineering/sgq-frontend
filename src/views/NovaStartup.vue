@@ -117,7 +117,7 @@ export default {
           if (hour < 10) {
             return `0${hour}:${minutes}`;
           }
-          return `${hour}:${minutes}`;
+          return `${hour}:0${minutes}`;
         }
         return { GetDate, GetStartHour };
       }
@@ -125,7 +125,6 @@ export default {
       const dataOp = await http.listDataByCodeOp(code_op);
       const data = dataOp.data.results[0];
 
-      console.log(data);
       this.headerInfo.client = data.CardName;
       this.headerInfo.codeClient = data.U_CodCliente;
       this.headerInfo.product = data.ProdName;

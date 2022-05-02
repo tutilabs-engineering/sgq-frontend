@@ -56,12 +56,12 @@
 
       <div class="input">
         <label for="client">Data</label>
-        <input type="date" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.day" disabled>
+        <input type="date" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.date" disabled>
       </div>
 
       <div class="input">
         <label for="client">Hora inicial</label>
-        <input type="time" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.start_time" disabled>
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa"  :value="headerInfo.startTime" disabled>
       </div>
 
     </fieldset>
@@ -108,8 +108,8 @@ export default {
         quantity: this.headerInfo.quantity,
         product_mold: this.headerInput.product_mold,
         machine: this.headerInput.machine,
-        day: new Date(this.headerInput.day),
-        start_time: new Date(),
+        day: this.headerInfo.date,
+        start_time: this.headerInfo.startTime,
       }}
       );
       }
