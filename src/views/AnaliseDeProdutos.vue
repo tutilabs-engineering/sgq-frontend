@@ -1,4 +1,10 @@
 <template>
+  <fieldset class="search-field">
+    <legend>Buscar Produto</legend>
+    <input type="text" placeholder="Teste">
+    <button>Teste</button>
+  </fieldset>
+
   <fieldset className="tableContent">
     <legend>Análise de Produto</legend>
     <table cellpadding="0" cellspacing="0">
@@ -151,6 +157,29 @@ table td {
   align-items: center;
 }
 
+.search-field {
+  background-color: transparent;
+  width: 35%;
+  display: flex;
+  flex-direction: row;
+}
+
+.search-field input {
+  width: 60%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  padding: 10px;
+}
+
+.search-field button{
+  width: 20%;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
  .btn {
     border: none;
     width: 50px;
@@ -168,8 +197,18 @@ table td {
     background-color: var(--card_orange);
   }
 
+@media (max-width: 765px) {
+  .search-field {
+      width: 100%;
+      display: flex;
+  }
+}
+
 
 @media (max-width: 1000px) {
+
+
+
   legend {
     text-align: center;
   }
