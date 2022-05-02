@@ -236,7 +236,7 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
-    beforeEnter: EmManutencao
+    beforeEnter: Auth
   }
 
 ]
