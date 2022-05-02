@@ -30,7 +30,7 @@
                   <input type="text" readonly :value="dataProduct.descricao" />
                 </div>
 
-                <div class="input">
+                <!-- <div class="input">
                   <p>Cód. Cliente</p>
                   <input type="text" readonly value="xxxxxx-xxx" />
                 </div>
@@ -38,7 +38,7 @@
                 <div class="input">
                   <p>Descrição Cliente</p>
                   <input type="text" readonly :value="dataProduct.cliente" />
-                </div>
+                </div> -->
               </div>
 
               <div class="perguntas">

@@ -1,8 +1,8 @@
 <template>
   <fieldset class="search-field">
-    <legend>Buscar Produto</legend>
-    <input type="text" placeholder="Teste">
-    <button>Teste</button>
+    <legend><i class="fas fa-filter"></i>Buscar Produto</legend>
+    <input type="text" placeholder="Teste" v-model="codeProductValue">
+    <button @click="searchProduct()"><i class="fas fa-search"></i> Buscar</button>
   </fieldset>
 
   <fieldset className="tableContent">
@@ -11,18 +11,15 @@
       <thead>
         <th>Cód. Produto</th>
         <th>Produto</th>
-        <th>Cód. Cliente</th>
-        <th>Cliente</th>
         <th>Opções</th>
       </thead>
 
       <tbody>
         <tr v-for="product in listProducts" :key="product.id">
+          {{product}}
           <td style="display: none"></td>
-          <td data-title="Cód. Prod.">{{ product.codigo_produto }}</td>
-          <td data-title="Produto">{{ product.descricao }}</td>
-          <td data-title="Cód. Cli.">xxxxxxxxxxxxxxxxx</td>
-          <td data-title="Cliente">{{ product.cliente }}</td>
+          <td data-title="Cód. Prod.">{{ product.code_product }}</td>
+          <td data-title="Produto">{{ product.name_product }}</td>
           <td class="lastTd" data-title="Opções">
             <div class="opcoes">
               <button class="btn btn-at" @click="StartComponentAttribute(product)">AT</button>
@@ -55,9 +52,22 @@ export default {
       modalAttributeOpen: false,
       modalVariableOpen: false,
       dataHeader: Object,
+      codeProductValue: "",
     };
   },
   methods: {
+
+    searchProduct: async function (){
+      console.log(this.codeProductValue);
+      await http.searchProductByCodeProduct(this.codeProductValue).then( (res) => {
+        console.log(res);
+        this.listProducts.push(res.data)
+        console.log(this.listProducts);
+      }).catch( (error) => {
+        console.log(error);
+      })
+    },
+
     StartComponentAttribute: function (dataProduct) {
       this.modalAttributeOpen = !this.modalAttributeOpen;
       this.dataHeader = dataProduct;
@@ -77,8 +87,8 @@ export default {
   },
   created: async function () {
     this.$store.commit("$SETISLOADING");
-    const products = await http.listProducts();
-    this.listProducts = products.data.list;
+    // const products = await http.listProducts();
+    // this.listProducts = products.data.list;
     this.$store.commit("$SETISLOADING");  
   },
 };
@@ -162,22 +172,29 @@ table td {
   width: 35%;
   display: flex;
   flex-direction: row;
+  margin-bottom: 30px;
 }
 
 .search-field input {
   width: 60%;
   height: 40px;
   border: none;
+  border: 1px solid rgba(37, 36, 36, 0.281);
   border-radius: 5px;
   outline: none;
   padding: 10px;
 }
 
 .search-field button{
-  width: 20%;
+  max-width: 20%;
+  min-width: 40%;
   margin-left: 10px;
   border: none;
   border-radius: 5px;
+  background-color: var(--card_green);
+  color: #fff;
+  font-weight: 400;
+  cursor: pointer;
 }
 
  .btn {
