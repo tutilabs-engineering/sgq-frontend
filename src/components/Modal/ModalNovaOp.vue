@@ -35,12 +35,12 @@
 
                 <div class="input">
                   <label for="op">Máquina</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" value="">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model="dataNewOpInStartup.machine">
                 </div>
 
                 <div class="input">
                   <label for="op">Molde</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" value="">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model="dataNewOpInStartup.product_mold">
                 </div>
 
                 <div class="input">
@@ -50,7 +50,7 @@
 
                 <div class="input">
                   <label for="op">Código Cliente</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.codeClient" disabled>
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.codeClient">
                 </div>
 
      
@@ -62,7 +62,7 @@
                 <legend>Histórico de Op's desta startup</legend>
                 <li><i class="fa fa-calendar-check"></i> <span>{{startup.op.code_op}}</span></li>
                 <div v-for="op in listOp" :key="op.id">
-                <li><i class="fa fa-calendar-check"></i> <span>123-234-200-4322-02</span></li>
+                <li><i class="fa fa-calendar-check"></i> <span>{{op}}</span></li>
                 </div>
 
               </fieldset>
@@ -122,17 +122,19 @@ export default {
         product_mold: "",
         client: "",
         code_client: "",
-        components: [
-          {
-            description: "",
-            item_number: "",
-            planned: "",
-            um: ""
-          },
-        ]
+        components: [],
       }
 
     };
+  },
+
+  created: async function (){
+      await http.findReportStartupById(this.id_startup).then( (res) => {
+        console.log(res.data.op.added_op);
+         this.listOp = res.data.op.added_op
+      }).catch( (error) => {
+        console.log(error);
+      })
   },
 
   props: {
@@ -154,6 +156,7 @@ export default {
         this.headerInfo.product = res.data.results[0].ProdName;
         this.headerInfo.codeProduct = res.data.results[0].ItemCode;
         
+        
 
         console.log();
         this.componentsInfo = []
@@ -167,30 +170,27 @@ export default {
           })
         })
 
+        this.dataNewOpInStartup.components = this.componentsInfo
+
       })
 
-      await http.findReportStartupById(this.id_startup).then( (res) => {
-        console.log(res.data.op.added_op);
-         this.listOp = res.data.op.added_op
-      }).catch( (error) => {
-        console.log(error);
-      })
+    
     },
 
     saveNewOpInStartup: async function(){
 
+      this.dataNewOpInStartup.code_op = this.code_op
       this.dataNewOpInStartup.client = this.headerInfo.client
       this.dataNewOpInStartup.code_client = this.headerInfo.codeClient
-      this.dataNewOpInStartup.product_mold = this.headerInfo.codeProduct
-      this.dataNewOpInStartup.code_op = this.code_op
+      
 
 
       console.log(this.dataNewOpInStartup);
-      // await http.addOpInStartup(id, this.dataNewOpInStartup).then( (res) => {
-      //   console.log("deu certo", res);
-      // }).catch( (error) => {
-      //   console.log(error);
-      // })
+      await http.addOpInStartup(this.id_startup, this.dataNewOpInStartup).then( (res) => {
+      console.log("deu certo", res);
+      }).catch( (error) => {
+        console.log(error);
+      })
     }
   }
 };

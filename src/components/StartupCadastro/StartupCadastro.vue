@@ -26,7 +26,7 @@
 
       <div class="input">
         <label for="client">Código cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient" >
       </div>
 
       <div class="input">
@@ -56,12 +56,12 @@
 
       <div class="input">
         <label for="client">Data</label>
-        <input type="date" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.day">
+        <input type="date" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.day" disabled>
       </div>
 
       <div class="input">
         <label for="client">Hora inicial</label>
-        <input type="time" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.start_time">
+        <input type="time" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.start_time" disabled>
       </div>
 
     </fieldset>
