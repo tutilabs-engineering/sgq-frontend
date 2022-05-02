@@ -67,8 +67,6 @@
 
               </fieldset>
 
-              
-
               <div class="btns">
                   <button class="btn btn-cancel" @click="$emit('openModalNovaOp')">cancelar</button>
                   <button class="btn btn-save" @click="saveNewOpInStartup">salvar</button>
