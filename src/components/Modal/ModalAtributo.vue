@@ -5,15 +5,13 @@
         <div class="modal_mask">
           <div class="modal_content">
             <div class="modal_header">
-              <div class="title_modal">
-                <h4>Atributo</h4>
+              <h1>Tabela de Atributos</h1>
                 <input
                   type="button"
                   value="X"
                   colorButton="red"
                   @click="$emit('changeStatus')"
                 />
-              </div>
             </div>
 
             <div class="modal_body">
@@ -23,16 +21,16 @@
                   <input
                     type="text"
                     readonly
-                    :value="dataProduct.codigo_produto"
+                    :value="dataProduct.code_product"
                   />
                 </div>
 
                 <div class="input">
-                  <p>Produto</p>
-                  <input type="text" readonly :value="dataProduct.descricao" />
+                  <p>Descrição Produto</p>
+                  <input type="text" readonly :value="dataProduct.name_product" />
                 </div>
 
-                <div class="input">
+                <!-- <div class="input">
                   <p>Cód. Cliente</p>
                   <input type="text" readonly value="xxxxxx-xxx" />
                 </div>
@@ -40,7 +38,7 @@
                 <div class="input">
                   <p>Descrição Cliente</p>
                   <input type="text" readonly :value="dataProduct.cliente" />
-                </div>
+                </div> -->
               </div>
 
               <div class="perguntas">
@@ -149,7 +147,7 @@ export default {
       btnDesabilitado: false,
       dataAttribute: {
         cod_sap: "(Remover isso do back-end)",
-        cod_product: this.dataProduct.codigo_produto,
+        cod_product: this.dataProduct.code_product,
         attention: true,
         question: "",
         is_enabled: true
@@ -163,7 +161,7 @@ export default {
 
     
     renderListAttribute: async function () {
-      await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+      await http.FindAttributesByCodeProduct(this.dataProduct.code_product).then( (res) => {
       if(res) {
          this.listQuestions = res.data.list 
       }
@@ -277,12 +275,8 @@ export default {
   },
 
   created: async function (){
-
-    
-
-
     this.$store.commit("$SETISLOADING");
-    await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+    await http.FindAttributesByCodeProduct(this.dataProduct.code_product).then( (res) => {
       if(res) {
          this.listQuestions = res.data.list
          
@@ -313,8 +307,8 @@ export default {
 
 .modal_mask .modal_content {
   position: relative;
-  width: 80%;
-  height: 90%;
+  width: 95%;
+  height: 90vh;
   margin: 30px auto;
   background: var(--bg_white);
   border-radius: 10px;
@@ -325,11 +319,42 @@ export default {
   overflow-y: auto;
 }
 
-.modal_mask .modal_content .modal_header {
-  width: 100%;
-  height: 3.5rem;
-  line-height: 3.5rem;
-  background: var(--bg_green);
+.modal_header {
+  width: 95%;
+  height: 10vh;
+  display: flex;
+  position: fixed;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding:20px;
+  z-index: 90;
+  border-radius: 10px;
+}
+
+.modal_header h1 {
+  color: var(--black_text);
+  line-height: 30px;
+}
+
+.modal_header input {
+  width: 30px;
+  height: 30px;
+  background-color: var(--card_red);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 20px;
+  color: #fff;
+  transition: 0.5s;
+}
+
+.modal_header input:hover {
+  background-color: var(--card_red);
+  transform: rotate(180deg);
+  border-radius: 50%;
+  color: #fff;
 }
 
 .modal_mask .modal_content .modal_header .title_modal {
@@ -348,6 +373,7 @@ export default {
   width: 98%;
   height: 90%;
   margin: auto;
+  margin-top: 10vh;
   position: relative;
   top: 0;
   left: 0;
@@ -388,6 +414,11 @@ export default {
   transform: rotate(180deg);
 }
 
+/*   scroll */
+
+::-webkit-scrollbar {
+    width: 0px;
+}
 
 /* -------- Style Atributo ------- */
 #inputImage {
@@ -397,7 +428,7 @@ export default {
 .modal_mask .modal_body .inputsHeader {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.3rem;

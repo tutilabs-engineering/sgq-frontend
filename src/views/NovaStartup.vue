@@ -75,13 +75,12 @@ export default {
       this.headerInfo.codeProduct = "";
       this.headerInfo.date = "";
       this.headerInfo.startTime = "";
-
+      this.headerInfo.quantity = "";
 
       this.techniqueInfo.cavity = "";
       this.techniqueInfo.cycle = "";
 
       this.componentsInfo = []
-      console.log(this.componentsInfo);
 
     },
 
@@ -118,16 +117,18 @@ export default {
           if (hour < 10) {
             return `0${hour}:${minutes}`;
           }
-          return `${hour}:${minutes}`;
+          return `${hour}:0${minutes}`;
         }
         return { GetDate, GetStartHour };
       }
 
       const dataOp = await http.listDataByCodeOp(code_op);
       const data = dataOp.data.results[0];
+
       this.headerInfo.client = data.CardName;
       this.headerInfo.codeClient = data.U_CodCliente;
       this.headerInfo.product = data.ProdName;
+      this.headerInfo.quantity = data.PlannedQty;
       this.headerInfo.codeProduct = data.ItemCode;
       this.headerInfo.date = GetDateTime().GetDate();
       this.headerInfo.startTime = GetDateTime().GetStartHour();
@@ -150,10 +151,10 @@ export default {
         })
       })
 
-      console.log(this.componentsInfo);
-
       this.$store.commit("$SETDATACREATESTARTUP", {techniqueData: this.techniqueInfo, components: this.componentsInfo});
       
+
+      console.log(this.headerInfo);
     },
 
   } 

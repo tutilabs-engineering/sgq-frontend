@@ -3,6 +3,7 @@
 
     <fieldset class="form formOP">
       <legend><i class="fas fa-filter"></i>Buscar OP</legend>
+      
       <div class="input inputOp">
         <label for="client">Informe o código</label>
         <input type="text" name="client" id="op" placeholder="ex: 2345" v-model="code_op">
@@ -25,7 +26,7 @@
 
       <div class="input">
         <label for="client">Código cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient" >
       </div>
 
       <div class="input">
@@ -40,7 +41,7 @@
 
       <div class="input">
         <label for="client">Quantidade</label>
-        <input type="number" name="client" id="client" placeholder="ex: 456" v-model="headerInput.quantity">
+        <input type="text" name="client" id="client" placeholder="ex: 456" :value="headerInfo.quantity" disabled>
       </div>
 
       <div class="input">
@@ -55,12 +56,12 @@
 
       <div class="input">
         <label for="client">Data</label>
-        <input type="date" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.day">
+        <input type="date" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.date" disabled>
       </div>
 
       <div class="input">
         <label for="client">Hora inicial</label>
-        <input type="time" name="client" id="client" placeholder="type qualquer coisa" v-model="headerInput.start_time">
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa"  :value="headerInfo.startTime" disabled>
       </div>
 
     </fieldset>
@@ -79,7 +80,6 @@ export default {
         product_mold: "",
         day: "",
         start_time: "",
-        quantity: ""
       }
       
     };
@@ -95,11 +95,7 @@ export default {
     }
   },
   watch: {
-    // code_op (newValor) {
-    //   this.$store.commit("$SETCODEOP", this.code_op);
-    //   this.$emit("returnCodeOp", newValor)
-    // },
-
+ 
     headerInput: {
       deep: true,
       immediate: true,
@@ -109,11 +105,11 @@ export default {
         code_client: this.headerInfo.codeClient,
         code_product: this.headerInfo.codeProduct,
         desc_product: this.headerInfo.product,
-        quantity: this.headerInput.quantity,
+        quantity: this.headerInfo.quantity,
         product_mold: this.headerInput.product_mold,
         machine: this.headerInput.machine,
-        day: new Date(this.headerInput.day),
-        start_time: new Date(),
+        day: this.headerInfo.date,
+        start_time: this.headerInfo.startTime,
       }}
       );
       }

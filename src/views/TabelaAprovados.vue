@@ -3,7 +3,8 @@
     <legend>Análise de Startup - Aprovadas</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
-        <th>Cod. OP</th>
+        <th>Cod. Startup</th>
+        <th>Cod. Produto</th>
         <th>Cod. Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
@@ -14,7 +15,9 @@
       <tbody >
         <tr v-for="item in listAproveds" :key="item.id" >
           <td style="display: none"></td>
-          <td data-title="Cod.OP">{{ item.op.code_product }}</td>
+          <td data-title="Cod. OP">{{item.op.code_op}}</td>
+          <td data-title="Cod. Startup">{{item.code_startup}}</td>
+          <td data-title="Cod. Produto">{{ item.op.code_product }}</td>   
           <td data-title="Cod. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Data">{{ formatDate(item.day) }}</td>
@@ -22,7 +25,7 @@
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
               <ModalNovaOp :modalNovaOp="modalNovaOp"
-                  @open-modal-novaOp="openModalNovaOp"/>
+                  @open-modal-novaOp="openModalNovaOp" :startup="item" :startup_id="item.id"/>
               <i class="fas fa-file-alt"></i>
              
             </div>
@@ -77,8 +80,13 @@ export default {
     this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus()
     this.listAproveds = listCount.data.reportStartups.approved
+    console.log(this.listAproveds);
+    this.id_startup = this.listAproveds[0].id
     this.isOp = await this.verifyOP(this.listAproveds.length)
     this.$store.commit("$SETISLOADING");
+
+    console.log(this.id_startup);
+    
   },
 
 
@@ -87,6 +95,7 @@ export default {
       listAproveds: [],
       modalNovaOp:false,
       isOp: false,
+      id_startup: "",
     };
   },
 };

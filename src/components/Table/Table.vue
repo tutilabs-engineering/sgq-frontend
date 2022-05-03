@@ -30,8 +30,8 @@
 
       <thead>
         <th>Código</th>
-        <th>Produto</th>
-        <th>Cliente</th>
+        <th>Cód. Produto</th>
+        <th>Cód. Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
         <th>Hora</th>
@@ -42,9 +42,10 @@
       <tbody>
         <tr v-for="item in itemsAbertos" :key="item.id">
           <td style="display: none"></td>
+          
           <td class="codeStartup" data-title="Código">{{ item.code_startup }}</td>
-          <td data-title="Produto">{{ item.op.code_product }}</td>
-          <td data-title="Cliente">{{ item.op.code_client }}</td>
+          <td data-title="Cód. Produto">{{ item.op.code_product }}</td>
+          <td data-title="Cód. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Data">{{ item.day }}</td>
           <td data-title="Hora">{{ item.start_time }}</td>
