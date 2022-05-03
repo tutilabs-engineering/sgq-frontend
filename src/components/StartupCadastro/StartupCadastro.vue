@@ -24,9 +24,14 @@
         <input type="text" name="client" id="client" placeholder="ex: Tutiplast" :value="headerInfo.client" disabled>
       </div>
 
-      <div class="input">
+      <div class="input" v-if="headerInfo.codeClient === null">
         <label for="client">Código cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient" >
+        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" v-model="codeClientManualInput" >
+      </div>
+
+      <div class="input" v-else>
+        <label for="client">Código cliente</label>
+        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient" disabled>
       </div>
 
       <div class="input">
@@ -80,7 +85,8 @@ export default {
         product_mold: "",
         day: "",
         start_time: "",
-      }
+      },
+      codeClientManualInput: "",
       
     };
   },
@@ -102,7 +108,7 @@ export default {
       handler(){
         this.$store.commit("$SETDATACREATESTARTUP", {header: {
         client: this.headerInfo.client,
-        code_client: this.headerInfo.codeClient,
+        code_client: this.headerInfo.codeClient || this.codeClientManualInput,
         code_product: this.headerInfo.codeProduct,
         desc_product: this.headerInfo.product,
         quantity: this.headerInfo.quantity,
