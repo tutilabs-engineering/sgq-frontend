@@ -9,6 +9,7 @@ import store from "./store"
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import VueTheMask from 'vue-the-mask'
 
 
 import VueChartkick from 'vue-chartkick'
@@ -16,6 +17,7 @@ import 'chartkick/chart.js'
 import VueParticles from 'vue-particles';
 
 import VueApexCharts from "vue3-apexcharts"
+
 
 dotenv.config()
 
@@ -33,5 +35,6 @@ app.use(router)
 app.use(VueSweetalert2);
 app.use(VueChartkick);
 app.use(VueApexCharts)
+app.use(VueTheMask)
 app.mount('#app')
 

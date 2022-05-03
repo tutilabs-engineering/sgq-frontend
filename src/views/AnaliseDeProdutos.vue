@@ -1,24 +1,27 @@
 <template>
-  <fieldset className="tableContent">
+  <fieldset class="search-field">
+    <legend><i class="fas fa-filter"></i>Buscar Produto</legend>
+    <input type="text" v-mask="'##.###.######.##-##'" placeholder="Teste" v-model="codeProductValue">
+    <button @click="searchProduct()"><i class="fas fa-search"></i> Buscar</button>
+  </fieldset>
+
+  <fieldset className="tableContent" v-if="!isSearched">
     <legend>Análise de Produto</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cód. Produto</th>
         <th>Produto</th>
-        <th>Cód. Cliente</th>
-        <th>Cliente</th>
         <th>Opções</th>
       </thead>
 
       <tbody>
-        <tr v-for="product in listProducts" :key="product.id">
+        <tr v-for="product in listAllProducts" :key="product.id">
           <td style="display: none"></td>
-          <td data-title="Cód. Prod.">{{ product.codigo_produto }}</td>
-          <td data-title="Produto">{{ product.descricao }}</td>
-          <td data-title="Cód. Cli.">xxxxxxxxxxxxxxxxx</td>
-          <td data-title="Cliente">{{ product.cliente }}</td>
+          <td data-title="Cód. Prod.">{{ product.code_product }}</td>
+          <td data-title="Produto">{{ product.name_product }}</td>
           <td class="lastTd" data-title="Opções">
             <div class="opcoes">
+              
               <button class="btn btn-at" @click="StartComponentAttribute(product)">AT</button>
               <button class="btn btn-va" @click="StartComponentVariable(product)">VA</button>
             </div>
@@ -29,6 +32,36 @@
     <ModalAttribute v-if="modalAttributeOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalAtrribute"/>
     <ModalVariable v-if="modalVariableOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalVariable"/>
   </fieldset>
+
+  <fieldset className="tableContent" v-else>
+    <legend>Análise de Produto</legend>
+    <table cellpadding="0" cellspacing="0">
+      <thead>
+        <th>Cód. Produto</th>
+        <th>Produto</th>
+        <th>Opções</th>
+      </thead>
+
+      <tbody>
+        <tr v-for="product in returnProductSearched" :key="product.id">
+          <td style="display: none"></td>
+          <td data-title="Cód. Prod.">{{ product.code_product }}</td>
+          <td data-title="Produto">{{ product.name_product }}</td>
+          <td class="lastTd" data-title="Opções">
+            <div class="opcoes">
+              
+              <button class="btn btn-at" @click="StartComponentAttribute(product)">AT</button>
+              <button class="btn btn-va" @click="StartComponentVariable(product)">VA</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ModalAttribute v-if="modalAttributeOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalAtrribute"/>
+    <ModalVariable v-if="modalVariableOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalVariable"/>
+  </fieldset>
+
+
 </template>
 
 <script>
@@ -44,17 +77,49 @@ export default {
   emits: ["modalAtributo", "modalVariavel"],
   data() {
     return {
-      listProducts: [],
-      listAttributes: [],
+      returnProductSearched: [],
+      listAllProducts: [],
       modalAttributeOpen: false,
       modalVariableOpen: false,
       dataHeader: Object,
+      codeProductValue: "",
+      isSearched: false,
     };
   },
+
+  watch: {
+    codeProductValue(newValue, oldValue){
+      if(newValue === "" || oldValue === ""){
+        this.isSearched = false
+      }
+    }
+  },
   methods: {
+
+    searchProduct: async function (){
+      
+      if(this.codeProductValue != ""){
+        this.$store.commit("$SETISLOADING");
+        this.isSearched = !this.isSearched;
+        this.returnProductSearched = []
+        await http.searchProductByCodeProduct(this.codeProductValue).then( (res) => {
+          this.returnProductSearched.push(res.data)
+        }).catch( (error) => {
+          console.log(error);
+          this.isSearched = !this.isSearched;
+          console.log("Código invalido");
+      })
+        this.$store.commit("$SETISLOADING"); 
+      }else {
+        console.log("Informe o codigo");
+      }
+      
+    },
+
     StartComponentAttribute: function (dataProduct) {
       this.modalAttributeOpen = !this.modalAttributeOpen;
       this.dataHeader = dataProduct;
+      console.log(this.dataHeader);
     },
     StartComponentVariable: function (dataProduct) {
       this.modalVariableOpen = !this.modalVariableOpen;
@@ -71,8 +136,9 @@ export default {
   },
   created: async function () {
     this.$store.commit("$SETISLOADING");
-    const products = await http.listProducts();
-    this.listProducts = products.data.list;
+    this.listAllProducts = await http.listProducts();
+    this.listAllProducts = this.listAllProducts.data.list;
+    console.log(this.listAllProducts);
     this.$store.commit("$SETISLOADING");  
   },
 };
@@ -151,6 +217,36 @@ table td {
   align-items: center;
 }
 
+.search-field {
+  background-color: transparent;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.search-field input {
+  width: 60%;
+  height: 40px;
+  border: none;
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  border-radius: 5px;
+  outline: none;
+  padding: 10px;
+}
+
+.search-field button{
+  max-width: 20%;
+  min-width: 40%;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--card_green);
+  color: #fff;
+  font-weight: 400;
+  cursor: pointer;
+}
+
  .btn {
     border: none;
     width: 50px;
@@ -168,8 +264,18 @@ table td {
     background-color: var(--card_orange);
   }
 
+@media (max-width: 765px) {
+  .search-field {
+      width: 100%;
+      display: flex;
+  }
+}
+
 
 @media (max-width: 1000px) {
+
+
+
   legend {
     text-align: center;
   }
@@ -219,9 +325,7 @@ table td {
     
   }
 
-  .lastTd {
-    border-bottom: 1.6px solid var(--green_text);
-  }
+ 
 
  
 }

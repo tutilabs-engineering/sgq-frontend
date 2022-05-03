@@ -63,6 +63,25 @@
           </select>
         </div>
 
+        <div class="input-acessLevel">
+          <label for="user-name">Unidade</label>
+          <select
+            name="lvAcess"
+            id="lvAcess"
+            class="select-lvAcess"
+            v-model="userRegister.fk_unity"
+          >
+            <option
+              v-for="(unity, index) in units"
+              :value="unity.value"
+              :key="index"
+            >
+              {{ unity.text }}
+            </option>
+          </select>
+        </div>
+
+
         <div class="buttons-action">
           <button class="btn save-btn" type="submit">Salvar</button>
         </div>
@@ -94,7 +113,7 @@ export default {
         cpf: "",
         register: "",
         fk_role: "",
-        fk_unity: "1",
+        fk_unity: "",
       },
       options: [
         { text: "Escolha", value: "" },
@@ -104,6 +123,12 @@ export default {
         { text: "Metrologista", value: 4 },
         { text: "Inspetor", value: 5 },
       ],
+
+      units: [
+        {text: "Escolha", value: ""},
+        {text: "Matriz", value: "1"},
+        {text: "Filial", value: "2"},
+      ]
     };
   },
 
@@ -111,6 +136,7 @@ export default {
     this.$store.commit("$SETISLOADING");
     await http.listUsers().then((res) => {
       this.users = res.data.users;
+      console.log(this.users);
     });
     this.$store.commit("$SETISLOADING");
   },
@@ -139,8 +165,9 @@ export default {
       const cpf = this.userRegister.cpf;
       const register = this.userRegister.register;
       const role = this.userRegister.fk_role;
+      const unity = this.userRegister.fk_unity;
 
-      if (!name || !email || !cpf || !register || !role) {
+      if (!name || !email || !cpf || !register || !role || !unity) {
         return Toast.fire({
           icon: "error",
           title: "Necessário preencher todos os campos!",
@@ -289,16 +316,9 @@ input:-webkit-autofill {
   background-color: var(--btn_gray);
 }
 
-/*
-.cancel-btn {
-    grid-column: 3;
-}
-
-*/
-
 .save-btn {
   width: 100%;
-  grid-column: 4;
+  grid-column: 1;
   color: var(--main_primaryWhite);
   background-color: var(--btn_blue);
 }

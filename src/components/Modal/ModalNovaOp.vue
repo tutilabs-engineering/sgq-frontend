@@ -1,56 +1,80 @@
 <template>
-  <div v-if="modalNovaOp">
-    <transition name="model">
-        <div class="modal_mask">
+  <div v-if="modalNovaOp" >
+    <transition name="model" >
+        <div class="modal_mask" >
           <div class="modal_content">
             <div class="modal_header">
-              <div class="title_modal">
-                <h4>Adicionar nova OP</h4>
-                <input
+              <h1>Vincular nova Ordem de Produção</h1>
+              <input
                   type="button"
                   value="X"
                   colorButton="red"
                   @click="$emit('openModalNovaOp')"
                 />
-              </div>
+
             </div>
-            
+          
             <div class="content-modal-op">
-              <div class="info-modal-op">
+
+              <div class="formOrdemProducao">
+
+                <div class="input inputOp">
+                  <label for="client"><i class="fas fa-filter"></i>Buscar OP</label>
+                  <input type="text" name="client" id="op" placeholder="ex: 2345" v-model="code_op">
+                </div>
+
+                <button type="submit" class="btn btn-search" @click="searchByCodeOp(code_op)"><i class="fas fa-search"></i> Buscar</button>
+              </div>
+
+              <fieldset class="info-modal-op">
 
                 <div class="input">
                   <label for="op">Cód. Startup</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model="code_op">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="startup.code_startup" disabled>
                 </div>
 
                 <div class="input">
                   <label for="op">Máquina</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP">
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model="dataNewOpInStartup.machine">
                 </div>
 
                 <div class="input">
-                  <label for="op">Cód. Produto</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.codeProduct">
+                  <label for="op">Molde</label>
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model="dataNewOpInStartup.product_mold">
                 </div>
 
                 <div class="input">
-                  <label for="op">Nova OP</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="code_op">
+                  <label for="op">Cliente</label>
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.client" disabled>
                 </div>
 
-                <div class="save-btn">
+                <div class="input">
+                  <label for="op">Código Cliente</label>
+                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.codeClient">
+                </div>
+
+     
+              </fieldset>
+
+              <TableComponentes :componentsInfo="componentsInfo"/>
+
+              <fieldset class="historic-op">
+                <legend>Histórico de Op's desta startup</legend>
+                <li><i class="fa fa-calendar-check"></i> <span>{{startup.op.code_op}}</span></li>
+                <div v-for="op in listOp" :key="op.id">
+                <li><i class="fa fa-calendar-check"></i> <span>{{op}}</span></li>
+                </div>
+
+              </fieldset>
+
+              <div class="btns">
                   <button class="btn btn-cancel" @click="$emit('openModalNovaOp')">cancelar</button>
-                  <button class="btn btn-save">salvar</button>
+                  <button class="btn btn-save" @click="saveNewOpInStartup">salvar</button>
                 </div>
 
+              
 
-              </div>
-              <div class="historic-op">
-                <span>Histórico de Op's desta startup</span>
-                <li><i class="fa fa-calendar-check"></i> <span>123-234-200-4322-01</span></li>
-                <li><i class="fa fa-calendar-check"></i> <span>123-234-200-4322-02</span></li>
-
-              </div>
+              
             </div>
 
           </div>
@@ -65,11 +89,14 @@
 
 <script>
 
+import TableComponentes from "../TableComponentes/TableComponentes.vue";
+
+
 import http from "../../services/startup/index";
 
 
 export default {
-  components: {},
+  components: {TableComponentes},
   name: "Modal",
   emits: ["openModalNovaOp"],
   data() {
@@ -85,24 +112,86 @@ export default {
         endTime: "",
       },
 
+      id_startup: this.startup_id,
+      code_op: "",
+      listOp: [],
+
+      dataNewOpInStartup: {
+        code_op: "",
+        machine: "",
+        product_mold: "",
+        client: "",
+        code_client: "",
+        components: [],
+      }
+
     };
   },
+
+  created: async function (){
+      await http.findReportStartupById(this.id_startup).then( (res) => {
+        console.log(res.data.op.added_op);
+         this.listOp = res.data.op.added_op
+      }).catch( (error) => {
+        console.log(error);
+      })
+  },
+
   props: {
+    startup: String,
     titleModal: String,
-    id: Number,
+    startup_id: Number,
     modalNovaOp: String,
   },
 
   methods: {
-    ReturnCodeOp: async function(code_op) {
-      const dataOp = await http.listDataByCodeOp(code_op);
-      const data = dataOp.data.data_op;
-      this.headerInfo.client = data.client;
-      this.headerInfo.codeClient = data.code_client;
-      this.headerInfo.product = data.product;
-      this.headerInfo.codeProduct = data.code_product;
+ 
+    searchByCodeOp: async function() {
+      
 
-  }
+      await http.listDataByCodeOp(this.code_op).then( (res) => {
+        console.log(res.data.results[0]);
+        this.headerInfo.client = res.data.results[0].CardName;
+        this.headerInfo.codeClient = res.data.results[0].U_CodCliente;
+        this.headerInfo.product = res.data.results[0].ProdName;
+        this.headerInfo.codeProduct = res.data.results[0].ItemCode;
+        
+        
+
+        console.log();
+        this.componentsInfo = []
+
+        res.data.results[0].Itens.map( (item) => {
+          this.componentsInfo.push( {
+            description: item.Descrição,
+            item_number: item.ItemCode,
+            planned: item.PlannedQty,
+            um: item.InvntryUom
+          })
+        })
+
+        this.dataNewOpInStartup.components = this.componentsInfo
+
+      })
+
+    
+    },
+
+    saveNewOpInStartup: async function(){
+
+      this.dataNewOpInStartup.code_op = this.code_op
+      this.dataNewOpInStartup.client = this.headerInfo.client
+      this.dataNewOpInStartup.code_client = this.headerInfo.codeClient
+      
+
+
+      console.log(this.dataNewOpInStartup);
+      await http.addOpInStartup(this.id_startup, this.dataNewOpInStartup).then( (res) => {
+      console.log("deu certo", res);
+      }).catch( (error) => {
+        console.log(error);
+      })
+    }
   }
 };
 </script>
@@ -123,8 +212,8 @@ export default {
 
 .modal_mask .modal_content {
   position: relative;
-  width: 80%;
-  height: 60%;
+  width: 95%;
+  height: 90vh;
   margin: 30px auto;
   background: var(--bg_white);
   border-radius: 10px;
@@ -132,34 +221,52 @@ export default {
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto;
+  overflow-y: auto;         
 }
 
-.modal_mask .modal_content .modal_header {
-  width: 100%;
-  height: 3.5rem;
-  line-height: 3.5rem;
-  background: var(--bg_green);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.modal_mask .modal_content .modal_header .title_modal {
-  width: 100%;
-  margin: auto;
-  padding: 0 2%;
-  color: var(--main_primaryWhite);
-  font-size: 1.5rem;
+.modal_header {
+  width: 95%;
+  height: 10vh;
   display: flex;
-  text-align: start;
-  align-items: center;
+  position: fixed;
   justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding:20px;
+  z-index: 90;
+  border-radius: 10px;
+}
+
+.modal_header h1 {
+  color: var(--black_text);
+  line-height: 30px;
+}
+
+.modal_header input {
+  width: 30px;
+  height: 30px;
+  background-color: var(--card_red);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 20px;
+  color: #fff;
+  transition: 0.5s;
+}
+
+.modal_header input:hover {
+  background-color: var(--card_red);
+  transform: rotate(180deg);
+  border-radius: 50%;
+  color: #fff;
 }
 
 .modal_mask .modal_body {
   width: 98%;
   height: 90%;
   margin: auto;
+  margin-top: 11vh;
   position: relative;
   top: 0;
   left: 0;
@@ -168,7 +275,7 @@ export default {
 
 .title_modal input {
   padding: 5px 10px;
-  border-radius: 50%;
+  border-radius: 20%;
   border: none;
   color: var(--white);
   background-color: rgb(223, 97, 97);
@@ -180,21 +287,32 @@ export default {
   background-color: rgb(148, 7, 7);
 }
 
+fieldset {
+  border: none;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-bottom: 30px;
+
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
+
+
 /* Style ScrollBar -------- */
+
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+    width: 0px;
 }
 
-::-webkit-scrollbar-track {
-  background: rgb(182, 181, 181);
-  border-radius: 15px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--bg_green);
-  border-radius: 15px;
-}
 
 /* -------- Style Atributo ------- */
 #inputImage {
@@ -240,17 +358,27 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
 }
+
+.inputOp {
+  margin-top: 10vh;
+  width: 33%;
+}
+
+.formOrdemProducao {
+  padding-left: 20px;
+}
+
 .info-modal-op {
   padding: 20px;
-  width: 70%;
-  height: 200px;
+  width: 100%;
+  height: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
   justify-content: center;
   align-items: center;
-  
 }
 
 .input {
@@ -279,12 +407,13 @@ export default {
   border-bottom: 2px solid rgba(128, 128, 128, 0.39);
 }
 
-.save-btn {
+.btns {
   width: 100%;
   grid-column-start: 2;
   margin-top: 30px;
   display: flex;
   justify-content: end;
+  padding: 40px;
 }
 
 .btn {
@@ -293,9 +422,10 @@ export default {
   font-weight: 600;
   cursor: pointer !important;
   height: 50px;
-  width: 50%;
-  margin: 0 0 0 10px;
-  border-radius: 10px;
+  max-width: 15vw;
+  min-width: 15vw;
+  margin: 5px;
+  border-radius: 5px;
   border: none;
   grid-column-start: 4;
   display: flex;
@@ -303,17 +433,26 @@ export default {
   align-items: center;
 }
 
+.btn-search {
+  background-color: var(--card_green);
+  color: #fff;
+}
+
 .btn-save {
   background-color: var(--card_blue);
   color: #fff;
 }
 
+.btn-cancel {
+  color: #fff;
+  background-color: var(--card_red);
+}
+
 .historic-op {
   padding-top: 20px;
-  width: 30%;
+  width: 100%;
   height: 100%;
   border-left: 1px solid rgba(0, 0, 0, 0.397);
-  
 }
 
 .historic-op li {
@@ -327,6 +466,11 @@ export default {
 
 
 @media (max-width: 768px) {
+
+  .inputOp {
+      margin-top: 10vh;
+      width: 100%;
+  }
   .modal_mask .modal_body .inputsHeader .input {
     width: 49%;
   }
@@ -365,6 +509,16 @@ export default {
   .fa-plus-circle {
     margin: 20px;
   }
+
+  .btns {
+    justify-content: center;
+  }
+
+  .btn {
+    max-width: 90vw;
+    min-width: 15vw;
+    width: 100%;
+  }
 }
 
 @media (max-width: 425px) {
@@ -379,11 +533,10 @@ export default {
   }
 
   .input {
-    align-items: center;
     width: 100%;
   }
 
-  .save-btn {
+  .btns {
     grid-column-start: auto;
     justify-content: center;
   }

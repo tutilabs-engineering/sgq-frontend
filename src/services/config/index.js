@@ -45,4 +45,4 @@ http.interceptors.request.use(function (config) {
     return Promise.reject(error)
   }
 )
-export { http };
+export { http, };
