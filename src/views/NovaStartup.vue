@@ -117,7 +117,7 @@ export default {
           if (hour < 10) {
             return `0${hour}:${minutes}`;
           }
-          return `${hour}:0${minutes}`;
+          return `${hour}:${minutes}`;
         }
         return { GetDate, GetStartHour };
       }
@@ -130,8 +130,8 @@ export default {
       this.headerInfo.product = data.ProdName;
       this.headerInfo.quantity = data.PlannedQty;
       this.headerInfo.codeProduct = data.ItemCode;
-      this.headerInfo.date = GetDateTime().GetDate();
-      this.headerInfo.startTime = GetDateTime().GetStartHour();
+      this.headerInfo.date = new Date()
+      this.headerInfo.startTime = new Date()
 
       //techniqueData
 
