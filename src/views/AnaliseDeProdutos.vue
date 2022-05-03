@@ -16,7 +16,6 @@
 
       <tbody>
         <tr v-for="product in listProducts" :key="product.id">
-          {{product}}
           <td style="display: none"></td>
           <td data-title="Cód. Prod.">{{ product.code_product }}</td>
           <td data-title="Produto">{{ product.name_product }}</td>
@@ -58,11 +57,8 @@ export default {
   methods: {
 
     searchProduct: async function (){
-      console.log(this.codeProductValue);
       await http.searchProductByCodeProduct(this.codeProductValue).then( (res) => {
-        console.log(res);
         this.listProducts.push(res.data)
-        console.log(this.listProducts);
       }).catch( (error) => {
         console.log(error);
       })
@@ -71,6 +67,7 @@ export default {
     StartComponentAttribute: function (dataProduct) {
       this.modalAttributeOpen = !this.modalAttributeOpen;
       this.dataHeader = dataProduct;
+      console.log(this.dataHeader);
     },
     StartComponentVariable: function (dataProduct) {
       this.modalVariableOpen = !this.modalVariableOpen;
@@ -169,7 +166,7 @@ table td {
 
 .search-field {
   background-color: transparent;
-  width: 35%;
+  width: 50%;
   display: flex;
   flex-direction: row;
   margin-bottom: 30px;

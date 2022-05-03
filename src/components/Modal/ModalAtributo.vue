@@ -21,13 +21,13 @@
                   <input
                     type="text"
                     readonly
-                    :value="dataProduct.codigo_produto"
+                    :value="dataProduct.code_product"
                   />
                 </div>
 
                 <div class="input">
                   <p>Produto</p>
-                  <input type="text" readonly :value="dataProduct.descricao" />
+                  <input type="text" readonly :value="dataProduct.name_product" />
                 </div>
 
                 <!-- <div class="input">
@@ -147,7 +147,7 @@ export default {
       btnDesabilitado: false,
       dataAttribute: {
         cod_sap: "(Remover isso do back-end)",
-        cod_product: this.dataProduct.codigo_produto,
+        cod_product: this.dataProduct.code_product,
         attention: true,
         question: "",
         is_enabled: true
@@ -161,7 +161,8 @@ export default {
 
     
     renderListAttribute: async function () {
-      await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+      
+      await http.FindAttributesByCodeProduct(this.dataProduct.code_product).then( (res) => {
       if(res) {
          this.listQuestions = res.data.list 
       }
@@ -276,7 +277,7 @@ export default {
 
   created: async function (){
 
-    
+    console.log(this.dataProduct);
 
 
     this.$store.commit("$SETISLOADING");
