@@ -1,7 +1,7 @@
 <template>
   <fieldset class="search-field">
     <legend><i class="fas fa-filter"></i>Buscar Produto</legend>
-    <input type="text" placeholder="Teste" v-model="codeProductValue">
+    <input type="text" v-mask="'##.###.######.##-##'" placeholder="Teste" v-model="codeProductValue">
     <button @click="searchProduct()"><i class="fas fa-search"></i> Buscar</button>
   </fieldset>
 
@@ -21,6 +21,7 @@
           <td data-title="Produto">{{ product.name_product }}</td>
           <td class="lastTd" data-title="Opções">
             <div class="opcoes">
+              
               <button class="btn btn-at" @click="StartComponentAttribute(product)">AT</button>
               <button class="btn btn-va" @click="StartComponentVariable(product)">VA</button>
             </div>
@@ -57,6 +58,7 @@ export default {
   methods: {
 
     searchProduct: async function (){
+      this.listProducts = []
       await http.searchProductByCodeProduct(this.codeProductValue).then( (res) => {
         this.listProducts.push(res.data)
       }).catch( (error) => {
@@ -272,9 +274,7 @@ table td {
     
   }
 
-  .lastTd {
-    border-bottom: 1.6px solid var(--green_text);
-  }
+ 
 
  
 }

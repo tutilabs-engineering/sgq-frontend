@@ -27,6 +27,7 @@
     "vue-loading-overlay": "^5.0.3",
     "vue-router": "^4.0.0-0",
     "vue-sweetalert2": "^5.0.2",
+    "vue-the-mask": "^0.11.1",
     "vue-toastification": "^2.0.0-rc.5",
     "vue3-apexcharts": "^1.4.1",
     "vue3-popper": "^1.4.2",
