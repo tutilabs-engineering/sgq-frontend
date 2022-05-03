@@ -22,11 +22,11 @@
                   <input
                     type="text"
                     readonly
-                    :value="dataProduct.codigo_produto"
+                    :value="dataProduct.code_product"
                   />
                 </div>
 
-                <div class="input">
+                <!-- <div class="input">
                   <p>Produto</p>
                   <input type="text" readonly :value="dataProduct.descricao" />
                 </div>
@@ -34,11 +34,11 @@
                 <div class="input">
                   <p>Cód. Cliente</p>
                   <input type="text" readonly value="XXXXXXXX-XX" />
-                </div>
+                </div> -->
 
                 <div class="input">
-                  <p>Descrição Cliente</p>
-                  <input type="text" readonly :value="dataProduct.cliente" />
+                  <p>Descrição Produto</p>
+                  <input type="text" readonly :value="dataProduct.name_product" />
                 </div>
                 
               </div>
@@ -151,7 +151,7 @@ export default {
       count: 0,
       list: {
         cod_sap: this.dataProduct.codigo_produto,
-        cod_product: this.dataProduct.codigo_produto,
+        cod_product: this.dataProduct.code_product,
         description: "",
         cota: 0,
         max: 0,
@@ -168,7 +168,7 @@ export default {
   created: async function () {
     this.$store.commit("$SETISLOADING");
     await http
-      .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
+      .FindVariableByCodeProduct(this.dataProduct.code_product)
       .then((res) => {
         this.variables = res.data.list;
       });
@@ -195,7 +195,7 @@ export default {
 
     async reloadList() {
       await http
-        .FindVariableByCodeProduct(this.dataProduct.codigo_produto)
+        .FindVariableByCodeProduct(this.dataProduct.code_product)
         .then((res) => {
           this.variables = res.data.list;
         });
@@ -444,7 +444,7 @@ export default {
 .modal_mask .modal_body .inputsHeader {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.3rem;

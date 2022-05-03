@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="input">
-                  <p>Produto</p>
+                  <p>Descrição Produto</p>
                   <input type="text" readonly :value="dataProduct.name_product" />
                 </div>
 
@@ -161,7 +161,6 @@ export default {
 
     
     renderListAttribute: async function () {
-      
       await http.FindAttributesByCodeProduct(this.dataProduct.code_product).then( (res) => {
       if(res) {
          this.listQuestions = res.data.list 
@@ -276,12 +275,8 @@ export default {
   },
 
   created: async function (){
-
-    console.log(this.dataProduct);
-
-
     this.$store.commit("$SETISLOADING");
-    await http.FindAttributesByCodeProduct(this.dataProduct.codigo_produto).then( (res) => {
+    await http.FindAttributesByCodeProduct(this.dataProduct.code_product).then( (res) => {
       if(res) {
          this.listQuestions = res.data.list
          
@@ -433,7 +428,7 @@ export default {
 .modal_mask .modal_body .inputsHeader {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.3rem;

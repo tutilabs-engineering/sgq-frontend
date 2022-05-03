@@ -5,7 +5,7 @@
     <button @click="searchProduct()"><i class="fas fa-search"></i> Buscar</button>
   </fieldset>
 
-  <fieldset className="tableContent">
+  <fieldset className="tableContent" v-if="!isSearched">
     <legend>Análise de Produto</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
@@ -15,7 +15,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="product in listProducts" :key="product.id">
+        <tr v-for="product in listAllProducts" :key="product.id">
           <td style="display: none"></td>
           <td data-title="Cód. Prod.">{{ product.code_product }}</td>
           <td data-title="Produto">{{ product.name_product }}</td>
@@ -32,6 +32,36 @@
     <ModalAttribute v-if="modalAttributeOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalAtrribute"/>
     <ModalVariable v-if="modalVariableOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalVariable"/>
   </fieldset>
+
+  <fieldset className="tableContent" v-else>
+    <legend>Análise de Produto</legend>
+    <table cellpadding="0" cellspacing="0">
+      <thead>
+        <th>Cód. Produto</th>
+        <th>Produto</th>
+        <th>Opções</th>
+      </thead>
+
+      <tbody>
+        <tr v-for="product in returnProductSearched" :key="product.id">
+          <td style="display: none"></td>
+          <td data-title="Cód. Prod.">{{ product.code_product }}</td>
+          <td data-title="Produto">{{ product.name_product }}</td>
+          <td class="lastTd" data-title="Opções">
+            <div class="opcoes">
+              
+              <button class="btn btn-at" @click="StartComponentAttribute(product)">AT</button>
+              <button class="btn btn-va" @click="StartComponentVariable(product)">VA</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ModalAttribute v-if="modalAttributeOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalAtrribute"/>
+    <ModalVariable v-if="modalVariableOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalVariable"/>
+  </fieldset>
+
+
 </template>
 
 <script>
@@ -47,23 +77,43 @@ export default {
   emits: ["modalAtributo", "modalVariavel"],
   data() {
     return {
-      listProducts: [],
-      listAttributes: [],
+      returnProductSearched: [],
+      listAllProducts: [],
       modalAttributeOpen: false,
       modalVariableOpen: false,
       dataHeader: Object,
       codeProductValue: "",
+      isSearched: false,
     };
+  },
+
+  watch: {
+    codeProductValue(newValue, oldValue){
+      if(newValue === "" || oldValue === ""){
+        this.isSearched = false
+      }
+    }
   },
   methods: {
 
     searchProduct: async function (){
-      this.listProducts = []
-      await http.searchProductByCodeProduct(this.codeProductValue).then( (res) => {
-        this.listProducts.push(res.data)
-      }).catch( (error) => {
-        console.log(error);
+      
+      if(this.codeProductValue != ""){
+        this.$store.commit("$SETISLOADING");
+        this.isSearched = !this.isSearched;
+        this.returnProductSearched = []
+        await http.searchProductByCodeProduct(this.codeProductValue).then( (res) => {
+          this.returnProductSearched.push(res.data)
+        }).catch( (error) => {
+          console.log(error);
+          this.isSearched = !this.isSearched;
+          console.log("Código invalido");
       })
+        this.$store.commit("$SETISLOADING"); 
+      }else {
+        console.log("Informe o codigo");
+      }
+      
     },
 
     StartComponentAttribute: function (dataProduct) {
@@ -86,8 +136,9 @@ export default {
   },
   created: async function () {
     this.$store.commit("$SETISLOADING");
-    // const products = await http.listProducts();
-    // this.listProducts = products.data.list;
+    this.listAllProducts = await http.listProducts();
+    this.listAllProducts = this.listAllProducts.data.list;
+    console.log(this.listAllProducts);
     this.$store.commit("$SETISLOADING");  
   },
 };
