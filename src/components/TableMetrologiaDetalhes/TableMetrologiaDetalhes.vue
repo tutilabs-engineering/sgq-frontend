@@ -5,7 +5,7 @@
 
         <thead>
           <th>Identificação</th>
-          <th v-for="x in arrayFilter(variables[0].items)" :key="x.id">{{ "Cavidade " + x.position_cavity}}</th>
+          <th v-for="x in arrayFilter(variables[0].items)" :key="x.id">{{"min - Cavidade " + x.position_cavity + " - max"}}</th>
         </thead>
 
         <tbody>
@@ -14,8 +14,11 @@
                
                <td> {{ i.variable}} </td>
                <td v-for="item in arrayFilter(i.items)" :key="item">
-                <div v-if="item !== null">
-                   <input class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required >
+                <div class="cavity-area" v-if="item !== null">
+                    <span>{{item.variable.min}}</span>
+                   <input @change="verifyValue(item.value, item.variable.min, item.variable.max)" class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required >
+                   <span>{{item.variable.max}}</span>
+            
                 </div>
                </td>   
           </tr>
@@ -41,6 +44,12 @@ export default {
 
        return arraySemVazios
 
+       },
+
+       verifyValue(item, min, max){
+         if(item < min || item > max){
+           console.log("Deu ruim");
+         }
        }
     },
     watch : {
@@ -82,7 +91,15 @@ legend {
   display: flex;
   justify-content: center;
 }
+input[type=number]::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+    
+}
+input[type=number] { 
+   -moz-appearance: textfield;
+   appearance: textfield;
 
+}
 table {
   width: 100%;
   padding: 20px;
@@ -119,11 +136,28 @@ table th {
   padding: 0 10px 0 10px;
 }
 
-.input-test{       
-  
-  width: 40%;
+.cavity-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cavity-area span {
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.input-test{
+  border: none;
+  margin: 0 20px 0 20px;
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  border-radius: 5px;
+  width: 20%;
+  outline: none;
   height: 40px;
   text-align: center;
+
 }
 
 
