@@ -61,12 +61,12 @@
 
       <div class="input">
         <label for="client">Data</label>
-        <input type="date" name="client" id="client" placeholder="type qualquer coisa" :value="headerInfo.date" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: ##/##/####" :value="headerInfo.date" disabled>
       </div>
 
       <div class="input">
         <label for="client">Hora inicial</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa"  :value="headerInfo.startTime" disabled>
+        <input type="text" name="client" id="client" placeholder="ex: 14:56 pm"  :value="headerInfo.startTime" disabled>
       </div>
 
     </fieldset>
