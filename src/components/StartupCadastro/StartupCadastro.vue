@@ -1,15 +1,10 @@
 <template>
   <div class="content-startupCadastro">
-
-    <fieldset class="form formOP">
+    
+    <fieldset class="search-field">
       <legend><i class="fas fa-filter"></i>Buscar OP</legend>
-      
-      <div class="input inputOp">
-        <label for="client">Informe o código</label>
-        <input type="text" name="client" id="op" placeholder="ex: 2345" v-model="code_op">
-      </div>
-
-      <button type="submit" class="btn" @click="searchByCodeOp(code_op)"><i class="fas fa-search"></i> Buscar</button>
+      <input type="text" placeholder="" v-model="code_op">
+      <button @click="searchByCodeOp(code_op)"><i class="fas fa-search"></i> Buscar</button>
     </fieldset>
     
     <fieldset class="form">
@@ -156,6 +151,36 @@ export default {
   justify-content: space-between;
   align-items: center;
   background-color: var(--bg_gray);
+}
+
+.search-field {
+  background-color: transparent;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.search-field input {
+  width: 70%;
+  height: 40px;
+  border: none;
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  border-radius: 5px;
+  outline: none;
+  padding: 10px;
+}
+
+.search-field button{
+  max-width: 20%;
+  min-width: 30%;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--card_green);
+  color: #fff;
+  font-weight: 400;
+  cursor: pointer;
 }
 
 .btn {

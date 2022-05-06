@@ -3,6 +3,7 @@
     <legend>Análise de Startup - Aprovadas</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
+        <th>Cod. OP</th>
         <th>Cod. Startup</th>
         <th>Cod. Produto</th>
         <th>Cod. Cliente</th>
@@ -26,7 +27,8 @@
             <div className="opcoes">
               <ModalNovaOp :modalNovaOp="modalNovaOp"
                   @open-modal-novaOp="openModalNovaOp" :startup="item" :startup_id="item.id"/>
-              <i class="fas fa-file-alt"></i>
+                  <button class="btn-visu"><i class="fas fa-file-alt"></i> Vincular</button>
+              
              
             </div>
           </td>
@@ -228,6 +230,20 @@ table td {
   font-weight: 300px;
 }
 
+.btn-visu {
+  border: none;
+  width: 100px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  background-color: var(--card_blue);
+  cursor: pointer;
+  gap: 5px;
+}
+
 .btn-back {
   margin-top: 30px;
   cursor: pointer;
@@ -252,17 +268,18 @@ table td {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 1px;
 }
 
 
 .fa-file-alt {
-  color: var(--card_blue);
-  font-size: 25px;
+  color: white;
+  font-size: 20px;
   cursor: pointer;
 }
 
 
-@media (max-width: 960px) {
+@media (max-width: 1000px) {
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;

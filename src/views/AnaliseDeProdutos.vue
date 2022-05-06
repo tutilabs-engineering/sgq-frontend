@@ -1,7 +1,7 @@
 <template>
   <fieldset class="search-field">
     <legend><i class="fas fa-filter"></i>Buscar Produto</legend>
-    <input type="text" v-mask="'##.###.######.##-##'" placeholder="Teste" v-model="codeProductValue">
+    <input type="text" v-mask="'##.###.######.##-##'" placeholder="" v-model="codeProductValue">
     <button @click="searchProduct()"><i class="fas fa-search"></i> Buscar</button>
   </fieldset>
 
@@ -22,8 +22,8 @@
           <td class="lastTd" data-title="Opções">
             <div class="opcoes">
               
-              <button class="btn btn-at" @click="StartComponentAttribute(product)">AT</button>
-              <button class="btn btn-va" @click="StartComponentVariable(product)">VA</button>
+              <button class="btn btn-at" @click="StartComponentAttribute(product)"> <i class="fas fa-tag"></i> Atributos</button>
+              <button class="btn btn-va" @click="StartComponentVariable(product)"> <i class="	fas fa-sort-numeric-up"></i> Variáveis</button>
             </div>
           </td>
         </tr>
@@ -50,8 +50,8 @@
           <td class="lastTd" data-title="Opções">
             <div class="opcoes">
               
-              <button class="btn btn-at" @click="StartComponentAttribute(product)">AT</button>
-              <button class="btn btn-va" @click="StartComponentVariable(product)">VA</button>
+              <button class="btn btn-at" @click="StartComponentAttribute(product)"><i class="fas fa-tag"></i> Atributos</button>
+              <button class="btn btn-va" @click="StartComponentVariable(product)"><i class="	fas fa-sort-numeric-up"></i> Variáveis</button>
             </div>
           </td>
         </tr>
@@ -226,7 +226,7 @@ table td {
 }
 
 .search-field input {
-  width: 60%;
+  width: 70%;
   height: 40px;
   border: none;
   border: 1px solid rgba(37, 36, 36, 0.281);
@@ -237,7 +237,7 @@ table td {
 
 .search-field button{
   max-width: 20%;
-  min-width: 40%;
+  min-width: 30%;
   margin-left: 10px;
   border: none;
   border-radius: 5px;
@@ -249,8 +249,9 @@ table td {
 
  .btn {
     border: none;
-    width: 50px;
-    height: 30px;
+    width: 100px;
+    height: 40px;
+    padding: 10px;
     border-radius: 5px;
     color: #fff;
     cursor: pointer;

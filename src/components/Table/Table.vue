@@ -106,7 +106,6 @@
 
       <tbody>
         <tr v-for="item in itemsFechados" :key="item.id">
-          {{item}}
           <td style="display: none"></td>
           <td class="codeStartup" data-title="Cód. Startup">{{ item.code_startup }}</td>
           <td data-title="Produto">{{ item.op.code_product }}</td>
