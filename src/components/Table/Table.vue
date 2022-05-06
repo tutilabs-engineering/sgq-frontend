@@ -1,6 +1,6 @@
 <template>
   <fieldset className="tableContent">
-    
+
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
@@ -137,6 +137,7 @@
 
 import http from "../../services/startup/"
 
+
 export default {
   setup() {},
   name: "Table",
@@ -147,8 +148,6 @@ export default {
       statusTable: true,
     };
   },
-
-  
 
 
   created: async function() {
