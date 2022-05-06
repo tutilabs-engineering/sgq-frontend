@@ -48,12 +48,12 @@
 
       <div class="input">
         <label for="client">Data</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.day" disabled>
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="formatDate(headerPreenchida.day)" disabled>
       </div>
 
       <div class="input">
         <label for="client">Hora inicial</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.start_time" disabled>
+        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="formatHour(headerPreenchida.start_time)" disabled>
       </div>
 
     </fieldset>
@@ -74,7 +74,21 @@ export default {
   props: {
     headerPreenchida: Object
   },
-  methods: {},
+  methods: {
+
+    formatHour(date) {
+      console.log(date);
+      this.hour = date.slice(11,19)
+      return this.hour
+    },
+    
+
+    formatDate(date) {
+      this.data = date.slice(0, 10)
+      return this.data
+    },
+
+  },
   watch: {
     code_op (newValor) {
       this.$store.commit("$SETCODEOP", this.code_op);

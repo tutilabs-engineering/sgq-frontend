@@ -98,7 +98,8 @@ export default {
       console.log(newValor);
       this.$store.commit("$SETCODEOP", this.code_op);
       this.$emit("returnCodeOp", newValor)
-    }
+    },
+    
   },
   watch: {
  
