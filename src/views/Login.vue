@@ -232,7 +232,7 @@ input:-webkit-autofill {
   font-size: 25px;
   height: 50px;
   border: none;
-  border-radius: 20px;
+  border-radius: 10px;
   transition: 0.4s;
 }
 

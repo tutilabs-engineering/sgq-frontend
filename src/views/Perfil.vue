@@ -38,16 +38,28 @@
             :placeholder="'ex: 03992355202'"
             :disabled="1"
           />
+
+          <div class="input system-white">
+            <label for="user-name">Unidade</label>
+            <select name="lvAcess" id="lvAcess" class="select-lvAcess" disabled>
+              <option value="adm">{{ user.unidadeNome }}</option>
+            </select>
+          </div>
+
+          
+
         </div>
 
         <div class="footer-user-data">
           <h3>Sistema</h3>
+
           <div class="input system-black">
             <label for="user-name">Nível de Acesso</label>
             <select name="lvAcess" id="lvAcess" class="select-lvAcess" disabled>
               <option value="adm">{{ user.cargo }}</option>
             </select>
           </div>
+
 
           <div class="btns btn-edit-false" v-if="btnEdit">
             <button class="btn btn-edit" @click="editStatus = false">
@@ -107,10 +119,31 @@
               v-model="user.cpf"
             />
           </div>
+
+          <div class="input system-white">
+          <label for="user-name">Unidade</label>
+          <select
+            name="lvAcess"
+            id="lvAcess"
+            class="select-lvAcess"
+            v-model="user.unidade"
+          >
+            <option
+              v-for="(unity, index) in units"
+              :value="unity.value"
+              :key="index"
+            >
+              {{ unity.text }}
+            </option>
+          </select>
+        </div>
+
+          
         </div>
 
         <div class="footer-user-data">
           <h3>Sistema</h3>
+
           <div class="input system-black">
             <label for="user-name">Nível de Acesso</label>
             <select
@@ -128,6 +161,10 @@
               </option>
             </select>
           </div>
+
+        
+
+          
 
           <div class="btns">
             <button class="btn btn-cancel" @click="editStatus = true">
@@ -161,6 +198,8 @@ export default {
         cpf: "",
         cargo: "",
         lvAccess: "",
+        unidade: "",
+        unidadeNome: ""
       },
 
       isDisable: true,
@@ -171,10 +210,16 @@ export default {
         { text: "Escolha", value: "" },
         { text: "ADM", value: 1 },
         { text: "Gestor", value: 2 },
-        { text: "Inspetor", value: 3 },
-        { text: "Analista", value: 4 },
-        { text: "Metrologista", value: 5 },
+        { text: "Analista", value: 3 },
+        { text: "Metrologista", value: 4 },
+        { text: "Inspetor", value: 5 },
       ],
+
+      units: [
+        {text: "Escolha", value: ""},
+        {text: "Matriz", value: 1},
+        {text: "Filial", value: 2 },
+      ]
     };
   },
 
@@ -205,6 +250,7 @@ export default {
         register: this.user.register,
         cpf: this.user.cpf,
         fk_role: this.user.lvAccess,
+        fk_unity: this.user.unidade
       };
 
       await http
@@ -218,6 +264,7 @@ export default {
               background: "#A8D4FF",
             });
             this.editStatus = !this.editStatus;
+            window.location.reload()
           }
         })
         .catch((error) => {
@@ -229,6 +276,8 @@ export default {
             iconColor: "#545454",
           });
         });
+
+        
     },
   },
 
@@ -252,6 +301,8 @@ export default {
             this.user.cpf = res.data.user.cpf;
             this.user.cargo = res.data.user.role.description;
             this.user.lvAccess = res.data.user.role.id;
+            this.user.unidade = res.data.user.unity.id;
+            this.user.unidadeNome = res.data.user.unity.name;
 
             const role = res.data.user.role.id
                     if(role === 1 || role === 2) {
@@ -347,11 +398,20 @@ export default {
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+.system-white {
+  background-color: var(--main_primaryWhite);
+  color: var(--black_text);
+  grid-column-start: 1;
+  grid-column-end: 2;
+  margin-bottom: 20px;
+}
+
 .system-black {
   color: var(--main_primaryWhite);
   background-color: var(--black_text);
   grid-column-start: 1;
   grid-column-end: 3;
+  margin-bottom: 20px;
 }
 
 .btns {

@@ -49,7 +49,8 @@
             
          </td>
           <td class="lastTd" data-title="Opção">
-            <button class="btn-preencher" @click="() => this.$router.push({ name: 'MetrologiaDetalhes', query: {id: metrologySolicitation.startup.id} })">Preencher</button>
+            <!-- <button class="btn-preencher" @click="() => this.$router.push({ name: 'MetrologiaDetalhes', query: {id: metrologySolicitation.startup.id} })">Preencher</button> -->
+            <button class="btn-preencher" @click="hasAnUser(metrologySolicitation.metrologyHistory, metrologySolicitation.startup.id)">Preencher</button>
           </td>
         </tr>
 
@@ -84,7 +85,6 @@
         <th></th>
       </thead>
 
-
       <thead>
         <th>O.Produção</th>
         <th>Cod. Produto</th>
@@ -105,7 +105,7 @@
           <td data-title="Data de Abertura">{{formatDate(metrologyHistory.metrologyHistory.startDate)}}</td>
           <td data-title="Data de Finalização">{{formatDate(metrologyHistory.metrologyHistory.endDate)}}</td>
           <td class="lastTd" data-title="Opção">
-            <button class="btn-view">Visualizar</button>
+            <button class="btn-view" @click="() => this.$router.push({ name: 'MetrologiaDetalhesPreenchido', query: {id: metrologyHistory.startup.id} })">Visualizar</button>
           </td>
         </tr>
       </tbody>
@@ -149,6 +149,35 @@ export default {
   },
 
   methods: {
+
+    hasAnUser: async function(user, router) {
+      if(user == null){
+        const Toast = this.$swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: '#ff5349',
+                    customClass: {
+                    popup: 'colored-toast',
+                    title: 'title-swal-text'
+                    },
+                    didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                    },
+                    showConfirmButton: false,
+                    timer: 2500,
+                    timerProgressBar: true
+                })
+                Toast.fire({
+                        icon: 'warning',
+                        title: 'Não há usuário ingressado',
+                        background: "#fff",
+                })
+        
+      }else {
+        this.$router.push({ name: 'MetrologiaDetalhes', query: {id: router} })
+      }
+    },
     formatDate(date) {
       date = date.slice(0, -14);
       this.year = date.slice(0, -6)
@@ -159,13 +188,13 @@ export default {
 
     listMetrologyHistory: async function(){
       await http.ListMetrologyHistory().then( (res) => {
-                this.metrologyHistoryList = res.data.list
+        this.metrologyHistoryList = res.data.list
       })
     },
 
     listMetrologySolicitations: async function(){
       await http.ListMetrologySolicitations().then( (res) => {
-                this.metrologySolicitationsList = res.data.list
+        this.metrologySolicitationsList = res.data.list
       })
     },
 
@@ -262,7 +291,7 @@ table td {
   cursor: pointer;
   width: 100%;
   height: 40px;
-  border-radius: 10px;
+  border-radius: 5px;
   color: var(--black_text);
   font-size: max(0.8rem, 1vw);
   font-weight: bold;

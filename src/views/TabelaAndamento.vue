@@ -14,7 +14,7 @@
       <tbody>
         <tr v-for="item in listConditional" :key="item.id">
           <td style="display: none"></td>
-           <td data-title="Cod.OP">{{ item.op.code_product }}</td>
+           <td data-title="Cod. OP">{{ item.op.code_product }}</td>
           <td data-title="Cod. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Data">{{ formatDate(item.day) }}</td>

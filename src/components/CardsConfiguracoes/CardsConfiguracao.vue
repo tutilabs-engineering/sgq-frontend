@@ -1,18 +1,37 @@
 <template>
-  <div class="cardSettings">
-    <router-link :to="link">
-      <div class="cardConfiguracao">
-        <i :class="icon"></i>
-        <h2>{{ title }}</h2>
-      </div>
-    </router-link>
+ 
+  <div v-if="type=='local'" class="card">
+  <router-link :to="link">
+    <fieldset class="cardSettings">
+      <h3>
+        {{title}}
+      </h3>
+          <i :class="icon"></i>
+    </fieldset>
+    
+  </router-link>
   </div>
+
+  <div v-else class="card">
+  <a :href="link" target="_blank">
+    <fieldset class="cardSettings">
+      <h3>
+        {{title}}
+      </h3>
+          <i :class="icon"></i>
+    </fieldset>
+    
+  </a>
+  </div>
+
+  
+
 </template>
 
 <script>
 export default {
   name: "CardConfiguracao",
-  props: ["title", "icon", "link"],
+  props: ["title", "icon", "link", "type"],
   data() {
     return {};
   },
@@ -23,52 +42,74 @@ export default {
 .cardSettings {
   width: 35%;
 }
-.cardConfiguracao {
-  cursor: pointer;
-  background-color: var(--main_primaryWhite);
-  border-radius: 10px;
+
+.card {
   width: 100%;
-  height: 300px;
-  text-align: center;
-  color: var(--bg_green);
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  transition: 0.5s;
-  padding: 20px;
-  /* margin: 100px; */
+  justify-content: center;
+}
+
+
+.cardSettings {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 0 50px 0 50px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
   border: 1px solid rgba(37, 36, 36, 0.281);
+  background-color: #fff;
 }
 
 .cardConfiguracao:hover {
-  background-color: var(--card_green);
-  color: var(--main_primaryWhite);
+  border: 3px solid rgba(37, 36, 36, 0.281);
 }
 
 .fas {
-  font-size: 120px;
+  font-size: 80px;
 }
 
 a {
+  height: 200px;
+  color: var(--card_green);
   text-decoration: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 600px;
+  text-align: center;
+  transition: 0.5s;
 }
-/* 
-@media (max-width: 1024px) {
+a:hover {
+  transform: translateX(4%);
+}
+
+h3 {
+  color: var(--black_text);
+  font-size: 25px;
+  font-weight: 600;
+}
+
+
+@media (max-width: 700px) {
+  .cardSettings {
+    width: 90%;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+  }
+
   a {
     width: 100%;
+    height: 150px;
   }
-  .cardConfiguracao {
-    margin: 10px;
-  }
-} */
 
-@media (max-width: 425px) {
-  .cardSettings {
-    width: 80%;
+  .fas {
+    font-size: 50px;
+  }
+
+  h1 {
+    font-size: 20px;
   }
   /* a {
     padding: 0;
