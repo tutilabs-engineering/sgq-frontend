@@ -105,7 +105,7 @@
           <td data-title="Data de Abertura">{{formatDate(metrologyHistory.metrologyHistory.startDate)}}</td>
           <td data-title="Data de Finalização">{{formatDate(metrologyHistory.metrologyHistory.endDate)}}</td>
           <td class="lastTd" data-title="Opção">
-            <button class="btn-view">Visualizar</button>
+            <button class="btn-view" @click="() => this.$router.push({ name: 'MetrologiaDetalhesPreenchido', query: {id: metrologyHistory.startup.id} })">Visualizar</button>
           </td>
         </tr>
       </tbody>
@@ -152,9 +152,29 @@ export default {
 
     hasAnUser: async function(user, router) {
       if(user == null){
-        console.log('não tem user');
+        const Toast = this.$swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: '#ff5349',
+                    customClass: {
+                    popup: 'colored-toast',
+                    title: 'title-swal-text'
+                    },
+                    didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                    },
+                    showConfirmButton: false,
+                    timer: 2500,
+                    timerProgressBar: true
+                })
+                Toast.fire({
+                        icon: 'warning',
+                        title: 'Não há usuário ingressado',
+                        background: "#fff",
+                })
+        
       }else {
-        console.log('tem user');
         this.$router.push({ name: 'MetrologiaDetalhes', query: {id: router} })
       }
     },

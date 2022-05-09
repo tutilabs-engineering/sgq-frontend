@@ -82,7 +82,8 @@
     </transition>
   </div>
 
-  <i class="fas fa-plus-circle" @click="$emit('openModalNovaOp')"></i>
+  <button class="btn-add" @click="$emit('openModalNovaOp')"><i class="fas fa-plus-circle"></i> Adicionar</button>
+  
   
 
 </template>
@@ -350,8 +351,8 @@ legend {
 }
 
 .fa-plus-circle {
-  color: var(--card_orange);
-  font-size: 25px;
+  color: white;
+  font-size: 20px;
   cursor: pointer;
 }
 .content-modal-op {
@@ -433,6 +434,21 @@ legend {
   align-items: center;
 }
 
+.btn-add {
+  border: none;
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: var(--card_green);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+}
+
 .btn-search {
   background-color: var(--card_green);
   color: #fff;
@@ -463,6 +479,7 @@ legend {
 .fa {
   color: var(--card_green);
 }
+
 
 
 @media (max-width: 768px) {
@@ -504,10 +521,6 @@ legend {
 
   .incrementAtributo .inputAdd input {
     width: 100%;
-  }
-
-  .fa-plus-circle {
-    margin: 20px;
   }
 
   .btns {

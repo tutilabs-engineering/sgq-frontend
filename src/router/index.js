@@ -214,6 +214,13 @@ const routes = [
   },
 
   {
+    path: '/metrologiaDetalhesPreenchido',
+    name: 'MetrologiaDetalhesPreenchido',
+    component: () => import('../views/MetrologiaDetalhesPreenchido.vue'),
+    beforeEnter: Auth
+  },
+
+  {
     path: '/configuracoes',
     name: 'Configuracoes',
     component: () => import('../views/Configuracoes.vue'),

@@ -1,6 +1,6 @@
 <template>
   <fieldset className="tableContent">
-    
+
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
@@ -29,7 +29,7 @@
       </thead>
 
       <thead>
-        <th>Código</th>
+        <th>Cód. Startup</th>
         <th>Cód. Produto</th>
         <th>Cód. Cliente</th>
         <th>Máquina</th>
@@ -43,7 +43,7 @@
         <tr v-for="item in itemsAbertos" :key="item.id">
           <td style="display: none"></td>
           
-          <td class="codeStartup" data-title="Código">{{ item.code_startup }}</td>
+          <td class="codeStartup" data-title="Cód. Startup">{{ item.code_startup }}</td>
           <td data-title="Cód. Produto">{{ item.op.code_product }}</td>
           <td data-title="Cód. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
@@ -59,9 +59,6 @@
                 </button>
                 <button className="btnOpcoes">
                   <i class="fas fa-file-excel"></i>
-                </button>
-                <button className="btnOpcoes">
-                  <i class="fas fa-door-closed"></i>
                 </button>
               </div>
             </div>
@@ -97,7 +94,7 @@
         <th></th>
       </thead>
       <thead>
-        <th>Código</th>
+        <th>Cód. Startup</th>
         <th>Produto</th>
         <th>Cliente</th>
         <th>Máquina</th>
@@ -110,7 +107,7 @@
       <tbody>
         <tr v-for="item in itemsFechados" :key="item.id">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="Código">{{ item.code_startup }}</td>
+          <td class="codeStartup" data-title="Cód. Startup">{{ item.code_startup }}</td>
           <td data-title="Produto">{{ item.op.code_product }}</td>
           <td data-title="Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
@@ -127,9 +124,6 @@
                 <button className="btnOpcoes">
                   <i class="fas fa-file-excel"></i>
                 </button>
-                <button className="btnOpcoes">
-                  <i class="fas fa-door-closed"></i>
-                </button>
               </div>
             </div>
           </td>
@@ -143,6 +137,7 @@
 
 import http from "../../services/startup/"
 
+
 export default {
   setup() {},
   name: "Table",
@@ -153,8 +148,6 @@ export default {
       statusTable: true,
     };
   },
-
-  
 
 
   created: async function() {
@@ -314,13 +307,10 @@ table td {
 }
 
 .fa-edit {
-  color: var(--black_text);
+  color: var(--card_blue);
 }
 .fa-file-excel {
   color: var(--card_green);
-}
-.fa-door-closed {
-  color: var(--card_blue);
 }
 
 .btns {

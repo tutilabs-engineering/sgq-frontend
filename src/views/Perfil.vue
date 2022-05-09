@@ -126,7 +126,7 @@
             name="lvAcess"
             id="lvAcess"
             class="select-lvAcess"
-            v-model="user.unity"
+            v-model="user.unidade"
           >
             <option
               v-for="(unity, index) in units"
@@ -210,9 +210,9 @@ export default {
         { text: "Escolha", value: "" },
         { text: "ADM", value: 1 },
         { text: "Gestor", value: 2 },
-        { text: "Inspetor", value: 3 },
-        { text: "Analista", value: 4 },
-        { text: "Metrologista", value: 5 },
+        { text: "Analista", value: 3 },
+        { text: "Metrologista", value: 4 },
+        { text: "Inspetor", value: 5 },
       ],
 
       units: [
@@ -250,7 +250,7 @@ export default {
         register: this.user.register,
         cpf: this.user.cpf,
         fk_role: this.user.lvAccess,
-        unity: this.user.unity
+        fk_unity: this.user.unidade
       };
 
       await http
@@ -264,6 +264,7 @@ export default {
               background: "#A8D4FF",
             });
             this.editStatus = !this.editStatus;
+            window.location.reload()
           }
         })
         .catch((error) => {
@@ -275,6 +276,8 @@ export default {
             iconColor: "#545454",
           });
         });
+
+        
     },
   },
 

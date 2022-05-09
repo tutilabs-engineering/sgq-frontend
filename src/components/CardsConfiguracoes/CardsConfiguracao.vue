@@ -3,9 +3,9 @@
   <div v-if="type=='local'" class="card">
   <router-link :to="link">
     <fieldset class="cardSettings">
-      <h1>
+      <h3>
         {{title}}
-      </h1>
+      </h3>
           <i :class="icon"></i>
     </fieldset>
     
@@ -15,9 +15,9 @@
   <div v-else class="card">
   <a :href="link" target="_blank">
     <fieldset class="cardSettings">
-      <h1>
+      <h3>
         {{title}}
-      </h1>
+      </h3>
           <i :class="icon"></i>
     </fieldset>
     
@@ -67,7 +67,7 @@ export default {
 }
 
 .fas {
-  font-size: 100px;
+  font-size: 80px;
 }
 
 a {
@@ -85,9 +85,9 @@ a:hover {
   transform: translateX(4%);
 }
 
-h1 {
+h3 {
   color: var(--black_text);
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
 }
 

@@ -43,7 +43,7 @@ export default {
                         icon: 'warning',
                         title: 'Informe a Ordem de Produção',
                         background: "#fff",
-                    })
+                })
                 
             }else {
                 this.fillStatus = !this.fillStatus
