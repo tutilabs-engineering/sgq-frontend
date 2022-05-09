@@ -26,16 +26,6 @@
                   />
                 </div>
 
-                <!-- <div class="input">
-                  <p>Produto</p>
-                  <input type="text" readonly :value="dataProduct.descricao" />
-                </div>
-
-                <div class="input">
-                  <p>Cód. Cliente</p>
-                  <input type="text" readonly value="XXXXXXXX-XX" />
-                </div> -->
-
                 <div class="input">
                   <p>Descrição Produto</p>
                   <input type="text" readonly :value="dataProduct.name_product" />
@@ -74,11 +64,11 @@
                     <p>{{ variable.min }}</p>
                   </div>
 
-                  
-
                   <div class="delete" @click="deleteVariable(variable.id)">
                     <span>Deletar</span>
                   </div>
+
+                  
 
                 </div>
               </div>
@@ -116,7 +106,12 @@
                     <input ref="file" type="file"  class="inputUpLoad" id="inputImage" @change="insertImageFile"/>
  
                 </div>
+
                 <button class="inputUpLoad inputImageDelete" @click="changeStatusButtonImage" v-else>Remover</button>
+
+                  <div class="inputCota">
+                  <img :src="imgObject" alt="">
+                </div>
 
                 <button type="submit" class="inputUpLoad">
                   <span> <i class="fas fa-plus"></i> Enviar</span>
@@ -158,7 +153,10 @@ export default {
         min: 0,
         file: "",
       },
-      statusButtonImage: true
+      statusButtonImage: true,
+      imgObject:{
+        
+      }
     };
   },
   props: {
@@ -179,9 +177,23 @@ export default {
 
     insertImageFile (e) {
       this.list.file = e.target.files[0]
+
+      this.createImage(this.list.file)
       if(this.list.file != "") {
          this.statusButtonImage = false
       }
+    },
+
+    createImage (imgFile){
+      // let image = new Image()
+      let reader = new FileReader()
+      let vm = this
+      reader.onload = (e) => {
+        vm.imgObject = e.target.result
+      }
+
+      reader.readAsDataURL(imgFile)
+      console.log(imgFile);
     },
 
     changeStatusButtonImage() {

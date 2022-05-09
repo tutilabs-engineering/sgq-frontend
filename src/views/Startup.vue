@@ -86,6 +86,4 @@ export default defineComponent({
 }
 
 
-
-@media
 </style>

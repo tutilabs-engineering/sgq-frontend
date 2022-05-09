@@ -11,12 +11,14 @@
         <tbody>
           
           <tr v-for="i in variables" :key="i" >
-               
                <td> {{ i.variable}} </td>
                <td v-for="item in arrayFilter(i.items)" :key="item">
                 <div class="cavity-area" v-if="item !== null">
                     <span>{{item.variable.min}}</span>
-                   <input @change="verifyValue(item.value, item.variable.min, item.variable.max)" class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required >
+                   <input @change="verifyValue(item.value, item.variable.min, item.variable.max)" class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required v-if="statusInput" disabled>
+
+                   <input @change="verifyValue(item.value, item.variable.min, item.variable.max)" class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required v-else>
+
                    <span>{{item.variable.max}}</span>
             
                 </div>
@@ -33,11 +35,30 @@
 <script>
 export default {
 
+    data(){
+      return {
+        statusInput: false,
+      }
+    },
+
+    created: async function() {
+      this.inputToggle()
+    },
+
     props: {
         variables: Object,
+        inputStatus: Boolean,
     },
     methods : {
-        arrayFilter(arr){
+      inputToggle(){
+        if(this.inputStatus == true){
+          this.statusInput = true
+        }else {
+          this.statusInput = false
+        }
+      },
+
+      arrayFilter(arr){
          var arraySemVazios = arr.filter(function (i) {
          return i;
        });

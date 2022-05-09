@@ -333,7 +333,7 @@ table td {
   display: none;
 }
 
-@media (max-width: 880px) {
+@media (max-width: 960px) {
 
   .btns {
     display: flex;
