@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <apexchart
       width="100%"
       :type="options.chart.type"
@@ -13,6 +14,11 @@
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "BarChartVue",
+   props: {
+    dashData: Array,
+    dashTime: Array,
+  },
+   
   data: function () {
     return {
       options: {
@@ -23,21 +29,24 @@ export default defineComponent({
           toolbar: {
             show: true,
           },
-       
         },
         colors: ["#3FC36D", "#E3E745"],
-        // xaxis: {
-        //   type: "datetime",
-        //   categories: this.dashDate,
-        // },
+        xaxis: {
+          type: "datetime",
+          categories: this.dashTime
+        },
       },
       series: [
         {
           name: "PREENCHIMENTO",
-          data: this.dashData
+          data: this.dashData.startup,
+        },
+        {
+          name: "Metrologia",
+          data: this.dashData.metrology,
         },
       ],
-       
+
       responsive: [
         {
           breakpoint: 480,
@@ -50,30 +59,39 @@ export default defineComponent({
           },
         },
       ],
-    
     };
   },
-  props : {
-    dashData : Array
-  },
-
-  watch:{
-    dashData(newValue){
-   this.series = [{
-          name: "Preenchimento",
-          data: newValue,
+    watch: {
+    dashTime(newValue){
+  
+          this.options ={
+        chart: {
+          type: "bar",
+          height: 350,
+          stacked: true,
+          toolbar: {
+            show: true,
+          },
         },
-        // {
-        //   name: "Metrologia",
-        //   data: newValue, 
-      // }
-        ]
- 
-},
-
-
-
-  }
+        colors: ["#3FC36D", "#E3E745"],
+        xaxis: {
+          type: "datetime",
+          categories: newValue
+        },
+      }
+       this.series = [
+        {
+          name: "Preenchimento",
+          data: this.dashData.startup,
+        },
+           {
+          name: "Metrologia",
+          data: this.dashData.metrology,
+        }
+      ];
+    }
+    }
+     
 
 });
 </script>

@@ -1,11 +1,8 @@
 <template>
   <div class="barCHart_content">
-
     <div class="barChart">
-    <h3>
-         Quantidade
-   </h3>
-      <BarChartVue :dashData='dashQuantity'  />
+      <h3>Quantidade</h3>
+      <BarChartVue :dashData="dashData" :dashTime="dashTime" />
     </div>
     <div class="barChart_filter">
       <div class="legend_chart">
@@ -29,42 +26,9 @@
     </div>
   </div>
 
-    <div class="barCHart_content">
-
-    <div class="barChart">
-    <h3>
-         Tempo
-   </h3>
-      <BarChartVue :dashData='dashTime'  />
-    </div>
-    <div class="barChart_filter">
-      <div class="legend_chart">
-        <div class="startUp_fill">
-          <span class="circle_fill"></span>
-          <p>Preenchimento</p>
-        </div>
-        <div class="metrology">
-          <span class="circle_metrology"></span>
-          <p>Metrologia</p>
-        </div>
-      </div>
-
-      <div class="legend_chart">
-        <div class="title_filter">
-          <i class="fas fa-filter"></i>
-          <p>Filtro</p>
-        </div>
-        <FilterBarChart @getSelectedConfig="getSelectedConfigByTime" />
-      </div>
-    </div>
-  </div>
-
   <div class="barCHart_content">
     <div class="barChart">
-      
-    <h3>
-         Falha de Perguntas Padrão
-   </h3>
+      <h3>Falha de Perguntas Padrão</h3>
       <DoughnutChart />
     </div>
     <div class="barChart_filter">
@@ -97,15 +61,16 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
-import http from "../services/dashboard/Dashboard"
+import http from "../services/dashboard/Dashboard";
 import BarChartVue from "../components/Chart/BarChartVue.vue";
 import DoughnutChart from "../components/Chart/DoughnutChartVue.vue";
 import FilterBarChart from "../components/Filters/FilterBarChart.vue";
 import FilterDoughnutChart from "../components/Filters/FilterDoughnutChart.vue";
+import dayjs from "dayjs";
+
 export default {
   components: {
     FilterBarChart,
@@ -114,57 +79,53 @@ export default {
     FilterDoughnutChart,
   },
   name: "Dashboard",
-async created(){
-
-      //  const result = await http.ListAllDataFilter({day : dayjs().format('YYYY-MM-DD')});
-
-      //  result.data.list.map((item)=>{
-      //    this.dashDate.push(item.date)
-      //    this.dashQuantity.push(item.quantity)
-      //   })
-
-
-},
-data(){
-  return {
-    dashQuantity : [],
-    dashTime : []
-  }
-},
-methods: {
-   async getSelectedConfig(data){
-
-    const dashData = []
-    
+  data() {
+    return {
+      cdate: dayjs().format("YYYY-MM-DD"),
+      dashData: {
+        startup: [],
+        metrology: [],
+      },
+      dashDataMetrologyQuantity: [],
+      dashTime: [],
+    };
+  },
+  async created() {
     const result = await http.ListAllDataFilter({
-    day : data.date,
-    machine : data.machine, 
-    code_product : data.code_product, 
-    code_client:data.client
+      day: dayjs().format("YYYY-MM-DD"),
     });
-     result.data.list.map((item)=>{
-     dashData.push({x: item.date, y:item.quantity})
-     })
-    this.dashQuantity = dashData
-},
-   async getSelectedConfigByTime(data){
+    await result.data.list.map((item) => {
+      this.dashData.startup.push(item.startup.quantitystartup);
+      this.dashTime.push(item.date);
+      this.dashData.metrology.push(item.metrology.quantitymetrology);
+    });
+  },
 
-    const dashData = []
-    
-    const result = await http.ListAllDataFilter({
-    day : data.date,
-    machine : data.machine, 
-    code_product : data.code_product, 
-    code_client:data.client
-    });
-     result.data.list.map((item)=>{
-     dashData.push({x: item.date, y: new Date(item.time)})
-     })
-     console.log(dashData);
-    this.dashTime = dashData
+  methods: {
+    async getSelectedConfig(data) {
+      const time = [];
+      const startup = [];
+      const metrology = [];
+
+      const result = await http.ListAllDataFilter({
+        day: data.date,
+        machine: data.machine,
+        code_product: data.product,
+        code_client: data.client,
+      });
+
+      await result.data.list.map((item) => {
+        startup.push(item.startup.quantitystartup);
+        time.push(item.date);
+        metrology.push(item.metrology.quantitymetrology);
+      });
+      
+      this.dashData.startup = startup;
+      this.dashTime = time;
+      this.dashData.metrology = metrology;
+    },
+  },
 }
-}
-};
 </script>
 
 <style scoped>
