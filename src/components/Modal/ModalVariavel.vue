@@ -112,7 +112,7 @@
                 <button class="inputUpLoad inputImageDelete" @click="changeStatusButtonImage" v-else>Remover</button>
 
                   <div class="inputCota">
-                    <img style="width:90%; border: 1px solid #888; border-radius: 5px" :src="imgObject" alt="">
+                    <img style="width:auto; border: 0 solid #888; border-radius: 5px" :src="imgObject" alt="">
                   </div>
 
                 <button type="submit" class="inputUpLoad">
