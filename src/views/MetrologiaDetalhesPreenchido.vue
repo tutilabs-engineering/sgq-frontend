@@ -39,7 +39,7 @@
      <fieldset>
        <legend>Preenchimento</legend>
 
-      <TableMetrologiaDetalhes @variablesModification="captureDataFromVariables" :variables="opById.metrology_items"/>
+      <TableMetrologiaDetalhes @variablesModification="captureDataFromVariables" :variables="opById.metrology_items" :inputStatus="true"/>
 
     </fieldset>
 
