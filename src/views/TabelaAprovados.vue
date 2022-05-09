@@ -4,6 +4,8 @@
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cod. OP</th>
+        <th>Cod. Startup</th>
+        <th>Cod. Produto</th>
         <th>Cod. Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
@@ -14,7 +16,9 @@
       <tbody >
         <tr v-for="item in listAproveds" :key="item.id" >
           <td style="display: none"></td>
-          <td data-title="Cod.OP">{{ item.op.code_product }}</td>
+          <td data-title="Cod. OP">{{item.op.code_op}}</td>
+          <td data-title="Cod. Startup">{{item.code_startup}}</td>
+          <td data-title="Cod. Produto">{{ item.op.code_product }}</td>   
           <td data-title="Cod. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Data">{{ formatDate(item.day) }}</td>
@@ -22,8 +26,9 @@
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
               <ModalNovaOp :modalNovaOp="modalNovaOp"
-                  @open-modal-novaOp="openModalNovaOp"/>
-              <i class="fas fa-file-alt"></i>
+                  @open-modal-novaOp="openModalNovaOp" :startup="item" :startup_id="item.id"/>
+                  <button class="btn-visu"><i class="fas fa-file-alt"></i> Vincular</button>
+              
              
             </div>
           </td>
@@ -77,8 +82,13 @@ export default {
     this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus()
     this.listAproveds = listCount.data.reportStartups.approved
+    console.log(this.listAproveds);
+    this.id_startup = this.listAproveds[0].id
     this.isOp = await this.verifyOP(this.listAproveds.length)
     this.$store.commit("$SETISLOADING");
+
+    console.log(this.id_startup);
+    
   },
 
 
@@ -87,6 +97,7 @@ export default {
       listAproveds: [],
       modalNovaOp:false,
       isOp: false,
+      id_startup: "",
     };
   },
 };
@@ -219,6 +230,20 @@ table td {
   font-weight: 300px;
 }
 
+.btn-visu {
+  border: none;
+  width: 100px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  background-color: var(--card_blue);
+  cursor: pointer;
+  gap: 5px;
+}
+
 .btn-back {
   margin-top: 30px;
   cursor: pointer;
@@ -243,17 +268,18 @@ table td {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 1px;
 }
 
 
 .fa-file-alt {
-  color: var(--card_blue);
-  font-size: 25px;
+  color: white;
+  font-size: 20px;
   cursor: pointer;
 }
 
 
-@media (max-width: 960px) {
+@media (max-width: 1000px) {
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;

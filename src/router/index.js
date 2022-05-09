@@ -114,7 +114,7 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: () => import('../views/Home.vue'),
-    beforeEnter: EmManutencao
+    beforeEnter: Auth
   },
   {
     path: '/startup',
@@ -210,6 +210,13 @@ const routes = [
     path: '/metrologiaDetalhes',
     name: 'MetrologiaDetalhes',
     component: () => import('../views/MetrologiaDetalhes.vue'),
+    beforeEnter: Auth
+  },
+
+  {
+    path: '/metrologiaDetalhesPreenchido',
+    name: 'MetrologiaDetalhesPreenchido',
+    component: () => import('../views/MetrologiaDetalhesPreenchido.vue'),
     beforeEnter: Auth
   },
 

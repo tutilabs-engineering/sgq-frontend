@@ -43,10 +43,6 @@
 
     </fieldset>
 
-    <div class="btn">
-      <button type="submit" class="btn-save" @click.prevent="saveData">Draft</button>
-      <button type="button" class="btn-close" @click="finishMetrology">Finalizar</button>
-    </div>
 
  </form>
  

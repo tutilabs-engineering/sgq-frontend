@@ -1,18 +1,35 @@
 <template>
   <div class="content-configuracao" v-if="showManager">
     <div class="cardsConfiguracao">
-      <CardsConfiguracao icon="fas fa-user-alt" title="Perfil" link="/perfil" />
+      <CardsConfiguracao icon="fas fa-user-alt" title="Perfil" link="/perfil" type="local"/>
       <CardsConfiguracao
-        icon="fas fa-user-cog"
-        title="Gerenciamento de Usuário"
+        icon="fas fa-cogs"
+        title="Gerenciamento"
         link="/cadastroUsuario"
+        type="local"
+      />
+
+
+      <CardsConfiguracao
+        icon="fas fa-book-reader"
+        title="Manual do Sistema"
+        link="../../docs/manual_sistema_sgq_v1.pdf"
+        type="ex"
       />
     </div>
   </div>
 
   <div class="content-configuracao" v-else>
     <div class="cardsConfiguracao">
-      <CardsConfiguracao icon="fas fa-user-alt" title="Perfil" link="/perfil" />
+      <CardsConfiguracao icon="fas fa-user-alt" title="Perfil" link="/perfil" type="local"/>
+
+      <CardsConfiguracao
+        icon="fas fa-book-reader"
+        title="Manual do Sistema"
+        link="../../docs/manual_sistema_sgq_v1.pdf"
+        type="ex"
+      />
+
     </div>
   </div>
 </template>
@@ -68,7 +85,6 @@ export default {
 <style scoped>
 .content-configuracao {
   width: 100%;
-  height: calc(90vh - 90px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,19 +93,15 @@ export default {
 .cardsConfiguracao {
   width: 100vw;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 2rem;
 }
 
-@media (max-width: 425px) {
-  /* .content-configuracao {
-    margin-top: 60px;
-  } */
-
+@media (max-width: 650px) {
   .cardsConfiguracao {
     flex-direction: column;
-    margin-top: 15rem;
   }
 }
 </style>

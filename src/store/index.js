@@ -22,6 +22,7 @@ export default createStore({
           code_product: "",
           desc_product: "",
           product_mold: "",
+          quantity: "",
           machine: "",
           day: "",
           start_time:"",
@@ -72,7 +73,6 @@ export default createStore({
       state.createDataStartup.techniqueData = techniqueData || state.createDataStartup.techniqueData
       state.createDataStartup.components = components || state.createDataStartup.components
      
-    
     },
     
    $SETDATAFILLSTARTUP(state, {specific_questions, default_question, img_1,img_2,img_3}) {

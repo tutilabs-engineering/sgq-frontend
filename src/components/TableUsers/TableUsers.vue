@@ -5,6 +5,7 @@
         <th>Nome</th>
         <th>Matricula</th>
         <th>Email</th>
+        <th>Unidade</th>
         <th>Nível de Acesso</th>
         <th>Status</th>
         <th>Opções</th>
@@ -16,6 +17,7 @@
           <td class="codeStartup" data-title="Nome">{{ user.name }}</td>
           <td data-title="Matricula">{{ user.register }}</td>
           <td data-title="Email">{{ user.email }}</td>
+          <td data-title="Unidade">{{user.unity.name}}</td>
           <td data-title="Nv. Acesso">{{ user.role.description }}</td>
 
           <td data-title="Status">
@@ -82,7 +84,6 @@ export default {
     ChangeStatus: async function (event) {
       var idUserByEvent = event.path[0][0].value;
       var btnValue = event.target[1].value;
-
       this.userChanged.id = await idUserByEvent;
 
       if (btnValue === "Habilitado") {

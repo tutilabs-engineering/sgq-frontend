@@ -4,13 +4,13 @@
       <img :src="preview" class="img-fluid" />
     </div>
 
-    <div v-if="imgStatus">
-      <label :for="myFile" class="selectImg">Selecione a Imagem</label>
+    <div v-if="imgStatus === true">
+      <label :for="myFile" class="selectImg"></label>
       <input type="file"  @change="previewImage" class="form-control-file" :id="myFile">
     </div>
 
     <div v-else>
-      <button class="selectImg">Indisponivel</button>
+      <!-- <button class="selectImg">teste</button> -->
     </div>
 
   </div>
@@ -20,7 +20,7 @@
       <img :src="preview" class="img-fluid" />
     </div>
 
-    <div v-if="imgStatus">
+    <div v-if="imgStatus ">
       <label :for="myFile" class="selectImg">Selecione a Imagem</label>
       <input type="file"  @change="previewImage" class="form-control-file" :id="myFile">
     </div>
