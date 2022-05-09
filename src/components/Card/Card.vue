@@ -80,7 +80,7 @@ a {
   font-size: 30px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .cardStatus {
     width: 90vw;
   }

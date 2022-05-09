@@ -118,7 +118,7 @@
             <div className="opcoes">
               <i class="fas fa-ellipsis-h"></i>
               <div class="dropdown-content">
-                <button className="btnOpcoes">
+                <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
                   <i class="fas fa-edit"></i>
                 </button>
                 <button className="btnOpcoes">
