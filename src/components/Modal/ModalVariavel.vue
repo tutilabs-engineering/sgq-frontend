@@ -68,6 +68,8 @@
                     <span>Deletar</span>
                   </div>
 
+                  
+
                 </div>
               </div>
 
@@ -104,7 +106,12 @@
                     <input ref="file" type="file"  class="inputUpLoad" id="inputImage" @change="insertImageFile"/>
  
                 </div>
+
                 <button class="inputUpLoad inputImageDelete" @click="changeStatusButtonImage" v-else>Remover</button>
+
+                  <div class="inputCota">
+                  <img :src="imgObject" alt="">
+                </div>
 
                 <button type="submit" class="inputUpLoad">
                   <span> <i class="fas fa-plus"></i> Enviar</span>
@@ -148,7 +155,7 @@ export default {
       },
       statusButtonImage: true,
       imgObject:{
-
+        
       }
     };
   },
@@ -178,11 +185,11 @@ export default {
     },
 
     createImage (imgFile){
-      let image = new Image()
+      // let image = new Image()
       let reader = new FileReader()
       let vm = this
       reader.onload = (e) => {
-        vm.image = e.target.result
+        vm.imgObject = e.target.result
       }
 
       reader.readAsDataURL(imgFile)
