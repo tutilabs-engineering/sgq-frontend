@@ -43,6 +43,7 @@
                   v-for="(variable, index) in variables"
                   :key="index"
                 >
+
                   <h4>{{ index + 1 }}</h4>
                   <div class="inputIdentificacao">
                     <p class="idInput">Identificação</p>
@@ -64,6 +65,7 @@
                     <p>{{ variable.min }}</p>
                   </div>
 
+          
                   <div class="delete" @click="deleteVariable(variable.id)">
                     <span>Deletar</span>
                   </div>
@@ -110,8 +112,8 @@
                 <button class="inputUpLoad inputImageDelete" @click="changeStatusButtonImage" v-else>Remover</button>
 
                   <div class="inputCota">
-                  <img :src="imgObject" alt="">
-                </div>
+                    <img style="width:90%; border: 1px solid #888; border-radius: 5px" :src="imgObject" alt="">
+                  </div>
 
                 <button type="submit" class="inputUpLoad">
                   <span> <i class="fas fa-plus"></i> Enviar</span>
@@ -177,8 +179,7 @@ export default {
 
     insertImageFile (e) {
       this.list.file = e.target.files[0]
-
-      this.createImage(this.list.file)
+      this.createImage(e.target.files[0])
       if(this.list.file != "") {
          this.statusButtonImage = false
       }
@@ -199,6 +200,7 @@ export default {
     changeStatusButtonImage() {
       this.statusButtonImage = true
       this.list.file = "";
+      this.imgObject = ""
     },
 
     getComments(value) {
