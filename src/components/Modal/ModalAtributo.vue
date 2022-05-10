@@ -481,18 +481,26 @@ export default {
   display: flex;
   gap: 0.5rem;
   text-align: center;
+  justify-content: center;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.075);
 }
 .perguntas .headerPergunta .titleHeader {
   position: relative;
   width: 33%;
-  margin-bottom: 30px;
+  margin: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .perguntas .headerPerguntas .titleHeader {
   position: relative;
   width: 33%;
-  margin-bottom: 30px;
+  margin: 30px 0 30px 0;
   text-align: center;
+  font-weight: 600;
+  color: var(--black_text);
 }
 
 .perguntas .headerPergunta .titleHeader .btnHabilitar {
