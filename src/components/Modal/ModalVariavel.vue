@@ -33,47 +33,53 @@
                 
               </div>
 
-              <div class="titleBody">
-                <h3>VARIÁVEL</h3>
-              </div>
-
-              <div class="variavel_increment">
-                <div
-                  class="inputsHeader"
+              <div class="variaveis">
+                <div class="headerVariaveis">
+                  <div class="titleHeader">Identificação</div>
+                  <div class="titleHeader">Cota</div>
+                  <div class="titleHeader">Máximo</div>
+                  <div class="titleHeader">Mínimo</div>
+                  <div class="titleHeader">Preview</div>
+                  <div class="titleHeader">Opções</div>
+                </div>
+                
+                <div class="headerVariavel">
+                  <div
+                  class="testeLi"
                   v-for="(variable, index) in variables"
-                  :key="index"
-                >
+                  :key="index">
 
-                  <h4>{{ index + 1 }}</h4>
-                  <div class="inputIdentificacao">
-                    <p class="idInput">Identificação</p>
-                    <p>{{ variable.description }}</p>
+                  <div class="titleHeader">
+                    {{variable.description}}
                   </div>
 
-                  <div class="inputCota">
-                    <p class="idCota">COTA:</p>
-                    <p>{{ variable.cota }}</p>
+                  <div class="titleHeader">
+                    {{variable.cota}}
                   </div>
 
-                  <div class="inputCota">
-                    <p class="idMax">MÁX:</p>
-                    <p>{{ variable.max }}</p>
+                  <div class="titleHeader">
+                    {{variable.max}}
                   </div>
 
-                  <div class="inputCota">
-                    <p class="idMin">MIN:</p>
-                    <p>{{ variable.min }}</p>
+                  <div class="titleHeader">
+                    {{variable.min}}
                   </div>
 
-          
-                  <div class="delete" @click="deleteVariable(variable.id)">
-                    <span>Deletar</span>
+                  <div class="titleHeader">
+                    {{variable.min}}
                   </div>
 
+                  <div class="titleHeader">
+                    <button class="delete" @click="deleteVariable(variable.id)">Deletar
+                  </button>
+                  </div>
                   
 
+                  </div>
                 </div>
+
               </div>
+
 
               <form
                 class="attributeVariable"
@@ -353,6 +359,55 @@ export default {
   overflow-y: auto;
 }
 
+.variaveis {
+  width: 100%;
+  overflow-y: auto;
+  position: relative;
+  padding: 1rem 0;
+  height: 60%;
+}
+
+.variaveis .headerVariaveis {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.variaveis .headerVariavel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.variaveis .headerVariavel .testeLi {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+  text-align: center;
+  justify-content: center;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.075);
+}
+
+.variaveis .headerVariavel .titleHeader {
+  position: relative;
+  width: 33%;
+  margin: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.variaveis .headerVariaveis .titleHeader {
+  position: relative;
+  width: 33%;
+  margin: 30px 0 30px 0;
+  text-align: center;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
 
 .modal_header {
   width: 95%;
@@ -460,7 +515,6 @@ export default {
   display: flex;
   justify-content: start;
   align-items: center;
-  flex-wrap: wrap;
   gap: 0.3rem;
   margin-top: 20px;
 }
@@ -649,12 +703,11 @@ export default {
   padding: 0 0.5rem;
 }
 
-.modal_mask .modal_body .variavel_increment .delete {
+.delete {
   background-color: var(--card_red);
   color: var(--main_primaryWhite);
   width: 100px;
   height: 35px;
-  margin-top: 20px;
   cursor: pointer;
   display: flex;
   justify-content: center;
