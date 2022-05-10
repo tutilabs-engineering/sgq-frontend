@@ -5,14 +5,13 @@
         <div class="modal_mask">
           <div class="modal_content">
             <div class="modal_header">
-                <h1>Tabela de Variáveis</h1>
-                <input
-                  type="button"
-                  value="X"
-                  colorButton="red"
-                  @click="$emit('changeStatus')"
-                />
-   
+              <h1>Tabela de Variáveis</h1>
+              <input
+                type="button"
+                value="X"
+                colorButton="red"
+                @click="$emit('changeStatus')"
+              />
             </div>
 
             <div class="modal_body">
@@ -28,9 +27,12 @@
 
                 <div class="input">
                   <p>Descrição Produto</p>
-                  <input type="text" readonly :value="dataProduct.name_product" />
+                  <input
+                    type="text"
+                    readonly
+                    :value="dataProduct.name_product"
+                  />
                 </div>
-                
               </div>
 
               <div class="variaveis">
@@ -42,44 +44,51 @@
                   <div class="titleHeader">Preview</div>
                   <div class="titleHeader">Opções</div>
                 </div>
-                
+
                 <div class="headerVariavel">
                   <div
-                  class="testeLi"
-                  v-for="(variable, index) in variables"
-                  :key="index">
+                    class="testeLi"
+                    v-for="(variable, index) in variables"
+                    :key="index"
+                  >
+                    <div class="titleHeader">
+                      {{ variable.description }}
+                    </div>
 
-                  <div class="titleHeader">
-                    {{variable.description}}
-                  </div>
+                    <div class="titleHeader">
+                      {{ variable.cota }}
+                    </div>
 
-                  <div class="titleHeader">
-                    {{variable.cota}}
-                  </div>
+                    <div class="titleHeader">
+                      {{ variable.max }}
+                    </div>
 
-                  <div class="titleHeader">
-                    {{variable.max}}
-                  </div>
+                    <div class="titleHeader">
+                      {{ variable.min }}
+                    </div>
 
-                  <div class="titleHeader">
-                    {{variable.min}}
-                  </div>
+                    <div class="titleHeader">
+                      <img
+                        v-on:click="openImgPreview(constURL + '/variables/' + variable.file)"
+                        style="height: 50px"
+                        :src="constURL + '/variables/' + variable.file"
+                        alt=""
+                        class="titleHeaderImg"
+                      />
+                    </div>
 
-                  <div class="titleHeader">
-                    {{variable.min}}
-                  </div>
+                    <div class="titleHeader">
+                      <button
+                        class="delete"
+                        @click="deleteVariable(variable.id)"
+                      >
+                        Deletar
+                      </button>
 
-                  <div class="titleHeader">
-                    <button class="delete" @click="deleteVariable(variable.id)">Deletar
-                  </button>
-                  </div>
-                  
-
+                    </div>
                   </div>
                 </div>
-
               </div>
-
 
               <form
                 class="attributeVariable"
@@ -87,39 +96,64 @@
               >
                 <div class="inputIdentificacao">
                   <p>IDENTIFICAÇÃO:</p>
-                  <input type="text" v-model="list.description" placeholder="Identificação 01"/>
+                  <input
+                    type="text"
+                    v-model="list.description"
+                    placeholder="Identificação 01"
+                  />
                 </div>
 
                 <div class="inputCota">
                   <p>COTA:</p>
-                  <input type="text" v-model="list.cota" step="any" placeholder="12.5"/>
+                  <input
+                    type="text"
+                    v-model="list.cota"
+                    step="any"
+                    placeholder="12.5"
+                  />
                 </div>
 
                 <div class="inputCota">
                   <p>MÁX:</p>
-                  <input type="text" v-model="list.max" step="any" placeholder="12.6"/>
+                  <input
+                    type="text"
+                    v-model="list.max"
+                    step="any"
+                    placeholder="12.6"
+                  />
                 </div>
 
                 <div class="inputCota">
                   <p>MIN:</p>
-                  <input type="text" v-model="list.min" step="any" placeholder="12.3"/>
+                  <input
+                    type="text"
+                    v-model="list.min"
+                    step="any"
+                    placeholder="12.3"
+                  />
                 </div>
-                
+
                 <div class="inputUpLoad" v-if="statusButtonImage">
-                    
-                    <label for="inputImage" class="inputImage"
-                      ><i class="fas fa-paperclip"></i
-                    > <span>Anexar</span></label>
-                    
-                    <input ref="file" type="file"  class="inputUpLoad" id="inputImage" @change="insertImageFile"/>
- 
+                  <label for="inputImage" class="inputImage"
+                    ><i class="fas fa-paperclip"></i> <span>Anexar</span></label
+                  >
+
+                  <input
+                    ref="file"
+                    type="file"
+                    class="inputUpLoad"
+                    id="inputImage"
+                    @change="insertImageFile"
+                  />
                 </div>
 
-                <button class="inputUpLoad inputImageDelete" @click="changeStatusButtonImage" v-else>Remover</button>
-
-                  <div class="inputCota">
-                    <img style="width:auto; border: 0 solid #888; border-radius: 5px" :src="imgObject" alt="">
-                  </div>
+                <button
+                  class="inputUpLoad inputImageDelete"
+                  @click="changeStatusButtonImage"
+                  v-else
+                >
+                  Remover
+                </button>
 
                 <button type="submit" class="inputUpLoad">
                   <span> <i class="fas fa-plus"></i> Enviar</span>
@@ -162,9 +196,8 @@ export default {
         file: "",
       },
       statusButtonImage: true,
-      imgObject:{
-        
-      }
+      imgObject: {},
+      constURL: this.$store.state.urlImg,
     };
   },
   props: {
@@ -182,31 +215,43 @@ export default {
   },
 
   methods: {
-
-    insertImageFile (e) {
-      this.list.file = e.target.files[0]
-      this.createImage(e.target.files[0])
-      if(this.list.file != "") {
-         this.statusButtonImage = false
+    insertImageFile(e) {
+      this.list.file = e.target.files[0];
+      this.createImage(e.target.files[0]);
+      if (this.list.file != "") {
+        this.statusButtonImage = false;
       }
     },
 
-    createImage (imgFile){
-      // let image = new Image()
-      let reader = new FileReader()
-      let vm = this
-      reader.onload = (e) => {
-        vm.imgObject = e.target.result
-      }
+    openImgPreview(imgPreview) {
+      this.$swal
+        .fire({
+          // title: "Tudo certo!",
+          // text: "A Startup foi cadastrada com Sucesso!",
+          imageUrl: imgPreview,
+          imageWidth: 'auto',
+          imageHeight: 'auto',
+          imageAlt: "Custom image",
+        })
+ 
+    },
 
-      reader.readAsDataURL(imgFile)
+    createImage(imgFile) {
+      // let image = new Image()
+      let reader = new FileReader();
+      let vm = this;
+      reader.onload = (e) => {
+        vm.imgObject = e.target.result;
+      };
+
+      reader.readAsDataURL(imgFile);
       console.log(imgFile);
     },
 
     changeStatusButtonImage() {
-      this.statusButtonImage = true
+      this.statusButtonImage = true;
       this.list.file = "";
-      this.imgObject = ""
+      this.imgObject = "";
     },
 
     getComments(value) {
@@ -247,13 +292,13 @@ export default {
 
       this.$store.commit("$SETISLOADING");
 
-      const formData = new FormData()
-      formData.append("description", this.list.description)
-      formData.append("cod_product", this.list.cod_product)
-      formData.append("cota", this.list.cota)
-      formData.append("max", this.list.max)
-      formData.append("min", this.list.min)
-      formData.append("file", this.list.file)
+      const formData = new FormData();
+      formData.append("description", this.list.description);
+      formData.append("cod_product", this.list.cod_product);
+      formData.append("cota", this.list.cota);
+      formData.append("max", this.list.max);
+      formData.append("min", this.list.min);
+      formData.append("file", this.list.file);
 
       await http
         .CreateVariable(formData)
@@ -268,9 +313,8 @@ export default {
             this.list.cota = "";
             this.list.max = "";
             this.list.min = "";
-            this.changeStatusButtonImage()
+            this.changeStatusButtonImage();
           }
-
         })
         .catch((error) => {
           if (!inputDescription || !inputCota || !inputMax || !inputMin) {
@@ -305,26 +349,31 @@ export default {
         timerProgressBar: true,
       });
       this.$store.commit("$SETISLOADING");
-      await http.DeleteVariable(id).then((res) => {
-        if (res.data.message === "Deleted") {
-          Toast.fire({
-            icon: "success",
-            title: "Variável deletada com sucesso!",
-            background: "#A8D4FF",
-          });
-        }
-      }).catch( (error) => {
-        if(error.response.status === 401){
+      await http
+        .DeleteVariable(id)
+        .then((res) => {
+          console.log(res);
+          if (res.data.message === "Deleted") {
             Toast.fire({
-            icon: "warning",
-            title: "Esta variável está sendo utilizada. Não será possível deleta-la!",
-            background: "#e3e745",
-          });
-        }
+              icon: "success",
+              title: "Variável deletada com sucesso!",
+              background: "#A8D4FF",
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error.response);
+          if (error.response.status === 401) {
+            Toast.fire({
+              icon: "warning",
+              title:
+                "Esta variável está sendo utilizada. Não será possível deleta-la!",
+              background: "#e3e745",
+            });
+          }
+        });
 
-      });
-
-      this.reloadList();
+      // await this.reloadList();
       this.$store.commit("$SETISLOADING");
     },
   },
@@ -399,6 +448,9 @@ export default {
   align-items: center;
 }
 
+.titleHeaderImg {
+  cursor: pointer;
+}
 .variaveis .headerVariaveis .titleHeader {
   position: relative;
   width: 33%;
@@ -408,7 +460,6 @@ export default {
   color: var(--black_text);
 }
 
-
 .modal_header {
   width: 95%;
   height: 10vh;
@@ -417,7 +468,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  padding:20px;
+  padding: 20px;
   z-index: 90;
   border-radius: 10px;
 }
@@ -491,7 +542,7 @@ export default {
 /* scroll  */
 
 ::-webkit-scrollbar {
-    width: 0px;
+  width: 0px;
 }
 
 /* -------- Style Variavel ------- */
@@ -519,7 +570,10 @@ export default {
   margin-top: 20px;
 }
 
-.idInput, .idMax, .idMin, .idCota {
+.idInput,
+.idMax,
+.idMin,
+.idCota {
   color: var(--black_text);
   font-weight: bold;
   font-size: 13px;
@@ -598,7 +652,6 @@ export default {
   cursor: pointer;
 }
 
-
 .modal_mask .modal_body .attributeVariable {
   width: 100%;
   display: flex;
@@ -668,7 +721,7 @@ export default {
   border: none;
 }
 
-.modal_mask .modal_body .attributeVariable .inputImage{
+.modal_mask .modal_body .attributeVariable .inputImage {
   width: 100%;
   height: 100%;
   cursor: pointer;
@@ -677,7 +730,6 @@ export default {
   align-items: center;
   border-radius: 5px;
   background-color: var(--card_blue);
-  
 }
 
 .inputImageDelete {
