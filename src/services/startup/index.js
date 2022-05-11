@@ -33,6 +33,10 @@ export default {
 
   addOpInStartup: async (id_startup, data) => {
     return http.post(`/reportStartup/addOp/${id_startup}`, data)
+  },
+
+  listAllMachines: async () => {
+    return http.get(`/reportStartup/machines/list`)
   }
 
 

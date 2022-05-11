@@ -1,7 +1,7 @@
 <template>
   <fieldset class="search-field">
     <legend><i class="fas fa-filter"></i>Buscar Produto</legend>
-    <input type="text" v-mask="'##.###.######.##-##'" placeholder="" v-model="codeProductValue">
+    <input type="text" placeholder="" v-model="codeProductValue">
     <button @click="searchProduct()"><i class="fas fa-search"></i> Buscar</button>
   </fieldset>
 
