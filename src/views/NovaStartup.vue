@@ -20,6 +20,8 @@ import BtnStartupCreate from "../components/BtnStartupCreate/BtnStartupCreate.vu
 
 import http from "../services/startup";
 
+import dayjs from 'dayjs'
+
 export default {
   data() {
     return {
@@ -89,38 +91,6 @@ export default {
         this.resetStartup()
       }
       this.dataInfo.code_op = code_op
-      function GetDateTime(){
-        function GetDate() {
-          const date = new Date();
-          let day = date.getDay();
-          let month = date.getMonth() + 1;
-          const year = date.getFullYear();
-
-          if (day !== 1) {
-            day = day - 1;
-          }
-          if (day.toString().length === 1) {
-            day = `0${day}`;
-          }
-          if (month < 10) {
-            month = `0${month}`;
-          }
-
-          return `${year}-${month}-${day}`;
-        }
-        function GetStartHour() {
-          const date = new Date();
-
-          let hour = date.getHours();
-          let minutes = date.getMinutes();
-
-          if (hour < 10) {
-            return `0${hour}:${minutes}`;
-          }
-          return `${hour}:${minutes}`;
-        }
-        return { GetDate, GetStartHour };
-      }
 
       const dataOp = await http.listDataByCodeOp(code_op);
       const data = dataOp.data.results[0];
@@ -130,8 +100,8 @@ export default {
       this.headerInfo.product = data.ProdName;
       this.headerInfo.quantity = data.PlannedQty;
       this.headerInfo.codeProduct = data.ItemCode;
-      this.headerInfo.date = new Date()
-      this.headerInfo.startTime = new Date()
+      this.headerInfo.date = dayjs(new Date()).locale('pt-br').format()
+      this.headerInfo.startTime = dayjs(new Date()).locale('pt-br').format()
 
       //techniqueData
 

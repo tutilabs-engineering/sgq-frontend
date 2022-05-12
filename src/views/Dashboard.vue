@@ -29,7 +29,8 @@
   <div class="barCHart_content">
     <div class="barChart">
       <h3>Falha de Perguntas Padrão</h3>
-      <DoughnutChart />
+      
+      <DoughnutChart :dados="dadosDash2" />
     </div>
     <div class="barChart_filter">
       <div class="legend_chart">
@@ -37,10 +38,10 @@
           <i class="fas fa-filter"></i>
           <p>Filtro</p>
         </div>
-        <FilterDoughnutChart />
+        <FilterDoughnutChart  @getSelectedSecondConfig="getSelectedSecondConfig"/>
       </div>
 
-      <div class="legend_chart_checkbox">
+    <!--  <div class="legend_chart_checkbox">
         <p>Falhas</p>
         <div class="checkBox_filter">
           <input type="checkbox" name="" id="" />
@@ -58,7 +59,7 @@
           <input type="checkbox" name="" id="" />
           <label for="">Falha 04</label>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -88,18 +89,50 @@ export default {
       },
       dashDataMetrologyQuantity: [],
       dashTime: [],
+      dadosDash2 : []
     };
   },
   async created() {
+     await this.$store.commit("$SETISLOADING");
+
     const result = await http.ListAllDataFilter({
       day: dayjs().format("YYYY-MM-DD"),
     });
+
     await result.data.list.map((item) => {
       this.dashData.startup.push(item.startup.quantitystartup);
       this.dashTime.push(item.date);
       this.dashData.metrology.push(item.metrology.quantitymetrology);
     });
-  },
+
+const result2 = await http.DefaultQuestionsDisapproved({  
+  date_start : dayjs().format("YYYY-MM-DD"),
+  date_end : dayjs().add(6, "day").format("YYYY-MM-DD")
+   })
+
+this.dadosDash2.push(
+result2.data.cavidade,
+result2.data.ciclo,
+result2.data.datadorMoldeAtualizado,
+result2.data.embalagemConformeFit,
+result2.data.etiquetaEmbalagemDeAcordoProdutoCliente,
+result2.data.fichaInstrucaoDeTrabalho,
+result2.data.fichaTecnicaInjecao,
+result2.data.fluxoOperacao,
+result2.data.masters,
+result2.data.materiaPrima,
+result2.data.padraoHomologado,
+result2.data.pesoMedioLiquido,
+result2.data.planoAtencao,
+result2.data.planoInspecaoQualidade,
+result2.data.posticoDoMolde,
+result2.data.recursosMaoDeObra,
+);
+
+
+await this.$store.commit("$SETISLOADING");
+
+},
 
   methods: {
     async getSelectedConfig(data) {
@@ -119,11 +152,40 @@ export default {
         time.push(item.date);
         metrology.push(item.metrology.quantitymetrology);
       });
-      
+
       this.dashData.startup = startup;
       this.dashTime = time;
       this.dashData.metrology = metrology;
+
     },
+
+async getSelectedSecondConfig(dataDate){
+await this.$store.commit("$SETISLOADING");
+
+const result2 = await http.DefaultQuestionsDisapproved(dataDate);
+this.dadosDash2 = []
+this.dadosDash2.push(
+result2.data.cavidade,
+result2.data.ciclo,
+result2.data.datadorMoldeAtualizado,
+result2.data.embalagemConformeFit,
+result2.data.etiquetaEmbalagemDeAcordoProdutoCliente,
+result2.data.fichaInstrucaoDeTrabalho,
+result2.data.fichaTecnicaInjecao,
+result2.data.fluxoOperacao,
+result2.data.masters,
+result2.data.materiaPrima,
+result2.data.padraoHomologado,
+result2.data.pesoMedioLiquido,
+result2.data.planoAtencao,
+result2.data.planoInspecaoQualidade,
+result2.data.posticoDoMolde,
+result2.data.recursosMaoDeObra,
+);
+
+await this.$store.commit("$SETISLOADING");
+
+    }
   },
 }
 </script>

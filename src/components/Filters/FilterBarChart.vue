@@ -19,7 +19,6 @@
 
   </select>
 </template>
-
 <script>
 import dayjs from 'dayjs'
 import http from "../../services/dashboard/Dashboard"
@@ -55,11 +54,10 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 input,
 select {
-  background: #e9dfdf;
+  background: #E9DFDF;
   border: none;
   border-radius: 10px;
   padding: 0.5rem 1rem;

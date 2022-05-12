@@ -23,37 +23,37 @@
 
       <div class="input">
         <label for="client">Produto</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.product" disabled>
+        <input type="text" name="client" id="client" :value="headerPreenchida.product" disabled>
       </div>
 
       <div class="input">
         <label for="client">Código Produto</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.codeProduct" disabled>
+        <input type="text" name="client" id="client" :value="headerPreenchida.codeProduct" disabled>
       </div>
 
       <div class="input">
         <label for="client">Quantidade</label>
-        <input type="number" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.quantity" disabled>
+        <input type="number" name="client" id="client" :value="headerPreenchida.quantity" disabled>
       </div>
 
       <div class="input">
         <label for="client">Máquina</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.machine" disabled>
+        <input type="text" name="client" id="client" :value="headerPreenchida.machine" disabled>
       </div>
 
       <div class="input">
         <label for="client">Molde</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="headerPreenchida.product_mold" disabled>
+        <input type="text" name="client" id="client" :value="headerPreenchida.product_mold" disabled>
       </div>
 
       <div class="input">
         <label for="client">Data</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="formatDate(headerPreenchida.day)" disabled>
+        <input type="text" name="client" id="client" :value="day" disabled>
       </div>
 
       <div class="input">
         <label for="client">Hora inicial</label>
-        <input type="text" name="client" id="client" placeholder="type qualquer coisa" :value="formatHour(headerPreenchida.start_time)" disabled>
+        <input type="text" name="client" id="client" :value="startTime" disabled>
       </div>
 
     </fieldset>
@@ -61,12 +61,14 @@
 </template>
 
 <script>
-// import http from "../../services/startup";
+import dayjs from 'dayjs'
 
 export default {
   data() {
     return {
       code_op: "",
+      startTime: dayjs(this.headerPreenchida.start_time).format('HH:mm:ss'),
+      day: dayjs(this.headerPreenchida.day).format('DD/MM/YYYY')
 
       
     };
@@ -75,18 +77,6 @@ export default {
     headerPreenchida: Object
   },
   methods: {
-
-    formatHour(date) {
-      console.log(date);
-      this.hour = date.slice(11,19)
-      return this.hour
-    },
-    
-
-    formatDate(date) {
-      this.data = date.slice(0, 10)
-      return this.data
-    },
 
   },
   watch: {
