@@ -29,12 +29,8 @@
   <div class="barCHart_content">
     <div class="barChart">
       <h3>Falha de Perguntas Padrão</h3>
-<<<<<<< HEAD
       
       <DoughnutChart :dados="dadosDash2" />
-=======
-      <DoughnutChart />
->>>>>>> 51e00e294d89b443bdf2dbb4aab91d2308d94d5a
     </div>
     <div class="barChart_filter">
       <div class="legend_chart">
@@ -93,7 +89,6 @@ export default {
       },
       dashDataMetrologyQuantity: [],
       dashTime: [],
-<<<<<<< HEAD
       dadosDash2 : []
     };
   },
@@ -104,20 +99,11 @@ export default {
       day: dayjs().format("YYYY-MM-DD"),
     });
 
-=======
-    };
-  },
-  async created() {
-    const result = await http.ListAllDataFilter({
-      day: dayjs().format("YYYY-MM-DD"),
-    });
->>>>>>> 51e00e294d89b443bdf2dbb4aab91d2308d94d5a
     await result.data.list.map((item) => {
       this.dashData.startup.push(item.startup.quantitystartup);
       this.dashTime.push(item.date);
       this.dashData.metrology.push(item.metrology.quantitymetrology);
     });
-<<<<<<< HEAD
 
 const result2 = await http.DefaultQuestionsDisapproved({  
   date_start : dayjs().format("YYYY-MM-DD"),
@@ -147,9 +133,6 @@ result2.data.recursosMaoDeObra,
 await this.$store.commit("$SETISLOADING");
 
 },
-=======
-  },
->>>>>>> 51e00e294d89b443bdf2dbb4aab91d2308d94d5a
 
   methods: {
     async getSelectedConfig(data) {
@@ -169,7 +152,6 @@ await this.$store.commit("$SETISLOADING");
         time.push(item.date);
         metrology.push(item.metrology.quantitymetrology);
       });
-<<<<<<< HEAD
 
       this.dashData.startup = startup;
       this.dashTime = time;
@@ -204,13 +186,6 @@ result2.data.recursosMaoDeObra,
 await this.$store.commit("$SETISLOADING");
 
     }
-=======
-      
-      this.dashData.startup = startup;
-      this.dashTime = time;
-      this.dashData.metrology = metrology;
-    },
->>>>>>> 51e00e294d89b443bdf2dbb4aab91d2308d94d5a
   },
 }
 </script>

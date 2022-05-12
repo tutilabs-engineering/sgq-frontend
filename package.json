@@ -16,11 +16,7 @@
     "cors": "^2.8.5",
     "datatables.net": "^1.11.1",
     "datatables.net-dt": "^1.11.1",
-<<<<<<< HEAD
     "dayjs": "^1.11.2",
-=======
-    "dayjs": "^1.11.1",
->>>>>>> 51e00e294d89b443bdf2dbb4aab91d2308d94d5a
     "dotenv": "^16.0.0",
     "jsonwebtoken": "^8.5.1",
     "remove": "^0.1.5",

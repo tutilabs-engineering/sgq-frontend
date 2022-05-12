@@ -13,7 +13,6 @@ export default {
     return await http.get("/dashboard/data-filter")
   },
 
-<<<<<<< HEAD
   DefaultQuestionsDisapproved: async ({  
   date_start ,
   date_end
@@ -21,7 +20,5 @@ export default {
     return await http.post("/dashboard/defaultQuestionsDisapproved/filter",{date_start,date_end})
   },
 
-=======
->>>>>>> 51e00e294d89b443bdf2dbb4aab91d2308d94d5a
 
 }
