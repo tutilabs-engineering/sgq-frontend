@@ -1,6 +1,7 @@
 <template>
   <fieldset className="tableContent">
 
+
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
@@ -118,7 +119,7 @@
             <div className="opcoes">
               <i class="fas fa-ellipsis-h"></i>
               <div class="dropdown-content">
-                <button className="btnOpcoes">
+                <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
                   <i class="fas fa-edit"></i>
                 </button>
                 <button className="btnOpcoes">
@@ -136,9 +137,11 @@
 <script>
 
 import http from "../../services/startup/"
+import dayjs from 'dayjs'
 
 
 export default {
+
   setup() {},
   name: "Table",
   data() {

@@ -1,7 +1,7 @@
 <template>
   <fieldset class="search-field">
     <legend><i class="fas fa-filter"></i>Buscar Produto</legend>
-    <input type="text" v-mask="'##.###.######.##-##'" placeholder="" v-model="codeProductValue">
+    <input type="text" placeholder="" v-model="codeProductValue">
     <button @click="searchProduct()"><i class="fas fa-search"></i> Buscar</button>
   </fieldset>
 
@@ -119,7 +119,6 @@ export default {
     StartComponentAttribute: function (dataProduct) {
       this.modalAttributeOpen = !this.modalAttributeOpen;
       this.dataHeader = dataProduct;
-      console.log(this.dataHeader);
     },
     StartComponentVariable: function (dataProduct) {
       this.modalVariableOpen = !this.modalVariableOpen;
@@ -138,7 +137,6 @@ export default {
     this.$store.commit("$SETISLOADING");
     this.listAllProducts = await http.listProducts();
     this.listAllProducts = this.listAllProducts.data.list;
-    console.log(this.listAllProducts);
     this.$store.commit("$SETISLOADING");  
   },
 };

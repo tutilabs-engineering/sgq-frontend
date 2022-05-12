@@ -1,75 +1,152 @@
 <template>
   <div class="content-startupCadastro">
-    
     <fieldset class="search-field">
       <legend><i class="fas fa-filter"></i>Buscar OP</legend>
-      <input type="text" placeholder="" v-model="code_op">
-      <button @click="searchByCodeOp(code_op)"><i class="fas fa-search"></i> Buscar</button>
+      <input type="text" placeholder="" v-model="code_op" />
+      <button @click="searchByCodeOp(code_op)">
+        <i class="fas fa-search"></i> Buscar
+      </button>
     </fieldset>
-    
-    <fieldset class="form">
 
-      
+    <fieldset class="form">
       <legend>Start-Injeção</legend>
 
-      
-      
       <div class="input">
         <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Tutiplast" :value="headerInfo.client" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          :value="headerInfo.client"
+          disabled
+        />
       </div>
 
       <div class="input" v-if="headerInfo.codeClient === null">
         <label for="client">Código cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" v-model="codeClientManualInput" >
+        <input
+          type="text"
+          name="client"
+          id="client"
+          v-model="codeClientManualInput"
+        />
       </div>
 
       <div class="input" v-else>
         <label for="client">Código cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerInfo.codeClient" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          :value="headerInfo.codeClient"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Produto</label>
-        <input type="text" name="client" id="client" placeholder="ex: Visor Central Fan" :value="headerInfo.product" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          :value="headerInfo.product"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Código Produto</label>
-        <input type="text" name="client" id="client" placeholder="ex: xx.xxx.xxxxxx.xx-xx" :value="headerInfo.codeProduct" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          :value="headerInfo.codeProduct"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Quantidade</label>
-        <input type="text" name="client" id="client" placeholder="ex: 456" :value="headerInfo.quantity" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          :value="headerInfo.quantity"
+          disabled
+        />
       </div>
 
-      <div class="input">
+      <div class="input inputMaq">
         <label for="client">Máquina</label>
-        <input type="text" name="client" id="client" placeholder="ex: MAQ01" v-model="headerInput.machine">
+        <input
+          type="text"
+          list="maquinas"
+          name="client"
+          id="client"
+          v-model="headerInput.machine"
+        />
+
+        <datalist id="maquinas">
+          <option
+            v-for="(maquina, index) in maqOptions"
+            :value="maquina.description"
+            :key="index"
+          >
+            {{ maquina.value }}
+          </option>
+        </datalist>
       </div>
 
       <div class="input">
         <label for="client">Molde</label>
-        <input type="text" name="client" id="client" placeholder="ex: MOD04" v-model="headerInput.product_mold">
+        <input
+          type="text"
+          list="moldes"
+          name="client"
+          id="client"
+          v-model="headerInput.product_mold"
+        />
+
+        <datalist id="moldes">
+          <option
+            v-for="(molde, index) in moldOptions"
+            :value="molde.description"
+            :key="index"
+          >
+            {{ molde.value }}
+          </option>
+        </datalist>
       </div>
 
       <div class="input">
         <label for="client">Data</label>
-        <input type="text" name="client" id="client" placeholder="ex: ##/##/####" :value="headerInfo.date" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          :value="formatYear(headerInfo.date)"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Hora inicial</label>
-        <input type="text" name="client" id="client" placeholder="ex: 14:56 pm"  :value="headerInfo.startTime" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          placeholder="---"
+          :value="formatHour(headerInfo.start_time)"
+          disabled
+        />
       </div>
-
     </fieldset>
   </div>
 </template>
 
 <script>
-// import http from "../../services/startup";
+import http from "../../services/startup";
+import dayjs from 'dayjs'
 
 export default {
   data() {
@@ -79,47 +156,74 @@ export default {
         machine: "",
         product_mold: "",
         day: "",
-        start_time: "",
+        start_time:""
       },
       codeClientManualInput: "",
-      
+
+      maqOptions: [],
+      moldOptions: []
     };
   },
   props: {
-    headerInfo: Object
+    headerInfo: Object,
   },
   methods: {
-    searchByCodeOp(newValor){
-      console.log(newValor);
+    searchByCodeOp(newValor) {
       this.$store.commit("$SETCODEOP", this.code_op);
-      this.$emit("returnCodeOp", newValor)
+      this.$emit("returnCodeOp", newValor);
     },
-    
+
+    formatYear(date){
+      return dayjs(date).format('DD/MM/YYYY')
+    },
+
+    formatHour(date){
+      return dayjs(date).format('HH:mm:ss')
+    }
+  },
+
+  created: async function () {
+    await http
+      .listAllMachines()
+      .then((res) => {
+        this.maqOptions = res.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    await http
+      .listAllMolds()
+      .then((res) => {
+        this.moldOptions = res.data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   watch: {
- 
     headerInput: {
       deep: true,
       immediate: true,
-      handler(){
-        this.$store.commit("$SETDATACREATESTARTUP", {header: {
-        client: this.headerInfo.client,
-        code_client: this.headerInfo.codeClient || this.codeClientManualInput,
-        code_product: this.headerInfo.codeProduct,
-        desc_product: this.headerInfo.product,
-        quantity: this.headerInfo.quantity,
-        product_mold: this.headerInput.product_mold,
-        machine: this.headerInput.machine,
-        day: this.headerInfo.date,
-        start_time: this.headerInfo.startTime,
-      }}
-      );
-      }
-    }
-
-  }
+      handler() {
+        this.$store.commit("$SETDATACREATESTARTUP", {
+          header: {
+            client: this.headerInfo.client,
+            code_client:
+              this.headerInfo.codeClient || this.codeClientManualInput,
+            code_product: this.headerInfo.codeProduct,
+            desc_product: this.headerInfo.product,
+            quantity: this.headerInfo.quantity,
+            product_mold: this.headerInput.product_mold,
+            machine: this.headerInput.machine,
+            day: this.headerInfo.date,
+            start_time: this.headerInfo.startTime,
+          },
+        });
+      },
+    },
+  },
 };
-
 </script>
 
 <style scoped>
@@ -171,7 +275,7 @@ export default {
   padding: 10px;
 }
 
-.search-field button{
+.search-field button {
   max-width: 20%;
   min-width: 30%;
   margin-left: 10px;
@@ -202,6 +306,7 @@ export default {
   padding: 5px;
   border-radius: 5px 5px 0 0;
 }
+
 .inputOp {
   display: flex;
 }
@@ -245,7 +350,9 @@ legend {
 }
 
 @media (max-width: 965px) {
-
+  .search-field {
+    width: 100%;
+  }
   .formOP {
     width: 100%;
   }

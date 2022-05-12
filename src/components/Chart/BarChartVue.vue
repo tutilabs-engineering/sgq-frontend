@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <apexchart
       width="100%"
       :type="options.chart.type"
@@ -11,9 +12,13 @@
 
 <script>
 import { defineComponent } from "vue";
-
 export default defineComponent({
   name: "BarChartVue",
+   props: {
+    dashData: Array,
+    dashTime: Array,
+  },
+   
   data: function () {
     return {
       options: {
@@ -28,26 +33,20 @@ export default defineComponent({
         colors: ["#3FC36D", "#E3E745"],
         xaxis: {
           type: "datetime",
-          categories: [
-            "03/01/2011 GMT",
-            "03/02/2011 GMT",
-            "03/03/2011 GMT",
-            "03/04/2011 GMT",
-            "03/05/2011 GMT",
-            "03/06/2011 GMT",
-          ],
+          categories: this.dashTime
         },
       },
       series: [
         {
           name: "PREENCHIMENTO",
-          data: [44, 55, 41, 67, 22, 43],
+          data: this.dashData.startup,
         },
         {
-          name: "METROLOGIA",
-          data: [13, 23, 20, 8, 13, 27],
+          name: "Metrologia",
+          data: this.dashData.metrology,
         },
       ],
+
       responsive: [
         {
           breakpoint: 480,
@@ -62,5 +61,37 @@ export default defineComponent({
       ],
     };
   },
+    watch: {
+    dashTime(newValue){
+  
+          this.options ={
+        chart: {
+          type: "bar",
+          height: 350,
+          stacked: true,
+          toolbar: {
+            show: true,
+          },
+        },
+        colors: ["#3FC36D", "#E3E745"],
+        xaxis: {
+          type: "datetime",
+          categories: newValue
+        },
+      }
+       this.series = [
+        {
+          name: "Preenchimento",
+          data: this.dashData.startup,
+        },
+           {
+          name: "Metrologia",
+          data: this.dashData.metrology,
+        }
+      ];
+    }
+    }
+     
+
 });
 </script>
