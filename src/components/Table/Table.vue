@@ -1,6 +1,7 @@
 <template>
   <fieldset className="tableContent">
 
+
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
@@ -136,9 +137,11 @@
 <script>
 
 import http from "../../services/startup/"
+import dayjs from 'dayjs'
 
 
 export default {
+
   setup() {},
   name: "Table",
   data() {

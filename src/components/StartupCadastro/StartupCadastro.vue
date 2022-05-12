@@ -17,7 +17,6 @@
           type="text"
           name="client"
           id="client"
-          placeholder="ex: Tutiplast"
           :value="headerInfo.client"
           disabled
         />
@@ -29,7 +28,6 @@
           type="text"
           name="client"
           id="client"
-          placeholder="ex: 64321KSS J300 FA"
           v-model="codeClientManualInput"
         />
       </div>
@@ -40,7 +38,6 @@
           type="text"
           name="client"
           id="client"
-          placeholder="ex: 64321KSS J300 FA"
           :value="headerInfo.codeClient"
           disabled
         />
@@ -52,7 +49,6 @@
           type="text"
           name="client"
           id="client"
-          placeholder="ex: Visor Central Fan"
           :value="headerInfo.product"
           disabled
         />
@@ -64,7 +60,6 @@
           type="text"
           name="client"
           id="client"
-          placeholder="ex: xx.xxx.xxxxxx.xx-xx"
           :value="headerInfo.codeProduct"
           disabled
         />
@@ -76,7 +71,6 @@
           type="text"
           name="client"
           id="client"
-          placeholder="ex: 456"
           :value="headerInfo.quantity"
           disabled
         />
@@ -89,28 +83,39 @@
           list="maquinas"
           name="client"
           id="client"
-          placeholder="ex: MAQ01"
           v-model="headerInput.machine"
         />
 
         <datalist id="maquinas">
-          <option v-for="(maquina, index) in maqOptions" :value="maquina.description" :key="index">
-            {{maquina.value}}
+          <option
+            v-for="(maquina, index) in maqOptions"
+            :value="maquina.description"
+            :key="index"
+          >
+            {{ maquina.value }}
           </option>
-
         </datalist>
-
       </div>
 
       <div class="input">
         <label for="client">Molde</label>
         <input
           type="text"
+          list="moldes"
           name="client"
           id="client"
-          placeholder="ex: MOD04"
           v-model="headerInput.product_mold"
         />
+
+        <datalist id="moldes">
+          <option
+            v-for="(molde, index) in moldOptions"
+            :value="molde.description"
+            :key="index"
+          >
+            {{ molde.value }}
+          </option>
+        </datalist>
       </div>
 
       <div class="input">
@@ -119,8 +124,7 @@
           type="text"
           name="client"
           id="client"
-          placeholder="ex: ##/##/####"
-          :value="headerInfo.date"
+          :value="formatYear(headerInfo.date)"
           disabled
         />
       </div>
@@ -131,8 +135,8 @@
           type="text"
           name="client"
           id="client"
-          placeholder="ex: 14:56 pm"
-          :value="headerInfo.startTime"
+          placeholder="---"
+          :value="formatHour(headerInfo.start_time)"
           disabled
         />
       </div>
@@ -142,6 +146,7 @@
 
 <script>
 import http from "../../services/startup";
+import dayjs from 'dayjs'
 
 export default {
   data() {
@@ -151,12 +156,12 @@ export default {
         machine: "",
         product_mold: "",
         day: "",
-        start_time: "",
+        start_time:""
       },
       codeClientManualInput: "",
 
       maqOptions: [],
-
+      moldOptions: []
     };
   },
   props: {
@@ -164,16 +169,37 @@ export default {
   },
   methods: {
     searchByCodeOp(newValor) {
-      console.log(newValor);
       this.$store.commit("$SETCODEOP", this.code_op);
       this.$emit("returnCodeOp", newValor);
     },
+
+    formatYear(date){
+      return dayjs(date).format('DD/MM/YYYY')
+    },
+
+    formatHour(date){
+      return dayjs(date).format('HH:mm:ss')
+    }
   },
 
-  created: async function(){
-    await http.listAllMachines().then( (res) => {
-      this.maqOptions = res.data
-    })
+  created: async function () {
+    await http
+      .listAllMachines()
+      .then((res) => {
+        this.maqOptions = res.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    await http
+      .listAllMolds()
+      .then((res) => {
+        this.moldOptions = res.data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   watch: {
     headerInput: {
@@ -281,7 +307,6 @@ export default {
   border-radius: 5px 5px 0 0;
 }
 
-
 .inputOp {
   display: flex;
 }
@@ -325,6 +350,9 @@ legend {
 }
 
 @media (max-width: 965px) {
+  .search-field {
+    width: 100%;
+  }
   .formOP {
     width: 100%;
   }

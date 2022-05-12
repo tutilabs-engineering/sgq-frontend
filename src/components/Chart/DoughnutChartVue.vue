@@ -14,27 +14,42 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "BarChartVue",
+  props : {
+    dados : Array
+  },
+  watch : {
+    dados(newValue){
+       console.log(newValue);
+       this.series = newValue
+
+    }
+  },
   data: function () {
     return {
-      series: [44, 55, 59, 80, 100, 34, 44, 55, 59, 80, 12, 34],
+      series: this.dados,
       options: {
         chart: {
           width: 380,
           type: "pie",
         },
         labels: [
-          "Start/0001",
-          "Start/0002",
-          "Start/0003",
-          "Start/0004",
-          "Start/0005",
-          "Start/0006",
-          "Start/0007",
-          "Start/0008",
-          "Start/0009",
-          "Start/0010",
-          "Start/0011",
-          "Start/0012",
+          "Cavidade",
+          "Ciclo",
+          "Matéria-prima",
+          "Masters",
+          "Peso médio liquido",
+          "Ficha de instrução de trabalho",
+          "Ficha técnica de injeção",
+          "Plano de inspeção de qualidade",
+          "Plano de atenção",
+          "Padrão homologado",
+          "Fluxo da operação",
+          "Postiço do molde",
+          "Datador do molde atualizado",
+          "Recursos mão de obra",
+          "Embalagem conforme FIT",
+          "Etiqueta da embalagem de acordo com o produto cliente"
+
         ],
         responsive: [
           {

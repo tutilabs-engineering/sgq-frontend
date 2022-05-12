@@ -37,6 +37,10 @@ export default {
 
   listAllMachines: async () => {
     return http.get(`/reportStartup/machines/list`)
+  },
+
+  listAllMolds: async () => {
+    return http.get(`/reportStartup/molds/list`)
   }
 
 
