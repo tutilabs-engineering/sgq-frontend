@@ -2,6 +2,7 @@
 
   <input type="date" @change="handler"  v-model="config.date_start"  />
   <input type="date" @change="handler"  v-model="config.date_end" />
+  
 
  <!-- <select name="" id="">
     <option value="">Start-up</option>
