@@ -31,7 +31,8 @@ export default {
 .input input {
   border: none;
   outline: none;
-  height: 50px;
+  height: 50px; 
   padding: 0px 5px 0 5px;
+  background-color: transparent;
 }
 </style>

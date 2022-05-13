@@ -195,8 +195,9 @@ input,
 select {
   background: #e9dfdf;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 0.5rem 1rem;
+  outline: none;
 }
 .barCHart_content {
   width: 100%;
@@ -214,6 +215,8 @@ select {
   width: 100%;
   background: var(--bg_white);
   padding: 2rem;
+  border-radius: 10px;
+  border: 1px solid rgba(37, 36, 36, 0.281);
 }
 
 .barCHart_content .barChart_filter {
@@ -231,6 +234,8 @@ select {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  border-radius: 10px;
 }
 
 .barCHart_content .barChart_filter .legend_chart .startUp_fill,
