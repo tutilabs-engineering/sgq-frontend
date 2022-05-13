@@ -18,7 +18,7 @@
           <td class="codeStartup" data-title="Nome">{{ user.name }}</td>
           <td data-title="Matricula">{{ user.register }}</td>
           <td data-title="Email">{{ user.email }}</td>
-          <td data-title="Unidade">{{user.unity.name}}</td>
+          <td data-title="Unidade">{{ user.unity.name }}</td>
           <td data-title="Nv. Acesso">{{ user.role.description }}</td>
 
           <td data-title="Status">
@@ -303,7 +303,6 @@ table td {
 }
 
 @media (max-width: 860px) {
-
   legend {
     text-align: center;
   }
