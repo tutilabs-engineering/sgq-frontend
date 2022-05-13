@@ -40,14 +40,14 @@
         </div>
 
         <div class="input">
-          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="3" @change="changeIcon(3)" @click="isAnswerd" disabled/>
+          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="3" @change="changeIcon(4)" @click="isAnswerd" disabled/>
           <label for="Ap">NA</label>
         </div>
       </div>
 
       <div class="fourth-row">
         <div class="input">
-          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="4" @change="changeIcon(4)" @click="isAnswerd" disabled/>
+          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="4" @change="changeIcon(3)" @click="isAnswerd" disabled/>
           <label for="Ap">GM</label>
         </div>
         <label :for="answeredQuestion.fk_default_question" class="labelFile">Enviar Arquivo</label>
