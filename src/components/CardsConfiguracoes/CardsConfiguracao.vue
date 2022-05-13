@@ -58,8 +58,9 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
-  border: 1px solid rgba(37, 36, 36, 0.281);
+  border: none;
   background-color: #fff;
+  border: 1px solid rgba(37, 36, 36, 0.281);
 }
 
 .cardConfiguracao:hover {

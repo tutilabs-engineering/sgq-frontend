@@ -37,7 +37,7 @@
     </div>
 
     <div class="info" v-if="statusItemsAbertos === true && statusItemsFechados === true">
-      <h3>Não há startups para serem listadas aqui</h3>
+      <h3 style="text-align:center">Não há startups para serem listadas aqui</h3>
       <button @click="() => this.$router.push({ name: 'Status' })">Criar uma Startup</button>
     </div>
   </div>
