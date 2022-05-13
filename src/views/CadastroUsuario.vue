@@ -38,6 +38,7 @@
             type="text"
             placeholder="CPF do usuário"
             v-model="userRegister.cpf"
+             v-mask="'###.###.###-##'"
           />
         </div>
 
@@ -157,10 +158,17 @@ export default {
 
       const name = this.userRegister.name;
       const email = this.userRegister.email;
+
+      // 
+      this.userRegister.cpf = this.userRegister.cpf.replace(".","")
+      this.userRegister.cpf = this.userRegister.cpf.replace(".","")
+      this.userRegister.cpf = this.userRegister.cpf.replace("-","")
+      
       const cpf = this.userRegister.cpf;
       const register = this.userRegister.register;
       const role = this.userRegister.fk_role;
       const unity = this.userRegister.fk_unity;
+
 
       if (!name || !email || !cpf || !register || !role || !unity) {
         return Toast.fire({

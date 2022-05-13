@@ -2,24 +2,24 @@
  
   <div v-if="type=='local'" class="card">
   <router-link :to="link">
-    <fieldset class="cardSettings">
+    <div class="cardSettings">
       <h3>
         {{title}}
       </h3>
           <i :class="icon"></i>
-    </fieldset>
+    </div>
     
   </router-link>
   </div>
 
   <div v-else class="card">
   <a :href="link" target="_blank">
-    <fieldset class="cardSettings">
+    <div class="cardSettings">
       <h3>
         {{title}}
       </h3>
           <i :class="icon"></i>
-    </fieldset>
+    </div>
     
   </a>
   </div>

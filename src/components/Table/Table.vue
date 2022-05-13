@@ -58,9 +58,9 @@
                 <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
                   <i class="fas fa-edit"></i>
                 </button>
-                <button className="btnOpcoes">
+                <!-- <button className="btnOpcoes">
                   <i class="fas fa-file-excel"></i>
-                </button>
+                </button> -->
               </div>
             </div>
           </td>
@@ -126,9 +126,9 @@
                 <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
                   <i class="fas fa-edit"></i>
                 </button>
-                <button className="btnOpcoes">
+                <!-- <button className="btnOpcoes">
                   <i class="fas fa-file-excel"></i>
-                </button>
+                </button> -->
               </div>
             </div>
           </td>
