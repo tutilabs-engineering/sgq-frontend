@@ -18,7 +18,7 @@
     <!-- <BtnStartupCreate @returnFillStatus="changedShowQuestions" /> -->
     <div class="group-buttons">
       <div class="btns-options">
-        <button class="btn-cancel btn">Cancelar</button>
+        <button class="btn-cancel btn" @click="() => this.$router.push({ name: 'Startup' })">Cancelar</button>
         <button class="btn-save btn" @click="saveFillReportStartup">
           Preencher
         </button>

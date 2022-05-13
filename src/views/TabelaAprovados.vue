@@ -27,7 +27,6 @@
             <div className="opcoes">
               <ModalNovaOp :modalNovaOp="modalNovaOp"
                   @open-modal-novaOp="openModalNovaOp" :startup="item" :startup_id="item.id"/>
-                  <button class="btn-visu"><i class="fas fa-file-alt"></i> Vincular</button>
               
              
             </div>
