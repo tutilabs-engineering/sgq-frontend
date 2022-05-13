@@ -2,7 +2,7 @@
 <template>
   <div class="gerenciamento-user">
     <fieldset class="perfil">
-      <legend class="firstLegend">Cadastrar Usuário</legend>
+      <legend class="firstLegend"><i class="fas fa-user-plus"></i> Cadastrar Usuário</legend>
 
       <form action="" class="cadastro-user-data" @submit.prevent="RegisterUser">
         <div class="input">

@@ -1,6 +1,6 @@
 <template>
   <fieldset className="tableContent">
-    <legend>Controle de Usuários</legend>
+    <legend><i class="fas fa-cog"></i> Controle de Usuários</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Nome</th>
