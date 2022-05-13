@@ -1,12 +1,8 @@
 
 <template>
   <div class="gerenciamento-user">
-    <div class="perfil">
-      <div class="user">
-        <div class="perfil-img"><i class="fas fa-user-alt"></i></div>
-        <h2>Gerenciamento de usuário</h2>
-      </div>
-      <h2>Cadastro</h2>
+    <fieldset class="perfil">
+      <legend class="firstLegend">Cadastrar Usuário</legend>
 
       <form action="" class="cadastro-user-data" @submit.prevent="RegisterUser">
         <div class="input">
@@ -81,12 +77,11 @@
           </select>
         </div>
 
-
         <div class="buttons-action">
           <button class="btn save-btn" type="submit">Salvar</button>
         </div>
       </form>
-    </div>
+    </fieldset>
 
     <div v-for="tudo of Tudousers" :key="tudo.id">
       <h2>{{ tudo }}</h2>
@@ -125,10 +120,10 @@ export default {
       ],
 
       units: [
-        {text: "Escolha", value: ""},
-        {text: "Matriz", value: "1"},
-        {text: "Filial", value: "2"},
-      ]
+        { text: "Escolha", value: "" },
+        { text: "Matriz", value: "1" },
+        { text: "Filial", value: "2" },
+      ],
     };
   },
 
@@ -212,9 +207,10 @@ export default {
   padding: 10px;
   justify-content: center;
   height: 80px;
-  border-radius: 10px;
+  border-radius: 5px;
   color: var(--black_text);
   font-weight: 600;
+  border: 1px solid rgba(37, 36, 36, 0.281);
 }
 
 .input input {
@@ -222,6 +218,27 @@ export default {
   outline: none;
   height: 50px;
   padding: 0px 5px 0 5px;
+}
+
+fieldset {
+  /* border: 1px solid rgba(37, 36, 36, 0.281); */
+  border: none;
+  width: 100%;
+  background-color: transparent;
+  border-radius: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.firstLegend {
+  margin-bottom: 15px;
+  margin-left: 20px;
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
 }
 
 input:-webkit-autofill {
@@ -237,7 +254,7 @@ input:-webkit-autofill {
 }
 
 .perfil {
-  width: 70%;
+  width: 90%;
   height: auto;
 }
 
@@ -292,16 +309,16 @@ input:-webkit-autofill {
   padding: 10px;
   justify-content: center;
   height: 80px;
-  border-radius: 10px;
+  border-radius: 5px;
   color: var(--black_text);
   font-weight: 600;
+  border: 1px solid rgba(37, 36, 36, 0.281);
 }
 
 .buttons-action {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 10px;
-  justify-content: center;
+  grid-column: 2;
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -311,14 +328,13 @@ input:-webkit-autofill {
   font-weight: 600;
   cursor: pointer;
   height: 60px;
-  border-radius: 10px;
+  border-radius: 5px;
   border: none;
   background-color: var(--btn_gray);
 }
 
 .save-btn {
-  width: 100%;
-  grid-column: 1;
+  width: 130px;
   color: var(--main_primaryWhite);
   background-color: var(--btn_blue);
 }
@@ -332,21 +348,33 @@ input:-webkit-autofill {
   height: 30px;
 }
 .select-lvAcess * {
-  border: 1px solid red;
-  background-color: var(--green_text);
-  color: var(--main_primaryWhite);
+  border: none;
+  background-color: var(--main_primaryWhite);
+  color: var(--btn_green);
+  font-weight: 600;
 }
 
 @media (max-width: 765px) {
+  legend {
+    text-align: center;
+  }
+
+  .firstLegend {
+    margin-left: 0;
+  }
   .cadastro-user-data {
     grid-template-columns: 1fr;
+  }
+
+  .save-btn {
+    width: 100%;
   }
   .perfil {
     width: 100%;
   }
 
   .buttons-action {
-    grid-template-columns: 1fr;
+    grid-column: 1;
   }
 
   .btn {

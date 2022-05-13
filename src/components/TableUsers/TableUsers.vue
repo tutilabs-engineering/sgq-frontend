@@ -1,5 +1,6 @@
 <template>
-  <div className="tableContent">
+  <fieldset className="tableContent">
+    <legend>Controle de Usuários</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Nome</th>
@@ -60,7 +61,7 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </fieldset>
 </template>
 
 <script>
@@ -207,16 +208,32 @@ export default {
   display: block;
 }
 
+fieldset {
+  border: 1px solid rgba(37, 36, 36, 0.281) !important;
+  width: 100%;
+  background-color: white !important;
+  border-radius: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
 .tableContent {
   width: 90%;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 
 .tableContent table {
   background-color: var(--bg_white);
   width: 100%;
   border-radius: 10px 10px 10px 10px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.466);
+  overflow-x: scroll;
 }
 
 table th {
@@ -286,6 +303,11 @@ table td {
 }
 
 @media (max-width: 860px) {
+
+  legend {
+    text-align: center;
+  }
+
   .tableContent thead {
     display: none;
   }
