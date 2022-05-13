@@ -33,7 +33,12 @@
     </div>
 
     <div class="table-injection">
-      <Table />
+      <Table @returnItemAbertos="ReturnItemAbertos" @returnItemFechados="ReturnItemFechados"/>
+    </div>
+
+    <div class="info" v-if="statusItemsAbertos === true && statusItemsFechados === true">
+      <h3>Não há startups para serem listadas aqui</h3>
+      <button @click="() => this.$router.push({ name: 'Status' })">Criar uma Startup</button>
     </div>
   </div>
 </template>
@@ -50,6 +55,8 @@ export default defineComponent({
   components: { Card, Table },
   data() {
     return {
+      statusItemsAbertos: false,
+      statusItemsFechados: false,
       startupsManagement: {
         approved: "",
         conditional: "",
@@ -58,13 +65,34 @@ export default defineComponent({
       }
     };
   },
+
+  methods: {
+    ReturnItemAbertos: async function (itemsAbertos){
+      if(itemsAbertos == 0){
+        this.statusItemsAbertos = true
+      }else {
+        this.statusItemsAbertos = false
+      }
+      console.log(`Isso é na startup:` + itemsAbertos);
+    },
+
+    ReturnItemFechados: async function (itemsFechados){
+      if(itemsFechados == 0){
+        this.statusItemsFechados = true
+      }else {
+        this.statusItemsFechados = false
+      }
+      console.log(`Isso é na startup:` + itemsFechados);
+    },
+  },
   created: async function() {
     const listCount = await http.listCountOfStartupsByStatus()
     this.startupsManagement.approved = listCount.data.approved
     this.startupsManagement.disapproved = listCount.data.disapproved
     this.startupsManagement.conditional = listCount.data.conditional
     this.startupsManagement.closed = listCount.data.closed
-  }
+  },
+
 });
 </script>
 
@@ -72,6 +100,32 @@ export default defineComponent({
 .content-startup {
   width: 100%;
   background-color: var(--background-color);
+}
+
+.info {
+  margin-top: 20px;
+  background-color: #fff;
+  width: 100%;
+  padding: 10px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  color: var(--black_text);
+}
+
+.info button {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--card_green);
+  cursor: pointer;
+  height: 40px;
+  color: white;
+  font-weight: 600;
+  width: 150px;
 }
 
 .cards {
