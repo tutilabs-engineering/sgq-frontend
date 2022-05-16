@@ -58,15 +58,19 @@
                 <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
                   <i class="fas fa-edit"></i>
                 </button>
-                <button className="btnOpcoes">
+                <!-- <button className="btnOpcoes">
                   <i class="fas fa-file-excel"></i>
-                </button>
+                </button> -->
               </div>
             </div>
           </td>
         </tr>
       </tbody>
+
+      
     </table>
+
+    
 
     <table v-else cellpadding="0" cellspacing="0">
       <div class="btns">
@@ -122,9 +126,9 @@
                 <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
                   <i class="fas fa-edit"></i>
                 </button>
-                <button className="btnOpcoes">
+                <!-- <button className="btnOpcoes">
                   <i class="fas fa-file-excel"></i>
-                </button>
+                </button> -->
               </div>
             </div>
           </td>
@@ -137,8 +141,6 @@
 <script>
 
 import http from "../../services/startup/"
-import dayjs from 'dayjs'
-
 
 export default {
 
@@ -172,12 +174,25 @@ export default {
     this.itemsAbertos = openedStartups
     this.itemsFechados = closedStartups
 
+    this.existItemAbertos(this.itemsAbertos.length)
+    this.existItemFechados(this.itemsFechados.length)
+
     this.$store.commit("$SETISLOADING");
   },
   methods: {
     OpenReportStartup: function(id_startup) {
       this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})
     },
+
+    
+    existItemAbertos(abertos){
+      this.$emit("returnItemAbertos", abertos);
+    },
+
+    existItemFechados: async function (fechados) {
+      this.$emit("returnItemFechados", fechados)
+    },
+
 
     formatDate(date) {
       this.year = date.slice(0, -6)
@@ -198,6 +213,11 @@ fieldset {
   display: flex;
   flex-direction: column;
   padding: 20px;
+}
+
+.noStartup {
+  width: 100%;
+  background-color: red;
 }
 
 .dropdown-content {

@@ -130,12 +130,14 @@ export default {
   },
 
   created: async function (){
+    this.$store.commit("$SETISLOADING");
       await http.findReportStartupById(this.id_startup).then( (res) => {
         console.log(res.data.op.added_op);
          this.listOp = res.data.op.added_op
       }).catch( (error) => {
         console.log(error);
       })
+      this.$store.commit("$SETISLOADING");
   },
 
   props: {
@@ -184,14 +186,27 @@ export default {
       this.dataNewOpInStartup.client = this.headerInfo.client
       this.dataNewOpInStartup.code_client = this.headerInfo.codeClient
       
-
+      this.$store.commit("$SETISLOADING");
 
       console.log(this.dataNewOpInStartup);
       await http.addOpInStartup(this.id_startup, this.dataNewOpInStartup).then( (res) => {
-      console.log("deu certo", res);
+        this.$swal
+                        .fire({
+                            title: "Tudo certo!",
+                            text: "A Startup foi vinculada com Sucesso!",
+                            imageUrl: "/img/allright.gif",
+                            imageWidth: 400,
+                            imageHeight: 200,
+                            imageAlt: "Custom image",
+                        })
+                        .then(() => {
+                            this.$router.push({ name: "TabelaAprovados" });
+                        });
       }).catch( (error) => {
         console.log(error);
       })
+
+      this.$store.commit("$SETISLOADING");
     }
   }
 };

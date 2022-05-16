@@ -1,12 +1,7 @@
 <template>
   <div class="content-perfil" v-if="editStatus">
-    <div class="perfil">
-      <div class="user">
-        <div class="perfil-img"><i class="fas fa-user-alt"></i></div>
-        <h2>Editar Usuário</h2>
-      </div>
-
-      <h3>Dados do usuário</h3>
+    <fieldset class="perfil">
+      <legend><i class="fas fa-user-check"></i> Perfil</legend>
 
       <form class="user-data">
         <div class="inputs">
@@ -65,17 +60,12 @@
           </div>
         </div>
       </form>
-    </div>
+    </fieldset>
   </div>
 
   <div class="content-perfil" v-else>
-    <div class="perfil">
-      <div class="user">
-        <div class="perfil-img"><i class="fas fa-user-alt"></i></div>
-        <h2>Editar Usuário</h2>
-      </div>
-
-      <h3>Dados do usuário</h3>
+    <fieldset class="perfil">
+      <legend><i class="fas fa-user-edit"></i>Edição</legend>
 
       <form class="user-data" @submit.prevent="UpdateUser">
         <div class="inputs">
@@ -165,7 +155,7 @@
           </div>
         </div>
       </form>
-    </div>
+    </fieldset>
   </div>
 </template>
 
@@ -303,15 +293,30 @@ export default {
 <style scoped>
 .content-perfil {
   width: 100%;
-  height: calc(90vh - 90px);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .perfil {
-  width: 70%;
+  width: 90%;
   height: auto;
+}
+
+fieldset {
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  border: none;
+  width: 100%;
+  border-radius: 10px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+legend {
+  font-size: 40px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--black_text);
 }
 
 .perfil h2 {
@@ -342,9 +347,10 @@ export default {
   padding: 10px;
   justify-content: center;
   height: 80px;
-  border-radius: 10px;
-  font-weight: 600;
+  border-radius: 5px;
   color: var(--black_text);
+  font-weight: 600;
+  border: 1px solid rgba(37, 36, 36, 0.281);
 }
 
 .input input {
@@ -435,12 +441,16 @@ export default {
 }
 
 @media (max-width: 765px) {
+
+  legend {
+    text-align: center;
+  }
   .inputs {
     grid-template-columns: 1fr;
   }
 
   .perfil {
-    width: 80%;
+    width: 100%;
   }
 
   .btn {
