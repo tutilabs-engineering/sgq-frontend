@@ -64,5 +64,7 @@ select {
   border: none;
   border-radius: 10px;
   padding: 0.5rem 1rem;
+  outline: none;
+  border-radius: 5px;
 }
 </style>

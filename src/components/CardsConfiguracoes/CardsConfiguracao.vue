@@ -2,24 +2,24 @@
  
   <div v-if="type=='local'" class="card">
   <router-link :to="link">
-    <fieldset class="cardSettings">
+    <div class="cardSettings">
       <h3>
         {{title}}
       </h3>
           <i :class="icon"></i>
-    </fieldset>
+    </div>
     
   </router-link>
   </div>
 
   <div v-else class="card">
   <a :href="link" target="_blank">
-    <fieldset class="cardSettings">
+    <div class="cardSettings">
       <h3>
         {{title}}
       </h3>
           <i :class="icon"></i>
-    </fieldset>
+    </div>
     
   </a>
   </div>
@@ -58,8 +58,9 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
-  border: 1px solid rgba(37, 36, 36, 0.281);
+  border: none;
   background-color: #fff;
+  border: 1px solid rgba(37, 36, 36, 0.281);
 }
 
 .cardConfiguracao:hover {
