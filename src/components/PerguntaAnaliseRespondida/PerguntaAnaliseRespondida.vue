@@ -171,7 +171,7 @@ export default {
   font-size: 16px;
   font-weight: 600;
   color: var(--black_text);
-  max-height: 50px;
+  max-height: 20rem;
   width: 100%;
 }
 

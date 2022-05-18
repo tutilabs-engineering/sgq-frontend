@@ -40,14 +40,14 @@
         </div>
 
         <div class="input">
-          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP"  value="3" @change="changeIcon(3)" @click="isAnswerd"/>
+          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP"  value="4" @change="changeIcon(4)" @click="isAnswerd"/>
           <label for="Ap">NA</label>
         </div>
       </div>
 
       <div class="fourth-row">
         <div class="input">
-          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP"  value="4" @change="changeIcon(4)" @click="isAnswerd"/>
+          <input type="radio" v-model="defaultQuestion.status" :name="idQuestion" id="AP"  value="3" @change="changeIcon(3)" @click="isAnswerd"/>
           <label for="Ap">GM</label>
         </div>
         <label :for="defaultQuestion.fk_default_question" class="labelFile">Enviar Arquivo</label>
@@ -150,7 +150,7 @@ fieldset {
   font-size: 16px;
   font-weight: 600;
   color: var(--black_text);
-  max-height: 50px;
+  max-height: 20rem;
   width: 100%;
 }
 

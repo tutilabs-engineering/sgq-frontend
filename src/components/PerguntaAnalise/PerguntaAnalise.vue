@@ -42,14 +42,14 @@
         </div>
 
         <div class="input">
-          <input type="radio" :name="specificQuestion.status" v-model="specificQuestion.status" id="AP" :value="3"   @change="changeIcon(3)" @click="isSpecificAnswerd"/>
+          <input type="radio" :name="specificQuestion.status" v-model="specificQuestion.status" id="AP" :value="4"   @change="changeIcon(4)" @click="isSpecificAnswerd"/>
           <label for="Ap">NA</label>
         </div>
       </div>
 
       <div class="fourth-row">
         <div class="input">
-          <input type="radio" :name="specificQuestion.status" v-model="specificQuestion.status" id="AP" :value="4"   @change="changeIcon(4)" @click="isSpecificAnswerd"/>
+          <input type="radio" :name="specificQuestion.status" v-model="specificQuestion.status" id="AP" :value="3"   @change="changeIcon(3)" @click="isSpecificAnswerd"/>
           <label for="Ap">GM</label>
         </div>
         <label :for="specificQuestion.fk_specific_question" class="labelFile">Enviar Arquivo</label>
