@@ -1,7 +1,6 @@
 <template>
  
-  <div v-if="type=='local'" class="card">
-  <router-link :to="link">
+  <router-link :to="link" v-if="type=='local'" class="card">
     <div class="cardSettings">
       <h3>
         {{title}}
@@ -10,10 +9,9 @@
     </div>
     
   </router-link>
-  </div>
 
-  <div v-else class="card">
-  <a :href="link" target="_blank">
+
+  <a :href="link" target="_blank" v-else class="card">
     <div class="cardSettings">
       <h3>
         {{title}}
@@ -22,7 +20,7 @@
     </div>
     
   </a>
-  </div>
+
 
   
 
@@ -44,7 +42,7 @@ export default {
 }
 
 .card {
-  width: 100%;
+  width: 50%;
   display: flex;
   justify-content: center;
 }
@@ -92,8 +90,18 @@ h3 {
   font-weight: 600;
 }
 
+@media (max-width: 1000px){
+  .card {
+    width: 90%;
+  }
+}
+
 
 @media (max-width: 700px) {
+
+  .card {
+    width: 90%;
+  }
   .cardSettings {
     width: 90%;
     flex-direction: column-reverse;
