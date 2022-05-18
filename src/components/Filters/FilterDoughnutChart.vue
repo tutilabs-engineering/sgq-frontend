@@ -3,6 +3,12 @@
   <input type="date" @change="handler"  v-model="config.date_start"  />
   <input type="date" @change="handler"  v-model="config.date_end" />
 
+   <select   @change="handler" v-model="config.workShift">
+    <option :value="0"> Turno </option>
+    <option :value="1">1 Turno</option>
+    <option :value="2">2 Turno</option>
+    <option :value="3">3 Turno</option>
+  </select>
 
  <!-- <select name="" id="">
     <option value="">Start-up</option>
@@ -44,7 +50,9 @@ export default {
     return { 
       config : {
       date_start : dayjs().format("YYYY-MM-DD"),
-      date_end : dayjs().add(6, "day").format("YYYY-MM-DD")
+      date_end : dayjs().add(6, "day").format("YYYY-MM-DD"),
+      workShift: 0
+      
     }
     }
   },

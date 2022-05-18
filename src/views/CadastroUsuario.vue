@@ -78,6 +78,24 @@
           </select>
         </div>
 
+        <div class="input-acessLevel">
+          <label for="user-name">Turno</label>
+          <select
+            name="lvAcess"
+            id="lvAcess"
+            class="select-lvAcess"
+            v-model="userRegister.fk_office_hour"
+          >
+            <option
+              v-for="(turno, index) in turnos"
+              :value="turno.value"
+              :key="index"
+            >
+              {{ turno.text }}
+            </option>
+          </select>
+        </div>
+
         <div class="buttons-action">
           <button class="btn save-btn" type="submit">Salvar</button>
         </div>
@@ -110,6 +128,7 @@ export default {
         register: "",
         fk_role: "",
         fk_unity: "",
+        fk_office_hour: ""
       },
       options: [
         { text: "Escolha", value: "" },
@@ -124,6 +143,14 @@ export default {
         { text: "Escolha", value: "" },
         { text: "Matriz", value: "1" },
         { text: "Filial", value: "2" },
+      ],
+
+      turnos: [
+        { text: "Escolha", value: "" },
+        { text: "1° Turno", value: 1 },
+        { text: "2° Turno", value: 2 },
+        { text: "3° Turno", value: 3 },
+        { text: "Comercial", value: 4 },
       ],
     };
   },
@@ -168,9 +195,10 @@ export default {
       const register = this.userRegister.register;
       const role = this.userRegister.fk_role;
       const unity = this.userRegister.fk_unity;
+      const office_hour = this.userRegister.fk_office_hour;
 
 
-      if (!name || !email || !cpf || !register || !role || !unity) {
+      if (!name || !email || !cpf || !register || !role || !unity || !office_hour) {
         return Toast.fire({
           icon: "error",
           title: "Necessário preencher todos os campos!",

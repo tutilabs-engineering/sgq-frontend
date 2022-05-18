@@ -41,6 +41,13 @@
             </select>
           </div>
 
+          <div class="input system-white">
+            <label for="user-name">Turno</label>
+            <select name="lvAcess" id="lvAcess" class="select-lvAcess" disabled>
+              <option value="adm">{{ user.turnoNome }}</option>
+            </select>
+          </div>
+
           
 
         </div>
@@ -128,6 +135,24 @@
           </select>
         </div>
 
+        <div class="input system-white">
+          <label for="user-name">Turno</label>
+          <select
+            name="lvAcess"
+            id="lvAcess"
+            class="select-lvAcess"
+            v-model="user.turno"
+          >
+            <option
+              v-for="(turno, index) in turnos"
+              :value="turno.value"
+              :key="index"
+            >
+              {{ turno.text }}
+            </option>
+          </select>
+        </div>
+
           
         </div>
 
@@ -189,7 +214,9 @@ export default {
         cargo: "",
         lvAccess: "",
         unidade: "",
-        unidadeNome: ""
+        unidadeNome: "",
+        turno: "",
+        turnoNome: ""
       },
 
       isDisable: true,
@@ -209,6 +236,14 @@ export default {
         {text: "Escolha", value: ""},
         {text: "Matriz", value: 1},
         {text: "Filial", value: 2 },
+      ],
+
+      turnos: [
+        {text: "Escolha", value: ""},
+        {text: "1° Turno", value: 1},
+        {text: "2° Turno", value: 2 },
+        {text: "3° Turno", value: 3 },
+        {text: "Comercial", value: 4 },
       ]
     };
   },
@@ -240,7 +275,8 @@ export default {
         register: this.user.register,
         cpf: this.user.cpf,
         fk_role: this.user.lvAccess,
-        fk_unity: this.user.unidade
+        fk_unity: this.user.unidade,
+        fk_office_hour: this.user.turno
       };
 
       await http
@@ -284,6 +320,7 @@ export default {
         await http
           .findUserById(sub)
           .then((res) => {
+            console.log(res);
             this.user.id = res.data.user.id;
             this.user.name = res.data.user.name;
             this.user.email = res.data.user.email;
@@ -293,6 +330,8 @@ export default {
             this.user.lvAccess = res.data.user.role.id;
             this.user.unidade = res.data.user.unity.id;
             this.user.unidadeNome = res.data.user.unity.name;
+            this.user.turno = res.data.user.office_hour.id;
+            this.user.turnoNome = res.data.user.office_hour.description
 
             const role = res.data.user.role.id
                     if(role === 1 || role === 2) {
@@ -410,9 +449,6 @@ legend {
 .system-white {
   background-color: var(--main_primaryWhite);
   color: var(--black_text);
-  grid-column-start: 1;
-  grid-column-end: 2;
-  margin-bottom: 20px;
 }
 
 .system-black {

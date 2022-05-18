@@ -1,63 +1,111 @@
 <template>
-<div v-for="(answeredQuestion,index) in answeredQuestions"  :key="answeredQuestion.fk_default_question">
-  <div class="question"  >
-    <fieldset>
-      <div class="first-row">
+  <div
+    v-for="(answeredQuestion, index) in answeredQuestions"
+    :key="answeredQuestion.fk_default_question"
+  >
+    <div class="question">
+      <fieldset>
+        <div class="first-row">
+          <div v-if="answeredQuestion.status == 0">
+            <i class="far fa-circle" aria-hidden="true"></i>
+          </div>
 
-        <div v-if="answeredQuestion.status == 0">
-          <i class="far fa-circle" aria-hidden="true"></i>
-        </div>
+          <div v-if="answeredQuestion.status == 1">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+          </div>
+          <div v-if="answeredQuestion.status == 2">
+            <i class="fa fa-times-circle"></i>
+          </div>
+          <div v-if="answeredQuestion.status == 3">
+            <i class="fa fa-exclamation-circle"></i>
+          </div>
+          <div v-if="answeredQuestion.status == 4">
+            <i class="fa fa-check-circle fa-blue" aria-hidden="true"></i>
+          </div>
 
-        <div v-if="answeredQuestion.status == 1">
-          <i class="fa fa-check-circle" aria-hidden="true"></i>
-        </div>
-        <div v-if="answeredQuestion.status == 2">
-          <i class="fa fa-times-circle"></i>
-        </div>
-        <div v-if="answeredQuestion.status == 3">
-          <i class="fa fa-exclamation-circle"></i>
-        </div>
-        <div v-if="answeredQuestion.status == 4">
-          <i class="fa fa-check-circle fa-blue" aria-hidden="true"></i>
-        </div>
-
-        <label for="res">{{ answeredQuestion.title }}</label>
-      </div>
-
-      <div class="second-row">
-        <input type="text" v-model="answeredQuestion.description" placeholder="Aguardando Resposta" disabled/>
-      </div>
-
-      <div class="third-row">
-        <div class="input">
-          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP" value="1" @change="changeIcon(1)" @click="isAnswerd" disabled/>
-          <label for="Ap">C</label>
+          <label for="res">{{ answeredQuestion.title }}</label>
         </div>
 
-        <div class="input">
-          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="2" @change="changeIcon(2)" @click="isAnswerd" disabled/>
-          <label for="Ap">NC</label>
+        <div class="second-row">
+          <input
+            type="text"
+            v-model="answeredQuestion.description"
+            placeholder="Aguardando Resposta"
+            disabled
+          />
         </div>
 
-        <div class="input">
-          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="3" @change="changeIcon(4)" @click="isAnswerd" disabled/>
-          <label for="Ap">NA</label>
-        </div>
-      </div>
+        <div class="third-row">
+          <div class="input">
+            <input
+              type="radio"
+              v-model="answeredQuestion.status"
+              :name="idQuestion"
+              id="AP"
+              value="1"
+              @change="changeIcon(1)"
+              @click="isAnswerd"
+              disabled
+            />
+            <label for="Ap">C</label>
+          </div>
 
-      <div class="fourth-row">
-        <div class="input">
-          <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP"  value="4" @change="changeIcon(3)" @click="isAnswerd" disabled/>
-          <label for="Ap">GM</label>
+          <div class="input">
+            <input
+              type="radio"
+              v-model="answeredQuestion.status"
+              :name="idQuestion"
+              id="AP"
+              value="2"
+              @change="changeIcon(2)"
+              @click="isAnswerd"
+              disabled
+            />
+            <label for="Ap">NC</label>
+          </div>
+
+          <div class="input">
+            <input
+              type="radio"
+              v-model="answeredQuestion.status"
+              :name="idQuestion"
+              id="AP"
+              value="3"
+              @change="changeIcon(4)"
+              @click="isAnswerd"
+              disabled
+            />
+            <label for="Ap">NA</label>
+          </div>
         </div>
-        <label :for="answeredQuestion.fk_default_question" class="labelFile">Enviar Arquivo</label>
-     
-  
-        <input type="file" :name="answeredQuestion.fk_default_question" :id="answeredQuestion.fk_default_question" class="input_file" @change="addFile($event,index)" />
-      </div>
-      
-    </fieldset>
-   </div>
+
+        <div class="fourth-row">
+          <div class="input">
+            <input
+              type="radio"
+              v-model="answeredQuestion.status"
+              :name="idQuestion"
+              id="AP"
+              value="4"
+              @change="changeIcon(3)"
+              @click="isAnswerd"
+              disabled
+            />
+            <label for="Ap">GM</label>
+          </div>
+
+          <button
+          class="btn btn-visualizar"
+          @click="openImgPreview(answeredQuestion.file)" v-if="answeredQuestion.file != ''"
+        >
+          Visualizar
+        </button>
+
+        </div>
+
+        
+      </fieldset>
+    </div>
   </div>
 </template>
 
@@ -66,34 +114,42 @@ export default {
   props: {
     answeredQuestions: Array,
     idQuestion: String,
-
   },
 
   methods: {
-    changeIcon(e){
-      this.valueQuestion = e
+    openImgPreview(imgPreview) {
+      const rota = this.$store.state.urlImg
+      console.log(rota);
+      this.$swal.fire({
+        // title: "Tudo certo!",
+        // text: "A Startup foi cadastrada com Sucesso!",
+        imageUrl: `${rota}/startup/questionsUploads/${imgPreview}`,
+        imageWidth: "auto",
+        imageHeight: "auto",
+        imageAlt: "Custom image",
+      });
+    },
+    changeIcon(e) {
+      this.valueQuestion = e;
     },
 
-    isAnswerd(){
-      this.answered = true
-      
+    isAnswerd() {
+      this.answered = true;
     },
-     addFile(event,index){
+    addFile(event, index) {
       // eslint-disable-next-line vue/no-mutating-props
-      this.answeredQuestions[index].file = event.target.files[0] 
-   
-    }
+      this.answeredQuestions[index].file = event.target.files[0];
+    },
   },
 
   watch: {
-    answeredQuestions : {
-      deep:true,
-      immediate:true,
-      handler(newvalue){
-         this.$emit("returnAnswered", newvalue)
-      
-      }
-    }
+    answeredQuestions: {
+      deep: true,
+      immediate: true,
+      handler(newvalue) {
+        this.$emit("returnAnswered", newvalue);
+      },
+    },
   },
 
   data() {
@@ -102,7 +158,6 @@ export default {
       answered: false,
       response: {
         id: this.idQuestion,
-
       },
 
     };
@@ -114,7 +169,7 @@ export default {
 .question {
   background-color: var(--card-color);
   width: auto;
-  height: 200px;
+  height: auto;
   border-right: 7px solid var(--button-color-01);
   border-radius: 10px;
   display: flex;
@@ -134,7 +189,8 @@ fieldset {
   padding: 20px;
 }
 
-.fa, .far {
+.fa,
+.far {
   margin-right: 10px;
   font-size: 30px;
   color: var(--card_green);
@@ -150,13 +206,26 @@ fieldset {
   font-size: 16px;
   font-weight: 600;
   color: var(--black_text);
-  max-height: 50px;
+  max-height: 20rem;
   width: 100%;
 }
 
 .second-row {
   width: 100%;
   margin: 10px 0px;
+}
+
+.btn {
+  width: 100px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-visualizar {
+  background-color: var(--card_green);
 }
 
 .second-row input {
