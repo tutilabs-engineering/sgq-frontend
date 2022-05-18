@@ -82,7 +82,8 @@ export default {
       title: item.description, 
       description:'',
       status:0,
-      file: ''
+      file: '',
+      preview : ''
      }
     })
   
@@ -93,11 +94,34 @@ export default {
 
 
     getSpecificAnswered: async function(specificAnswered){
-      this.$store.commit("$SETDATAFILLSTARTUP",{ specific_questions : specificAnswered})
+      const specificAnsweredFormat = specificAnswered.map((item)=> {
+        return {
+        attention: item.attention,
+        is_enabled: item.is_enabled,
+        question: item.question,
+        fk_specific_question: item.fk_specific_question,
+        description:item.description,
+        status:item.status,
+        file:item.file,
+        }
+      });
+
+      this.$store.commit("$SETDATAFILLSTARTUP",{ specific_questions : specificAnsweredFormat})
     },
 
     getAnswered: async function(res){
-     this.$store.commit("$SETDATAFILLSTARTUP",{ default_question : res})
+      console.log(res);
+    const default_questionFormat = res.map((item)=>{
+        return { 
+      fk_default_question:item.fk_default_question, 
+      title: item.title, 
+      description:item.description,
+      status:item.status,
+      file:item.file,
+     }
+    })
+    
+     this.$store.commit("$SETDATAFILLSTARTUP",{ default_question : default_questionFormat})
     },
     getImg_1:async function(res){
       this.$store.commit("$SETDATAFILLSTARTUP",{ img_1 : res})

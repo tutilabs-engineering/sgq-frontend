@@ -45,6 +45,9 @@ export default {
   width: 50%;
   display: flex;
   justify-content: center;
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  background-color: #fff;
+  
 }
 
 
@@ -55,10 +58,9 @@ export default {
   padding: 0 50px 0 50px;
   justify-content: space-between;
   align-items: center;
-  border-radius: 10px;
   border: none;
-  background-color: #fff;
-  border: 1px solid rgba(37, 36, 36, 0.281);
+  background-color: transparent;
+  
 }
 
 .cardConfiguracao:hover {
@@ -79,6 +81,7 @@ a {
   width: 600px;
   text-align: center;
   transition: 0.5s;
+  border-radius: 10px;
 }
 a:hover {
   transform: translateX(4%);

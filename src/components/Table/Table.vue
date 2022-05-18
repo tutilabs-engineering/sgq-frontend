@@ -159,6 +159,7 @@ export default {
     
     this.$store.commit("$SETISLOADING");
     const allStartups = await http.listAllStartups()
+    console.log(allStartups);
     let openedStartups = [];
     let closedStartups = [];
     allStartups.data.forEach((startup) => {
