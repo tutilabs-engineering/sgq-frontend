@@ -1,12 +1,13 @@
 import { http } from "../config";
 
 export default {
-  ListAllDataFilter: async ({machine = "", code_product = "",code_client = "",day}) => {
+  ListAllDataFilter: async ({machine = "", code_product = "",code_client = "",day,workShift}) => {
     return await http.post("/dashboard/time", { 
       machine,
       code_product,
       code_client,
-      day
+      day,
+      workShift,
     })
   },
   ListAllFilter: async () => {
@@ -15,9 +16,11 @@ export default {
 
   DefaultQuestionsDisapproved: async ({  
   date_start ,
-  date_end
+  date_end,
+  workShift
    }) => {
-    return await http.post("/dashboard/defaultQuestionsDisapproved/filter",{date_start,date_end})
+     console.log({date_start,date_end,workShift});
+    return await http.post("/dashboard/defaultQuestionsDisapproved/filter",{date_start,date_end,workShift})
   },
 
 
