@@ -1,6 +1,6 @@
 <template>
   <fieldset className="tableContent" v-if="isOp === true">
-    <legend>Análise de Startup - Em Andamento</legend>
+    <legend>Análise de Startup - Condicional</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cod. OP</th>
@@ -21,15 +21,11 @@
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
-              <i class="fas fa-ellipsis-h"></i>
-              <div class="dropdown-content">
-                <button className="btnOpcoes">
-                  <i class="fas fa-plus-circle"></i>
-                </button>
-                <button className="btnOpcoes">
-                  <i class="fas fa-file-alt"></i>
-                </button>
-              </div>
+
+                <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
+              Visualizar
+            </button>
+          
             </div>
           </td>
         </tr>
@@ -51,6 +47,9 @@ export default {
   name: "Table",
 
   methods: {
+    OpenReportStartup: function(id_startup) {
+      this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})
+    },
     verifyOP: async function (list_op){
       if(list_op == 0){
         return false
@@ -194,6 +193,28 @@ table td {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn_visualizar {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  background: var(--btn_blue);
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  color: var(--main_primaryWhite);
+  align-items: center;
+  height: 40px;
+  width: 90px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.btn_visualizar{
+  font-size: 14px;
+  color: var(--main_primaryWhite);
 }
 
 /* BTNS */

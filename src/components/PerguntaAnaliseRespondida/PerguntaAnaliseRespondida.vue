@@ -49,11 +49,12 @@
 
       <div class="fourth-row">
         <div class="input">
-          <input type="radio" :name="idQuestion" v-model="answeredQuestion.status" id="AP" value="4"   @change="changeIcon(4)" @click="isSpecificAnswerd"/>
+          <input type="radio" :name="idQuestion" v-model="answeredQuestion.status" id="AP" value="4"   @change="changeIcon(4)" @click="isSpecificAnswerd" disabled/>
           <label for="Ap">GM</label>
         </div>
-        <label :for="answeredQuestion.fk_specific_question" class="labelFile">Enviar Arquivo</label>
-        <input type="file" :name="answeredQuestion.fk_specific_question" :id="answeredQuestion.fk_specific_question" class="input_file"  @change="addFile($event,index)" />
+        <button class="btn btn-visualizar" @click="openImgPreview(answeredQuestion.file)" v-if="answeredQuestion.file != ''">
+          Visualizar
+        </button>
       </div>
 
     </fieldset>
@@ -80,6 +81,20 @@ export default {
   },
 
   methods: {
+
+    openImgPreview(imgPreview) {
+      const rota = this.$store.state.urlImg
+      console.log(rota);
+      this.$swal.fire({
+        // title: "Tudo certo!",
+        // text: "A Startup foi cadastrada com Sucesso!",
+        imageUrl: `${rota}/startup/questionsUploads/${imgPreview}`,
+        imageWidth: "auto",
+        imageHeight: "auto",
+        imageAlt: "Custom image",
+      });
+    },
+
     changeIcon(e){
       this.valueQuestion = e 
     },
@@ -119,11 +134,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .question {
   background-color: var(--card-color);
   width: auto;
-  height: 200px;
+  height: auto;
   border-right: 7px solid var(--button-color-01);
   border-radius: 10px;
   display: flex;
@@ -171,7 +186,7 @@ export default {
   font-size: 16px;
   font-weight: 600;
   color: var(--black_text);
-  max-height: 50px;
+  max-height: 20rem;
   width: 100%;
 }
 
