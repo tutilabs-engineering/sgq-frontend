@@ -135,9 +135,14 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
   gap: 1rem;
 }
 
+@media(max-width:1100px){
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem,1fr));
 
+  }
+}
 </style>
