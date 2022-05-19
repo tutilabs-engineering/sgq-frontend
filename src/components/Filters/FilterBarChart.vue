@@ -1,6 +1,13 @@
 <template>
   <input type="date" v-model="config.date" />
   
+   <select v-model="config.workShift">
+    <option :value="0"> Turno </option>
+    <option :value="1">1 Turno</option>
+    <option :value="2">2 Turno</option>
+    <option :value="3">3 Turno</option>
+  </select>
+  
   <select v-model="config.product">
     <option value="">Produto</option>
     <option v-for="l in listProduct" :key="l.code_product" :value="l.code_product">{{l.desc_product}}</option>
@@ -30,7 +37,8 @@ export default {
         date : dayjs().format('YYYY-MM-DD'),
         machine : "",
         client : "",
-        product : ""
+        product : "",
+        workShift: 0
       },
       listProduct : [],
       listClient : [],

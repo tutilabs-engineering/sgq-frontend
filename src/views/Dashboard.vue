@@ -145,6 +145,7 @@ await this.$store.commit("$SETISLOADING");
         machine: data.machine,
         code_product: data.product,
         code_client: data.client,
+        workShift: data.workShift
       });
 
       await result.data.list.map((item) => {
