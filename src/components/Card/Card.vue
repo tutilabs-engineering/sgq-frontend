@@ -75,6 +75,7 @@ a {
   width: 100%;
   margin: 0 !important;
   border: none !important;
+  z-index: 0 !important;
 }
 
 .cardStatusText h3 {
