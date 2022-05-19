@@ -117,7 +117,7 @@ export default {
 .header {
   width: 210px;
   height: auto;
-  z-index: 10;
+  z-index: 2000;
   position: fixed;
   background-color: var(--bg_green);
   color: var(--main_primaryWhite);
