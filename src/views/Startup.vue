@@ -136,6 +136,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  z-index: 0;
 }
 
 @media(max-width:1100px){
