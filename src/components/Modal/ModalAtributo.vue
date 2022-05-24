@@ -296,7 +296,7 @@ export default {
 .modal_mask {
   position: fixed;
   display: table;
-  z-index: 1000;
+  z-index: 3000;
   top: 0;
   left: 0;
   width: 100%;
