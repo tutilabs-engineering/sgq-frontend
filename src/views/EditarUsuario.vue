@@ -254,9 +254,7 @@ export default {
             this.user.unidadeNome = res.data.user.unity.name;
             this.user.turno = res.data.user.office_hour.id;
             this.user.turnoNome = res.data.user.office_hour.description
-            
 
-            console.log(this.user);
           })
           .catch((error) => console.log("error", error));
         this.$store.commit("$SETISLOADING");

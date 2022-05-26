@@ -320,7 +320,6 @@ export default {
         await http
           .findUserById(sub)
           .then((res) => {
-            console.log(res);
             this.user.id = res.data.user.id;
             this.user.name = res.data.user.name;
             this.user.email = res.data.user.email;

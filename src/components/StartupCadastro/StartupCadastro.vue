@@ -66,7 +66,7 @@
       </div>
 
       <div class="input">
-        <label for="client">Quantidade</label>
+        <label for="client">Quantidade Planejada</label>
         <input
           type="text"
           name="client"

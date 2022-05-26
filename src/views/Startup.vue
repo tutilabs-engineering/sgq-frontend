@@ -73,7 +73,6 @@ export default defineComponent({
       }else {
         this.statusItemsAbertos = false
       }
-      console.log(`Isso é na startup:` + itemsAbertos);
     },
 
     ReturnItemFechados: async function (itemsFechados){
@@ -82,7 +81,6 @@ export default defineComponent({
       }else {
         this.statusItemsFechados = false
       }
-      console.log(`Isso é na startup:` + itemsFechados);
     },
   },
   created: async function() {

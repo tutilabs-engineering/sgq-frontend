@@ -60,7 +60,6 @@ export default {
       teste: function (inputValue, max, min) {
         if(inputValue > max || inputValue < min) {
           console.log("inválido");
-          // efeitos pipi
         }else {
           console.log("tá válido");
         }

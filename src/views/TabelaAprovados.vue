@@ -81,13 +81,11 @@ export default {
     this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus()
     this.listAproveds = listCount.data.reportStartups.approved
-    console.log(this.listAproveds);
+
     this.id_startup = this.listAproveds[0].id
     this.isOp = await this.verifyOP(this.listAproveds.length)
     this.$store.commit("$SETISLOADING");
 
-    console.log(this.id_startup);
-    
   },
 
 

@@ -122,9 +122,7 @@ export default {
       })
 
       this.$store.commit("$SETDATACREATESTARTUP", {techniqueData: this.techniqueInfo, components: this.componentsInfo});
-      
 
-      console.log(this.headerInfo);
     },
 
   } 

@@ -2,20 +2,31 @@
   <div class="content-questions">
     <fieldset class="content-tablePerguntas">
       <legend class="legenda">Perguntas Padrões</legend>
-   
-        <PerguntaPadrao :defaultQuestions="defaultQuestions" @returnAnswered="getAnswered"    />
+
+      <PerguntaPadrao
+        :defaultQuestions="defaultQuestions"
+        @returnAnswered="getAnswered"
+      />
     </fieldset>
-    
-  <fieldset class="content-tablePerguntas" v-if="specificQuestions.length == 0">
-      <legend class="legenda-warning">Não há Perguntas Especificas para este Produto<br/><span>Verifique a tabela de análise</span></legend>
+
+    <fieldset
+      class="content-tablePerguntas"
+      v-if="specificQuestions.length == 0"
+    >
+      <legend class="legenda-warning">
+        Não há Perguntas Especificas para este Produto<br /><span
+          >Verifique a tabela de análise</span
+        >
+      </legend>
     </fieldset>
 
     <fieldset class="content-tablePerguntas" v-else>
       <legend class="legenda">Tabela de Análise</legend>
 
-        <PerguntaAnalise :specificQuestions="specificQuestions" @returnSpecificAnswered="getSpecificAnswered"  />
-   
-      
+      <PerguntaAnalise
+        :specificQuestions="specificQuestions"
+        @returnSpecificAnswered="getSpecificAnswered"
+      />
     </fieldset>
 
     <!-- <fieldset>
@@ -24,8 +35,8 @@
 
     <fieldset class="content-imgs">
       <UploadImage :id="1" @setImage="getImg_1" />
-      <UploadImage :id="2" @setImage="getImg_2"/>
-      <UploadImage :id="3" @setImage="getImg_3"/>
+      <UploadImage :id="2" @setImage="getImg_2" />
+      <UploadImage :id="3" @setImage="getImg_3" />
     </fieldset>
   </div>
 </template>
@@ -43,15 +54,13 @@ export default {
     return {
       defaultQuestions: [],
       specificQuestions: [],
-      
+
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
       // id_startup: this.id_startup
-      defaultQuestionsResp : [],
+      defaultQuestionsResp: [],
       specificQuestionsResp: [],
     };
-
-    
   },
 
   props: {
@@ -67,75 +76,71 @@ export default {
   created: async function () {
     this.$store.commit("$SETISLOADING");
 
-    await http.findReportStartupById(this.id_startup).then( (res) => {
-      this.specificQuestions = res.data.specific_questions_in_product
-    })
+    await http.findReportStartupById(this.id_startup).then((res) => {
+      this.specificQuestions = res.data.specific_questions_in_product;
+    });
 
     const responseDefaultQuestions = await http.listAllDefaultQuestions();
     this.defaultQuestions = responseDefaultQuestions.data.defaultQuestions;
-   
-  
 
     this.defaultQuestions = await this.defaultQuestions.map((item) => {
-      return { 
-      fk_default_question:item.id, 
-      title: item.description, 
-      description:'',
-      status:0,
-      file: '',
-      preview : ''
-     }
-    })
-  
+      return {
+        fk_default_question: item.id,
+        title: item.description,
+        description: "",
+        status: 0,
+        file: "",
+        preview: "",
+      };
+    });
+
     this.$store.commit("$SETISLOADING");
   },
 
   methods: {
-
-
-    getSpecificAnswered: async function(specificAnswered){
-      const specificAnsweredFormat = specificAnswered.map((item)=> {
+    getSpecificAnswered: async function (specificAnswered) {
+      const specificAnsweredFormat = specificAnswered.map((item) => {
         return {
-        attention: item.attention,
-        is_enabled: item.is_enabled,
-        question: item.question,
-        fk_specific_question: item.fk_specific_question,
-        description:item.description,
-        status:item.status,
-        file:item.file,
-        }
+          attention: item.attention,
+          is_enabled: item.is_enabled,
+          question: item.question,
+          fk_specific_question: item.fk_specific_question,
+          description: item.description,
+          status: item.status,
+          file: item.file,
+        };
       });
 
-      this.$store.commit("$SETDATAFILLSTARTUP",{ specific_questions : specificAnsweredFormat})
+      this.$store.commit("$SETDATAFILLSTARTUP", {
+        specific_questions: specificAnsweredFormat,
+      });
     },
 
-    getAnswered: async function(res){
-      console.log(res);
-    const default_questionFormat = res.map((item)=>{
-        return { 
-      fk_default_question:item.fk_default_question, 
-      title: item.title, 
-      description:item.description,
-      status:item.status,
-      file:item.file,
-     }
-    })
-    
-     this.$store.commit("$SETDATAFILLSTARTUP",{ default_question : default_questionFormat})
-    },
-    getImg_1:async function(res){
-      this.$store.commit("$SETDATAFILLSTARTUP",{ img_1 : res})
-    },
-    getImg_2:async function(res){
-      this.$store.commit("$SETDATAFILLSTARTUP",{ img_2 : res})
-    },
-    getImg_3:async function(res){
-      this.$store.commit("$SETDATAFILLSTARTUP",{ img_3 : res})
+    getAnswered: async function (res) {
+      const default_questionFormat = res.map((item) => {
+        return {
+          fk_default_question: item.fk_default_question,
+          title: item.title,
+          description: item.description,
+          status: item.status,
+          file: item.file,
+        };
+      });
 
-    }
-
+      this.$store.commit("$SETDATAFILLSTARTUP", {
+        default_question: default_questionFormat,
+      });
+    },
+    getImg_1: async function (res) {
+      this.$store.commit("$SETDATAFILLSTARTUP", { img_1: res });
+    },
+    getImg_2: async function (res) {
+      this.$store.commit("$SETDATAFILLSTARTUP", { img_2: res });
+    },
+    getImg_3: async function (res) {
+      this.$store.commit("$SETDATAFILLSTARTUP", { img_3: res });
+    },
   },
-
 };
 </script>
 
