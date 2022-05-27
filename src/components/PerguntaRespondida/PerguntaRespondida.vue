@@ -17,10 +17,10 @@
             <i class="fa fa-times-circle"></i>
           </div>
           <div v-if="answeredQuestion.status == 3">
-            <i class="fa fa-exclamation-circle"></i>
+            <i class="fa fa-check-circle fa-blue" aria-hidden="true"></i>
           </div>
           <div v-if="answeredQuestion.status == 4">
-            <i class="fa fa-check-circle fa-blue" aria-hidden="true"></i>
+            <i class="fa fa-exclamation-circle"></i>
           </div>
 
           <label for="res">{{ answeredQuestion.title }}</label>
@@ -95,15 +95,13 @@
           </div>
 
           <button
-          class="btn btn-visualizar"
-          @click="openImgPreview(answeredQuestion.file)" v-if="answeredQuestion.file != ''"
-        >
-          Visualizar
-        </button>
-
+            class="btn btn-visualizar"
+            @click="openImgPreview(answeredQuestion.file)"
+            v-if="answeredQuestion.file != ''"
+          >
+            Visualizar
+          </button>
         </div>
-
-        
       </fieldset>
     </div>
   </div>
@@ -118,7 +116,7 @@ export default {
 
   methods: {
     openImgPreview(imgPreview) {
-      const rota = this.$store.state.urlImg
+      const rota = this.$store.state.urlImg;
       this.$swal.fire({
         // title: "Tudo certo!",
         // text: "A Startup foi cadastrada com Sucesso!",
@@ -158,7 +156,6 @@ export default {
       response: {
         id: this.idQuestion,
       },
-
     };
   },
 };
@@ -277,7 +274,7 @@ input[type="radio"] {
 }
 
 .fa-blue {
-  color: var(--flag_yellow);
+  color: var(--card_blue);
 }
 
 .fa-circle {

@@ -32,7 +32,6 @@
               <ModalNovaOp :modalNovaOp="modalNovaOp"
                   @open-modal-novaOp="openModalNovaOp" :startup="item" :startup_id="item.id"/>
               
-             
             </div>
           </td>
         </tr>
