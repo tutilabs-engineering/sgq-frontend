@@ -25,6 +25,10 @@
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
+              <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
+                <i class="fa fa-eye"></i>
+              Visualizar
+            </button>
               <ModalNovaOp :modalNovaOp="modalNovaOp"
                   @open-modal-novaOp="openModalNovaOp" :startup="item" :startup_id="item.id"/>
               
@@ -56,6 +60,10 @@ export default {
   setup() {},
   name: "Table",
   methods: {
+    OpenReportStartup: function(id_startup) {
+      this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})
+    },
+
     openModalNovaOp() {
       this.modalNovaOp = !this.modalNovaOp;
     },
@@ -227,6 +235,20 @@ table td {
   font-weight: 300px;
 }
 
+.btn_visualizar {
+  border: none;
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: var(--card_blue);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
 .btn-visu {
   border: none;
   width: 100px;
@@ -263,9 +285,14 @@ table td {
 
 .opcoes {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  gap: 1px;
+  gap: 5px;
+}
+
+.fa-eye {
+  color: #fff;
+  font-size: 20px;
 }
 
 
