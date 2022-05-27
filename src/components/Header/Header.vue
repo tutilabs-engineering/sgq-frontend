@@ -7,7 +7,7 @@
       ><i class="fas fa-bars"></i
     ></span> -->
     <h2 class="title">{{ titlePage }}</h2>
-    <span class="version">Versão 1.0.1</span>
+    <span class="version">Versão 1.1.2</span>
   </div>
 </template>
 
