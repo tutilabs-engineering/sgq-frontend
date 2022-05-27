@@ -29,6 +29,7 @@
 
           <input class="btnLogin" type="submit" value="Entrar" />
         </form>
+        <span class="version">Versão 1.0.1</span>
       </div>
     </div>
   </div>
@@ -205,6 +206,12 @@ html {
   font-size: 20px;
   color: var(--main_primaryWhite);
   opacity: 0.8;
+}
+
+.version {
+  margin-top: 30px;
+  color: #fff;
+  font-size: 14px;
 }
 
 input:-webkit-autofill {

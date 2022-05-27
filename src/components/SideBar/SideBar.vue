@@ -3,6 +3,7 @@
     <a @click="() => this.$router.push({ name: 'Startup' })" class="logo"
       ><i class="fas fa-vial"></i>SGQ</a
     >
+
     <input
       class="menu-btn"
       type="checkbox"
@@ -13,11 +14,7 @@
       ><span class="navicon"></span
     ></label>
     <ul class="menu">
-      <!-- <li @click="changeCheckboxValue">
-        <a @click="() => this.$router.push({ name: 'Home' })"
-          ><i class="fas fa-home"></i>Home</a
-        >
-      </li> -->
+   
       <li @click="changeCheckboxValue">
         <a @click="() => this.$router.push({ name: 'Startup' })"
           ><i class="fas fa-check-circle"></i>Startup</a
@@ -51,6 +48,7 @@
       <li @click="changeCheckboxValue">
         <a @click="Exit"><i class="fas fa-door-open"></i>Sair</a>
       </li>
+
     </ul>
   </header>
 </template>
