@@ -3,8 +3,8 @@
     <legend>Análise de Startup - Aprovadas</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
-        <th>Cod. OP</th>
         <th>Cod. Startup</th>
+        <th>Cod. OP</th>
         <th>Cod. Produto</th>
         <th>Cod. Cliente</th>
         <th>Máquina</th>
@@ -16,8 +16,8 @@
       <tbody >
         <tr v-for="item in listAproveds" :key="item.id" >
           <td style="display: none"></td>
-          <td data-title="Cod. OP">{{item.op.code_op}}</td>
           <td data-title="Cod. Startup">{{item.code_startup}}</td>
+          <td data-title="Cod. OP">{{item.op.code_op}}</td>
           <td data-title="Cod. Produto">{{ item.op.code_product }}</td>   
           <td data-title="Cod. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
@@ -25,6 +25,10 @@
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
+              <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
+                <i class="fa fa-eye"></i>
+              Visualizar
+            </button>
               <ModalNovaOp :modalNovaOp="modalNovaOp"
                   @open-modal-novaOp="openModalNovaOp" :startup="item" :startup_id="item.id"/>
               
@@ -56,6 +60,10 @@ export default {
   setup() {},
   name: "Table",
   methods: {
+    OpenReportStartup: function(id_startup) {
+      this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})
+    },
+
     openModalNovaOp() {
       this.modalNovaOp = !this.modalNovaOp;
     },
@@ -81,13 +89,11 @@ export default {
     this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus()
     this.listAproveds = listCount.data.reportStartups.approved
-    console.log(this.listAproveds);
+
     this.id_startup = this.listAproveds[0].id
     this.isOp = await this.verifyOP(this.listAproveds.length)
     this.$store.commit("$SETISLOADING");
 
-    console.log(this.id_startup);
-    
   },
 
 
@@ -229,6 +235,20 @@ table td {
   font-weight: 300px;
 }
 
+.btn_visualizar {
+  border: none;
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: var(--card_blue);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
 .btn-visu {
   border: none;
   width: 100px;
@@ -265,9 +285,14 @@ table td {
 
 .opcoes {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  gap: 1px;
+  gap: 5px;
+}
+
+.fa-eye {
+  color: #fff;
+  font-size: 20px;
 }
 
 

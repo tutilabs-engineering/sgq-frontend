@@ -7,6 +7,7 @@
       ><i class="fas fa-bars"></i
     ></span> -->
     <h2 class="title">{{ titlePage }}</h2>
+    <span class="version">Versão 1.1.2</span>
   </div>
 </template>
 
@@ -43,11 +44,17 @@ export default {
   margin-left: 210px;
   transition: 0.5s;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 40px;
   background-color: var(--bg_white);
   border-bottom: 1px solid rgba(37, 36, 36, 0.281);
   z-index: 10;
+}
+
+.version {
+  color: var(--black_text);
+  font-size: 12px;
 }
 
 .header.activeHeader {

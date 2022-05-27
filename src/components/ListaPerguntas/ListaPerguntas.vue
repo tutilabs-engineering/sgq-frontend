@@ -72,8 +72,6 @@ export default {
 
     const responseSpecificQuestions = await httpAttributes.FindAttributesByCodeProduct(this.startupData.op.code_product);
 
-    console.log(responseDefaultQuestions);
-    console.log(responseSpecificQuestions);
     if(responseSpecificQuestions) {
       
       await responseSpecificQuestions.data.list.map( (item) => {

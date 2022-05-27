@@ -245,7 +245,6 @@ export default {
       };
 
       reader.readAsDataURL(imgFile);
-      console.log(imgFile);
     },
 
     changeStatusButtonImage() {
@@ -352,7 +351,6 @@ export default {
       await http
         .DeleteVariable(id)
         .then((res) => {
-          console.log(res);
           if (res.data.message === "Deleted") {
             Toast.fire({
               icon: "success",
@@ -385,7 +383,7 @@ export default {
 .modal_mask {
   position: fixed;
   display: table;
-  z-index: 3000;
+  z-index: 100;
   top: 0;
   left: 0;
   width: 100%;

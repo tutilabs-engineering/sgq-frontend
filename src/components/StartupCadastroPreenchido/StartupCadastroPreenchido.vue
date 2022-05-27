@@ -32,7 +32,7 @@
       </div>
 
       <div class="input">
-        <label for="client">Quantidade</label>
+        <label for="client">Quantidade Planejada</label>
         <input type="number" name="client" id="client" :value="headerPreenchida.quantity" disabled>
       </div>
 
@@ -73,12 +73,11 @@ export default {
       
     };
   },
+
   props: {
     headerPreenchida: Object
   },
-  methods: {
-
-  },
+  
   watch: {
     code_op (newValor) {
       this.$store.commit("$SETCODEOP", this.code_op);

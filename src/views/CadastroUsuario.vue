@@ -159,7 +159,6 @@ export default {
     this.$store.commit("$SETISLOADING");
     await http.listUsers().then((res) => {
       this.users = res.data.users;
-      console.log(this.users);
     });
     this.$store.commit("$SETISLOADING");
   },

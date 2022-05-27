@@ -75,7 +75,6 @@ export default {
        
        await http.FindMetrologyById(id).then( (res) => {
         this.opById = res.data.list
-        console.log(this.opById);
       })
       
      

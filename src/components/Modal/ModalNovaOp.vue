@@ -1,103 +1,142 @@
 <template>
-  <div v-if="modalNovaOp" >
-    <transition name="model" >
-        <div class="modal_mask" >
-          <div class="modal_content">
-            <div class="modal_header">
-              <h1>Vincular nova Ordem de Produção</h1>
-              <input
-                  type="button"
-                  value="X"
-                  colorButton="red"
-                  @click="$emit('openModalNovaOp')"
+  <div v-if="modalNovaOp">
+    <transition name="model">
+      <div class="modal_mask">
+        <div class="modal_content">
+          <div class="modal_header">
+            <h1>Vincular nova Ordem de Produção</h1>
+            <input
+              type="button"
+              value="X"
+              colorButton="red"
+              @click="$emit('openModalNovaOp')"
+            />
+          </div>
+
+          <div class="content-modal-op">
+            <div class="formOrdemProducao">
+              <div class="input inputOp">
+                <label for="client"
+                  ><i class="fas fa-filter"></i>Buscar OP</label
+                >
+                <input
+                  type="text"
+                  name="client"
+                  id="op"
+                  placeholder="ex: 2345"
+                  v-model="code_op"
                 />
-
-            </div>
-          
-            <div class="content-modal-op">
-
-              <div class="formOrdemProducao">
-
-                <div class="input inputOp">
-                  <label for="client"><i class="fas fa-filter"></i>Buscar OP</label>
-                  <input type="text" name="client" id="op" placeholder="ex: 2345" v-model="code_op">
-                </div>
-
-                <button type="submit" class="btn btn-search" @click="searchByCodeOp(code_op)"><i class="fas fa-search"></i> Buscar</button>
               </div>
 
-              <fieldset class="info-modal-op">
-
-                <div class="input">
-                  <label for="op">Cód. Startup</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="startup.code_startup" disabled>
-                </div>
-
-                <div class="input">
-                  <label for="op">Máquina</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model="dataNewOpInStartup.machine">
-                </div>
-
-                <div class="input">
-                  <label for="op">Molde</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model="dataNewOpInStartup.product_mold">
-                </div>
-
-                <div class="input">
-                  <label for="op">Cliente</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.client" disabled>
-                </div>
-
-                <div class="input">
-                  <label for="op">Código Cliente</label>
-                  <input type="text" name="client" id="op" placeholder="Digite o código OP" v-model.lazy="headerInfo.codeClient">
-                </div>
-
-     
-              </fieldset>
-
-              <TableComponentes :componentsInfo="componentsInfo"/>
-
-              <fieldset class="historic-op">
-                <legend>Histórico de Op's desta startup</legend>
-                <li><i class="fa fa-calendar-check"></i> <span>{{startup.op.code_op}}</span></li>
-                <div v-for="op in listOp" :key="op.id">
-                <li><i class="fa fa-calendar-check"></i> <span>{{op}}</span></li>
-                </div>
-
-              </fieldset>
-
-              <div class="btns">
-                  <button class="btn btn-cancel" @click="$emit('openModalNovaOp')">cancelar</button>
-                  <button class="btn btn-save" @click="saveNewOpInStartup">salvar</button>
-                </div>
-
-              
-
-              
+              <button
+                type="submit"
+                class="btn btn-search"
+                @click="searchByCodeOp(code_op)"
+              >
+                <i class="fas fa-search"></i> Buscar
+              </button>
             </div>
 
+            <fieldset class="info-modal-op">
+              <div class="input">
+                <label for="op">Cód. Startup</label>
+                <input
+                  type="text"
+                  name="client"
+                  id="op"
+                  placeholder="Digite o código OP"
+                  :value="startup.code_startup"
+                  disabled
+                />
+              </div>
+
+              <div class="input">
+                <label for="op">Máquina</label>
+                <input
+                  type="text"
+                  name="client"
+                  id="op"
+                  placeholder="Digite o código OP"
+                  v-model="dataNewOpInStartup.machine"
+                />
+              </div>
+
+              <div class="input">
+                <label for="op">Molde</label>
+                <input
+                  type="text"
+                  name="client"
+                  id="op"
+                  placeholder="Digite o código OP"
+                  v-model="dataNewOpInStartup.product_mold"
+                />
+              </div>
+
+              <div class="input">
+                <label for="op">Cliente</label>
+                <input
+                  type="text"
+                  name="client"
+                  id="op"
+                  placeholder="Digite o código OP"
+                  v-model.lazy="headerInfo.client"
+                  disabled
+                />
+              </div>
+
+              <div class="input">
+                <label for="op">Código Cliente</label>
+                <input
+                  type="text"
+                  name="client"
+                  id="op"
+                  placeholder="Digite o código OP"
+                  v-model.lazy="headerInfo.codeClient"
+                />
+              </div>
+            </fieldset>
+
+            <TableComponentes :componentsInfo="componentsInfo" />
+
+            <fieldset class="historic-op">
+              <legend>Histórico de Op's desta startup</legend>
+              <li>
+                <i class="fa fa-calendar-check"></i>
+                <span>{{ startup.op.code_op }}</span>
+              </li>
+              <div v-for="op in listOp" :key="op.id">
+                <li>
+                  <i class="fa fa-calendar-check"></i> <span>{{ op }}</span>
+                </li>
+              </div>
+            </fieldset>
+
+            <div class="btns">
+              <button class="btn btn-cancel" @click="$emit('openModalNovaOp')">
+                cancelar
+              </button>
+              <button class="btn btn-save" @click="saveNewOpInStartup">
+                salvar
+              </button>
+            </div>
           </div>
         </div>
+      </div>
     </transition>
   </div>
 
-  <button class="btn-add" @click="$emit('openModalNovaOp')"><i class="fas fa-plus-circle"></i> Adicionar</button>
-  
-  
-
+  <button class="btn-add" @click="$emit('openModalNovaOp')">
+    <i class="fas fa-plus-circle"></i> Vincular OP
+  </button>
 </template>
 
 <script>
-
 import TableComponentes from "../TableComponentes/TableComponentes.vue";
-
 
 import http from "../../services/startup/index";
 
-
 export default {
-  components: {TableComponentes},
+  components: { TableComponentes },
   name: "Modal",
   emits: ["openModalNovaOp"],
   data() {
@@ -124,20 +163,21 @@ export default {
         client: "",
         code_client: "",
         components: [],
-      }
-
+      },
     };
   },
 
-  created: async function (){
+  created: async function () {
     this.$store.commit("$SETISLOADING");
-      await http.findReportStartupById(this.id_startup).then( (res) => {
-        console.log(res.data.op.added_op);
-         this.listOp = res.data.op.added_op
-      }).catch( (error) => {
-        console.log(error);
+    await http
+      .findReportStartupById(this.id_startup)
+      .then((res) => {
+        this.listOp = res.data.op.added_op;
       })
-      this.$store.commit("$SETISLOADING");
+      .catch((error) => {
+        console.log(error);
+      });
+    this.$store.commit("$SETISLOADING");
   },
 
   props: {
@@ -148,67 +188,59 @@ export default {
   },
 
   methods: {
- 
-    searchByCodeOp: async function() {
-      
-
-      await http.listDataByCodeOp(this.code_op).then( (res) => {
-        console.log(res.data.results[0]);
+    searchByCodeOp: async function () {
+      await http.listDataByCodeOp(this.code_op).then((res) => {
         this.headerInfo.client = res.data.results[0].CardName;
         this.headerInfo.codeClient = res.data.results[0].U_CodCliente;
         this.headerInfo.product = res.data.results[0].ProdName;
         this.headerInfo.codeProduct = res.data.results[0].ItemCode;
-        
-        
 
-        console.log();
-        this.componentsInfo = []
+        this.componentsInfo = [];
 
-        res.data.results[0].Itens.map( (item) => {
-          this.componentsInfo.push( {
+        res.data.results[0].Itens.map((item) => {
+          this.componentsInfo.push({
             description: item.Descrição,
             item_number: item.ItemCode,
             planned: item.PlannedQty,
-            um: item.InvntryUom
-          })
-        })
+            um: item.InvntryUom,
+          });
+        });
 
-        this.dataNewOpInStartup.components = this.componentsInfo
-
-      })
-
-    
+        this.dataNewOpInStartup.components = this.componentsInfo;
+      });
     },
 
-    saveNewOpInStartup: async function(){
+    saveNewOpInStartup: async function () {
+      this.dataNewOpInStartup.code_op = this.code_op;
+      this.dataNewOpInStartup.client = this.headerInfo.client;
+      this.dataNewOpInStartup.code_client = this.headerInfo.codeClient;
 
-      this.dataNewOpInStartup.code_op = this.code_op
-      this.dataNewOpInStartup.client = this.headerInfo.client
-      this.dataNewOpInStartup.code_client = this.headerInfo.codeClient
-      
       this.$store.commit("$SETISLOADING");
 
       console.log(this.dataNewOpInStartup);
-      await http.addOpInStartup(this.id_startup, this.dataNewOpInStartup).then( (res) => {
-        this.$swal
-                        .fire({
-                            title: "Tudo certo!",
-                            text: "A Startup foi vinculada com Sucesso!",
-                            imageUrl: "/img/allright.gif",
-                            imageWidth: 400,
-                            imageHeight: 200,
-                            imageAlt: "Custom image",
-                        })
-                        .then(() => {
-                            this.$router.push({ name: "TabelaAprovados" });
-                        });
-      }).catch( (error) => {
-        console.log(error);
-      })
+      await http
+        .addOpInStartup(this.id_startup, this.dataNewOpInStartup)
+        .then((res) => {
+          this.$swal
+            .fire({
+              title: "Tudo certo!",
+              text: "A Startup foi vinculada com Sucesso!",
+              imageUrl: "/img/allright.gif",
+              imageWidth: 400,
+              imageHeight: 200,
+              imageAlt: "Custom image",
+            })
+            .then(() => {
+              this.$router.push({ name: "TabelaAprovados" });
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
       this.$store.commit("$SETISLOADING");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -217,7 +249,7 @@ export default {
 .modal_mask {
   position: fixed;
   display: table;
-  z-index: 3000;
+  z-index: 100;
   top: 0;
   left: 0;
   width: 100%;
@@ -228,7 +260,7 @@ export default {
 
 .modal_mask .modal_content {
   position: relative;
-  width: 95%;
+  width: 90%;
   height: 90vh;
   margin: 30px auto;
   background: var(--bg_white);
@@ -237,18 +269,18 @@ export default {
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto;         
+  overflow-y: auto;
 }
 
 .modal_header {
-  width: 95%;
+  width: 90%;
   height: 10vh;
   display: flex;
   position: fixed;
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  padding:20px;
+  padding: 20px;
   z-index: 90;
   border-radius: 10px;
 }
@@ -296,7 +328,7 @@ export default {
   color: var(--white);
   background-color: rgb(223, 97, 97);
   cursor: pointer;
-  font-weight: 600;  
+  font-weight: 600;
 }
 
 .title_modal input:hover {
@@ -312,7 +344,6 @@ fieldset {
   flex-direction: column;
   padding: 20px;
   margin-bottom: 30px;
-
 }
 
 legend {
@@ -321,14 +352,11 @@ legend {
   color: var(--black_text);
 }
 
-
-
 /* Style ScrollBar -------- */
 
 ::-webkit-scrollbar {
-    width: 0px;
+  width: 0px;
 }
-
 
 /* -------- Style Atributo ------- */
 #inputImage {
@@ -451,7 +479,7 @@ legend {
 
 .btn-add {
   border: none;
-  width: 100px;
+  width: 120px;
   height: 40px;
   border-radius: 5px;
   color: #fff;
@@ -461,7 +489,6 @@ legend {
   align-items: center;
   justify-content: center;
   gap: 5px;
-
 }
 
 .btn-search {
@@ -495,13 +522,10 @@ legend {
   color: var(--card_green);
 }
 
-
-
 @media (max-width: 768px) {
-
   .inputOp {
-      margin-top: 10vh;
-      width: 100%;
+    margin-top: 10vh;
+    width: 100%;
   }
   .modal_mask .modal_body .inputsHeader .input {
     width: 49%;
@@ -511,7 +535,8 @@ legend {
     height: 90% !important;
   }
 
-  .info-modal-op, .historic-op {
+  .info-modal-op,
+  .historic-op {
     width: 100%;
     height: auto;
     border-left: 0;
@@ -572,6 +597,5 @@ legend {
   .modal_mask .modal_body .inputsHeader .input {
     width: 100%;
   }
-
 }
 </style>

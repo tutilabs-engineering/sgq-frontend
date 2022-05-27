@@ -94,6 +94,7 @@ export default {
 
       const dataOp = await http.listDataByCodeOp(code_op);
       const data = dataOp.data.results[0];
+      console.log(data);
 
       this.headerInfo.client = data.CardName;
       this.headerInfo.codeClient = data.U_CodCliente;
@@ -122,9 +123,7 @@ export default {
       })
 
       this.$store.commit("$SETDATACREATESTARTUP", {techniqueData: this.techniqueInfo, components: this.componentsInfo});
-      
 
-      console.log(this.headerInfo);
     },
 
   } 

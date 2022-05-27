@@ -22,6 +22,7 @@
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
               <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
+                <i class="fas fa-eyes"></i>
               Visualizar
             </button>
             </div>
@@ -212,6 +213,10 @@ table td {
 .btn_visualizar{
   font-size: 14px;
   color: var(--main_primaryWhite);
+}
+
+.fa-eye {
+  font-size: 20px;
 }
 
 .btn-back {

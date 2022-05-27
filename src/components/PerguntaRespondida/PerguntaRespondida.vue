@@ -119,7 +119,6 @@ export default {
   methods: {
     openImgPreview(imgPreview) {
       const rota = this.$store.state.urlImg
-      console.log(rota);
       this.$swal.fire({
         // title: "Tudo certo!",
         // text: "A Startup foi cadastrada com Sucesso!",

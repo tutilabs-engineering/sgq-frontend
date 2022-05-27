@@ -18,7 +18,12 @@
     <!-- <BtnStartupCreate @returnFillStatus="changedShowQuestions" /> -->
     <div class="group-buttons">
       <div class="btns-options">
-        <button class="btn-cancel btn" @click="() => this.$router.push({ name: 'Startup' })">Cancelar</button>
+        <button
+          class="btn-cancel btn"
+          @click="() => this.$router.push({ name: 'Startup' })"
+        >
+          Cancelar
+        </button>
         <button class="btn-save btn" @click="saveFillReportStartup">
           Preencher
         </button>
@@ -35,6 +40,14 @@
       @returnCodeOp="ReturnCodeOp"
       :headerPreenchida="headerPreenchida"
     />
+
+    <div v-for="code in code_secondary" :key="code.id">
+      <SecondaryOP :codeSecondary="code"/>
+    </div>
+    
+
+    
+
     <TableCavidadePreenchido :techniqueInfo="techniqueInfo" />
     <TableComponentesPreenchido :componentsInfo="componentsInfo" />
 
@@ -43,6 +56,7 @@
 </template>
 
 <script>
+import SecondaryOP from '../components/SecondaryOP/SecondaryOP.vue'
 import TableCavidadePreenchido from "../components/TableCavidadePreenchido/TableCavidadePreenchido.vue";
 import TableComponentesPreenchido from "../components/TableComponentesPreenchido/TableComponentesPreenchido.vue";
 import StartupCadastroPreenchido from "../components/StartupCadastroPreenchido/StartupCadastroPreenchido.vue";
@@ -78,6 +92,8 @@ export default {
         user_id: "",
       },
 
+      code_secondary: [],
+
       isFilled: false,
       data_startup: {},
 
@@ -93,17 +109,18 @@ export default {
     TableComponentesPreenchido,
     ListaPerguntasPreenchida,
     ListaPerguntas,
+    SecondaryOP
   },
 
   created: async function () {
     await http.findReportStartupById(this.id_startup).then((res) => {
+      console.log(res.data);
       this.data_startup = res.data;
       this.headerPreenchida.code_op = this.data_startup.op.code_op;
       this.headerPreenchida.client = this.data_startup.op.client;
       this.headerPreenchida.codeClient = this.data_startup.op.code_client;
       this.headerPreenchida.product = this.data_startup.op.desc_product;
       this.headerPreenchida.codeProduct = this.data_startup.op.code_product;
-      this.headerPreenchida.quantity = "2"; // verificar dps
       this.headerPreenchida.machine = this.data_startup.op.machine;
       this.headerPreenchida.product_mold = this.data_startup.op.product_mold;
       this.headerPreenchida.day = this.data_startup.day;
@@ -115,7 +132,15 @@ export default {
       this.componentsInfo = this.data_startup.op.components;
 
       this.isFilled = this.data_startup.filled;
+
+      this.code_secondary = res.data.op.added_op;
+
     });
+
+    await http.listDataByCodeOp(this.headerPreenchida.code_op).then((res) => {
+      this.headerPreenchida.quantity = res.data.results[0].PlannedQty;
+    });
+
   },
   methods: {
     async saveFillReportStartup() {

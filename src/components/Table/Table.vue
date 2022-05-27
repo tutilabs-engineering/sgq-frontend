@@ -35,7 +35,7 @@
         <th>Cód. Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
-        <th>Hora</th>
+        <th>Horário</th>
         <th>Criador</th>
         <th>Opções</th>
       </thead>
@@ -49,7 +49,7 @@
           <td data-title="Cód. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Data">{{ item.day }}</td>
-          <td data-title="Hora">{{ item.start_time }}</td>
+          <td data-title="Horário">{{ item.start_time }}</td>
           <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
@@ -104,7 +104,7 @@
         <th>Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
-        <th>Hora</th>
+        <th>Horário</th>
         <th>Criador</th>
         <th>Opções</th>
       </thead>
@@ -117,7 +117,7 @@
           <td data-title="Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Data">{{ item.day }}</td>
-          <td data-title="Hora">{{ item.start_time }}</td>
+          <td data-title="Horário">{{ item.start_time }}</td>
           <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
@@ -141,6 +141,7 @@
 <script>
 
 import http from "../../services/startup/"
+import dayjs from 'dayjs'
 
 export default {
 
@@ -165,7 +166,7 @@ export default {
     allStartups.data.forEach((startup) => {
       startup.day = startup.day.split("T")[0]
       startup.day = this.formatDate(startup.day)
-      startup.start_time = startup.start_time.split("T")[1].split(".")[0]
+      startup.start_time = dayjs(startup.start_time).locale('pt-br').format('HH:mm:ss');
       if(startup.open === true) {
         openedStartups.push(startup)
       }else {
