@@ -29,7 +29,7 @@
                 <i class="fa fa-eye"></i>
               Visualizar
             </button>
-              <ModalNovaOp :modalNovaOp="modalNovaOp"
+              <ModalNovaOp :modalNovaOp="modalNovaOp" :nameRouter="nameRouter"
                   @open-modal-novaOp="openModalNovaOp" :startup="item" :startup_id="item.id"/>
               
             </div>
@@ -102,6 +102,7 @@ export default {
       modalNovaOp:false,
       isOp: false,
       id_startup: "",
+      nameRouter: "TabelaAprovados"
     };
   },
 };

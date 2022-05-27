@@ -34,6 +34,7 @@
               </button>
               <ModalNovaOp
                 :modalNovaOp="modalNovaOp"
+                :nameRouter="nameRouter"
                 @open-modal-novaOp="openModalNovaOp"
                 :startup="item"
                 :startup_id="item.id"
@@ -108,6 +109,7 @@ export default {
       listConditional: [],
       isOp: false,
       modalNovaOp:false,
+      nameRouter: "TabelaAndamento"
     };
   },
 };

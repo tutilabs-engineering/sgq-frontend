@@ -41,7 +41,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in itemsAbertos" :key="item.id">
+        <tr v-for="item in itemsAbertos.slice().reverse()" :key="item.id">
           <td style="display: none"></td>
           
           <td class="codeStartup" data-title="Cód. Startup">{{ item.code_startup }}</td>
@@ -110,7 +110,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in itemsFechados" :key="item.id">
+        <tr v-for="item in itemsFechados.slice().reverse()" :key="item.id">
           <td style="display: none"></td>
           <td class="codeStartup" data-title="Cód. Startup">{{ item.code_startup }}</td>
           <td data-title="Produto">{{ item.op.code_product }}</td>
