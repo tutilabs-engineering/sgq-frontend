@@ -80,7 +80,7 @@
                     <div class="titleHeader">
                       <button
                         class="delete"
-                        @click="deleteVariable(variable.id)"
+                        @click.prevent="deleteVariable(variable.id)"
                       >
                         Deletar
                       </button>
@@ -210,6 +210,7 @@ export default {
       .FindVariableByCodeProduct(this.dataProduct.code_product)
       .then((res) => {
         this.variables = res.data.list;
+        console.log(this.variables);
       });
     this.$store.commit("$SETISLOADING");
   },
@@ -330,7 +331,7 @@ export default {
     },
 
     /* Delete Variable */
-    async deleteVariable(id) {
+    deleteVariable: async function (id) {
       const Toast = this.$swal.mixin({
         toast: true,
         position: "top-right",
@@ -370,8 +371,7 @@ export default {
             });
           }
         });
-
-      // await this.reloadList();
+      this.reloadList();
       this.$store.commit("$SETISLOADING");
     },
   },
