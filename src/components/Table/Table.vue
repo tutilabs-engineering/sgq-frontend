@@ -31,6 +31,7 @@
 
       <thead>
         <th>Cód. Startup</th>
+        <th>Cód. OP</th>
         <th>Cód. Produto</th>
         <th>Cód. Cliente</th>
         <th>Máquina</th>
@@ -45,6 +46,7 @@
           <td style="display: none"></td>
           
           <td class="codeStartup" data-title="Cód. Startup">{{ item.code_startup }}</td>
+          <td data-title="Cód. OP">{{ item.op.code_op }}</td>
           <td data-title="Cód. Produto">{{ item.op.code_product }}</td>
           <td data-title="Cód. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
@@ -100,8 +102,9 @@
       </thead>
       <thead>
         <th>Cód. Startup</th>
-        <th>Produto</th>
-        <th>Cliente</th>
+        <th>Cód. OP</th>
+        <th>Cód. Produto</th>
+        <th>Cód. Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
         <th>Horário</th>
@@ -113,8 +116,9 @@
         <tr v-for="item in itemsFechados" :key="item.id">
           <td style="display: none"></td>
           <td class="codeStartup" data-title="Cód. Startup">{{ item.code_startup }}</td>
-          <td data-title="Produto">{{ item.op.code_product }}</td>
-          <td data-title="Cliente">{{ item.op.code_client }}</td>
+          <td data-title="Cód. OP">{{ item.op.code_op }}</td>
+          <td data-title="Cód. Produto">{{ item.op.code_product }}</td>
+          <td data-title="Cód. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Data">{{ item.day }}</td>
           <td data-title="Horário">{{ item.start_time }}</td>
@@ -126,9 +130,6 @@
                 <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
                   <i class="fas fa-edit"></i>
                 </button>
-                <!-- <button className="btnOpcoes">
-                  <i class="fas fa-file-excel"></i>
-                </button> -->
               </div>
             </div>
           </td>
@@ -160,7 +161,6 @@ export default {
     
     this.$store.commit("$SETISLOADING");
     const allStartups = await http.listAllStartups()
-    console.log(allStartups);
     let openedStartups = [];
     let closedStartups = [];
     allStartups.data.forEach((startup) => {
@@ -173,14 +173,18 @@ export default {
         closedStartups.push(startup)
       }
     });
-    this.itemsAbertos = openedStartups
-    this.itemsFechados = closedStartups
+    this.itemsAbertos = openedStartups.reverse()
+    this.itemsFechados = closedStartups.reverse()
+
+    console.log(this.itemsAbertos);
 
     this.existItemAbertos(this.itemsAbertos.length)
     this.existItemFechados(this.itemsFechados.length)
 
     this.$store.commit("$SETISLOADING");
   },
+
+  
   methods: {
     OpenReportStartup: function(id_startup) {
       this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})

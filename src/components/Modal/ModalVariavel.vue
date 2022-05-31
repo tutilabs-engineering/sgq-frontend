@@ -69,7 +69,11 @@
 
                     <div class="titleHeader">
                       <img
-                        v-on:click="openImgPreview(constURL + '/variables/' + variable.file)"
+                        v-on:click="
+                          openImgPreview(
+                            constURL + '/variables/' + variable.file
+                          )
+                        "
                         style="height: 50px"
                         :src="constURL + '/variables/' + variable.file"
                         alt=""
@@ -84,7 +88,6 @@
                       >
                         Deletar
                       </button>
-
                     </div>
                   </div>
                 </div>
@@ -225,16 +228,14 @@ export default {
     },
 
     openImgPreview(imgPreview) {
-      this.$swal
-        .fire({
-          // title: "Tudo certo!",
-          // text: "A Startup foi cadastrada com Sucesso!",
-          imageUrl: imgPreview,
-          imageWidth: 'auto',
-          imageHeight: 'auto',
-          imageAlt: "Custom image",
-        })
- 
+      this.$swal.fire({
+        // title: "Tudo certo!",
+        // text: "A Startup foi cadastrada com Sucesso!",
+        imageUrl: imgPreview,
+        imageWidth: "auto",
+        imageHeight: "auto",
+        imageAlt: "Custom image",
+      });
     },
 
     createImage(imgFile) {
