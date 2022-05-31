@@ -3,7 +3,9 @@
     <legend>Análise de Startup - Condicional</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
+        <th>Cod. Startup</th>
         <th>Cod. OP</th>
+        <th>Cod. Produto</th>
         <th>Cod. Cliente</th>
         <th>Máquina</th>
         <th>Data</th>
@@ -14,18 +16,29 @@
       <tbody>
         <tr v-for="item in listConditional" :key="item.id">
           <td style="display: none"></td>
-           <td data-title="Cod. OP">{{ item.op.code_product }}</td>
+          <td data-title="Cod. Startup">{{ item.code_startup }}</td>
+          <td data-title="Cod. OP">{{ item.op.code_op }}</td>
+          <td data-title="Cod. Produto">{{ item.op.code_product }}</td>  
           <td data-title="Cod. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Data">{{ formatDate(item.day) }}</td>
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
-
-                <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
-              Visualizar
-            </button>
-          
+              <button
+                className="btn_visualizar"
+                @click="OpenReportStartup(item.id)"
+              >
+                <i class="fa fa-eye"></i>
+                Visualizar
+              </button>
+              <ModalNovaOp
+                :modalNovaOp="modalNovaOp"
+                :nameRouter="nameRouter"
+                @open-modal-novaOp="openModalNovaOp"
+                :startup="item"
+                :startup_id="item.id"
+              />
             </div>
           </td>
         </tr>
@@ -34,43 +47,60 @@
   </fieldset>
 
   <fieldset class="tableContent" v-else>
-      <h2 class="legenda-warning">Não há Startups para serem listadas<br/><button @click="() => this.$router.push({ name: 'Startup' })" class="btn-back">Voltar</button></h2>
+    <h2 class="legenda-warning">
+      Não há Startups para serem listadas<br /><button
+        @click="() => this.$router.push({ name: 'Startup' })"
+        class="btn-back"
+      >
+        Voltar
+      </button>
+    </h2>
   </fieldset>
-
-
 </template>
 
 <script>
-import http from "../services/startup/"
+import http from "../services/startup/";
+import ModalNovaOp from '../components/Modal/ModalNovaOp.vue'
 export default {
   setup() {},
   name: "Table",
+  components: {
+    ModalNovaOp
+  },
+  emits: ["modalNovaOp"],
 
   methods: {
-    OpenReportStartup: function(id_startup) {
-      this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})
+    OpenReportStartup: function (id_startup) {
+      this.$router.push({
+        path: "/create-startup-by-id",
+        query: { id: id_startup },
+      });
     },
-    verifyOP: async function (list_op){
-      if(list_op == 0){
-        return false
-      }else {
-        return true
+    verifyOP: async function (list_op) {
+      if (list_op == 0) {
+        return false;
+      } else {
+        return true;
       }
     },
 
-  formatDate(date) {
+    openModalNovaOp() {
+      this.modalNovaOp = !this.modalNovaOp;
+    },
+
+    formatDate(date) {
       date = date.slice(0, -14);
-      this.year = date.slice(0, -6)
-      this.month = date.slice(5, -3)
-      this.day = date.slice(-2)
-      return date = `${this.day}/${this.month}/${this.year}`
+      this.year = date.slice(0, -6);
+      this.month = date.slice(5, -3);
+      this.day = date.slice(-2);
+      return (date = `${this.day}/${this.month}/${this.year}`);
     },
   },
-    created: async function() {
+  created: async function () {
     this.$store.commit("$SETISLOADING");
-    const listCount = await http.listCountOfStartupsByStatus()
-    this.listConditional = listCount.data.reportStartups.conditional
-    this.isOp = await this.verifyOP(this.listConditional.length)
+    const listCount = await http.listCountOfStartupsByStatus();
+    this.listConditional = listCount.data.reportStartups.conditional;
+    this.isOp = await this.verifyOP(this.listConditional.length);
     this.$store.commit("$SETISLOADING");
   },
 
@@ -78,13 +108,14 @@ export default {
     return {
       listConditional: [],
       isOp: false,
+      modalNovaOp:false,
+      nameRouter: "TabelaAndamento"
     };
   },
 };
 </script>
 
 <style scoped>
-
 .legenda-warning {
   font-size: 25px;
   text-align: center;
@@ -110,10 +141,8 @@ export default {
   border-radius: 5px;
   height: 40px;
   width: 90px;
-  background-color: var(--card_green);;
+  background-color: var(--card_green);
 }
-
-
 
 .tableContent {
   position: relative;
@@ -140,7 +169,7 @@ export default {
   background-color: #fff;
   border-radius: 10px;
   min-width: 50px;
-  border: 1px solid rgba(37, 36, 36, 0.281);  
+  border: 1px solid rgba(37, 36, 36, 0.281);
   padding: 15px 5px;
   z-index: 1;
   position: absolute;
@@ -196,25 +225,17 @@ table td {
 }
 
 .btn_visualizar {
-  position: relative;
-  display: flex;
-  justify-content: space-around;
-  background: var(--btn_blue);
-  padding: 0.5rem;
   border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  color: var(--main_primaryWhite);
-  align-items: center;
+  width: 120px;
   height: 40px;
-  width: 90px;
-  margin: auto;
+  border-radius: 5px;
+  color: #fff;
+  background-color: var(--card_blue);
   cursor: pointer;
-}
-
-.btn_visualizar{
-  font-size: 14px;
-  color: var(--main_primaryWhite);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 /* BTNS */
@@ -249,7 +270,9 @@ table td {
 
 .opcoes {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
 .btnOpcoes {
@@ -273,6 +296,11 @@ table td {
 }
 .fa-file-alt {
   color: var(--card_blue);
+}
+
+.fa-eye {
+  color: #fff;
+  font-size: 20px;
 }
 
 .btns {

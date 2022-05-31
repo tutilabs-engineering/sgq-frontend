@@ -1,9 +1,13 @@
 <template>
   <fieldset class="search-field">
     <legend><i class="fas fa-filter"></i>Buscar Produto</legend>
-    <input type="text" placeholder="" v-model="codeProductValue">
-    <button @click="searchProduct()"><i class="fas fa-search"></i> Buscar</button>
+    <input type="text" placeholder="" v-model="codeProductValue" />
+    <button @click="searchProduct()">
+      <i class="fas fa-search"></i> Buscar
+    </button>
+    
   </fieldset>
+
 
   <fieldset className="tableContent" v-if="!isSearched">
     <legend>Análise de Produto</legend>
@@ -21,16 +25,33 @@
           <td data-title="Produto">{{ product.name_product }}</td>
           <td class="lastTd" data-title="Opções">
             <div class="opcoes">
-              
-              <button class="btn btn-at" @click="StartComponentAttribute(product)"> <i class="fas fa-tag"></i> Atributos</button>
-              <button class="btn btn-va" @click="StartComponentVariable(product)"> <i class="	fas fa-sort-numeric-up"></i> Variáveis</button>
+              <button
+                class="btn btn-at"
+                @click="StartComponentAttribute(product)"
+              >
+                <i class="fas fa-tag"></i> Atributos
+              </button>
+              <button
+                class="btn btn-va"
+                @click="StartComponentVariable(product)"
+              >
+                <i class="fas fa-sort-numeric-up"></i> Variáveis
+              </button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-    <ModalAttribute v-if="modalAttributeOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalAtrribute"/>
-    <ModalVariable v-if="modalVariableOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalVariable"/>
+    <ModalAttribute
+      v-if="modalAttributeOpen"
+      :dataProduct="dataHeader"
+      @changeStatus="changeStatusModalAtrribute"
+    />
+    <ModalVariable
+      v-if="modalVariableOpen"
+      :dataProduct="dataHeader"
+      @changeStatus="changeStatusModalVariable"
+    />
   </fieldset>
 
   <fieldset className="tableContent" v-else>
@@ -49,26 +70,40 @@
           <td data-title="Produto">{{ product.name_product }}</td>
           <td class="lastTd" data-title="Opções">
             <div class="opcoes">
-              
-              <button class="btn btn-at" @click="StartComponentAttribute(product)"><i class="fas fa-tag"></i> Atributos</button>
-              <button class="btn btn-va" @click="StartComponentVariable(product)"><i class="	fas fa-sort-numeric-up"></i> Variáveis</button>
+              <button
+                class="btn btn-at"
+                @click="StartComponentAttribute(product)"
+              >
+                <i class="fas fa-tag"></i> Atributos
+              </button>
+              <button
+                class="btn btn-va"
+                @click="StartComponentVariable(product)"
+              >
+                <i class="fas fa-sort-numeric-up"></i> Variáveis
+              </button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-    <ModalAttribute v-if="modalAttributeOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalAtrribute"/>
-    <ModalVariable v-if="modalVariableOpen" :dataProduct="dataHeader" @changeStatus="changeStatusModalVariable"/>
+    <ModalAttribute
+      v-if="modalAttributeOpen"
+      :dataProduct="dataHeader"
+      @changeStatus="changeStatusModalAtrribute"
+    />
+    <ModalVariable
+      v-if="modalVariableOpen"
+      :dataProduct="dataHeader"
+      @changeStatus="changeStatusModalVariable"
+    />
   </fieldset>
-
-
 </template>
 
 <script>
 import ModalAttribute from "../components/Modal/ModalAtributo.vue";
 import ModalVariable from "../components/Modal/ModalVariavel.vue";
 import http from "../services/productAnalysis/Products";
-
 
 export default {
   components: { ModalAttribute, ModalVariable },
@@ -88,32 +123,33 @@ export default {
   },
 
   watch: {
-    codeProductValue(newValue, oldValue){
-      if(newValue === "" || oldValue === ""){
-        this.isSearched = false
+    codeProductValue(newValue, oldValue) {
+      if (newValue === "" || oldValue === "") {
+        this.isSearched = false;
       }
-    }
+    },
   },
   methods: {
 
-    searchProduct: async function (){
-      
-      if(this.codeProductValue != ""){
+    searchProduct: async function () {
+      if (this.codeProductValue != "") {
         this.$store.commit("$SETISLOADING");
         this.isSearched = !this.isSearched;
-        this.returnProductSearched = []
-        await http.searchProductByCodeProduct(this.codeProductValue).then( (res) => {
-          this.returnProductSearched.push(res.data)
-        }).catch( (error) => {
-          console.log(error);
-          this.isSearched = !this.isSearched;
-          console.log("Código invalido");
-      })
-        this.$store.commit("$SETISLOADING"); 
-      }else {
+        this.returnProductSearched = [];
+        await http
+          .searchProductByCodeProduct(this.codeProductValue)
+          .then((res) => {
+            this.returnProductSearched.push(res.data);
+          })
+          .catch((error) => {
+            console.log(error);
+            this.isSearched = !this.isSearched;
+            console.log("Código invalido");
+          });
+        this.$store.commit("$SETISLOADING");
+      } else {
         console.log("Informe o codigo");
       }
-      
     },
 
     StartComponentAttribute: function (dataProduct) {
@@ -125,19 +161,18 @@ export default {
       this.dataHeader = dataProduct;
     },
 
-    changeStatusModalAtrribute () {
-      this.modalAttributeOpen = !this.modalAttributeOpen
+    changeStatusModalAtrribute() {
+      this.modalAttributeOpen = !this.modalAttributeOpen;
     },
-    changeStatusModalVariable () {
-      this.modalVariableOpen = !this.modalVariableOpen
-    }
-
+    changeStatusModalVariable() {
+      this.modalVariableOpen = !this.modalVariableOpen;
+    },
   },
   created: async function () {
     this.$store.commit("$SETISLOADING");
     this.listAllProducts = await http.listProducts();
     this.listAllProducts = this.listAllProducts.data.list;
-    this.$store.commit("$SETISLOADING");  
+    this.$store.commit("$SETISLOADING");
   },
 };
 </script>
@@ -233,7 +268,7 @@ table td {
   padding: 10px;
 }
 
-.search-field button{
+.search-field button {
   max-width: 20%;
   min-width: 30%;
   margin-left: 10px;
@@ -245,36 +280,32 @@ table td {
   cursor: pointer;
 }
 
- .btn {
-    border: none;
-    width: 100px;
-    height: 40px;
-    padding: 10px;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-  }
+.btn {
+  border: none;
+  width: 100px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
 
-  .btn-at {
-    background-color: var(--card_blue);
-  }
+.btn-at {
+  background-color: var(--card_blue);
+}
 
-  .btn-va {
-    background-color: var(--card_orange);
-  }
+.btn-va {
+  background-color: var(--card_orange);
+}
 
 @media (max-width: 765px) {
   .search-field {
-      width: 100%;
-      display: flex;
+    width: 100%;
+    display: flex;
   }
 }
 
-
 @media (max-width: 1000px) {
-
-
-
   legend {
     text-align: center;
   }
@@ -296,7 +327,6 @@ table td {
 
   [data-title] {
     color: var(--black_text);
-    
   }
 
   .tableContent td {
@@ -305,7 +335,6 @@ table td {
     justify-content: space-between;
     min-height: 70px;
     color: var(--black_text);
-    
   }
 
   .tableContent td:first-of-type {
@@ -314,18 +343,12 @@ table td {
     text-align: center;
     display: flex;
     justify-content: center;
-    
   }
 
   .tableContent td:not(:first-of-type):before {
     content: attr(data-title);
     display: block;
     font-weight: bold;
-    
   }
-
- 
-
- 
 }
 </style>
