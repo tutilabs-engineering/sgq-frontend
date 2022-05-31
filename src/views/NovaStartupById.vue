@@ -1,9 +1,17 @@
 <template>
   <div class="content-novaStartup" v-if="!isFilled">
+    <div style="display:flex; gap: 20px">
     <fieldset>
       <legend>Status</legend>
-      <span class="startup-nao-preenchida">Startup NÃO Preenchida</span>
+      <span class="startup-preenchida">Preenchida</span>
     </fieldset>
+    <fieldset>
+      <legend>Startup</legend>
+      <span class="startup-preenchida">Cód: {{code_startup}}</span>
+    </fieldset>
+    </div>
+
+    
     <StartupCadastroPreenchido
       @returnCodeOp="ReturnCodeOp"
       :headerPreenchida="headerPreenchida"
@@ -31,10 +39,16 @@
     </div>
   </div>
   <div class="content-novaStartup" v-else>
+    <div style="display:flex; gap: 20px">
     <fieldset>
       <legend>Status</legend>
-      <span class="startup-preenchida">Startup Preenchida</span>
+      <span class="startup-preenchida">Preenchida</span>
     </fieldset>
+    <fieldset>
+      <legend>Startup</legend>
+      <span class="startup-preenchida">Cód: {{code_startup}}</span>
+    </fieldset>
+    </div>
 
     <StartupCadastroPreenchido
       @returnCodeOp="ReturnCodeOp"
@@ -93,6 +107,7 @@ export default {
       },
 
       code_secondary: [],
+      code_startup: "",
 
       isFilled: false,
       data_startup: {},
@@ -114,8 +129,8 @@ export default {
 
   created: async function () {
     await http.findReportStartupById(this.id_startup).then((res) => {
-      console.log(res.data);
       this.data_startup = res.data;
+      this.code_startup = this.data_startup.code_startup;
       this.headerPreenchida.code_op = this.data_startup.op.code_op;
       this.headerPreenchida.client = this.data_startup.op.client;
       this.headerPreenchida.codeClient = this.data_startup.op.code_client;

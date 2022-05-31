@@ -10,9 +10,8 @@ export default {
   },
 
   DeleteVariable: async (id) => {
-    const x = await http.delete(`variable/${id}`)
-    console.log(x);
-    return x
+    return await http.delete(`variable/${id}`)
+  
   }
 
 

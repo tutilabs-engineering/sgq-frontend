@@ -323,7 +323,7 @@ input[type="radio"] {
 }
 
 .fa-blue {
-  color: var(--flag_yellow);
+  color: var(--card_blue);
 }
 
 .fa-circle {
