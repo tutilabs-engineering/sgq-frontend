@@ -4,7 +4,7 @@
     <fieldset class="content-tablePerguntas">
       <legend class="legenda">Perguntas Padrões</legend>
       
-        <PerguntaRespondida :answeredQuestions="datastartup" />
+        <PerguntaRespondida :answeredQuestions="datastartup"/>
 
     </fieldset>
 
@@ -46,8 +46,8 @@ export default {
       specificQuestions: [],
       numberCavidade: this.qtdeCavidade,
       qtdePerguntas: [],
-      datastartup: this.startupData.report_startup_fill.default_questions_responses.default_questions,
-      datastartupSpecifcs: this.startupData.report_startup_fill.specific_questions_responses.specific_questions,
+      datastartup: this.startupData.report_startup_fill.default_questions_responses.default_questions  || [],
+      datastartupSpecifcs: this.startupData.report_startup_fill.specific_questions_responses.specific_questions || [],
       exit: ""
     };
 
