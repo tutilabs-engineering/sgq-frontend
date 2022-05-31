@@ -69,7 +69,11 @@
 
                     <div class="titleHeader">
                       <img
-                        v-on:click="openImgPreview(constURL + '/variables/' + variable.file)"
+                        v-on:click="
+                          openImgPreview(
+                            constURL + '/variables/' + variable.file
+                          )
+                        "
                         style="height: 50px"
                         :src="constURL + '/variables/' + variable.file"
                         alt=""
@@ -80,11 +84,10 @@
                     <div class="titleHeader">
                       <button
                         class="delete"
-                        @click="deleteVariable(variable.id)"
+                        @click.prevent="deleteVariable(variable.id)"
                       >
                         Deletar
                       </button>
-
                     </div>
                   </div>
                 </div>
@@ -210,6 +213,7 @@ export default {
       .FindVariableByCodeProduct(this.dataProduct.code_product)
       .then((res) => {
         this.variables = res.data.list;
+        console.log(this.variables);
       });
     this.$store.commit("$SETISLOADING");
   },
@@ -224,16 +228,14 @@ export default {
     },
 
     openImgPreview(imgPreview) {
-      this.$swal
-        .fire({
-          // title: "Tudo certo!",
-          // text: "A Startup foi cadastrada com Sucesso!",
-          imageUrl: imgPreview,
-          imageWidth: 'auto',
-          imageHeight: 'auto',
-          imageAlt: "Custom image",
-        })
- 
+      this.$swal.fire({
+        // title: "Tudo certo!",
+        // text: "A Startup foi cadastrada com Sucesso!",
+        imageUrl: imgPreview,
+        imageWidth: "auto",
+        imageHeight: "auto",
+        imageAlt: "Custom image",
+      });
     },
 
     createImage(imgFile) {
@@ -330,7 +332,7 @@ export default {
     },
 
     /* Delete Variable */
-    async deleteVariable(id) {
+    deleteVariable: async function (id) {
       const Toast = this.$swal.mixin({
         toast: true,
         position: "top-right",
@@ -370,8 +372,7 @@ export default {
             });
           }
         });
-
-      // await this.reloadList();
+      this.reloadList();
       this.$store.commit("$SETISLOADING");
     },
   },

@@ -185,9 +185,23 @@ export default {
     titleModal: String,
     startup_id: Number,
     modalNovaOp: String,
+    nameRouter: String
   },
 
   methods: {
+    reloadOpStartup: async function () {
+      this.$store.commit("$SETISLOADING");
+      await http
+      .findReportStartupById(this.id_startup)
+      .then((res) => {
+        this.listOp = res.data.op.added_op;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      this.$store.commit("$SETISLOADING");
+    },
     searchByCodeOp: async function () {
       await http.listDataByCodeOp(this.code_op).then((res) => {
         this.headerInfo.client = res.data.results[0].CardName;
@@ -231,7 +245,7 @@ export default {
               imageAlt: "Custom image",
             })
             .then(() => {
-              this.$router.push({ name: "TabelaAprovados" });
+              this.reloadOpStartup()
             });
         })
         .catch((error) => {

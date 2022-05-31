@@ -6,12 +6,12 @@
           <div class="modal_content">
             <div class="modal_header">
               <h1>Tabela de Atributos</h1>
-                <input
-                  type="button"
-                  value="X"
-                  colorButton="red"
-                  @click="$emit('changeStatus')"
-                />
+              <input
+                type="button"
+                value="X"
+                colorButton="red"
+                @click="$emit('changeStatus')"
+              />
             </div>
 
             <div class="modal_body">
@@ -27,7 +27,11 @@
 
                 <div class="input">
                   <p>Descrição Produto</p>
-                  <input type="text" readonly :value="dataProduct.name_product" />
+                  <input
+                    type="text"
+                    readonly
+                    :value="dataProduct.name_product"
+                  />
                 </div>
 
                 <!-- <div class="input">
@@ -68,39 +72,35 @@
                         :name="index"
                         v-model="todo.attention"
                       />
-                      
                     </div>
                     <div class="titleHeader">
-                 
-                      <input type="button"
+                      <input
+                        type="button"
                         @click.prevent="changeStatus($event, todo.id)"
                         :id="index"
                         value="Habilitado"
                         class="btnH"
                         v-if="todo.is_enabled"
-                      >
-                        <input type="button"
+                      />
+                      <input
+                        type="button"
                         v-else
                         @click.prevent="changeStatus($event, todo.id)"
                         :id="index"
                         value="Desabilitado"
                         class="btnD"
-                      >
-             
+                      />
                     </div>
 
                     <div class="titleHeader">
-
-                      <input type="button"
+                      <input
+                        type="button"
                         @click.prevent="deleteQuestion(todo.id)"
                         :id="index"
                         value="Deletar"
                         class="btn-delete"
-                      >
-                      
-             
+                      />
                     </div>
-                    
                   </div>
                 </div>
               </div>
@@ -108,7 +108,7 @@
                 <form action="" @submit.prevent="CreateNewQuestion">
                   <h3>ADICIONAR PERGUNTA:</h3>
                   <div class="inputAdd">
-                    <input type="text" v-model="dataAttribute.question"/>
+                    <input type="text" v-model="dataAttribute.question" />
                     <button class="btnHabilitar">
                       <i class="fas fa-plus"></i> Adicionar
                     </button>
@@ -126,9 +126,7 @@
 </template>
 
 <script>
-
-
-import http from "../../services/productAnalysis/Attributes"
+import http from "../../services/productAnalysis/Attributes";
 
 export default {
   components: {},
@@ -150,25 +148,25 @@ export default {
         cod_product: this.dataProduct.code_product,
         attention: true,
         question: "",
-        is_enabled: true
-      }
+        is_enabled: true,
+      },
     };
   },
   props: {
     dataProduct: Object,
   },
   methods: {
-
-    
     renderListAttribute: async function () {
-      await http.FindAttributesByCodeProduct(this.dataProduct.code_product).then( (res) => {
-      if(res) {
-         this.listQuestions = res.data.list 
-      }
-    })
+      await http
+        .FindAttributesByCodeProduct(this.dataProduct.code_product)
+        .then((res) => {
+          if (res) {
+            this.listQuestions = res.data.list;
+          }
+        });
     },
 
-    deleteQuestion: async function(id){
+    deleteQuestion: async function (id) {
       const Toast = this.$swal.mixin({
         toast: true,
         position: "top-right",
@@ -188,20 +186,20 @@ export default {
 
       this.$store.commit("$SETISLOADING");
       await http.DeleteQuestionById(id);
-      this.renderListAttribute()
+      this.renderListAttribute();
       this.$store.commit("$SETISLOADING");
       Toast.fire({
-              icon: "error",
-              title: "Pergunta deletada!",
-              background: "#FFA490",
-            });
+        icon: "error",
+        title: "Pergunta deletada!",
+        background: "#FFA490",
+      });
     },
 
     getComments(value) {
       this.comments = value;
     },
 
-    CreateNewQuestion: async function() {
+    CreateNewQuestion: async function () {
       const Toast = this.$swal.mixin({
         toast: true,
         position: "top-right",
@@ -219,32 +217,31 @@ export default {
         timerProgressBar: true,
       });
 
-
       this.$store.commit("$SETISLOADING");
-      
+
       try {
         const response = await http.CreateAttribute(this.dataAttribute);
-        
-        this.renderListAttribute()
-        this.dataAttribute.question = ""
+
+        this.renderListAttribute();
+        this.dataAttribute.question = "";
         Toast.fire({
-                icon: "success",
-                title: "Pergunta criada com sucesso!",
-                background: "#A8D4FF",
-              });
+          icon: "success",
+          title: "Pergunta criada com sucesso!",
+          background: "#A8D4FF",
+        });
         this.$store.commit("$SETISLOADING");
         return response;
       } catch {
         Toast.fire({
-              icon: "error",
-              title: "Pergunta já existente!",
-              background: "#FFA490",
-            });
-        
+          icon: "error",
+          title: "Pergunta já existente!",
+          background: "#FFA490",
+        });
+
         this.$store.commit("$SETISLOADING");
       }
     },
-    
+
     trocaStatus() {
       this.textBtn = "Desabilitado";
       this.btnDesabilitado = true;
@@ -252,42 +249,39 @@ export default {
 
     async changeAttention(id, attentionValue) {
       this.$store.commit("$SETISLOADING");
-      await http.ChangeAttentionByAttributes(id, attentionValue)
+      await http.ChangeAttentionByAttributes(id, attentionValue);
       this.$store.commit("$SETISLOADING");
     },
 
-    async changeStatus($event,id) {
+    async changeStatus($event, id) {
       this.$store.commit("$SETISLOADING");
-        var btnTarget =$event.target;
-        if(btnTarget.value === "Habilitado"){
-          btnTarget.value="Desabilitado"
-          btnTarget.className="btnD"
-          await http.ChangeStatusByAttributes(id,  false)
-          this.$store.commit("$SETISLOADING");
-      
-      }else{
-        btnTarget.value="Habilitado"
-        btnTarget.className="btnH"
-        await http.ChangeStatusByAttributes(id,  true)
+      var btnTarget = $event.target;
+      if (btnTarget.value === "Habilitado") {
+        btnTarget.value = "Desabilitado";
+        btnTarget.className = "btnD";
+        await http.ChangeStatusByAttributes(id, false);
+        this.$store.commit("$SETISLOADING");
+      } else {
+        btnTarget.value = "Habilitado";
+        btnTarget.className = "btnH";
+        await http.ChangeStatusByAttributes(id, true);
         this.$store.commit("$SETISLOADING");
       }
-    }
+    },
   },
 
-  created: async function (){
+  created: async function () {
     this.$store.commit("$SETISLOADING");
-    await http.FindAttributesByCodeProduct(this.dataProduct.code_product).then( (res) => {
-      if(res) {
-         this.listQuestions = res.data.list
-         
-        this.$store.commit("$SETISLOADING");
-      }
-       
-    })
+    await http
+      .FindAttributesByCodeProduct(this.dataProduct.code_product)
+      .then((res) => {
+        if (res) {
+          this.listQuestions = res.data.list;
 
-  }
-
-
+          this.$store.commit("$SETISLOADING");
+        }
+      });
+  },
 };
 </script>
 
@@ -327,7 +321,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  padding:20px;
+  padding: 20px;
   z-index: 90;
   border-radius: 10px;
 }
@@ -417,7 +411,7 @@ export default {
 /*   scroll */
 
 ::-webkit-scrollbar {
-    width: 0px;
+  width: 0px;
 }
 
 /* -------- Style Atributo ------- */
@@ -562,7 +556,9 @@ export default {
   cursor: pointer;
 }
 
-.btnH, .btnD, .btn-delete {
+.btnH,
+.btnD,
+.btn-delete {
   width: 100px;
   border: none;
   height: 40px;
@@ -583,8 +579,6 @@ export default {
 .btn-delete {
   background-color: var(--card_red);
 }
-
-
 
 @media (max-width: 768px) {
   .modal_mask .modal_body .inputsHeader .input {
