@@ -70,7 +70,7 @@
               v-model="answeredQuestion.status"
               :name="idQuestion"
               id="AP"
-              value="3"
+              value="4"
               @change="changeIcon(4)"
               @click="isAnswerd"
               disabled
@@ -86,7 +86,7 @@
               v-model="answeredQuestion.status"
               :name="idQuestion"
               id="AP"
-              value="4"
+              value="3"
               @change="changeIcon(3)"
               @click="isAnswerd"
               disabled
