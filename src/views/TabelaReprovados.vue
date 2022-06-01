@@ -92,7 +92,7 @@ export default {
   created: async function () {
     this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus();
-    this.listDisapproved = listCount.data.reportStartups.disapproved;
+    this.listDisapproved = listCount.data.reportStartups.disapproved.reverse();
     this.isOp = await this.verifyOP(this.listDisapproved.length);
     this.$store.commit("$SETISLOADING");
   },

@@ -99,7 +99,7 @@ export default {
   created: async function () {
     this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus();
-    this.listConditional = listCount.data.reportStartups.conditional;
+    this.listConditional = listCount.data.reportStartups.conditional.reverse();
     this.isOp = await this.verifyOP(this.listConditional.length);
     this.$store.commit("$SETISLOADING");
   },

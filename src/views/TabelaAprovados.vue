@@ -87,7 +87,7 @@ export default {
   created: async function() {
     this.$store.commit("$SETISLOADING");
     const listCount = await http.listCountOfStartupsByStatus()
-    this.listAproveds = listCount.data.reportStartups.approved
+    this.listAproveds = listCount.data.reportStartups.approved.reverse()
 
     this.id_startup = this.listAproveds[0].id
     this.isOp = await this.verifyOP(this.listAproveds.length)
