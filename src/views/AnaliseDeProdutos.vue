@@ -8,6 +8,9 @@
     
   </fieldset>
 
+  <!-- <h1>numero de paginas {{pages}} / startIndex: {{startIndex}} / endIndex: {{endIndex}} / totalItens: {{totalItens}}</h1> -->
+  
+
 
   <fieldset className="tableContent" v-if="!isSearched">
     <legend>Análise de Produto</legend>
@@ -19,7 +22,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="product in listAllProducts" :key="product.id">
+        <tr v-for="(product, index) in currentItens" :key="product.id">
           <td style="display: none"></td>
           <td data-title="Cód. Prod.">{{ product.code_product }}</td>
           <td data-title="Produto">{{ product.name_product }}</td>
@@ -52,6 +55,11 @@
       :dataProduct="dataHeader"
       @changeStatus="changeStatusModalVariable"
     />
+    <div class="pagination-component">
+    <div v-for="index  in pages" key="index" >
+      <button value="index" @click="setNewIndex(index)" :class="changeColorBtn(index)">{{index}}</button>
+    </div>
+    </div>
   </fieldset>
 
   <fieldset className="tableContent" v-else>
@@ -105,6 +113,7 @@ import ModalAttribute from "../components/Modal/ModalAtributo.vue";
 import ModalVariable from "../components/Modal/ModalVariavel.vue";
 import http from "../services/productAnalysis/Products";
 
+
 export default {
   components: { ModalAttribute, ModalVariable },
   setup() {},
@@ -119,8 +128,22 @@ export default {
       dataHeader: Object,
       codeProductValue: "",
       isSearched: false,
+      indexId: 0,
+
+      // Apenas para paginação
+      totalItens: "10",
+      itensPerPage: "10",
+      currentPage: 0,
+      pages: "",
+      startIndex: "",
+      endIndex: "",
+      currentItens: "",
+
+      btnChanged: false
+
     };
   },
+  
 
   watch: {
     codeProductValue(newValue, oldValue) {
@@ -130,6 +153,35 @@ export default {
     },
   },
   methods: {
+
+    calcPagination: async function () {
+    this.pages = this.calcPages()
+    this.startIndex = this.currentPage * this.itensPerPage,
+    this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage)
+    },
+
+    setNewIndex: async function(e){
+      this.currentPage = e
+      this.startIndex =  this.currentPage * this.itensPerPage
+      this.startIndex = this.startIndex - 10
+      this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage)
+      this.listAllProducts = await http.listProducts();
+      this.listAllProducts = this.listAllProducts.data.list;
+      this.currentItens = this.listAllProducts.slice(this.startIndex, this.endIndex)
+
+    },
+
+    calcPages(){
+      return Math.ceil(parseInt(this.totalItens)/parseInt(this.itensPerPage))
+    },
+
+    changeColorBtn(index){
+      if(this.currentPage == index){
+        return 'btnClicked'
+      }
+    },
+
+
 
     searchProduct: async function () {
       if (this.codeProductValue != "") {
@@ -168,16 +220,52 @@ export default {
       this.modalVariableOpen = !this.modalVariableOpen;
     },
   },
+
+  
   created: async function () {
+    
+    
     this.$store.commit("$SETISLOADING");
     this.listAllProducts = await http.listProducts();
     this.listAllProducts = this.listAllProducts.data.list;
+
+    // passa o total de paginas começando corretamente
+    this.totalItens = this.listAllProducts.length
+    this.pages = this.calcPages()
+
+    this.startIndex = this.currentPage * this.itensPerPage,
+    this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage)
+    
+
+    this.currentItens = this.listAllProducts.slice(this.startIndex, this.endIndex)
+
     this.$store.commit("$SETISLOADING");
   },
 };
 </script>
 
 <style scoped>
+
+.pagination-component {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.btnClicked {
+  background-color: var(--card_blue) !important;
+}
+
+
+.pagination-component button {
+  color: #fff;
+  cursor: pointer;
+  width: 60px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--card_green);
+}
 fieldset {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
@@ -297,6 +385,9 @@ table td {
 .btn-va {
   background-color: var(--card_orange);
 }
+
+
+
 
 @media (max-width: 765px) {
   .search-field {

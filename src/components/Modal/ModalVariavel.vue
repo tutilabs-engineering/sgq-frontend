@@ -541,7 +541,24 @@ export default {
 /* scroll  */
 
 ::-webkit-scrollbar {
-  width: 0px;
+  width:10px;
+  display: block;
+  
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #cccaca; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 /* -------- Style Variavel ------- */

@@ -16,10 +16,10 @@
           <div v-if="answeredQuestion.status == 2">
             <i class="fa fa-times-circle"></i>
           </div>
-          <div v-if="answeredQuestion.status == 3">
+          <div v-if="answeredQuestion.status == 4">
             <i class="fa fa-check-circle fa-blue" aria-hidden="true"></i>
           </div>
-          <div v-if="answeredQuestion.status == 4">
+          <div v-if="answeredQuestion.status == 3">
             <i class="fa fa-exclamation-circle"></i>
           </div>
 
@@ -70,7 +70,7 @@
               v-model="answeredQuestion.status"
               :name="idQuestion"
               id="AP"
-              value="3"
+              value="4"
               @change="changeIcon(4)"
               @click="isAnswerd"
               disabled
@@ -86,7 +86,7 @@
               v-model="answeredQuestion.status"
               :name="idQuestion"
               id="AP"
-              value="4"
+              value="3"
               @change="changeIcon(3)"
               @click="isAnswerd"
               disabled

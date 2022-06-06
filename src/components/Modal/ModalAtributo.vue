@@ -310,7 +310,7 @@ export default {
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .modal_header {
@@ -411,7 +411,24 @@ export default {
 /*   scroll */
 
 ::-webkit-scrollbar {
-  width: 0px;
+  width:10px;
+  display: block;
+  
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #cccaca; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 /* -------- Style Atributo ------- */

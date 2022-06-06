@@ -1,13 +1,7 @@
 <template>
   <div class="header">
-    <!-- <span
-      class="collapse-icon"
-      @click="toggleSidebar"
-      :class="{ 'rotate-180': collapsed }"
-      ><i class="fas fa-bars"></i
-    ></span> -->
     <h2 class="title">{{ titlePage }}</h2>
-    <span class="version">Versão 1.1.2</span>
+    <span class="version">Versão 1.3.4</span>
   </div>
 </template>
 
