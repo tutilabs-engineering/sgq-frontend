@@ -60,9 +60,6 @@
                 <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
                   <i class="fas fa-edit"></i>
                 </button>
-                <!-- <button className="btnOpcoes">
-                  <i class="fas fa-file-excel"></i>
-                </button> -->
               </div>
             </div>
           </td>
@@ -153,6 +150,8 @@ export default {
       itemsAbertos: Array,
       itemsFechados: Array,
       statusTable: true,
+
+
     };
   },
 

@@ -14,11 +14,11 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in listDisapproved" :key="item.id">
+        <tr v-for="item in currentItens" :key="item.id">
           <td style="display: none"></td>
-          <td data-title="Cod. Startup">{{item.code_startup}}</td>
-          <td data-title="Cod. OP">{{item.op.code_op}}</td>
-          <td data-title="Cod. Produto">{{ item.op.code_product }}</td>   
+          <td data-title="Cod. Startup">{{ item.code_startup }}</td>
+          <td data-title="Cod. OP">{{ item.op.code_op }}</td>
+          <td data-title="Cod. Produto">{{ item.op.code_product }}</td>
           <td data-title="Cod. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Data">{{ formatDate(item.day) }}</td>
@@ -37,6 +37,18 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="pagination-component">
+      <div v-for="index in pages" key="index">
+        <button
+          value="index"
+          @click="setNewIndex(index)"
+          :class="changeColorBtn(index)"
+        >
+          {{ index }}
+        </button>
+      </div>
+    </div>
   </fieldset>
 
   <fieldset class="tableContent" v-else>
@@ -61,10 +73,52 @@ export default {
     return {
       listDisapproved: [],
       isOp: false,
+
+      // Apenas para paginação
+      totalItens: "10",
+      itensPerPage: "10",
+      currentPage: 0,
+      pages: "",
+      startIndex: "",
+      endIndex: "",
+      currentItens: "",
+
+      btnChanged: false,
     };
   },
 
   methods: {
+    calcPagination: async function () {
+      this.pages = this.calcPages();
+      (this.startIndex = this.currentPage * this.itensPerPage),
+        (this.endIndex =
+          parseInt(this.startIndex) + parseInt(this.itensPerPage));
+    },
+
+    setNewIndex: async function (e) {
+      this.currentPage = e;
+      this.startIndex = this.currentPage * this.itensPerPage;
+      this.startIndex = this.startIndex - 10;
+      this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage);
+      const listCount = await http.listCountOfStartupsByStatus();
+      this.listDisapproved =
+        listCount.data.reportStartups.disapproved.reverse();
+      this.currentItens = this.listDisapproved.slice(
+        this.startIndex,
+        this.endIndex
+      );
+    },
+
+    calcPages() {
+      return Math.ceil(parseInt(this.totalItens) / parseInt(this.itensPerPage));
+    },
+
+    changeColorBtn(index) {
+      if (this.currentPage == index) {
+        return "btnClicked";
+      }
+    },
+
     OpenReportStartup: function (id_startup) {
       this.$router.push({
         path: "/create-startup-by-id",
@@ -94,12 +148,43 @@ export default {
     const listCount = await http.listCountOfStartupsByStatus();
     this.listDisapproved = listCount.data.reportStartups.disapproved.reverse();
     this.isOp = await this.verifyOP(this.listDisapproved.length);
+
+    this.totalItens = this.listDisapproved.length;
+    this.pages = this.calcPages();
+
+    (this.startIndex = this.currentPage * this.itensPerPage),
+      (this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage));
+
+    this.currentItens = this.listDisapproved.slice(
+      this.startIndex,
+      this.endIndex
+    );
     this.$store.commit("$SETISLOADING");
   },
 };
 </script>
 
 <style scoped>
+.pagination-component {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.btnClicked {
+  background-color: var(--card_blue) !important;
+}
+
+.pagination-component button {
+  color: #fff;
+  cursor: pointer;
+  width: 60px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--card_green);
+}
+
 .legenda-warning {
   font-size: 25px;
   text-align: center;
