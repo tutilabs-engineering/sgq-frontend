@@ -1,17 +1,16 @@
 <template>
   <div class="content-novaStartup" v-if="!isFilled">
-    <div style="display:flex; gap: 20px">
-    <fieldset>
-      <legend>Status</legend>
-      <span class="startup-preenchida">Preenchida</span>
-    </fieldset>
-    <fieldset>
-      <legend>Startup</legend>
-      <span class="startup-preenchida">Cód: {{code_startup}}</span>
-    </fieldset>
+    <div style="display: flex; gap: 20px">
+      <fieldset>
+        <legend>Status</legend>
+        <span class="startup-preenchida"> Não Preenchida</span>
+      </fieldset>
+      <fieldset>
+        <legend>Startup</legend>
+        <span class="startup-preenchida">Cód: {{ code_startup }}</span>
+      </fieldset>
     </div>
 
-    
     <StartupCadastroPreenchido
       @returnCodeOp="ReturnCodeOp"
       :headerPreenchida="headerPreenchida"
@@ -21,7 +20,12 @@
     <ListaPerguntasPreenchida
       :id_startup="id_startup"
       :qtdeCavidade="techniqueInfo.cavity"
+      :startupData="data_startup"
     />
+    <!-- Verificar Status de Metrologia -->
+    <div :class="metrologyStyle">
+      {{ verifyMetrology(data_startup) }}
+    </div>
 
     <!-- <BtnStartupCreate @returnFillStatus="changedShowQuestions" /> -->
     <div class="group-buttons">
@@ -32,22 +36,29 @@
         >
           Cancelar
         </button>
+        <div v-if="verifyMetrologyStatus(data_startup)">
         <button class="btn-save btn" @click="saveFillReportStartup">
+          Finalizar
+        </button>
+        </div>
+         <div v-else>
+        <button class="btn-save-fill btn" @click="saveFillReportStartup">
           Preencher
         </button>
+        </div>
       </div>
     </div>
   </div>
   <div class="content-novaStartup" v-else>
-    <div style="display:flex; gap: 20px">
-    <fieldset>
-      <legend>Status</legend>
-      <span class="startup-preenchida">Preenchida</span>
-    </fieldset>
-    <fieldset>
-      <legend>Startup</legend>
-      <span class="startup-preenchida">Cód: {{code_startup}}</span>
-    </fieldset>
+    <div style="display: flex; gap: 20px">
+      <fieldset>
+        <legend>Status</legend>
+        <span class="startup-preenchida">Preenchida</span>
+      </fieldset>
+      <fieldset>
+        <legend>Startup</legend>
+        <span class="startup-preenchida">Cód: {{ code_startup }}</span>
+      </fieldset>
     </div>
 
     <StartupCadastroPreenchido
@@ -56,11 +67,8 @@
     />
 
     <div v-for="code in code_secondary" :key="code.id">
-      <SecondaryOP :codeSecondary="code"/>
+      <SecondaryOP :codeSecondary="code" />
     </div>
-    
-
-    
 
     <TableCavidadePreenchido :techniqueInfo="techniqueInfo" />
     <TableComponentesPreenchido :componentsInfo="componentsInfo" />
@@ -70,7 +78,7 @@
 </template>
 
 <script>
-import SecondaryOP from '../components/SecondaryOP/SecondaryOP.vue'
+import SecondaryOP from "../components/SecondaryOP/SecondaryOP.vue";
 import TableCavidadePreenchido from "../components/TableCavidadePreenchido/TableCavidadePreenchido.vue";
 import TableComponentesPreenchido from "../components/TableComponentesPreenchido/TableComponentesPreenchido.vue";
 import StartupCadastroPreenchido from "../components/StartupCadastroPreenchido/StartupCadastroPreenchido.vue";
@@ -82,6 +90,7 @@ import http from "../services/startup";
 export default {
   data() {
     return {
+      metrologyStyle: "alert-metrology-aproved",
       id_startup: this.$route.query.id,
 
       headerPreenchida: {
@@ -124,11 +133,12 @@ export default {
     TableComponentesPreenchido,
     ListaPerguntasPreenchida,
     ListaPerguntas,
-    SecondaryOP
+    SecondaryOP,
   },
 
   created: async function () {
     await http.findReportStartupById(this.id_startup).then((res) => {
+
       this.data_startup = res.data;
       this.code_startup = this.data_startup.code_startup;
       this.headerPreenchida.code_op = this.data_startup.op.code_op;
@@ -149,20 +159,44 @@ export default {
       this.isFilled = this.data_startup.filled;
 
       this.code_secondary = res.data.op.added_op;
-
     });
 
     await http.listDataByCodeOp(this.headerPreenchida.code_op).then((res) => {
       this.headerPreenchida.quantity = res.data.results[0].PlannedQty;
     });
-
   },
   methods: {
+    verifyMetrologyStatus(startup) {
+      if (startup.metrology.length > 0) {
+        if (!startup.metrology[0].metrology) {
+          // metrologia preenchida
+          return true;
+        }
+      }
+      return false;
+    },
+    verifyMetrology(startup) {
+      if (startup.metrology.length <= 0 ) {
+        return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
+        // Nao Existe metrologia
+      }
+      if (startup.metrology.length > 0) {
+        if (startup.metrology[0].metrology) {
+          // Verificar se a metroliga está fechada
+          // True ela esta aberta
+          //  False ela está fechada
+          this.metrologyStyle = "alert-metrology";
+          return "Variaveis em Metrologia Não preenchidas, está Startup não pode ser fechada porém os dados podem ser salvos.";
+        }
+        return "Variaveis em Metrologia preenchidas, está Startup pode ser fechada.";
+      }
+    },
     async saveFillReportStartup() {
       //
       this.$store.commit("$SETISLOADING");
 
       const data = this.$store.getters.$GETDATAFILLREPORTSTARTUP;
+
       const form = new FormData();
 
       data.default_question.map((item) => {
@@ -277,6 +311,23 @@ export default {
 </script>
 
 <style scoped>
+.alert-metrology-aproved {
+  width: 100%;
+  padding: 10px;
+  background: var(--card_green);
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.alert-metrology {
+  width: 100%;
+  padding: 10px;
+  background: var(--card_red);
+  border-radius: 4px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
 fieldset {
   margin-left: 20px;
   width: 30%;
@@ -329,6 +380,7 @@ legend {
 }
 
 .btn-save,
+.btn-save-fill
 .btn-cancel {
   width: 79%;
 }
@@ -345,6 +397,12 @@ legend {
 
 .btn-save {
   background-color: var(--card_green);
+  width: auto;
+}
+
+.btn-save-fill {
+  background-color: var(--card_blue);
+  width: auto;
 }
 
 .btn-fill-save {

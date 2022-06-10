@@ -1,7 +1,5 @@
 <template>
   <fieldset className="tableContent">
-
-
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
@@ -35,6 +33,9 @@
         <th>Cód. Produto</th>
         <th>Cód. Cliente</th>
         <th>Máquina</th>
+        <th>Metrologia</th>
+        <th>Status</th>
+        <th>Preenchimento</th>
         <th>Data</th>
         <th>Horário</th>
         <th>Criador</th>
@@ -44,12 +45,21 @@
       <tbody>
         <tr v-for="item in itemsAbertos" :key="item.id">
           <td style="display: none"></td>
-          
-          <td class="codeStartup" data-title="Cód. Startup">{{ item.code_startup }}</td>
+
+          <td class="codeStartup" data-title="Cód. Startup">
+            {{ item.code_startup }}
+          </td>
           <td data-title="Cód. OP">{{ item.op.code_op }}</td>
           <td data-title="Cód. Produto">{{ item.op.code_product }}</td>
           <td data-title="Cód. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
+          <td data-title="Metrologia">
+            {{ verifyMetrology(item.metrology) }}
+          </td>
+          <td data-title="Status">{{ verifyOpenStartup(item) }}</td>
+          <td data-title="Preenchimento">{{ verifyFillStartup(item) }}</td>
+
+          <!-- <td data-title="Metrologia">{{ verifyMetrology(item.metrology) }}</td> -->
           <td data-title="Data">{{ item.day }}</td>
           <td data-title="Horário">{{ item.start_time }}</td>
           <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
@@ -57,7 +67,10 @@
             <div className="opcoes">
               <i class="fas fa-ellipsis-h"></i>
               <div class="dropdown-content">
-                <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
+                <button
+                  className="btnOpcoes"
+                  @click="OpenReportStartup(item.id)"
+                >
                   <i class="fas fa-edit"></i>
                 </button>
               </div>
@@ -65,11 +78,7 @@
           </td>
         </tr>
       </tbody>
-
-      
     </table>
-
-    
 
     <table v-else cellpadding="0" cellspacing="0">
       <div class="btns">
@@ -103,6 +112,9 @@
         <th>Cód. Produto</th>
         <th>Cód. Cliente</th>
         <th>Máquina</th>
+        <th>Metrologia</th>
+        <th>Status</th>
+        <th>Preenchimento</th>
         <th>Data</th>
         <th>Horário</th>
         <th>Criador</th>
@@ -112,11 +124,16 @@
       <tbody>
         <tr v-for="item in itemsFechados" :key="item.id">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="Cód. Startup">{{ item.code_startup }}</td>
+          <td class="codeStartup" data-title="Cód. Startup">
+            {{ item.code_startup }}
+          </td>
           <td data-title="Cód. OP">{{ item.op.code_op }}</td>
           <td data-title="Cód. Produto">{{ item.op.code_product }}</td>
           <td data-title="Cód. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
+          <td data-title="Metrologia">{{ verifyMetrology(item.metrology) }}</td>
+          <td data-title="Status">{{ verifyOpenStartup(item) }}</td>
+          <td data-title="Preenchimento">{{ verifyFillStartup(item) }}</td>
           <td data-title="Data">{{ item.day }}</td>
           <td data-title="Horário">{{ item.start_time }}</td>
           <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
@@ -124,7 +141,10 @@
             <div className="opcoes">
               <i class="fas fa-ellipsis-h"></i>
               <div class="dropdown-content">
-                <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
+                <button
+                  className="btnOpcoes"
+                  @click="OpenReportStartup(item.id)"
+                >
                   <i class="fas fa-edit"></i>
                 </button>
               </div>
@@ -185,6 +205,39 @@ export default {
 
   
   methods: {
+
+    verifyOpenStartup(startup){
+       if(startup.open && startup.filled){
+         return "Rodando"
+       }else if(!startup.open && startup.filled){
+         return "Fechado"
+       }else{
+         return "Aguardando"
+       }
+    },
+    verifyFillStartup(startup){
+      // Se startup não estiver fechada e não foi preenchida nenhuma vez
+        if(startup.filled == false && startup.report_startup_fill.length <= 0){
+           return "Em Aberto"
+        } else if(startup.filled == false && startup.report_startup_fill.length > 0){
+           return "Em Andamento"
+        }else if(startup.filled == true){
+            return "Preenchido"
+        }
+
+    },
+
+    verifyMetrology(metrology){
+      if(metrology.length > 0){
+        if(metrology[0].metrology == false){
+            return "Met. Preenchida"
+        }else if(metrology[0].metrology == true){
+            return "Met. Não Preenchida"
+        }
+      }else{
+        return "Não existe Metrologia"
+      }
+    },
     OpenReportStartup: function(id_startup) {
       this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})
     },
@@ -304,6 +357,7 @@ table td {
   font-weight: bold;
   border: none;
   font-weight: 300px;
+  font-size: 13px;
 }
 
 .startup-opened,
@@ -346,15 +400,14 @@ table td {
 }
 
 @media (max-width: 1080px) {
-
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
   }
 
-  .tableContent{
+  .tableContent {
     padding: 0;
-  } 
+  }
   .tableContent thead {
     display: none;
   }
@@ -373,10 +426,9 @@ table td {
     justify-content: space-between;
   }
 
-  [data-title]{
+  [data-title] {
     color: var(--black_text);
   }
-
 
   .tableContent td:first-of-type {
     font-weight: bold;
@@ -395,7 +447,5 @@ table td {
   .lastTd {
     border-bottom: 1.6px solid var(--card_green);
   }
-
-
 }
 </style>

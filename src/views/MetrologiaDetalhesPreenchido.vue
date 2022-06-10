@@ -3,7 +3,7 @@
 <div class="content-metrologiaDetalhes">
       <fieldset class="form">
         <legend>Metrologia</legend>
-        
+  
       <div class="input">
         <label for="code_product">Código Produto</label>
         <input type="text" name="code_product" id="code_product" placeholder="Digite o código OP" :value="opById.header.code_product" disabled>
@@ -63,20 +63,36 @@ export default {
         return {
           newDataVariables : [],
           dataVariables: [],
-          opById: [],
+          opById: {
+              metrology_items: [
+                {
+                  items : []
+                }
+              ],
+              header : {
+              code_product : "",
+              code_client: "",
+              desc_product: "",
+              client:"",
+              user : {
+                   name : "",
+                   startDate: ""
+              }
+            }
+          },
           qtdeCavidade: 0,
           exit: "",
         };
     },
 
     created: async function(){
-      
+        this.$store.commit("$SETISLOADING");
        const id = this.$route.query.id
        
        await http.FindMetrologyById(id).then( (res) => {
         this.opById = res.data.list
       })
-      
+       this.$store.commit("$SETISLOADING");
      
     },
     methods : {

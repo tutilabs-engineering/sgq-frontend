@@ -49,7 +49,7 @@
                 <div class="headerPerguntas">
                   <div class="titleHeader">Pergunta</div>
                   <div class="titleHeader">Atenção</div>
-                  <div class="titleHeader">Status</div>
+                  <!-- <div class="titleHeader">Status</div> -->
                   <div class="titleHeader">Opções</div>
                 </div>
 
@@ -73,7 +73,7 @@
                         v-model="todo.attention"
                       />
                     </div>
-                    <div class="titleHeader">
+                    <!-- <div class="titleHeader">
                       <input
                         type="button"
                         @click.prevent="changeStatus($event, todo.id)"
@@ -90,7 +90,7 @@
                         value="Desabilitado"
                         class="btnD"
                       />
-                    </div>
+                    </div> -->
 
                     <div class="titleHeader">
                       <input
@@ -259,12 +259,12 @@ export default {
       if (btnTarget.value === "Habilitado") {
         btnTarget.value = "Desabilitado";
         btnTarget.className = "btnD";
-        await http.ChangeStatusByAttributes(id, false);
+        // await http.ChangeStatusByAttributes(id, false);
         this.$store.commit("$SETISLOADING");
       } else {
         btnTarget.value = "Habilitado";
         btnTarget.className = "btnH";
-        await http.ChangeStatusByAttributes(id, true);
+        // await http.ChangeStatusByAttributes(id, true);
         this.$store.commit("$SETISLOADING");
       }
     },
