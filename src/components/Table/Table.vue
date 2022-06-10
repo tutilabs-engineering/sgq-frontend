@@ -1,24 +1,26 @@
 <template>
   <fieldset className="tableContent">
+
+    <legend>Startups</legend>
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
           Startups Abertas
         </button>
         <button @click="statusTable = false" class="btn startup">
-          Startups Fechadas
+          StartupsFechadas
         </button>
       </div>
 
       <thead>
         <th>
           <button @click="statusTable = true" class="btn startup-opened">
-            Startups Abertas
+            Abertas
           </button>
         </th>
         <th>
           <button @click="statusTable = false" class="btn startup">
-            Startups Fechadas
+            Fechadas
           </button>
         </th>
         <th></th>
@@ -84,12 +86,12 @@
       <thead>
         <th>
           <button @click="statusTable = true" class="btn startup">
-            Startups Abertas
+            Abertas
           </button>
         </th>
         <th>
           <button @click="statusTable = false" class="btn startup-closed">
-            Startups Fechadas
+            Fechadas
           </button>
         </th>
         <th></th>
@@ -365,6 +367,12 @@ export default {
   background-color: var(--card_green);
 }
 
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
 fieldset {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
@@ -501,6 +509,9 @@ table td {
 }
 
 @media (max-width: 1080px) {
+  legend {
+    text-align: center;
+  }
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
