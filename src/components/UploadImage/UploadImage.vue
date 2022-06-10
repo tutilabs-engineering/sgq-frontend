@@ -1,4 +1,5 @@
 <template>
+
   <div class="content-imgPreview" v-if="imgName">
     <div class="container-img">
       <img :src="preview" class="img-fluid" />
@@ -17,6 +18,7 @@
 
   <div class="content-imgPreview" v-else>
     <div class="container-img">
+   
       <img :src="preview" class="img-fluid" />
     </div>
 
@@ -37,7 +39,7 @@ export default {
   data () {
     return {
       imgDefault: "https://i.fbcd.co/products/resized/resized-750-500/563d0201e4359c2e890569e254ea14790eb370b71d08b6de5052511cc0352313.jpg",
-      preview: "https://i.fbcd.co/products/resized/resized-750-500/563d0201e4359c2e890569e254ea14790eb370b71d08b6de5052511cc0352313.jpg",
+      preview:"https://i.fbcd.co/products/resized/resized-750-500/563d0201e4359c2e890569e254ea14790eb370b71d08b6de5052511cc0352313.jpg",
       image: null,
       myFile: "my-file" + this.id,
       imgStatus: true,
@@ -48,14 +50,17 @@ export default {
     id: Number,
     img: String,
     imgName: String,
+    imgNamePreview: String
   },
 
   created: async function (){
+
     if(this.imgName){
     const x = `${this.$store.state.urlImg}/startup/questionsUploads/${this.imgName}`
     this.changeImgStatus()
     this.preview = x  
     }
+
   },
 
   methods: {
@@ -86,6 +91,14 @@ export default {
       }
     }
   },
+  watch : {
+    imgNamePreview(newValue){
+    if(newValue){
+    const x = `${this.$store.state.urlImg}/startup/questionsUploads/${newValue}`
+    this.preview = x  
+    }
+    }
+  }
 
 }
 </script>

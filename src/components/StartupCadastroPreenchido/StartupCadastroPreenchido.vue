@@ -75,7 +75,7 @@ export default {
   },
 
   props: {
-    headerPreenchida: Object
+    headerPreenchida: Object,
   },
   
   watch: {

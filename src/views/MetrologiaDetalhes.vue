@@ -1,12 +1,17 @@
 <template>
 
 <div class="content-metrologiaDetalhes">
+      <div v-show="alert" class="aviso-metrologia">
+            <div>
+        A metrologia só pode ser preenchida pelo usuario que ingressou.
+            </div>
+        </div>
       <fieldset class="form">
         <legend>Metrologia</legend>
         
       <div class="input">
         <label for="code_product">Código Produto</label>
-        <input type="text" name="code_product" id="code_product" placeholder="Digite o código OP" :value="opById.header.code_product" disabled>
+        <input type="text" placeholder="Digite o código OP" :value="opById.header.code_product" disabled>
       </div>
 
       <div class="input">
@@ -65,22 +70,50 @@ export default {
     name: "MetrologiaDetalhes",
     data(){
         return {
+          alert: false,
           newDataVariables : [],
           dataVariables: [],
           opById: [],
           qtdeCavidade: 0,
           exit: "",
+              opById: {
+              metrology_items: [
+                {
+                  items : []
+                }
+              ],
+              header : {
+              code_product : "",
+              code_client: "",
+              desc_product: "",
+              client:"",
+              user : {
+                    id: "",
+                   name : "",
+                   startDate: ""
+              }
+            }
+          },
         };
     },
 
     created: async function(){
-      
+       
+      this.$store.commit("$SETISLOADING");
        const id = this.$route.query.id
        
        await http.FindMetrologyById(id).then( (res) => {
         this.opById = res.data.list
+      });
+
+      const user = await userId.DataUser().then((res)=>{
+        return res.data.user.id
       })
-      
+              
+       if(this.opById.header.user.id !=  user){
+           this.alert = true
+       }
+        this.$store.commit("$SETISLOADING");
      
     },
     methods : {
@@ -240,6 +273,13 @@ async finishMetrology(){
 </script>
 
 <style scoped>
+.aviso-metrologia{
+    padding: 10px;;
+    text-align: center;
+    background: var(--card_red);
+    border-radius: 10px;
+    color: #ffff;
+}
 
 legend {
   font-size: 30px;

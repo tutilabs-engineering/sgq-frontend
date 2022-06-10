@@ -1,17 +1,18 @@
 <template>
   <div class="content-questions">
     <fieldset class="content-tablePerguntas">
-      <legend class="legenda">Perguntas Padrões</legend>
-
+      <legend class="legenda">Perguntas Padrões </legend>
       <PerguntaPadrao
-        :defaultQuestions="defaultQuestions"
+        :defaultQuestions="verifyReprenchiDeStartup(startupData)
+         || 
+         defaultQuestions"
         @returnAnswered="getAnswered"
       />
     </fieldset>
 
     <fieldset
       class="content-tablePerguntas"
-      v-if="specificQuestions.length == 0"
+      v-if="specificQuestions.length == 0 && verifyReprenchiSpecificDeStartup(startupData)==false"
     >
       <legend class="legenda-warning">
         Não há Perguntas Especificas para este Produto<br /><span
@@ -24,7 +25,9 @@
       <legend class="legenda">Tabela de Análise</legend>
 
       <PerguntaAnalise
-        :specificQuestions="specificQuestions"
+        :specificQuestions="verifyReprenchiSpecificDeStartup(startupData)
+         || 
+        specificQuestions"
         @returnSpecificAnswered="getSpecificAnswered"
       />
     </fieldset>
@@ -32,12 +35,12 @@
     <!-- <fieldset>
       <TableQtdeCavidade :numberCavidade="numberCavidade" :codProd="code_product"/>
     </fieldset> -->
-
     <fieldset class="content-imgs">
-      <UploadImage :id="1" @setImage="getImg_1" />
-      <UploadImage :id="2" @setImage="getImg_2" />
-      <UploadImage :id="3" @setImage="getImg_3" />
+      <UploadImage :imgNamePreview="startupData.img_1" :id="1" @setImage="getImg_1" />
+      <UploadImage :imgNamePreview="startupData.img_2" :id="2" @setImage="getImg_2" />
+      <UploadImage :imgNamePreview="startupData.img_3" :id="3" @setImage="getImg_3" />
     </fieldset>
+  
   </div>
 </template>
 
@@ -52,6 +55,7 @@ import http from "../../services/startup/index";
 export default {
   data() {
     return {
+     
       defaultQuestions: [],
       specificQuestions: [],
 
@@ -66,6 +70,8 @@ export default {
   props: {
     qtdeCavidade: Number,
     id_startup: Number,
+    startupData : Array
+
   },
   components: {
     PerguntaPadrao,
@@ -82,7 +88,7 @@ export default {
 
     const responseDefaultQuestions = await http.listAllDefaultQuestions();
     this.defaultQuestions = responseDefaultQuestions.data.defaultQuestions;
-
+    
     this.defaultQuestions = await this.defaultQuestions.map((item) => {
       return {
         fk_default_question: item.id,
@@ -93,11 +99,36 @@ export default {
         preview: "",
       };
     });
-
+   
+   
     this.$store.commit("$SETISLOADING");
   },
 
   methods: {
+    verifyReprenchiSpecificDeStartup: function(startup){
+        if(!startup.report_startup_fill){
+          return false;
+        }
+        if(!startup.report_startup_fill.specific_questions_responses){
+           return false;
+        }
+
+        if(startup.report_startup_fill.specific_questions_responses.specific_questions.length <= 0){
+          return false;
+        }
+        return startup.report_startup_fill.specific_questions_responses.specific_questions
+    },
+  
+    verifyReprenchiDeStartup: function(startup){
+        if(!startup.report_startup_fill){
+          return false;
+        }
+        if(!startup.report_startup_fill.default_questions_responses){
+           return false;
+        }
+        return startup.report_startup_fill.default_questions_responses.default_questions
+    },
+    
     getSpecificAnswered: async function (specificAnswered) {
       const specificAnsweredFormat = specificAnswered.map((item) => {
         return {
@@ -145,6 +176,7 @@ export default {
 </script>
 
 <style secoped>
+
 .content-questions {
   width: 100%;
   padding: 20px;

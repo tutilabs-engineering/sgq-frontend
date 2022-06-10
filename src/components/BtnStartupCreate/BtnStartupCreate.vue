@@ -130,6 +130,7 @@ export default {
 
                         
                     }).catch ( (error) => {
+                      console.log(error.response);
                         if(error.response.data.message === "Already exists a startup open with this code_op"){
                             Toast.fire({
                                 icon: 'warning',
@@ -142,7 +143,15 @@ export default {
                                 title: 'Não existem variáveis cadastradas para este produto',
                                 background: "#e3e745",
                             })
-                        }else {
+                        }
+                        else if(error.response.data.message === 'A ultima Startup precisa ser preenchida.'){
+
+                       Toast.fire({
+                            icon: 'warning',
+                            title: "A ultima Startup com está maquina precisa ser preenchida.",
+                            background: "#e3e745",
+                        })
+                        } else {
                             Toast.fire({
                             icon: 'warning',
                             title: 'Verifique se todos os campos foram preenchidos',

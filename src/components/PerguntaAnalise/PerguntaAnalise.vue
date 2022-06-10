@@ -141,8 +141,8 @@ export default {
         is_enabled: item.is_enabled,
         question: item.question,
         fk_specific_question: item.id,
-        description: "",
-        status: 0,
+        description: item.description || "",
+        status: item.status || 0,
         file: "",
         preview : "",
       };

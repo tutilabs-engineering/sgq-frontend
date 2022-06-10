@@ -35,6 +35,9 @@
         <th>Cód. Produto</th>
         <th>Cód. Cliente</th>
         <th>Máquina</th>
+        <th>Metrologia</th>
+        <th>Status</th>
+        <th>Preenchimento</th>
         <th>Data</th>
         <th>Horário</th>
         <th>Criador</th>
@@ -52,6 +55,13 @@
           <td data-title="Cód. Produto">{{ item.op.code_product }}</td>
           <td data-title="Cód. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
+          <td data-title="Metrologia">
+            {{ verifyMetrology(item.metrology) }}
+          </td>
+          <td data-title="Status">{{ verifyOpenStartup(item) }}</td>
+          <td data-title="Preenchimento">{{ verifyFillStartup(item) }}</td>
+
+          <!-- <td data-title="Metrologia">{{ verifyMetrology(item.metrology) }}</td> -->
           <td data-title="Data">{{ item.day }}</td>
           <td data-title="Horário">{{ item.start_time }}</td>
           <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
@@ -70,7 +80,6 @@
           </td>
         </tr>
       </tbody>
-
     </table>
 
     <table v-else cellpadding="0" cellspacing="0">
@@ -105,6 +114,9 @@
         <th>Cód. Produto</th>
         <th>Cód. Cliente</th>
         <th>Máquina</th>
+        <th>Metrologia</th>
+        <th>Status</th>
+        <th>Preenchimento</th>
         <th>Data</th>
         <th>Horário</th>
         <th>Criador</th>
@@ -121,6 +133,9 @@
           <td data-title="Cód. Produto">{{ item.op.code_product }}</td>
           <td data-title="Cód. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
+          <td data-title="Metrologia">{{ verifyMetrology(item.metrology) }}</td>
+          <td data-title="Status">{{ verifyOpenStartup(item) }}</td>
+          <td data-title="Preenchimento">{{ verifyFillStartup(item) }}</td>
           <td data-title="Data">{{ item.day }}</td>
           <td data-title="Horário">{{ item.start_time }}</td>
           <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
@@ -144,7 +159,7 @@
     </table>
 
     <div v-if="statusTable" class="pagination-component">
-        <div v-for="index in pages" key="index">
+        <div v-for="index in pages" :key="index">
           <button
             value="index"
             @click="setNewIndex(index)"
@@ -156,7 +171,7 @@
       </div>
 
     <div v-else class="pagination-component">
-        <div v-for="index in pagesClosed" key="index">
+        <div v-for="index in pagesClosed" :key="index">
           <button
             value="index"
             @click="setNewIndexClosed(index)"
@@ -248,6 +263,40 @@ export default {
   },
 
   methods: {
+
+    verifyOpenStartup(startup){
+       if(startup.open && startup.filled){
+         return "Rodando"
+       }else if(!startup.open && startup.filled){
+         return "Fechado"
+       }else{
+         return "Aguardando"
+       }
+    },
+    verifyFillStartup(startup){
+      // Se startup não estiver fechada e não foi preenchida nenhuma vez
+        if(startup.filled == false && startup.report_startup_fill.length <= 0){
+           return "Em Aberto"
+        } else if(startup.filled == false && startup.report_startup_fill.length > 0){
+           return "Em Andamento"
+        }else if(startup.filled == true){
+            return "Preenchido"
+        }
+
+    },
+
+    verifyMetrology(metrology){
+      if(metrology.length > 0){
+        if(metrology[0].metrology == false){
+            return "Met. Preenchida"
+        }else if(metrology[0].metrology == true){
+            return "Met. Não Preenchida"
+        }
+      }else{
+        return "Não existe Metrologia"
+      }
+    },
+    
     calcPagination: async function () {
       this.pages = this.calcPages();
       (this.startIndex = this.currentPage * this.itensPerPage),
@@ -467,6 +516,7 @@ table td {
   font-weight: bold;
   border: none;
   font-weight: 300px;
+  font-size: 13px;
 }
 
 .startup-opened,

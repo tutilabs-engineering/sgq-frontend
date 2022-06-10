@@ -3,7 +3,7 @@
     
     <fieldset class="content-tablePerguntas">
       <legend class="legenda">Perguntas Padrões</legend>
-      
+  
         <PerguntaRespondida :answeredQuestions="datastartup"/>
 
     </fieldset>
