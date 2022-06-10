@@ -1,24 +1,26 @@
 <template>
   <fieldset className="tableContent">
+
+    <legend>Startups</legend>
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
         <button @click="statusTable = true" class="btn startup-opened">
           Startups Abertas
         </button>
         <button @click="statusTable = false" class="btn startup">
-          Startups Fechadas
+          StartupsFechadas
         </button>
       </div>
 
       <thead>
         <th>
           <button @click="statusTable = true" class="btn startup-opened">
-            Startups Abertas
+            Abertas
           </button>
         </th>
         <th>
           <button @click="statusTable = false" class="btn startup">
-            Startups Fechadas
+            Fechadas
           </button>
         </th>
         <th></th>
@@ -43,7 +45,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in itemsAbertos" :key="item.id">
+        <tr v-for="item in currentItens" :key="item.id">
           <td style="display: none"></td>
 
           <td class="codeStartup" data-title="Cód. Startup">
@@ -93,12 +95,12 @@
       <thead>
         <th>
           <button @click="statusTable = true" class="btn startup">
-            Startups Abertas
+            Abertas
           </button>
         </th>
         <th>
           <button @click="statusTable = false" class="btn startup-closed">
-            Startups Fechadas
+            Fechadas
           </button>
         </th>
         <th></th>
@@ -122,7 +124,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in itemsFechados" :key="item.id">
+        <tr v-for="item in currentItensClosed" :key="item.id">
           <td style="display: none"></td>
           <td class="codeStartup" data-title="Cód. Startup">
             {{ item.code_startup }}
@@ -152,17 +154,43 @@
           </td>
         </tr>
       </tbody>
+
+      
     </table>
+
+    <div v-if="statusTable" class="pagination-component">
+        <div v-for="index in pages" :key="index">
+          <button
+            value="index"
+            @click="setNewIndex(index)"
+            :class="changeColorBtn(index)"
+          >
+            {{ index }}
+          </button>
+        </div>
+      </div>
+
+    <div v-else class="pagination-component">
+        <div v-for="index in pagesClosed" :key="index">
+          <button
+            value="index"
+            @click="setNewIndexClosed(index)"
+            :class="changeColorBtn(index)"
+          >
+            {{ index }}
+          </button>
+        </div>
+      </div>
+
+
   </fieldset>
 </template>
 
 <script>
-
-import http from "../../services/startup/"
-import dayjs from 'dayjs'
+import http from "../../services/startup/";
+import dayjs from "dayjs";
 
 export default {
-
   setup() {},
   name: "Table",
   data() {
@@ -171,39 +199,69 @@ export default {
       itemsFechados: Array,
       statusTable: true,
 
+      // Apenas para paginação
+      totalItens: "10",
+      itensPerPage: "10",
+      currentPage: 0,
+      pages: "",
+      pagesClosed: "",
+      startIndex: "",
+      endIndex: "",
+      currentItens: "",
+      currentItensClosed: "",
+
+      totalItensClosed: "10",
 
     };
   },
 
+  watch: {
+    statusTable(newValue){
+      if(newValue === true){
+        this.currentPage = 0
+      }else{
+        this.currentPage = 0
+      }
+    }
+  },
 
-  created: async function() {
-    
+  created: async function () {
     this.$store.commit("$SETISLOADING");
-    const allStartups = await http.listAllStartups()
+    const allStartups = await http.listAllStartups();
     let openedStartups = [];
     let closedStartups = [];
     allStartups.data.forEach((startup) => {
-      startup.day = startup.day.split("T")[0]
-      startup.day = this.formatDate(startup.day)
-      startup.start_time = dayjs(startup.start_time).locale('pt-br').format('HH:mm:ss');
-      if(startup.open === true) {
-        openedStartups.push(startup)
-      }else {
-        closedStartups.push(startup)
+      startup.day = startup.day.split("T")[0];
+      startup.day = this.formatDate(startup.day);
+      startup.start_time = dayjs(startup.start_time)
+        .locale("pt-br")
+        .format("HH:mm:ss");
+      if (startup.open === true) {
+        openedStartups.push(startup);
+      } else {
+        closedStartups.push(startup);
       }
     });
-    this.itemsAbertos = openedStartups.reverse()
-    this.itemsFechados = closedStartups.reverse()
+    this.itemsAbertos = openedStartups.reverse();
+    this.itemsFechados = closedStartups.reverse();
 
-    console.log(this.itemsAbertos);
+    this.existItemAbertos(this.itemsAbertos.length);
+    this.existItemFechados(this.itemsFechados.length);
 
-    this.existItemAbertos(this.itemsAbertos.length)
-    this.existItemFechados(this.itemsFechados.length)
+    this.totalItens = this.itemsAbertos.length;
+    this.totalItensClosed = this.itemsFechados.length;
+    this.pages = this.calcPages();
+    this.pagesClosed = this.calcPagesClosed()
+
+    this.startIndex = this.currentPage * this.itensPerPage;
+    this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage);
+
+    this.currentItens = this.itemsAbertos.slice(this.startIndex, this.endIndex);
+    this.currentItensClosed = this.itemsFechados.slice(this.startIndex, this.endIndex);
 
     this.$store.commit("$SETISLOADING");
   },
 
-  
   methods: {
 
     verifyOpenStartup(startup){
@@ -238,31 +296,132 @@ export default {
         return "Não existe Metrologia"
       }
     },
-    OpenReportStartup: function(id_startup) {
-      this.$router.push({path: "/create-startup-by-id", query: {id: id_startup}})
+    
+    calcPagination: async function () {
+      this.pages = this.calcPages();
+      (this.startIndex = this.currentPage * this.itensPerPage),
+        (this.endIndex =
+          parseInt(this.startIndex) + parseInt(this.itensPerPage));
     },
 
-    
-    existItemAbertos(abertos){
+    setNewIndex: async function (e) {
+      this.currentPage = e;
+      this.startIndex = this.currentPage * this.itensPerPage;
+      this.startIndex = this.startIndex - 10;
+      this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage);
+
+      const allStartups = await http.listAllStartups();
+      let openedStartups = [];
+      allStartups.data.forEach((startup) => {
+        startup.day = startup.day.split("T")[0];
+        startup.day = this.formatDate(startup.day);
+        startup.start_time = dayjs(startup.start_time)
+          .locale("pt-br")
+          .format("HH:mm:ss");
+        if (startup.open === true) {
+          openedStartups.push(startup);
+        }
+      });
+      this.itemsAbertos = openedStartups.reverse();
+
+      this.currentItens = this.itemsAbertos.slice(
+        this.startIndex,
+        this.endIndex
+      );
+    },
+
+    setNewIndexClosed: async function (e) {
+      this.currentPage = e;
+      this.startIndex = this.currentPage * this.itensPerPage;
+      this.startIndex = this.startIndex - 10;
+      this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage);
+
+      const allStartups = await http.listAllStartups();
+      let closedStartups = [];
+      allStartups.data.forEach((startup) => {
+        startup.day = startup.day.split("T")[0];
+        startup.day = this.formatDate(startup.day);
+        startup.start_time = dayjs(startup.start_time)
+          .locale("pt-br")
+          .format("HH:mm:ss");
+        if (startup.open === false) {
+          closedStartups.push(startup);
+        }
+      });
+      this.itemsFechados = closedStartups.reverse();
+
+      this.currentItensClosed = this.itemsFechados.slice(
+        this.startIndex,
+        this.endIndex
+      );
+    },
+
+    calcPages() {
+      return Math.ceil(parseInt(this.totalItens) / parseInt(this.itensPerPage));
+    },
+
+    calcPagesClosed() {
+      return Math.ceil(parseInt(this.totalItensClosed) / parseInt(this.itensPerPage));
+    },
+
+    changeColorBtn(index) {
+      if (this.currentPage == index) {
+        return "btnClicked";
+      }
+    },
+
+    OpenReportStartup: function (id_startup) {
+      this.$router.push({
+        path: "/create-startup-by-id",
+        query: { id: id_startup },
+      });
+    },
+
+    existItemAbertos(abertos) {
       this.$emit("returnItemAbertos", abertos);
     },
 
     existItemFechados: async function (fechados) {
-      this.$emit("returnItemFechados", fechados)
+      this.$emit("returnItemFechados", fechados);
     },
-
 
     formatDate(date) {
-      this.year = date.slice(0, -6)
-      this.month = date.slice(5, -3)
-      this.day = date.slice(-2)
-      return date = `${this.day}/${this.month}/${this.year}`
+      this.year = date.slice(0, -6);
+      this.month = date.slice(5, -3);
+      this.day = date.slice(-2);
+      return (date = `${this.day}/${this.month}/${this.year}`);
     },
-  }
+  },
 };
 </script>
 
 <style scoped>
+.pagination-component {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.btnClicked {
+  background-color: var(--card_blue) !important;
+}
+
+.pagination-component button {
+  color: #fff;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--card_green);
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
 fieldset {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
@@ -400,6 +559,9 @@ table td {
 }
 
 @media (max-width: 1080px) {
+  legend {
+    text-align: center;
+  }
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;

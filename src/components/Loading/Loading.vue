@@ -2,6 +2,7 @@
   <div class="loading-content">
     <h2 class="title">SGQ</h2>
     <div class="quadrado"></div>
+    <p class="version">Versão 1.4.5</p>
   </div>
 </template>
 
@@ -56,6 +57,11 @@ export default {
 
 .displayLoading {
   display: none;
+}
+
+.version {
+  color: var(--black_text);
+  margin-top: 20px;
 }
 
 @keyframes title-transform {

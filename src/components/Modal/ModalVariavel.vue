@@ -98,7 +98,7 @@
                 @submit.prevent="RegisterVariable"
               >
                 <div class="inputIdentificacao">
-                  <p>IDENTIFICAÇÃO:</p>
+                  <p>Identificação:</p>
                   <input
                     type="text"
                     v-model="list.description"
@@ -107,7 +107,7 @@
                 </div>
 
                 <div class="inputCota">
-                  <p>COTA:</p>
+                  <p>Nominal:</p>
                   <input
                     type="text"
                     v-model="list.cota"
@@ -117,7 +117,7 @@
                 </div>
 
                 <div class="inputCota">
-                  <p>MÁX:</p>
+                  <p>Máximo:</p>
                   <input
                     type="text"
                     v-model="list.max"
@@ -127,7 +127,7 @@
                 </div>
 
                 <div class="inputCota">
-                  <p>MIN:</p>
+                  <p class="titleHeader">Mínimo:</p>
                   <input
                     type="text"
                     v-model="list.min"
@@ -541,24 +541,23 @@ export default {
 /* scroll  */
 
 ::-webkit-scrollbar {
-  width:10px;
+  width: 10px;
   display: block;
-  
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #cccaca; 
+  background: #cccaca;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 
 /* -------- Style Variavel ------- */
@@ -575,6 +574,7 @@ export default {
   top: 0;
   left: 0;
   padding: 0 15px;
+  overflow: hidden;
 }
 
 .modal_mask .modal_body .inputsHeader {
