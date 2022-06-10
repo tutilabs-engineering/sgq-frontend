@@ -360,7 +360,7 @@ export default {
 .pagination-component button {
   color: #fff;
   cursor: pointer;
-  width: 60px;
+  width: 30px;
   height: 30px;
   border: none;
   border-radius: 5px;
