@@ -33,13 +33,11 @@
         <th>Cód. Startup</th>
         <th>Cód. OP</th>
         <th>Cód. Produto</th>
-        <th>Cód. Cliente</th>
         <th>Máquina</th>
         <th>Metrologia</th>
         <th>Status</th>
-        <th>Preenchimento</th>
+        <th>Preench.</th>
         <th>Data</th>
-        <th>Horário</th>
         <th>Criador</th>
         <th>Opções</th>
       </thead>
@@ -53,7 +51,7 @@
           </td>
           <td data-title="Cód. OP">{{ item.op.code_op }}</td>
           <td data-title="Cód. Produto">{{ item.op.code_product }}</td>
-          <td data-title="Cód. Cliente">{{ item.op.code_client }}</td>
+     
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Metrologia">
             {{ verifyMetrology(item.metrology) }}
@@ -62,8 +60,7 @@
           <td data-title="Preenchimento">{{ verifyFillStartup(item) }}</td>
 
           <!-- <td data-title="Metrologia">{{ verifyMetrology(item.metrology) }}</td> -->
-          <td data-title="Data">{{ item.day }}</td>
-          <td data-title="Horário">{{ item.start_time }}</td>
+          <td data-title="Data - Hora">{{ item.day }} <br> {{ item.start_time }}</td>
           <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
@@ -112,13 +109,11 @@
         <th>Cód. Startup</th>
         <th>Cód. OP</th>
         <th>Cód. Produto</th>
-        <th>Cód. Cliente</th>
         <th>Máquina</th>
         <th>Metrologia</th>
         <th>Status</th>
         <th>Preenchimento</th>
         <th>Data</th>
-        <th>Horário</th>
         <th>Criador</th>
         <th>Opções</th>
       </thead>
@@ -131,13 +126,11 @@
           </td>
           <td data-title="Cód. OP">{{ item.op.code_op }}</td>
           <td data-title="Cód. Produto">{{ item.op.code_product }}</td>
-          <td data-title="Cód. Cliente">{{ item.op.code_client }}</td>
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Metrologia">{{ verifyMetrology(item.metrology) }}</td>
           <td data-title="Status">{{ verifyOpenStartup(item) }}</td>
           <td data-title="Preenchimento">{{ verifyFillStartup(item) }}</td>
-          <td data-title="Data">{{ item.day }}</td>
-          <td data-title="Horário">{{ item.start_time }}</td>
+          <td data-title="Data - Hora">{{ item.day }} <br> {{ item.start_time }}</td>
           <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
@@ -454,6 +447,7 @@ fieldset {
 
 .tableContent {
   margin-top: 40px;
+  font-size: 13px;
 }
 
 .tableContent table {
@@ -465,7 +459,7 @@ fieldset {
 
 table th {
   height: 50px;
-  font-size: 17px;
+  font-size: 15px;
   color: var(--black_text);
   padding: 10px 10px 0 10px;
 }
@@ -558,7 +552,7 @@ table td {
   display: none;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 1100px) {
   legend {
     text-align: center;
   }
