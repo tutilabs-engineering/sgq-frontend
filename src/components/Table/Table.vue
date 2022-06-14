@@ -1,6 +1,5 @@
 <template>
   <fieldset className="tableContent">
-
     <legend>Startups</legend>
     <table v-if="statusTable" cellpadding="0" cellspacing="0">
       <div class="btns">
@@ -51,7 +50,7 @@
           </td>
           <td data-title="Cód. OP">{{ item.op.code_op }}</td>
           <td data-title="Cód. Produto">{{ item.op.code_product }}</td>
-     
+
           <td data-title="Maquina">{{ item.op.machine }}</td>
           <td data-title="Metrologia">
             {{ verifyMetrology(item.metrology) }}
@@ -60,7 +59,10 @@
           <td data-title="Preenchimento">{{ verifyFillStartup(item) }}</td>
 
           <!-- <td data-title="Metrologia">{{ verifyMetrology(item.metrology) }}</td> -->
-          <td data-title="Data - Hora">{{ item.day }} <br> {{ item.start_time }}</td>
+          <td data-title="Data - Hora">
+            {{ item.day }} <br />
+            {{ item.start_time }}
+          </td>
           <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
@@ -130,7 +132,10 @@
           <td data-title="Metrologia">{{ verifyMetrology(item.metrology) }}</td>
           <td data-title="Status">{{ verifyOpenStartup(item) }}</td>
           <td data-title="Preenchimento">{{ verifyFillStartup(item) }}</td>
-          <td data-title="Data - Hora">{{ item.day }} <br> {{ item.start_time }}</td>
+          <td data-title="Data - Hora">
+            {{ item.day }} <br />
+            {{ item.start_time }}
+          </td>
           <td data-title="Usuario">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
@@ -147,35 +152,31 @@
           </td>
         </tr>
       </tbody>
-
-      
     </table>
 
     <div v-if="statusTable" class="pagination-component">
-        <div v-for="index in pages" :key="index">
-          <button
-            value="index"
-            @click="setNewIndex(index)"
-            :class="changeColorBtn(index)"
-          >
-            {{ index }}
-          </button>
-        </div>
+      <div v-for="index in pages" :key="index">
+        <button
+          value="index"
+          @click="setNewIndex(index)"
+          :class="changeColorBtn(index)"
+        >
+          {{ index }}
+        </button>
       </div>
+    </div>
 
     <div v-else class="pagination-component">
-        <div v-for="index in pagesClosed" :key="index">
-          <button
-            value="index"
-            @click="setNewIndexClosed(index)"
-            :class="changeColorBtn(index)"
-          >
-            {{ index }}
-          </button>
-        </div>
+      <div v-for="index in pagesClosed" :key="index">
+        <button
+          value="index"
+          @click="setNewIndexClosed(index)"
+          :class="changeColorBtn(index)"
+        >
+          {{ index }}
+        </button>
       </div>
-
-
+    </div>
   </fieldset>
 </template>
 
@@ -204,18 +205,17 @@ export default {
       currentItensClosed: "",
 
       totalItensClosed: "10",
-
     };
   },
 
   watch: {
-    statusTable(newValue){
-      if(newValue === true){
-        this.currentPage = 0
-      }else{
-        this.currentPage = 0
+    statusTable(newValue) {
+      if (newValue === true) {
+        this.currentPage = 0;
+      } else {
+        this.currentPage = 0;
       }
-    }
+    },
   },
 
   created: async function () {
@@ -224,8 +224,7 @@ export default {
     let openedStartups = [];
     let closedStartups = [];
     allStartups.data.forEach((startup) => {
-      startup.day = startup.day.split("T")[0];
-      startup.day = this.formatDate(startup.day);
+      startup.day = dayjs(startup.day).locale("pt-br").format("DD/MM/YYYY");
       startup.start_time = dayjs(startup.start_time)
         .locale("pt-br")
         .format("HH:mm:ss");
@@ -237,6 +236,7 @@ export default {
     });
     this.itemsAbertos = openedStartups.reverse();
     this.itemsFechados = closedStartups.reverse();
+    console.log(this.itemsFechados);
 
     this.existItemAbertos(this.itemsAbertos.length);
     this.existItemFechados(this.itemsFechados.length);
@@ -244,52 +244,56 @@ export default {
     this.totalItens = this.itemsAbertos.length;
     this.totalItensClosed = this.itemsFechados.length;
     this.pages = this.calcPages();
-    this.pagesClosed = this.calcPagesClosed()
+    this.pagesClosed = this.calcPagesClosed();
 
     this.startIndex = this.currentPage * this.itensPerPage;
     this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage);
 
     this.currentItens = this.itemsAbertos.slice(this.startIndex, this.endIndex);
-    this.currentItensClosed = this.itemsFechados.slice(this.startIndex, this.endIndex);
+    this.currentItensClosed = this.itemsFechados.slice(
+      this.startIndex,
+      this.endIndex
+    );
 
     this.$store.commit("$SETISLOADING");
   },
 
   methods: {
-
-    verifyOpenStartup(startup){
-       if(startup.open && startup.filled){
-         return "Rodando"
-       }else if(!startup.open && startup.filled){
-         return "Fechado"
-       }else{
-         return "Aguardando"
-       }
-    },
-    verifyFillStartup(startup){
-      // Se startup não estiver fechada e não foi preenchida nenhuma vez
-        if(startup.filled == false && startup.report_startup_fill.length <= 0){
-           return "Em Aberto"
-        } else if(startup.filled == false && startup.report_startup_fill.length > 0){
-           return "Em Andamento"
-        }else if(startup.filled == true){
-            return "Preenchido"
-        }
-
-    },
-
-    verifyMetrology(metrology){
-      if(metrology.length > 0){
-        if(metrology[0].metrology == false){
-            return "Met. Preenchida"
-        }else if(metrology[0].metrology == true){
-            return "Met. Não Preenchida"
-        }
-      }else{
-        return "Não existe Metrologia"
+    verifyOpenStartup(startup) {
+      if (startup.open && startup.filled) {
+        return "Rodando";
+      } else if (!startup.open && startup.filled) {
+        return "Fechado";
+      } else {
+        return "Aguardando";
       }
     },
-    
+    verifyFillStartup(startup) {
+      // Se startup não estiver fechada e não foi preenchida nenhuma vez
+      if (startup.filled == false && startup.report_startup_fill.length <= 0) {
+        return "Em Aberto";
+      } else if (
+        startup.filled == false &&
+        startup.report_startup_fill.length > 0
+      ) {
+        return "Em Andamento";
+      } else if (startup.filled == true) {
+        return "Preenchido";
+      }
+    },
+
+    verifyMetrology(metrology) {
+      if (metrology.length > 0) {
+        if (metrology[0].metrology == false) {
+          return "Met. Preenchida";
+        } else if (metrology[0].metrology == true) {
+          return "Met. Não Preenchida";
+        }
+      } else {
+        return "Não existe Metrologia";
+      }
+    },
+
     calcPagination: async function () {
       this.pages = this.calcPages();
       (this.startIndex = this.currentPage * this.itensPerPage),
@@ -306,8 +310,7 @@ export default {
       const allStartups = await http.listAllStartups();
       let openedStartups = [];
       allStartups.data.forEach((startup) => {
-        startup.day = startup.day.split("T")[0];
-        startup.day = this.formatDate(startup.day);
+        startup.day = dayjs(startup.day).locale("pt-br").format("DD/MM/YYYY");
         startup.start_time = dayjs(startup.start_time)
           .locale("pt-br")
           .format("HH:mm:ss");
@@ -332,8 +335,7 @@ export default {
       const allStartups = await http.listAllStartups();
       let closedStartups = [];
       allStartups.data.forEach((startup) => {
-        startup.day = startup.day.split("T")[0];
-        startup.day = this.formatDate(startup.day);
+        startup.day = dayjs(startup.day).locale("pt-br").format("DD/MM/YYYY");
         startup.start_time = dayjs(startup.start_time)
           .locale("pt-br")
           .format("HH:mm:ss");
@@ -354,7 +356,9 @@ export default {
     },
 
     calcPagesClosed() {
-      return Math.ceil(parseInt(this.totalItensClosed) / parseInt(this.itensPerPage));
+      return Math.ceil(
+        parseInt(this.totalItensClosed) / parseInt(this.itensPerPage)
+      );
     },
 
     changeColorBtn(index) {
@@ -376,13 +380,6 @@ export default {
 
     existItemFechados: async function (fechados) {
       this.$emit("returnItemFechados", fechados);
-    },
-
-    formatDate(date) {
-      this.year = date.slice(0, -6);
-      this.month = date.slice(5, -3);
-      this.day = date.slice(-2);
-      return (date = `${this.day}/${this.month}/${this.year}`);
     },
   },
 };
@@ -447,7 +444,7 @@ fieldset {
 
 .tableContent {
   margin-top: 40px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .tableContent table {
