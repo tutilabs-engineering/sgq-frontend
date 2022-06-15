@@ -2,7 +2,7 @@
 <div class="tableContent">
  
       <table cellpadding="0" cellspacing="0">
-
+ 
         <thead>
           <th>Identificação</th>
           <th v-for="x in arrayFilter(variables[0].items)" :key="x.id">{{"min - Cavidade " + x.position_cavity + " - max"}}</th>
@@ -14,12 +14,13 @@
                <td> {{ i.variable}} </td>
                <td v-for="item in arrayFilter(i.items)" :key="item" data-title="Cavidade">
                 <div class="cavity-area" v-if="item !== null">
-                  <span>max - {{item.variable.min}}</span>
+               
+                  <span>min - {{item.variable.min}}</span>
                    <input @change="verifyValue(item.value, item.variable.min, item.variable.max)" class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required v-if="statusInput" disabled>
 
                    <input @change="verifyValue(item.value, item.variable.min, item.variable.max)" class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required v-else>
 
-                   <span>{{item.variable.max}} - min</span>
+                   <span>{{item.variable.max}} - max</span>
             
                 </div>
                </td>   
