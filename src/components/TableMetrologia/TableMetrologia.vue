@@ -101,9 +101,9 @@
           <td class="codeStartup" data-title="O.P">{{ metrologyHistory.startup.op.code_op}}</td>
           <td data-title="Cod. Produto">{{metrologyHistory.startup.op.code_product}}</td>
           <td data-title="Produto">{{metrologyHistory.startup.op.desc_product}}</td>
-          <td data-title="Data de Envio">{{formatDate(metrologyHistory.sendToMetrology) }}</td>
-          <td data-title="Data de Abertura">{{formatDate(metrologyHistory.metrologyHistory.startDate)}}</td>
-          <td data-title="Data de Finalização">{{formatDate(metrologyHistory.metrologyHistory.endDate)}}</td>
+          <td data-title="Data de Envio">{{metrologyHistory.sendToMetrology}}</td>
+          <td data-title="Data de Abertura">{{metrologyHistory.metrologyHistory.startDate}}</td>
+          <td data-title="Data de Finalização">{{metrologyHistory.metrologyHistory.endDate}}</td>
           <td class="lastTd" data-title="Opção">
             <button class="btn-view" @click="() => this.$router.push({ name: 'MetrologiaDetalhesPreenchido', query: {id: metrologyHistory.startup.id} })">Visualizar</button>
           </td>
@@ -137,10 +137,10 @@ export default {
     // this.user_id = dataUser().user.id
          
         //Lista histórico de Metrologia
-        this.listMetrologyHistory()
+        await this.listMetrologyHistory()
 
         //Lista solictações
-        this.listMetrologySolicitations()
+        await this.listMetrologySolicitations()
 
         await userId.DataUser().then((res)=>{
            this.user_id = res.data.user.id

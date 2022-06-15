@@ -1,4 +1,5 @@
 <template>
+
   <div class="content-novaStartup" v-if="!isFilled">
     <div style="display: flex; gap: 20px">
       <fieldset>
@@ -74,6 +75,38 @@
     <TableComponentesPreenchido :componentsInfo="componentsInfo" />
 
     <ListaPerguntas :startupData="data_startup" />
+
+  <div v-if="data_startup.metrology_items.length > 0">
+
+ <div>
+ 
+    <fieldset>
+    <legend>Metrologia</legend>
+       <div class="form"> 
+
+      <div class="input">
+        <label for="client">Horário Inicial</label>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="data_startup.metrology[0].metrologyHistory.startDate"  disabled> 
+      </div>
+
+          <div class="input">
+        <label for="client">Horário Final</label>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="data_startup.metrology[0].metrologyHistory.endDate"   disabled> 
+      </div>
+
+      <div class="input">
+        <label for="client">Técnico Agregado</label>
+        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="data_startup.metrology[0].metrologyHistory.user.name"  disabled> 
+      </div>
+    
+    </div>
+
+         <TableMetrologiaDetalhes  :variables="data_startup.metrology_items" :inputStatus="true"/>
+    </fieldset>
+ </div>
+
+  </div>
+
   </div>
 </template>
 
@@ -84,6 +117,7 @@ import TableComponentesPreenchido from "../components/TableComponentesPreenchido
 import StartupCadastroPreenchido from "../components/StartupCadastroPreenchido/StartupCadastroPreenchido.vue";
 import ListaPerguntasPreenchida from "../components/ListaPerguntasPreenchida/ListaPerguntasPreenchida.vue";
 import ListaPerguntas from "../components/ListaPerguntas/ListaPerguntas.vue";
+import TableMetrologiaDetalhes from '../components/TableMetrologiaDetalhes/TableMetrologiaDetalhes.vue'
 
 import http from "../services/startup";
 
@@ -134,6 +168,7 @@ export default {
     ListaPerguntasPreenchida,
     ListaPerguntas,
     SecondaryOP,
+    TableMetrologiaDetalhes
   },
 
   created: async function () {
@@ -166,6 +201,14 @@ export default {
     });
   },
   methods: {
+    formatDate(date) {
+      date = date.slice(0, -14);
+      this.year = date.slice(0, -6)
+      this.month = date.slice(5, -3)
+      this.day = date.slice(-2)
+      return date = `${this.day}/${this.month}/${this.year}`
+    },
+
     verifyMetrologyStatus(startup) {
       if (startup.metrology.length > 0) {
         if (!startup.metrology[0].metrology) {
@@ -175,7 +218,7 @@ export default {
       }
       return false;
     },
-    verifyMetrology(startup) {
+     verifyMetrology(startup) {
       if (startup.metrology.length <= 0 ) {
         return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
         // Nao Existe metrologia
@@ -311,6 +354,46 @@ export default {
 </script>
 
 <style scoped>
+
+
+.form {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 10px 10px 10px 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  margin-bottom: 20px;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 70px;
+  padding: 5px;
+  border-radius: 5px 5px 0 0;
+}
+
+.input label {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--black_text);
+}
+
+.input input {
+  background-color: transparent;
+  border: none;
+  transition: 1s;
+  outline: none;
+  font-size: 15px;
+  height: 52px;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.39);
+}
+
+
 .alert-metrology-aproved {
   width: 100%;
   padding: 10px;
@@ -330,7 +413,7 @@ export default {
 
 fieldset {
   margin-left: 20px;
-  width: 30%;
+  width: 100%;
   border: 1px solid rgba(37, 36, 36, 0.281);
   font-size: 20px;
   font-weight: 600;
@@ -429,6 +512,26 @@ legend {
   .btn-fill-save,
   .btns-options {
     grid-column: 1;
+  }
+}
+
+@media (max-width: 1114px) and (min-width: 766px){
+  .legend {
+    text-align: center;
+  }
+    .form {
+    padding: 12px;
+    grid-template-columns: auto;
+  }
+}
+
+@media (max-width: 765px){
+  legend {
+    text-align: center;
+  }
+    .form {
+    padding: 12px;
+    grid-template-columns: 1fr;
   }
 }
 </style>
