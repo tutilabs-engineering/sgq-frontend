@@ -1,5 +1,4 @@
 <template>
-
   <div class="content-novaStartup" v-if="!isFilled">
     <div style="display: flex; gap: 20px">
       <fieldset>
@@ -38,20 +37,20 @@
           Cancelar
         </button>
         <div v-if="verifyMetrologyStatus(data_startup)">
-        <button class="btn-save btn" @click="saveFillReportStartup">
-          Finalizar
-        </button>
+          <button class="btn-save btn" @click="saveFillReportStartup">
+            Finalizar
+          </button>
         </div>
-         <div v-else>
-        <button class="btn-save-fill btn" @click="saveFillReportStartup">
-          Preencher
-        </button>
+        <div v-else>
+          <button class="btn-save-fill btn" @click="saveFillReportStartup">
+            Preencher
+          </button>
         </div>
       </div>
     </div>
   </div>
   <div class="content-novaStartup" v-else>
-    <div style="display: flex; gap: 20px">
+    <div style="display: flex; gap: 20px; padding-right: 20px">
       <fieldset>
         <legend>Status</legend>
         <span class="startup-preenchida">Preenchida</span>
@@ -76,37 +75,53 @@
 
     <ListaPerguntas :startupData="data_startup" />
 
-  <div v-if="data_startup.metrology_items.length > 0">
-
- <div>
- 
-    <fieldset>
-    <legend>Metrologia</legend>
-       <div class="form"> 
-
-      <div class="input">
-        <label for="client">Horário Inicial</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="data_startup.metrology[0].metrologyHistory.startDate"  disabled> 
-      </div>
+    <div v-if="data_startup.metrology_items.length > 0" class="metrologyInStartup">
+      <fieldset>
+        <legend>Metrologia</legend>
+        <div class="form">
+          <div class="input">
+            <label for="client">Horário Inicial</label>
+            <input
+              type="text"
+              name="client"
+              id="client"
+              placeholder="ex: Yamaha"
+              :value="data_startup.metrology[0].metrologyHistory.startDate"
+              disabled
+            />
+          </div>
 
           <div class="input">
-        <label for="client">Horário Final</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="data_startup.metrology[0].metrologyHistory.endDate"   disabled> 
-      </div>
+            <label for="client">Horário Final</label>
+            <input
+              type="text"
+              name="client"
+              id="client"
+              placeholder="ex: Yamaha"
+              :value="data_startup.metrology[0].metrologyHistory.endDate"
+              disabled
+            />
+          </div>
 
-      <div class="input">
-        <label for="client">Técnico Agregado</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="data_startup.metrology[0].metrologyHistory.user.name"  disabled> 
-      </div>
-    
+          <div class="input">
+            <label for="client">Técnico Agregado</label>
+            <input
+              type="text"
+              name="client"
+              id="client"
+              placeholder="ex: Yamaha"
+              :value="data_startup.metrology[0].metrologyHistory.user.name"
+              disabled
+            />
+          </div>
+        </div>
+
+        <TableMetrologiaDetalhes
+          :variables="data_startup.metrology_items"
+          :inputStatus="true"
+        />
+      </fieldset>
     </div>
-
-         <TableMetrologiaDetalhes  :variables="data_startup.metrology_items" :inputStatus="true"/>
-    </fieldset>
- </div>
-
-  </div>
-
   </div>
 </template>
 
@@ -117,7 +132,8 @@ import TableComponentesPreenchido from "../components/TableComponentesPreenchido
 import StartupCadastroPreenchido from "../components/StartupCadastroPreenchido/StartupCadastroPreenchido.vue";
 import ListaPerguntasPreenchida from "../components/ListaPerguntasPreenchida/ListaPerguntasPreenchida.vue";
 import ListaPerguntas from "../components/ListaPerguntas/ListaPerguntas.vue";
-import TableMetrologiaDetalhes from '../components/TableMetrologiaDetalhes/TableMetrologiaDetalhes.vue'
+import TableMetrologiaDetalhes from "../components/TableMetrologiaDetalhes/TableMetrologiaDetalhes.vue";
+
 
 import http from "../services/startup";
 
@@ -168,12 +184,11 @@ export default {
     ListaPerguntasPreenchida,
     ListaPerguntas,
     SecondaryOP,
-    TableMetrologiaDetalhes
+    TableMetrologiaDetalhes,
   },
 
   created: async function () {
     await http.findReportStartupById(this.id_startup).then((res) => {
-
       this.data_startup = res.data;
       this.code_startup = this.data_startup.code_startup;
       this.headerPreenchida.code_op = this.data_startup.op.code_op;
@@ -203,10 +218,10 @@ export default {
   methods: {
     formatDate(date) {
       date = date.slice(0, -14);
-      this.year = date.slice(0, -6)
-      this.month = date.slice(5, -3)
-      this.day = date.slice(-2)
-      return date = `${this.day}/${this.month}/${this.year}`
+      this.year = date.slice(0, -6);
+      this.month = date.slice(5, -3);
+      this.day = date.slice(-2);
+      return (date = `${this.day}/${this.month}/${this.year}`);
     },
 
     verifyMetrologyStatus(startup) {
@@ -218,8 +233,8 @@ export default {
       }
       return false;
     },
-     verifyMetrology(startup) {
-      if (startup.metrology.length <= 0 ) {
+    verifyMetrology(startup) {
+      if (startup.metrology.length <= 0) {
         return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
         // Nao Existe metrologia
       }
@@ -354,8 +369,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .form {
   padding: 20px;
   width: 100%;
@@ -367,7 +380,9 @@ export default {
   grid-gap: 20px;
   margin-bottom: 20px;
 }
-
+.metrologyInStartup {
+  padding-right: 40px;
+}
 .input {
   display: flex;
   flex-direction: column;
@@ -392,7 +407,6 @@ export default {
   height: 52px;
   border-bottom: 2px solid rgba(128, 128, 128, 0.39);
 }
-
 
 .alert-metrology-aproved {
   width: 100%;
@@ -463,8 +477,7 @@ legend {
 }
 
 .btn-save,
-.btn-save-fill
-.btn-cancel {
+.btn-save-fill .btn-cancel {
   width: 79%;
 }
 
@@ -515,21 +528,21 @@ legend {
   }
 }
 
-@media (max-width: 1114px) and (min-width: 766px){
+@media (max-width: 1114px) and (min-width: 766px) {
   .legend {
     text-align: center;
   }
-    .form {
+  .form {
     padding: 12px;
     grid-template-columns: auto;
   }
 }
 
-@media (max-width: 765px){
+@media (max-width: 765px) {
   legend {
     text-align: center;
   }
-    .form {
+  .form {
     padding: 12px;
     grid-template-columns: 1fr;
   }

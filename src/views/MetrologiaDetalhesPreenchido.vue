@@ -1,264 +1,295 @@
 <template>
+  <div class="content-metrologiaDetalhes">
+    <fieldset class="form">
+      <legend>Metrologia</legend>
 
-<div class="content-metrologiaDetalhes">
-      <fieldset class="form">
-        <legend>Metrologia</legend>
-  
       <div class="input">
         <label for="code_product">Código Produto</label>
-        <input type="text" name="code_product" id="code_product" placeholder="Digite o código OP" :value="opById.header.code_product" disabled>
+        <input
+          type="text"
+          name="code_product"
+          id="code_product"
+          placeholder="Digite o código OP"
+          :value="opById.header.code_product"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Código Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="opById.header.code_client" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          placeholder="ex: Yamaha"
+          :value="opById.header.code_client"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Produto</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha"  :value="opById.header.desc_product" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          placeholder="ex: Yamaha"
+          :value="opById.header.desc_product"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="opById.header.client" disabled> 
+        <input
+          type="text"
+          name="client"
+          id="client"
+          placeholder="ex: Yamaha"
+          :value="opById.header.client"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Técnico Agregado</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="opById.header.user.name" disabled> 
+        <input
+          type="text"
+          name="client"
+          id="client"
+          placeholder="ex: Yamaha"
+          :value="opById.header.user.name"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Horário Inicial</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="formatDate(opById.header.user.startDate)" disabled> 
+        <input
+          type="text"
+          name="client"
+          id="client"
+          placeholder="ex: Yamaha"
+          :value="formatDate(opById.header.user.startDate)"
+          disabled
+        />
       </div>
-
-     </fieldset>
- <form>
-     <fieldset>
-       <legend>Preenchimento</legend>
-
-      <TableMetrologiaDetalhes @variablesModification="captureDataFromVariables" :variables="opById.metrology_items" :inputStatus="true"/>
-
     </fieldset>
+    <form>
+      <fieldset>
+        <legend>Preenchimento</legend>
 
-
- </form>
- 
- 
-</div>
-  
+        <TableMetrologiaDetalhes
+          @variablesModification="captureDataFromVariables"
+          :variables="opById.metrology_items"
+          :inputStatus="true"
+        />
+      </fieldset>
+    </form>
+  </div>
 </template>
 
 <script>
-import  http  from '../services/metrology/Metrology'
-import TableMetrologiaDetalhes from '../components/TableMetrologiaDetalhes/TableMetrologiaDetalhes.vue'
-import  userId  from '../utils/dataUser'
+import http from "../services/metrology/Metrology";
+import TableMetrologiaDetalhes from "../components/TableMetrologiaDetalhes/TableMetrologiaDetalhes.vue";
+import userId from "../utils/dataUser";
 
 export default {
-    components: { TableMetrologiaDetalhes},
-    name: "MetrologiaDetalhes",
-    data(){
-        return {
-          newDataVariables : [],
-          dataVariables: [],
-          opById: {
-              metrology_items: [
-                {
-                  items : []
-                }
-              ],
-              header : {
-              code_product : "",
-              code_client: "",
-              desc_product: "",
-              client:"",
-              user : {
-                   name : "",
-                   startDate: ""
-              }
-            }
+  components: { TableMetrologiaDetalhes },
+  name: "MetrologiaDetalhes",
+  data() {
+    return {
+      newDataVariables: [],
+      dataVariables: [],
+      opById: {
+        metrology_items: [
+          {
+            items: [],
           },
-          qtdeCavidade: 0,
-          exit: "",
-        };
-    },
+        ],
+        header: {
+          code_product: "",
+          code_client: "",
+          desc_product: "",
+          client: "",
+          user: {
+            name: "",
+            startDate: "",
+          },
+        },
+      },
+      qtdeCavidade: 0,
+      exit: "",
+    };
+  },
 
-    created: async function(){
-        this.$store.commit("$SETISLOADING");
-       const id = this.$route.query.id
-       
-       await http.FindMetrologyById(id).then( (res) => {
-        this.opById = res.data.list
-      })
-       this.$store.commit("$SETISLOADING");
-     
-    },
-    methods : {
+  created: async function () {
+    this.$store.commit("$SETISLOADING");
+    const id = this.$route.query.id;
 
-    dataUpdate: async function (){
-      const startup = this.$route.query.id
-      const user = await userId.DataUser().then((res)=>{
-        return res.data.user.id
-      })
-       const data = {
-          user,
-          metrology : this.newDataVariables
-        }
-         
+    await http.FindMetrologyById(id).then((res) => {
+      this.opById = res.data.list;
+    });
+    this.$store.commit("$SETISLOADING");
+  },
+  methods: {
+    dataUpdate: async function () {
+      const startup = this.$route.query.id;
+      const user = await userId.DataUser().then((res) => {
+        return res.data.user.id;
+      });
+      const data = {
+        user,
+        metrology: this.newDataVariables,
+      };
+
       const Toast = this.$swal.mixin({
-                    toast: true,
-                    position: 'top-right',
-                    iconColor: '#ff5349',
-                    customClass: {
-                    popup: 'colored-toast',
-                    title: 'title-swal-text'
-                    },
-                    didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
-                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
-                    },
-                    showConfirmButton: false,
-                    timer: 2500,
-                    timerProgressBar: true
-                })
-               
-                
-         await http.UpdateDataMetrologyOfStartup(startup, data).then((res)=>{
-           this.exit = res
+        toast: true,
+        position: "top-right",
+        iconColor: "#ff5349",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
 
-         }).catch((error)=>{
-           Toast.fire({
-                        icon: 'warning',
-                        title: error.response.data.message,
-                        background: "#fff",
-                    })
-         })
+      await http
+        .UpdateDataMetrologyOfStartup(startup, data)
+        .then((res) => {
+          this.exit = res;
+        })
+        .catch((error) => {
+          Toast.fire({
+            icon: "warning",
+            title: error.response.data.message,
+            background: "#fff",
+          });
+        });
     },
 
     formatDate(date) {
       date = date.slice(0, -14);
-      this.year = date.slice(0, -6)
-      this.month = date.slice(5, -3)
-      this.day = date.slice(-2)
-      return date = `${this.day}/${this.month}/${this.year}`
+      this.year = date.slice(0, -6);
+      this.month = date.slice(5, -3);
+      this.day = date.slice(-2);
+      return (date = `${this.day}/${this.month}/${this.year}`);
     },
 
+    captureDataFromVariables(val) {
+      // Capture data in table details metrology to salve(this.$emit)
+      this.dataVariables = val;
+    },
 
-      captureDataFromVariables(val){
-        // Capture data in table details metrology to salve(this.$emit)
-         this.dataVariables = val
-      }, 
-
-      async saveData(){
-         //Loading Construct Data Metrology to save in database
-        await this.constructDataMetrology();
-        await this.dataUpdate();
-
-        this.$swal.fire({
-            title: 'Preenchimento salvo!',
-            text: "Você pode voltar depois para finalizá-la",
-            icon: 'success',
-            reverseButtons: true,
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Okay',
-            cancelButtonText: 'Não'
-          }).then( (result) => {
-            if(result.isConfirmed) {
-              this.$router.push({ name: "metrologia" });
-            }
-          })
-
-          
-      },
-
-
-      constructDataMetrology: async function (){
-          this.newDataVariables = []
-          this.dataVariables.map((element)=>{
-             element.items.map((item)=>{
-               if(item != null){
-                 this.newDataVariables.push({id: item.metrology_id, value: item.value})
-               }
-             })
-         })
-        
-      },
-async finishMetrology(){
+    async saveData() {
+      //Loading Construct Data Metrology to save in database
       await this.constructDataMetrology();
       await this.dataUpdate();
-      const startup = this.$route.query.id
-      const user = await userId.DataUser().then((res)=>{
-        return res.data.user.id
-      })
 
-           
+      this.$swal
+        .fire({
+          title: "Preenchimento salvo!",
+          text: "Você pode voltar depois para finalizá-la",
+          icon: "success",
+          reverseButtons: true,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Okay",
+          cancelButtonText: "Não",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.$router.push({ name: "metrologia" });
+          }
+        });
+    },
+
+    constructDataMetrology: async function () {
+      this.newDataVariables = [];
+      this.dataVariables.map((element) => {
+        element.items.map((item) => {
+          if (item != null) {
+            this.newDataVariables.push({
+              id: item.metrology_id,
+              value: item.value,
+            });
+          }
+        });
+      });
+    },
+    async finishMetrology() {
+      await this.constructDataMetrology();
+      await this.dataUpdate();
+      const startup = this.$route.query.id;
+      const user = await userId.DataUser().then((res) => {
+        return res.data.user.id;
+      });
+
       const Toast = this.$swal.mixin({
-                    toast: true,
-                    position: 'top-right',
-                    iconColor: '#ff5349',
-                    customClass: {
-                    popup: 'colored-toast',
-                    title: 'title-swal-text'
-                    },
-                    didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
-                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
-                    },
-                    showConfirmButton: false,
-                    timer: 2500,
-                    timerProgressBar: true
-                })
+        toast: true,
+        position: "top-right",
+        iconColor: "#ff5349",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
 
- await this.$swal.fire({
-    title: 'Você realmente quer terminar esta revisão de metrologia?',
-    text: "Depois de concluído, será associado a Startup",
-    icon: 'warning',
-    showCancelButton: true,
-    reverseButtons: true,
-    cancelButtonColor: '#d33',
-    confirmButtonColor: '#3085d6',
-    confirmButtonText: 'Concluir'
-}).then(async (result) => {
-  if (result.isConfirmed) {
-   
-   await http.FinishMetrologyByUserId(startup,user).then((res)=>{
-     console.log(res);
-     Toast.fire({
-      icon : "success",
-      title :  "Metrologia finalizada com sucesso!",
-     });
-     this.$router.push({ name: "metrologia" });
-
-
-   }).catch(()=>{
-
-   Toast.fire({
-     icon : "error",
-     title :  "Verifique se os valores estão dentro dos limites máximos e mínimos",
-    })
-   })
-    
- 
-  }
-})
-
-    }
-
-},
-
-}
+      await this.$swal
+        .fire({
+          title: "Você realmente quer terminar esta revisão de metrologia?",
+          text: "Depois de concluído, será associado a Startup",
+          icon: "warning",
+          showCancelButton: true,
+          reverseButtons: true,
+          cancelButtonColor: "#d33",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Concluir",
+        })
+        .then(async (result) => {
+          if (result.isConfirmed) {
+            await http
+              .FinishMetrologyByUserId(startup, user)
+              .then((res) => {
+                console.log(res);
+                Toast.fire({
+                  icon: "success",
+                  title: "Metrologia finalizada com sucesso!",
+                });
+                this.$router.push({ name: "metrologia" });
+              })
+              .catch(() => {
+                Toast.fire({
+                  icon: "error",
+                  title:
+                    "Verifique se os valores estão dentro dos limites máximos e mínimos",
+                });
+              });
+          }
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
-
 legend {
   font-size: 30px;
   font-weight: 600;
   color: var(--black_text);
 }
-
 
 fieldset {
   border: 1px solid rgba(37, 36, 36, 0.281);
@@ -312,7 +343,7 @@ fieldset {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  gap:3px;
+  gap: 3px;
 }
 
 .btn-save {
@@ -334,27 +365,26 @@ fieldset {
   border-radius: 5px;
   font-size: 1.1rem;
   color: var(--main_primaryWhite);
-   background-color: var(--card_blue);
+  background-color: var(--card_blue);
 }
 
-@media (max-width: 1114px) and (min-width: 766px){
+@media (max-width: 1114px) and (min-width: 766px) {
   .legend {
     text-align: center;
   }
-    .form {
+  .form {
     padding: 12px;
     grid-template-columns: auto;
   }
 }
 
-@media (max-width: 765px){
+@media (max-width: 765px) {
   legend {
     text-align: center;
   }
-    .form {
+  .form {
     padding: 12px;
     grid-template-columns: 1fr;
   }
 }
-
 </style>

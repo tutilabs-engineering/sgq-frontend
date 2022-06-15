@@ -12,14 +12,14 @@
           
           <tr v-for="i in variables" :key="i" >
                <td> {{ i.variable}} </td>
-               <td v-for="item in arrayFilter(i.items)" :key="item">
+               <td v-for="item in arrayFilter(i.items)" :key="item" data-title="Cavidade">
                 <div class="cavity-area" v-if="item !== null">
-                    <span>{{item.variable.min}}</span>
+                  <span>max - {{item.variable.min}}</span>
                    <input @change="verifyValue(item.value, item.variable.min, item.variable.max)" class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required v-if="statusInput" disabled>
 
                    <input @change="verifyValue(item.value, item.variable.min, item.variable.max)" class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required v-else>
 
-                   <span>{{item.variable.max}}</span>
+                   <span>{{item.variable.max}} - min</span>
             
                 </div>
                </td>   
@@ -155,6 +155,7 @@ table th {
   text-align: center;
   height: 30px;
   padding: 0 10px 0 10px;
+  color: var(--black_text);
 }
 
 .cavity-area {
@@ -166,7 +167,6 @@ table th {
 .cavity-area span {
   flex-direction: column;
   font-size: 14px;
-  font-weight: 500;
 }
 
 .input-test{
@@ -183,12 +183,38 @@ table th {
 
 
 @media (max-width: 965px) {
+
   .tableContent {
-    padding: 0;
+    color: var(--black_text);
+  }
+  
+  .tableContent thead {
+    
+    display: none;
   }
 
-  legend {
+  .tableButton {
+    display: block;
+  }
+
+  .tableContent td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tableContent td:first-of-type {
+    font-size: 1.2rem;
     text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .tableContent td:not(:first-of-type):before {
+    font-size: 14px;
+    content: attr(data-title);
+    display: block;
+
   }
 }
 </style>
