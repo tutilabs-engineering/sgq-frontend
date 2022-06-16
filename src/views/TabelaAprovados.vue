@@ -192,10 +192,6 @@ export default {
   gap: 5px;
 }
 
-.btnClicked {
-  background-color: var(--card_blue) !important;
-}
-
 .pagination-component button {
   color: #fff;
   cursor: pointer;
