@@ -8,10 +8,6 @@
     
   </fieldset>
 
-  <!-- <h1>numero de paginas {{pages}} / startIndex: {{startIndex}} / endIndex: {{endIndex}} / totalItens: {{totalItens}}</h1> -->
-  
-
-
   <fieldset className="tableContent" v-if="!isSearched">
     <legend>Análise de Produto</legend>
     <table cellpadding="0" cellspacing="0">
@@ -22,7 +18,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="(product, index) in currentItens" :key="product.id">
+        <tr v-for="product in displayedPosts" :key="product.id">
           <td style="display: none"></td>
           <td data-title="Cód. Prod.">{{ product.code_product }}</td>
           <td data-title="Produto">{{ product.name_product }}</td>
@@ -56,9 +52,26 @@
       @changeStatus="changeStatusModalVariable"
     />
     <div class="pagination-component">
-    <div v-for="index  in pages" key="index" >
-      <button value="index" @click="setNewIndex(index)" :class="changeColorBtn(index)">{{index}}</button>
-    </div>
+    <button class="btn-pagination" type="button" v-if="page != 1" @click="page--">
+    Prev
+  </button>
+  <button
+    class="btn-pagination"
+    type="button"
+    v-for="pageNumber in pages.slice(page - 1, page + 5)"
+    :key="pageNumber"
+    @click="page = pageNumber"
+  >
+    {{ pageNumber }}
+  </button>
+  <button
+    class="btn-pagination"
+    type="button"
+    @click="page++"
+    v-if="page < pages.length"
+  >
+    Next
+  </button>
     </div>
   </fieldset>
 
@@ -106,6 +119,7 @@
       @changeStatus="changeStatusModalVariable"
     />
   </fieldset>
+
 </template>
 
 <script>
@@ -114,8 +128,9 @@ import ModalVariable from "../components/Modal/ModalVariavel.vue";
 import http from "../services/productAnalysis/Products";
 
 
+
 export default {
-  components: { ModalAttribute, ModalVariable },
+  components: { ModalAttribute, ModalVariable},
   setup() {},
   name: "Table",
   emits: ["modalAtributo", "modalVariavel"],
@@ -130,16 +145,13 @@ export default {
       isSearched: false,
       indexId: 0,
 
-      // Apenas para paginação
-      totalItens: "10",
-      itensPerPage: "10",
-      currentPage: 0,
-      pages: "",
-      startIndex: "",
-      endIndex: "",
-      currentItens: "",
+      btnChanged: false,
 
-      btnChanged: false
+
+      posts: [""],
+      page: 1,
+      perPage: 10,
+      pages: [],
 
     };
   },
@@ -151,37 +163,33 @@ export default {
         this.isSearched = false;
       }
     },
+
+    posts() {
+      this.setPages();
+    },
+
+
   },
+  computed: {
+    displayedPosts() {
+      return this.paginate(this.posts);
+    },
+  },
+
   methods: {
-
-    calcPagination: async function () {
-    this.pages = this.calcPages()
-    this.startIndex = this.currentPage * this.itensPerPage,
-    this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage)
-    },
-
-    setNewIndex: async function(e){
-      this.currentPage = e
-      this.startIndex =  this.currentPage * this.itensPerPage
-      this.startIndex = this.startIndex - 10
-      this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage)
-      this.listAllProducts = await http.listProducts();
-      this.listAllProducts = this.listAllProducts.data.list;
-      this.currentItens = this.listAllProducts.slice(this.startIndex, this.endIndex)
-
-    },
-
-    calcPages(){
-      return Math.ceil(parseInt(this.totalItens)/parseInt(this.itensPerPage))
-    },
-
-    changeColorBtn(index){
-      if(this.currentPage == index){
-        return 'btnClicked'
+    setPages() {
+      let numberOfPages = Math.ceil(this.posts.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
       }
     },
-
-
+    paginate(posts) {
+      let page = this.page;
+      let perPage = this.perPage;
+      let from = page * perPage - perPage;
+      let to = page * perPage;
+      return posts.slice(from, to);
+    },
 
     searchProduct: async function () {
       if (this.codeProductValue != "") {
@@ -224,21 +232,11 @@ export default {
   
   created: async function () {
     
-    
     this.$store.commit("$SETISLOADING");
     this.listAllProducts = await http.listProducts();
     this.listAllProducts = this.listAllProducts.data.list;
 
-    // passa o total de paginas começando corretamente
-    this.totalItens = this.listAllProducts.length
-    this.pages = this.calcPages()
-
-    this.startIndex = this.currentPage * this.itensPerPage,
-    this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage)
-    
-
-    this.currentItens = this.listAllProducts.slice(this.startIndex, this.endIndex)
-
+    this.posts = this.listAllProducts
     this.$store.commit("$SETISLOADING");
   },
 };
@@ -252,20 +250,22 @@ export default {
   gap: 5px;
 }
 
-.btnClicked {
-  background-color: var(--card_blue) !important;
-}
 
-
-.pagination-component button {
-  color: #fff;
+.btn-pagination {
   cursor: pointer;
-  width: 30px;
+  color: #fff;
+  width: 40px;
   height: 30px;
   border: none;
+  margin: 2px;
+  background-color: var(--bg_green);
   border-radius: 5px;
-  background-color: var(--card_green);
 }
+
+.btn-pagination:focus {
+  background-color: var(--card_blue);
+}
+
 fieldset {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;

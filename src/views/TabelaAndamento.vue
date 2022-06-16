@@ -14,7 +14,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in currentItens" :key="item.id">
+        <tr v-for="item in displayedPosts" :key="item.id">
           <td style="display: none"></td>
           <td data-title="Cod. Startup">{{ item.code_startup }}</td>
           <td data-title="Cod. OP">{{ item.op.code_op }}</td>
@@ -46,15 +46,31 @@
     </table>
 
     <div class="pagination-component">
-      <div v-for="index in pages" key="index">
-        <button
-          value="index"
-          @click="setNewIndex(index)"
-          :class="changeColorBtn(index)"
-        >
-          {{ index }}
-        </button>
-      </div>
+      <button
+        class="btn-pagination"
+        type="button"
+        v-if="page != 1"
+        @click="page--"
+      >
+        Prev
+      </button>
+      <button
+        class="btn-pagination"
+        type="button"
+        v-for="pageNumber in pages.slice(page - 1, page + 5)"
+        :key="pageNumber"
+        @click="page = pageNumber"
+      >
+        {{ pageNumber }}
+      </button>
+      <button
+        class="btn-pagination"
+        type="button"
+        @click="page++"
+        v-if="page < pages.length"
+      >
+        Next
+      </button>
     </div>
   </fieldset>
 
@@ -74,7 +90,6 @@
 import http from "../services/startup/";
 import ModalNovaOp from "../components/Modal/ModalNovaOp.vue";
 export default {
-  setup() {},
   name: "Table",
   components: {
     ModalNovaOp,
@@ -82,36 +97,20 @@ export default {
   emits: ["modalNovaOp"],
 
   methods: {
-    calcPagination: async function () {
-      this.pages = this.calcPages();
-      (this.startIndex = this.currentPage * this.itensPerPage),
-        (this.endIndex =
-          parseInt(this.startIndex) + parseInt(this.itensPerPage));
-    },
-
-    setNewIndex: async function (e) {
-      this.currentPage = e;
-      this.startIndex = this.currentPage * this.itensPerPage;
-      this.startIndex = this.startIndex - 10;
-      this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage);
-      const listCount = await http.listCountOfStartupsByStatus();
-      this.listConditional =
-        listCount.data.reportStartups.conditional.reverse();
-      this.currentItens = this.listConditional.slice(
-        this.startIndex,
-        this.endIndex
-      );
-    },
-
-    calcPages() {
-      return Math.ceil(parseInt(this.totalItens) / parseInt(this.itensPerPage));
-    },
-
-    changeColorBtn(index) {
-      if (this.currentPage == index) {
-        return "btnClicked";
+    setPages() {
+      let numberOfPages = Math.ceil(this.posts.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
       }
     },
+    paginate(posts) {
+      let page = this.page;
+      let perPage = this.perPage;
+      let from = page * perPage - perPage;
+      let to = page * perPage;
+      return posts.slice(from, to);
+    },
+    
     OpenReportStartup: function (id_startup) {
       this.$router.push({
         path: "/create-startup-by-id",
@@ -144,18 +143,21 @@ export default {
     this.listConditional = listCount.data.reportStartups.conditional.reverse();
     this.isOp = await this.verifyOP(this.listConditional.length);
 
-    this.totalItens = this.listConditional.length;
-    this.pages = this.calcPages();
-
-    (this.startIndex = this.currentPage * this.itensPerPage),
-      (this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage));
-
-    this.currentItens = this.listConditional.slice(
-      this.startIndex,
-      this.endIndex
-    );
+    //pagination
+    this.posts = this.listConditional
 
     this.$store.commit("$SETISLOADING");
+  },
+
+  watch: {
+    posts() {
+      this.setPages();
+    }
+  },
+  computed: {
+    displayedPosts() {
+      return this.paginate(this.posts);
+    },
   },
 
   data() {
@@ -165,16 +167,12 @@ export default {
       modalNovaOp: false,
       nameRouter: "TabelaAndamento",
 
-      // Apenas para paginação
-      totalItens: "10",
-      itensPerPage: "10",
-      currentPage: 0,
-      pages: "",
-      startIndex: "",
-      endIndex: "",
-      currentItens: "",
-
       btnChanged: false,
+
+      posts: [""],
+      page: 1,
+      perPage: 9,
+      pages: [],
     };
   },
 };
@@ -187,18 +185,19 @@ export default {
   gap: 5px;
 }
 
-.btnClicked {
-  background-color: var(--card_blue) !important;
-}
-
-.pagination-component button {
-  color: #fff;
+.btn-pagination {
   cursor: pointer;
-  width: 30px;
+  color: #fff;
+  width: 40px;
   height: 30px;
   border: none;
+  margin: 2px;
+  background-color: var(--bg_green);
   border-radius: 5px;
-  background-color: var(--card_green);
+}
+
+.btn-pagination:focus {
+  background-color: var(--card_blue);
 }
 
 .legenda-warning {
