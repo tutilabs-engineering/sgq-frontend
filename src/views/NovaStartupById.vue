@@ -1,6 +1,6 @@
 <template>
   <div class="content-novaStartup" v-if="!isFilled">
-    <div style="display: flex; gap: 20px">
+    <div class="cards-status">
       <fieldset>
         <legend>Status</legend>
         <span class="startup-preenchida"> Não Preenchida</span>
@@ -50,7 +50,7 @@
     </div>
   </div>
   <div class="content-novaStartup" v-else>
-    <div style="display: flex; gap: 20px; padding-right: 20px">
+    <div class="cards-status">
       <fieldset>
         <legend>Status</legend>
         <span class="startup-preenchida">Preenchida</span>
@@ -383,6 +383,13 @@ export default {
 .metrologyInStartup {
   padding-right: 40px;
 }
+
+.cards-status {
+  display: flex; 
+  gap: 20px;
+  padding-right: 20px;
+}
+
 .input {
   display: flex;
   flex-direction: column;
@@ -536,9 +543,22 @@ legend {
     padding: 12px;
     grid-template-columns: auto;
   }
+
+  .cards-status {
+  display: flex; 
+  gap: 20px;
+  padding-right: 0;
+}
+  
 }
 
 @media (max-width: 765px) {
+  .cards-status {
+  display: flex; 
+  gap: 20px;
+  padding-right: 0;
+}
+
   legend {
     text-align: center;
   }
@@ -546,5 +566,9 @@ legend {
     padding: 12px;
     grid-template-columns: 1fr;
   }
+
+  .metrologyInStartup {
+    padding-right: 0px;
+}
 }
 </style>
