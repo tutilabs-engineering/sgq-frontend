@@ -168,7 +168,6 @@ export default {
   },
 
   created: async function () {
-    this.$store.commit("$SETISLOADING");
     await http
       .findReportStartupById(this.id_startup)
       .then((res) => {
@@ -177,7 +176,6 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-    this.$store.commit("$SETISLOADING");
   },
 
   props: {
