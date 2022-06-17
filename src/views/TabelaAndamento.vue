@@ -171,7 +171,7 @@ export default {
 
       posts: [""],
       page: 1,
-      perPage: 9,
+      perPage: 10,
       pages: [],
     };
   },

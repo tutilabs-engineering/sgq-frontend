@@ -240,9 +240,6 @@ export default {
       }
       if (startup.metrology.length > 0) {
         if (startup.metrology[0].metrology) {
-          // Verificar se a metroliga está fechada
-          // True ela esta aberta
-          //  False ela está fechada
           this.metrologyStyle = "alert-metrology";
           return "Atenção: As variáveis da Metrologia não foram preenchidas. Esta Startup não pode ser fechada porém os dados podem ser salvos.";
         }
