@@ -244,9 +244,9 @@ export default {
           // True ela esta aberta
           //  False ela está fechada
           this.metrologyStyle = "alert-metrology";
-          return "Variaveis em Metrologia Não preenchidas, está Startup não pode ser fechada porém os dados podem ser salvos.";
+          return "Atenção: As variáveis da Metrologia não foram preenchidas. Esta Startup não pode ser fechada porém os dados podem ser salvos.";
         }
-        return "Variaveis em Metrologia preenchidas, está Startup pode ser fechada.";
+        return "As variaveis da Metrologia estão preenchidas. A Startup pode ser fechada.";
       }
     },
     async saveFillReportStartup() {
