@@ -146,13 +146,15 @@ table {
 }
 
 table th {
-  font-size: 17px;
+  font-size: 10px;
   color:  var(--black_text);
   padding: 10px 10px 10px 10px;
 }
 
 .tableContent tr {
   height: 60px;
+  font-size: 10px;
+  word-wrap: break-word;
 }
 
 .table td {
@@ -184,7 +186,7 @@ table th {
 
 .cavity-area span {
   flex-direction: column;
-  font-size: 14px;
+  font-size: 10px;
 }
 
 .input-test{
@@ -205,6 +207,10 @@ table th {
   .tableContent {
     color: var(--black_text);
   }
+
+  .tableContent {
+    font-size: 10px;
+  }
   
   .tableContent thead {
     
@@ -219,20 +225,24 @@ table th {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: 20px;
+    
   }
 
   .tableContent td:first-of-type {
-    font-size: 1.2rem;
+    margin-top: 30px;
+    font-size: 9px;
     text-align: center;
     display: flex;
     justify-content: center;
   }
 
   .tableContent td:not(:first-of-type):before {
-    font-size: 14px;
+    font-size: 9px;
     content: attr(data-title);
     display: block;
 
   }
+
 }
 </style>

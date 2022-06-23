@@ -101,9 +101,9 @@
           <td class="codeStartup" data-title="O.P">{{ metrologyHistory.startup.op.code_op}}</td>
           <td data-title="Cod. Produto">{{metrologyHistory.startup.op.code_product}}</td>
           <td data-title="Produto">{{metrologyHistory.startup.op.desc_product}}</td>
-          <td data-title="Data de Envio">{{metrologyHistory.sendToMetrology}}</td>
-          <td data-title="Data de Abertura">{{metrologyHistory.metrologyHistory.startDate}}</td>
-          <td data-title="Data de Finalização">{{metrologyHistory.metrologyHistory.endDate}}</td>
+          <td data-title="Data de Envio">{{formatYear(metrologyHistory.sendToMetrology)}} <br> {{formatHour(metrologyHistory.sendToMetrology)}}</td>
+          <td data-title="Data de Abertura">{{formatYear(metrologyHistory.metrologyHistory.startDate)}} <br>{{  formatHour(metrologyHistory.metrologyHistory.startDate)}}</td>
+          <td data-title="Data de Finalização">{{formatYear(metrologyHistory.metrologyHistory.endDate)}} <br> {{formatHour(metrologyHistory.metrologyHistory.endDate)}}</td>
           <td class="lastTd" data-title="Opção">
             <button class="btn-view" @click="() => this.$router.push({ name: 'MetrologiaDetalhesPreenchido', query: {id: metrologyHistory.startup.id} })">Visualizar</button>
           </td>
@@ -114,7 +114,7 @@
 </template>
 
 <script>
-
+import dayjs from 'dayjs'
 import  http  from '../../services/metrology/Metrology'
 import  userId  from '../../utils/dataUser'
 export default {
@@ -124,11 +124,13 @@ export default {
       metrologySolicitationsList: [],
       statusTable: true,
       userAssociated: "",
-      day: "",
-      month: "",
-      year: "",
       user_id: "",
-      dataHeader: Object
+      dataHeader: Object,
+
+      dateSend: "",
+      dateOpened: "",
+      dateFinished: "",
+
     };
   },
 
@@ -145,6 +147,7 @@ export default {
         await userId.DataUser().then((res)=>{
            this.user_id = res.data.user.id
          })
+
     this.$store.commit("$SETISLOADING");
   },
 
@@ -178,24 +181,27 @@ export default {
         this.$router.push({ name: 'MetrologiaDetalhes', query: {id: router} })
       }
     },
-    formatDate(date) {
-      date = date.slice(0, -14);
-      this.year = date.slice(0, -6)
-      this.month = date.slice(5, -3)
-      this.day = date.slice(-2)
-      return date = `${this.day}/${this.month}/${this.year}`
-    },
 
     listMetrologyHistory: async function(){
       await http.ListMetrologyHistory().then( (res) => {
         this.metrologyHistoryList = res.data.list
+        
       })
     },
 
     listMetrologySolicitations: async function(){
       await http.ListMetrologySolicitations().then( (res) => {
         this.metrologySolicitationsList = res.data.list
+        
       })
+    },
+
+    formatYear(date){
+      return dayjs(date).format('DD/MM/YYYY')
+    },
+
+    formatHour(date){
+      return dayjs(date).format('HH:mm:ss')
     },
 
     ingressar: async function(fk_startup){
@@ -256,7 +262,7 @@ fieldset {
 
 table th {
   height: 50px;
-  font-size: 17px;
+  font-size: 15px;
   color: var(--black_text);
   padding: 10px 10px 0 10px;
 }
@@ -270,7 +276,7 @@ table td {
 }
 
 .tableContent td {
-  font-size: 17px;
+  font-size: 15px;
   text-align: center;
   height: 50px;
   padding: 0 10px 0 10px;
@@ -333,7 +339,7 @@ table td {
   display: none;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1080px) {
 
   .btns {
     display: flex;

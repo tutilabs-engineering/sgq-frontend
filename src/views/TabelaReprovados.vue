@@ -14,7 +14,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in currentItens" :key="item.id">
+        <tr v-for="item in displayedPosts" :key="item.id">
           <td style="display: none"></td>
           <td data-title="Cod. Startup">{{ item.code_startup }}</td>
           <td data-title="Cod. OP">{{ item.op.code_op }}</td>
@@ -39,15 +39,31 @@
     </table>
 
     <div class="pagination-component">
-      <div v-for="index in pages" key="index">
-        <button
-          value="index"
-          @click="setNewIndex(index)"
-          :class="changeColorBtn(index)"
-        >
-          {{ index }}
-        </button>
-      </div>
+      <button
+        class="btn-pagination"
+        type="button"
+        v-if="page != 1"
+        @click="page--"
+      >
+        Prev
+      </button>
+      <button
+        class="btn-pagination"
+        type="button"
+        v-for="pageNumber in pages.slice(page - 1, page + 5)"
+        :key="pageNumber"
+        @click="page = pageNumber"
+      >
+        {{ pageNumber }}
+      </button>
+      <button
+        class="btn-pagination"
+        type="button"
+        @click="page++"
+        v-if="page < pages.length"
+      >
+        Next
+      </button>
     </div>
   </fieldset>
 
@@ -74,49 +90,39 @@ export default {
       listDisapproved: [],
       isOp: false,
 
-      // Apenas para paginação
-      totalItens: "10",
-      itensPerPage: "10",
-      currentPage: 0,
-      pages: "",
-      startIndex: "",
-      endIndex: "",
-      currentItens: "",
-
       btnChanged: false,
+
+      posts: [""],
+      page: 1,
+      perPage: 9,
+      pages: [],
     };
+  },
+  computed: {
+    displayedPosts() {
+      return this.paginate(this.posts);
+    },
+  },
+
+  watch: {
+    posts() {
+      this.setPages();
+    },
   },
 
   methods: {
-    calcPagination: async function () {
-      this.pages = this.calcPages();
-      (this.startIndex = this.currentPage * this.itensPerPage),
-        (this.endIndex =
-          parseInt(this.startIndex) + parseInt(this.itensPerPage));
-    },
-
-    setNewIndex: async function (e) {
-      this.currentPage = e;
-      this.startIndex = this.currentPage * this.itensPerPage;
-      this.startIndex = this.startIndex - 10;
-      this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage);
-      const listCount = await http.listCountOfStartupsByStatus();
-      this.listDisapproved =
-        listCount.data.reportStartups.disapproved.reverse();
-      this.currentItens = this.listDisapproved.slice(
-        this.startIndex,
-        this.endIndex
-      );
-    },
-
-    calcPages() {
-      return Math.ceil(parseInt(this.totalItens) / parseInt(this.itensPerPage));
-    },
-
-    changeColorBtn(index) {
-      if (this.currentPage == index) {
-        return "btnClicked";
+    setPages() {
+      let numberOfPages = Math.ceil(this.posts.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
       }
+    },
+    paginate(posts) {
+      let page = this.page;
+      let perPage = this.perPage;
+      let from = page * perPage - perPage;
+      let to = page * perPage;
+      return posts.slice(from, to);
     },
 
     OpenReportStartup: function (id_startup) {
@@ -149,16 +155,7 @@ export default {
     this.listDisapproved = listCount.data.reportStartups.disapproved.reverse();
     this.isOp = await this.verifyOP(this.listDisapproved.length);
 
-    this.totalItens = this.listDisapproved.length;
-    this.pages = this.calcPages();
-
-    (this.startIndex = this.currentPage * this.itensPerPage),
-      (this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage));
-
-    this.currentItens = this.listDisapproved.slice(
-      this.startIndex,
-      this.endIndex
-    );
+    this.posts = this.listDisapproved;
     this.$store.commit("$SETISLOADING");
   },
 };
@@ -171,18 +168,19 @@ export default {
   gap: 5px;
 }
 
-.btnClicked {
-  background-color: var(--card_blue) !important;
-}
-
-.pagination-component button {
-  color: #fff;
+.btn-pagination {
   cursor: pointer;
-  width: 30px;
+  color: #fff;
+  width: 40px;
   height: 30px;
   border: none;
+  margin: 2px;
+  background-color: var(--bg_green);
   border-radius: 5px;
-  background-color: var(--card_green);
+}
+
+.btn-pagination:focus {
+  background-color: var(--card_blue);
 }
 
 .legenda-warning {

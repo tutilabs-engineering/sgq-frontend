@@ -194,6 +194,13 @@ const routes = [
   },
 
   {
+    path: '/paginacaoTeste',
+    name: 'paginacaoTeste',
+    component: () => import('../views/PaginacaoTeste.vue'),
+    beforeEnter: Auth
+  },
+
+  {
     path: '/create-startup-by-id',
     name: 'NovaStartupById',
     component: () => import('../views/NovaStartupById.vue'),
