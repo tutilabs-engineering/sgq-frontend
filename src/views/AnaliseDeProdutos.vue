@@ -5,7 +5,6 @@
     <button @click="searchProduct()">
       <i class="fas fa-search"></i> Buscar
     </button>
-    
   </fieldset>
 
   <fieldset className="tableContent" v-if="!isSearched">
@@ -52,26 +51,31 @@
       @changeStatus="changeStatusModalVariable"
     />
     <div class="pagination-component">
-    <button class="btn-pagination" type="button" v-if="page != 1" @click="page--">
-    Prev
-  </button>
-  <button
-    class="btn-pagination"
-    type="button"
-    v-for="pageNumber in pages.slice(page - 1, page + 5)"
-    :key="pageNumber"
-    @click="page = pageNumber"
-  >
-    {{ pageNumber }}
-  </button>
-  <button
-    class="btn-pagination"
-    type="button"
-    @click="page++"
-    v-if="page < pages.length"
-  >
-    Next
-  </button>
+      <button
+        class="btn-pagination"
+        type="button"
+        v-if="page != 1"
+        @click="page--"
+      >
+        Prev
+      </button>
+      <button
+        class="btn-pagination"
+        type="button"
+        v-for="pageNumber in pages.slice(page - 1, page + 5)"
+        :key="pageNumber"
+        @click="page = pageNumber"
+      >
+        {{ pageNumber }}
+      </button>
+      <button
+        class="btn-pagination"
+        type="button"
+        @click="page++"
+        v-if="page < pages.length"
+      >
+        Next
+      </button>
     </div>
   </fieldset>
 
@@ -119,7 +123,6 @@
       @changeStatus="changeStatusModalVariable"
     />
   </fieldset>
-
 </template>
 
 <script>
@@ -127,10 +130,8 @@ import ModalAttribute from "../components/Modal/ModalAtributo.vue";
 import ModalVariable from "../components/Modal/ModalVariavel.vue";
 import http from "../services/productAnalysis/Products";
 
-
-
 export default {
-  components: { ModalAttribute, ModalVariable},
+  components: { ModalAttribute, ModalVariable },
   setup() {},
   name: "Table",
   emits: ["modalAtributo", "modalVariavel"],
@@ -147,15 +148,12 @@ export default {
 
       btnChanged: false,
 
-
       posts: [""],
       page: 1,
       perPage: 10,
       pages: [],
-
     };
   },
-  
 
   watch: {
     codeProductValue(newValue, oldValue) {
@@ -167,8 +165,6 @@ export default {
     posts() {
       this.setPages();
     },
-
-
   },
   computed: {
     displayedPosts() {
@@ -229,27 +225,23 @@ export default {
     },
   },
 
-  
   created: async function () {
-    
     this.$store.commit("$SETISLOADING");
     this.listAllProducts = await http.listProducts();
     this.listAllProducts = this.listAllProducts.data.list;
 
-    this.posts = this.listAllProducts
+    this.posts = this.listAllProducts;
     this.$store.commit("$SETISLOADING");
   },
 };
 </script>
 
 <style scoped>
-
 .pagination-component {
   display: flex;
   justify-content: center;
   gap: 5px;
 }
-
 
 .btn-pagination {
   cursor: pointer;
@@ -385,9 +377,6 @@ table td {
 .btn-va {
   background-color: var(--card_orange);
 }
-
-
-
 
 @media (max-width: 765px) {
   .search-field {

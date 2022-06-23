@@ -192,14 +192,19 @@ export default {
   gap: 5px;
 }
 
-.pagination-component button {
-  color: #fff;
+.btn-pagination {
   cursor: pointer;
-  width: 30px;
+  color: #fff;
+  width: 40px;
   height: 30px;
   border: none;
+  margin: 2px;
+  background-color: var(--bg_green);
   border-radius: 5px;
-  background-color: var(--card_green);
+}
+
+.btn-pagination:focus {
+  background-color: var(--card_blue);
 }
 
 .legenda-warning {
