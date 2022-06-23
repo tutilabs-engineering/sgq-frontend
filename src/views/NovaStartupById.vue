@@ -280,7 +280,6 @@ export default {
       return false;
     },
     verifyMetrology(startup) {
-<<<<<<< HEAD
       if (startup.metrology) {
         if (startup.metrology.length <= 0) {
           return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
@@ -296,18 +295,6 @@ export default {
           }
           return "Variaveis em Metrologia preenchidas, está Startup pode ser fechada.";
         }
-=======
-      if (startup.metrology.length <= 0) {
-        return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
-        // Nao Existe metrologia
-      }
-      if (startup.metrology.length > 0) {
-        if (startup.metrology[0].metrology) {
-          this.metrologyStyle = "alert-metrology";
-          return "Atenção: As variáveis da Metrologia não foram preenchidas. Esta Startup não pode ser fechada porém os dados podem ser salvos.";
-        }
-        return "As variaveis da Metrologia estão preenchidas. A Startup pode ser fechada.";
->>>>>>> 034a355f618d1bccd2042b9fd08b1641e6ea653a
       }
 
       return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
