@@ -9,7 +9,7 @@
         </thead>
 
         <tbody>
-          
+    
           <tr v-for="i in variables" :key="i" >
                <td> {{ i.variable}} </td>
                <td v-for="item in arrayFilter(i.items)" :key="item" data-title="Cavidade">
@@ -23,7 +23,13 @@
                    <span>{{item.variable.max}} - max</span>
             
                 </div>
+                <div>
+                   <i class="fas fa-eye" @click="verifyModelImagen(item.variable.file)" ></i>
+               
+                </div>
+               
                </td>   
+              
           </tr>
              
            
@@ -59,6 +65,17 @@ export default {
         }
       },
 
+      verifyModelImagen(imagem){
+      const rota = this.$store.state.urlImg;
+
+      this.$swal.fire({
+      imageUrl: `${rota}/variables/${imagem}`,
+      padding: '1.5em',
+      imageWidth: 800,
+      imageHeight: 500,
+      imageAlt: 'Variavel sem Imagem',
+      })
+      },
       arrayFilter(arr){
          var arraySemVazios = arr.filter(function (i) {
          return i;

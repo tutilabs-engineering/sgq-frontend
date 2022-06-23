@@ -2,9 +2,17 @@
   <div class="content-novaStartup" v-if="!isFilled">
     <div style="display: flex; gap: 20px">
       <fieldset>
-        <legend>Status</legend>
-        <span class="startup-preenchida"> Não Preenchida</span>
+        <legend>Situação </legend>
+        <span class="startup-preenchida"> 
+        {{verifyOpenStartup(data_startup)}}</span>
       </fieldset>
+      
+      <fieldset>
+        <legend>Preench. </legend>
+        <span class="startup-preenchida"> 
+        {{verifyFillStartup(data_startup)}}</span>
+      </fieldset>
+
       <fieldset>
         <legend>Startup</legend>
         <span class="startup-preenchida">Cód: {{ code_startup }}</span>
@@ -51,9 +59,19 @@
   </div>
   <div class="content-novaStartup" v-else>
     <div style="display: flex; gap: 20px; padding-right: 20px">
+
       <fieldset>
-        <legend>Status</legend>
-        <span class="startup-preenchida">Preenchida</span>
+        <legend>Situação </legend>
+        <span class="startup-preenchida"> 
+        {{verifyOpenStartup(data_startup)}}</span>
+      </fieldset>
+
+       <fieldset>
+        <legend>Status Startup </legend>
+        <span class="startup-preenchida" v-if="data_startup.status.id == 1">Aprovado</span>
+        <span class="startup-nao-preenchida" v-else-if="data_startup.status.id == 2">Reprovado</span>
+        <span class="startup-preenchida-com-condicional" v-else-if="data_startup.status.id == 3">Aprovado com condicional</span>
+
       </fieldset>
       <fieldset>
         <legend>Startup</legend>
@@ -75,7 +93,10 @@
 
     <ListaPerguntas :startupData="data_startup" />
 
-    <div v-if="data_startup.metrology_items.length > 0" class="metrologyInStartup">
+    <div
+      v-if="data_startup.metrology_items.length > 0"
+      class="metrologyInStartup"
+    >
       <fieldset>
         <legend>Metrologia</legend>
         <div class="form">
@@ -134,7 +155,6 @@ import ListaPerguntasPreenchida from "../components/ListaPerguntasPreenchida/Lis
 import ListaPerguntas from "../components/ListaPerguntas/ListaPerguntas.vue";
 import TableMetrologiaDetalhes from "../components/TableMetrologiaDetalhes/TableMetrologiaDetalhes.vue";
 
-
 import http from "../services/startup";
 
 export default {
@@ -153,16 +173,16 @@ export default {
         machine: "",
         product_mold: "",
         date: "",
-        startTime: "",
+        startTime: ""
       },
 
       techniqueInfo: {
         cavity: "",
-        cycle: "",
+        cycle: ""
       },
       dataInfo: {
         code_op: "",
-        user_id: "",
+        user_id: ""
       },
 
       code_secondary: [],
@@ -174,7 +194,7 @@ export default {
       componentsInfo: [],
       showQuestions: true,
 
-      perguntasRespondidas: this.data_startup,
+      perguntasRespondidas: this.data_startup
     };
   },
   components: {
@@ -184,11 +204,11 @@ export default {
     ListaPerguntasPreenchida,
     ListaPerguntas,
     SecondaryOP,
-    TableMetrologiaDetalhes,
+    TableMetrologiaDetalhes
   },
 
-  created: async function () {
-    await http.findReportStartupById(this.id_startup).then((res) => {
+  created: async function() {
+    await http.findReportStartupById(this.id_startup).then(res => {
       this.data_startup = res.data;
       this.code_startup = this.data_startup.code_startup;
       this.headerPreenchida.code_op = this.data_startup.op.code_op;
@@ -211,7 +231,7 @@ export default {
       this.code_secondary = res.data.op.added_op;
     });
 
-    await http.listDataByCodeOp(this.headerPreenchida.code_op).then((res) => {
+    await http.listDataByCodeOp(this.headerPreenchida.code_op).then(res => {
       this.headerPreenchida.quantity = res.data.results[0].PlannedQty;
     });
   },
@@ -223,31 +243,61 @@ export default {
       this.day = date.slice(-2);
       return (date = `${this.day}/${this.month}/${this.year}`);
     },
+     
+     verifyOpenStartup(startup) {
+      if (startup.open && startup.filled) {
+        return "Rodando";
+      } else if (!startup.open && startup.filled) {
+        return "Fechado";
+      } else {
+        return "Aguardando";
+      }
+    },
+
+      verifyFillStartup(startup ) {
+      // Se startup não estiver fechada e não foi preenchida nenhuma vez
+      if (startup.filled == false && !startup.report_startup_fill) {
+        return "Em Aberto";
+      } else if (
+        startup.filled == false &&
+        startup.report_startup_fill
+      ) {
+        return "Em Andamento";
+      }
+
+      return "Preenchido"
+    },
 
     verifyMetrologyStatus(startup) {
-      if (startup.metrology.length > 0) {
-        if (!startup.metrology[0].metrology) {
-          // metrologia preenchida
-          return true;
+      if (startup.metrology) {
+        if (startup.metrology.length > 0) {
+          if (!startup.metrology[0].metrology) {
+            // metrologia preenchida
+            return true;
+          }
         }
       }
       return false;
     },
     verifyMetrology(startup) {
-      if (startup.metrology.length <= 0) {
-        return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
-        // Nao Existe metrologia
-      }
-      if (startup.metrology.length > 0) {
-        if (startup.metrology[0].metrology) {
-          // Verificar se a metroliga está fechada
-          // True ela esta aberta
-          //  False ela está fechada
-          this.metrologyStyle = "alert-metrology";
-          return "Variaveis em Metrologia Não preenchidas, está Startup não pode ser fechada porém os dados podem ser salvos.";
+      if (startup.metrology) {
+        if (startup.metrology.length <= 0) {
+          return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
+          // Nao Existe metrologia
         }
-        return "Variaveis em Metrologia preenchidas, está Startup pode ser fechada.";
+        if (startup.metrology.length > 0) {
+          if (startup.metrology[0].metrology) {
+            // Verificar se a metroliga está fechada
+            // True ela esta aberta
+            //  False ela está fechada
+            this.metrologyStyle = "alert-metrology";
+            return "Variaveis em Metrologia Não preenchidas, está Startup não pode ser fechada porém os dados podem ser salvos.";
+          }
+          return "Variaveis em Metrologia preenchidas, está Startup pode ser fechada.";
+        }
       }
+
+      return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
     },
     async saveFillReportStartup() {
       //
@@ -257,14 +307,14 @@ export default {
 
       const form = new FormData();
 
-      data.default_question.map((item) => {
+      data.default_question.map(item => {
         if (item.file != null) {
           form.append(`${item.fk_default_question}`, item.file);
           item.file = "";
         }
       });
 
-      data.specific_questions.map((item) => {
+      data.specific_questions.map(item => {
         if (item.file != null) {
           form.append(`${item.fk_specific_question}`, item.file);
           item.file = "";
@@ -291,7 +341,7 @@ export default {
           imageUrl: "/img/allright.gif",
           imageWidth: 400,
           imageHeight: 200,
-          imageAlt: "Custom image",
+          imageAlt: "Custom image"
         })
         .then(() => {
           this.$router.push({ name: "Startup" });
@@ -302,7 +352,7 @@ export default {
       this.showQuestions = e;
     },
 
-    ReturnCodeOp: async function (code_op) {
+    ReturnCodeOp: async function(code_op) {
       this.dataInfo.code_op = code_op;
       function GetDateTime() {
         function GetDate() {
@@ -350,21 +400,21 @@ export default {
 
       // //componentsInfo
 
-      data.components.map((item) => {
+      data.components.map(item => {
         this.componentsInfo.push({
           description: item.description,
           item_number: item.ItemCode,
           planned: item.PlannedQty,
-          um: item.UM,
+          um: item.UM
         });
       });
 
       this.$store.commit("$SETDATACREATESTARTUP", {
         techniqueData: this.techniqueInfo,
-        components: this.componentsInfo,
+        components: this.componentsInfo
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -445,6 +495,10 @@ legend {
 
 .startup-preenchida {
   color: var(--card_green);
+}
+
+.startup-preenchida-com-condicional {
+  color: var(--flag_yellow);
 }
 
 .content-novaStartup {
