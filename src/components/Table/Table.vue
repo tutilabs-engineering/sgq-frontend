@@ -68,10 +68,7 @@
             <div className="opcoes">
               <i class="fas fa-ellipsis-h"></i>
               <div class="dropdown-content">
-                <button
-                  className="btnOpcoes"
-                  @click="OpenReportStartup(item.id)"
-                >
+                <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
                   <i class="fas fa-edit"></i>
                 </button>
               </div>
@@ -121,7 +118,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in currentItensClosed" :key="item.id">
+        <tr v-for="item in listPaginated" :key="item.id">
           <td style="display: none"></td>
           <td class="codeStartup" data-title="Cód. Startup">
             {{ item.code_startup }}
@@ -141,10 +138,7 @@
             <div className="opcoes">
               <i class="fas fa-ellipsis-h"></i>
               <div class="dropdown-content">
-                <button
-                  className="btnOpcoes"
-                  @click="OpenReportStartup(item.id)"
-                >
+                <button className="btnOpcoes" @click="OpenReportStartup(item.id)">
                   <i class="fas fa-edit"></i>
                 </button>
               </div>
@@ -156,18 +150,14 @@
 
     <div v-if="statusTable" class="pagination-component">
       <div v-for="index in pages" :key="index">
-        <button
-          value="index"
-          @click="setNewIndex(index)"
-          :class="changeColorBtn(index)"
-        >
+        <button value="index" @click="setNewIndex(index)" :class="changeColorBtn(index)">
           {{ index }}
         </button>
       </div>
     </div>
 
     <div v-else class="pagination-component">
-      <div v-for="index in pagesClosed" :key="index">
+      <!-- <div v-for="index in pagesClosed" :key="index">
         <button
           value="index"
           @click="setNewIndexClosed(index)"
@@ -175,7 +165,9 @@
         >
           {{ index }}
         </button>
-      </div>
+      </div> -->
+
+      <Pagination :list="itemsFechados" @displayNewList="displayNewList" />
     </div>
   </fieldset>
 </template>
@@ -183,41 +175,39 @@
 <script>
 import http from "../../services/startup/";
 import dayjs from "dayjs";
+import Pagination from "../Pagination/Pagination.vue";
 
 export default {
-  setup() {},
+  setup() { },
   name: "Table",
   data() {
     return {
       itemsAbertos: Array,
       itemsFechados: Array,
       statusTable: true,
-
       // Apenas para paginação
       totalItens: "10",
       itensPerPage: "10",
       currentPage: 0,
       pages: "",
-      pagesClosed: "",
       startIndex: "",
       endIndex: "",
       currentItens: "",
-      currentItensClosed: "",
 
-      totalItensClosed: "10",
+
+      listPaginated: []
     };
   },
-
   watch: {
     statusTable(newValue) {
       if (newValue === true) {
         this.currentPage = 0;
-      } else {
+      }
+      else {
         this.currentPage = 0;
       }
     },
   },
-
   created: async function () {
     this.$store.commit("$SETISLOADING");
     const allStartups = await http.listAllStartups();
@@ -230,41 +220,37 @@ export default {
         .format("HH:mm:ss");
       if (startup.open === true) {
         openedStartups.push(startup);
-      } else {
+      }
+      else {
         closedStartups.push(startup);
       }
     });
     this.itemsAbertos = openedStartups.reverse();
     this.itemsFechados = closedStartups.reverse();
     console.log(this.itemsFechados);
-
     this.existItemAbertos(this.itemsAbertos.length);
     this.existItemFechados(this.itemsFechados.length);
-
     this.totalItens = this.itemsAbertos.length;
     this.totalItensClosed = this.itemsFechados.length;
     this.pages = this.calcPages();
-    this.pagesClosed = this.calcPagesClosed();
-
     this.startIndex = this.currentPage * this.itensPerPage;
     this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage);
-
     this.currentItens = this.itemsAbertos.slice(this.startIndex, this.endIndex);
-    this.currentItensClosed = this.itemsFechados.slice(
-      this.startIndex,
-      this.endIndex
-    );
-
     this.$store.commit("$SETISLOADING");
   },
-
   methods: {
+
+    displayNewList(e) {
+      this.listPaginated = e
+    },
     verifyOpenStartup(startup) {
       if (startup.open && startup.filled) {
         return "Rodando";
-      } else if (!startup.open && startup.filled) {
+      }
+      else if (!startup.open && startup.filled) {
         return "Fechado";
-      } else {
+      }
+      else {
         return "Aguardando";
       }
     },
@@ -272,41 +258,39 @@ export default {
       // Se startup não estiver fechada e não foi preenchida nenhuma vez
       if (startup.filled == false && startup.report_startup_fill.length <= 0) {
         return "Em Aberto";
-      } else if (
-        startup.filled == false &&
-        startup.report_startup_fill.length > 0
-      ) {
+      }
+      else if (startup.filled == false &&
+        startup.report_startup_fill.length > 0) {
         return "Em Andamento";
-      } else if (startup.filled == true) {
+      }
+      else if (startup.filled == true) {
         return "Preenchido";
       }
     },
-
     verifyMetrology(metrology) {
       if (metrology.length > 0) {
         if (metrology[0].metrology == false) {
           return "Met. Preenchida";
-        } else if (metrology[0].metrology == true) {
+        }
+        else if (metrology[0].metrology == true) {
           return "Met. Não Preenchida";
         }
-      } else {
+      }
+      else {
         return "Não existe Metrologia";
       }
     },
-
     calcPagination: async function () {
       this.pages = this.calcPages();
       (this.startIndex = this.currentPage * this.itensPerPage),
         (this.endIndex =
           parseInt(this.startIndex) + parseInt(this.itensPerPage));
     },
-
     setNewIndex: async function (e) {
       this.currentPage = e;
       this.startIndex = this.currentPage * this.itensPerPage;
       this.startIndex = this.startIndex - 10;
       this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage);
-
       const allStartups = await http.listAllStartups();
       let openedStartups = [];
       allStartups.data.forEach((startup) => {
@@ -319,46 +303,11 @@ export default {
         }
       });
       this.itemsAbertos = openedStartups.reverse();
-
-      this.currentItens = this.itemsAbertos.slice(
-        this.startIndex,
-        this.endIndex
-      );
-    },
-
-    setNewIndexClosed: async function (e) {
-      this.currentPage = e;
-      this.startIndex = this.currentPage * this.itensPerPage;
-      this.startIndex = this.startIndex - 10;
-      this.endIndex = parseInt(this.startIndex) + parseInt(this.itensPerPage);
-
-      const allStartups = await http.listAllStartups();
-      let closedStartups = [];
-      allStartups.data.forEach((startup) => {
-        startup.day = dayjs(startup.day).locale("pt-br").format("DD/MM/YYYY");
-        startup.start_time = dayjs(startup.start_time)
-          .locale("pt-br")
-          .format("HH:mm:ss");
-        if (startup.open === false) {
-          closedStartups.push(startup);
-        }
-      });
-      this.itemsFechados = closedStartups.reverse();
-
-      this.currentItensClosed = this.itemsFechados.slice(
-        this.startIndex,
-        this.endIndex
-      );
+      this.currentItens = this.itemsAbertos.slice(this.startIndex, this.endIndex);
     },
 
     calcPages() {
       return Math.ceil(parseInt(this.totalItens) / parseInt(this.itensPerPage));
-    },
-
-    calcPagesClosed() {
-      return Math.ceil(
-        parseInt(this.totalItensClosed) / parseInt(this.itensPerPage)
-      );
     },
 
     changeColorBtn(index) {
@@ -366,22 +315,20 @@ export default {
         return "btnClicked";
       }
     },
-
     OpenReportStartup: function (id_startup) {
       this.$router.push({
         path: "/create-startup-by-id",
         query: { id: id_startup },
       });
     },
-
     existItemAbertos(abertos) {
       this.$emit("returnItemAbertos", abertos);
     },
-
     existItemFechados: async function (fechados) {
       this.$emit("returnItemFechados", fechados);
     },
   },
+  components: { Pagination }
 };
 </script>
 
@@ -541,6 +488,7 @@ table td {
 .fa-edit {
   color: var(--card_blue);
 }
+
 .fa-file-excel {
   color: var(--card_green);
 }
@@ -553,6 +501,7 @@ table td {
   legend {
     text-align: center;
   }
+
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
@@ -561,6 +510,7 @@ table td {
   .tableContent {
     padding: 0;
   }
+
   .tableContent thead {
     display: none;
   }

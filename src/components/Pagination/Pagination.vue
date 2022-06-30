@@ -86,6 +86,7 @@ export default {
   margin: 2px;
   background-color: var(--card_green);
   border-radius: 5px;
+  border: none;
 }
 
 .btn-pagination:focus {

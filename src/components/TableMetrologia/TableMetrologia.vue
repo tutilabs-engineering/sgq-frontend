@@ -40,17 +40,19 @@
 
         <tr v-for="metrologySolicitation in metrologySolicitationsList" :key="metrologySolicitation.id">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="O.P">{{ metrologySolicitation.startup.op.code_op}}</td>
-          <td data-title="Cod. Produto">{{ metrologySolicitation.startup.op.code_product}}</td>
-          <td data-title="Produto">{{ metrologySolicitation.startup.op.desc_product}}</td>
+          <td class="codeStartup" data-title="O.P">{{ metrologySolicitation.startup.op.code_op }}</td>
+          <td data-title="Cod. Produto">{{ metrologySolicitation.startup.op.code_product }}</td>
+          <td data-title="Produto">{{ metrologySolicitation.startup.op.desc_product }}</td>
           <td data-title="Técnico">
-            <button class="btn-ingressar" v-if="metrologySolicitation.metrologyHistory === null" @click="ingressar(metrologySolicitation.startup.id)">Ingressar</button>
-            <span v-else>{{metrologySolicitation.metrologyHistory.user.name}}</span>
-            
-         </td>
+            <button class="btn-ingressar" v-if="metrologySolicitation.metrologyHistory === null"
+              @click="ingressar(metrologySolicitation.startup.id)">Ingressar</button>
+            <span v-else>{{ metrologySolicitation.metrologyHistory.user.name }}</span>
+
+          </td>
           <td class="lastTd" data-title="Opção">
             <!-- <button class="btn-preencher" @click="() => this.$router.push({ name: 'MetrologiaDetalhes', query: {id: metrologySolicitation.startup.id} })">Preencher</button> -->
-            <button class="btn-preencher" @click="hasAnUser(metrologySolicitation.metrologyHistory, metrologySolicitation.startup.id)">Preencher</button>
+            <button class="btn-preencher"
+              @click="hasAnUser(metrologySolicitation.metrologyHistory, metrologySolicitation.startup.id)">Preencher</button>
           </td>
         </tr>
 
@@ -75,7 +77,7 @@
         </th>
         <th>
           <button @click="statusTable = false" class="btn startup-closed">
-            
+
             Histórico
           </button>
         </th>
@@ -96,27 +98,38 @@
       </thead>
 
       <tbody>
-        <tr v-for="metrologyHistory in metrologyHistoryList" :key="metrologyHistory.id">
+        <tr v-for="metrologyHistory in listPaginated" :key="metrologyHistory.id">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="O.P">{{ metrologyHistory.startup.op.code_op}}</td>
-          <td data-title="Cod. Produto">{{metrologyHistory.startup.op.code_product}}</td>
-          <td data-title="Produto">{{metrologyHistory.startup.op.desc_product}}</td>
-          <td data-title="Data de Envio">{{formatYear(metrologyHistory.sendToMetrology)}} <br> {{formatHour(metrologyHistory.sendToMetrology)}}</td>
-          <td data-title="Data de Abertura">{{formatYear(metrologyHistory.metrologyHistory.startDate)}} <br>{{  formatHour(metrologyHistory.metrologyHistory.startDate)}}</td>
-          <td data-title="Data de Finalização">{{formatYear(metrologyHistory.metrologyHistory.endDate)}} <br> {{formatHour(metrologyHistory.metrologyHistory.endDate)}}</td>
+          <td class="codeStartup" data-title="O.P">{{ metrologyHistory.startup.op.code_op }}</td>
+          <td data-title="Cod. Produto">{{ metrologyHistory.startup.op.code_product }}</td>
+          <td data-title="Produto">{{ metrologyHistory.startup.op.desc_product }}</td>
+          <td data-title="Data de Envio">{{ formatYear(metrologyHistory.sendToMetrology) }} <br>
+            {{ formatHour(metrologyHistory.sendToMetrology) }}</td>
+          <td data-title="Data de Abertura">{{ formatYear(metrologyHistory.metrologyHistory.startDate) }} <br>{{
+              formatHour(metrologyHistory.metrologyHistory.startDate)
+          }}</td>
+          <td data-title="Data de Finalização">{{ formatYear(metrologyHistory.metrologyHistory.endDate) }} <br>
+            {{ formatHour(metrologyHistory.metrologyHistory.endDate) }}</td>
           <td class="lastTd" data-title="Opção">
-            <button class="btn-view" @click="() => this.$router.push({ name: 'MetrologiaDetalhesPreenchido', query: {id: metrologyHistory.startup.id} })">Visualizar</button>
+            <button class="btn-view"
+              @click="() => this.$router.push({ name: 'MetrologiaDetalhesPreenchido', query: { id: metrologyHistory.startup.id } })">Visualizar</button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <div class="pagination-component" v-if="statusTable == false">
+      <Pagination :list="metrologyHistoryList" @displayNewList="displayNewList" />
+    </div>
   </fieldset>
 </template>
 
 <script>
 import dayjs from 'dayjs'
-import  http  from '../../services/metrology/Metrology'
-import  userId  from '../../utils/dataUser'
+import http from '../../services/metrology/Metrology'
+import userId from '../../utils/dataUser'
+import Pagination from '../../components/Pagination/Pagination.vue';
+
 export default {
   data() {
     return {
@@ -126,103 +139,97 @@ export default {
       userAssociated: "",
       user_id: "",
       dataHeader: Object,
-
       dateSend: "",
       dateOpened: "",
       dateFinished: "",
 
+      listPaginated: []
     };
   },
-
-  created: async function() {
+  created: async function () {
     this.$store.commit("$SETISLOADING");
-    // this.user_id = dataUser().user.id
-         
-        //Lista histórico de Metrologia
-        await this.listMetrologyHistory()
+    await this.listMetrologyHistory();
 
-        //Lista solictações
-        await this.listMetrologySolicitations()
-
-        await userId.DataUser().then((res)=>{
-           this.user_id = res.data.user.id
-         })
-
+    //Lista solictações
+    await this.listMetrologySolicitations();
+    await userId.DataUser().then((res) => {
+      this.user_id = res.data.user.id;
+    });
     this.$store.commit("$SETISLOADING");
   },
-
   methods: {
+    displayNewList(e) {
+      this.listPaginated = e
+    },
 
-    hasAnUser: async function(user, router) {
-      if(user == null){
+    hasAnUser: async function (user, router) {
+      if (user == null) {
         const Toast = this.$swal.mixin({
-                    toast: true,
-                    position: 'top-right',
-                    iconColor: '#ff5349',
-                    customClass: {
-                    popup: 'colored-toast',
-                    title: 'title-swal-text'
-                    },
-                    didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
-                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
-                    },
-                    showConfirmButton: false,
-                    timer: 2500,
-                    timerProgressBar: true
-                })
-                Toast.fire({
-                        icon: 'warning',
-                        title: 'Não há usuário ingressado',
-                        background: "#fff",
-                })
-        
-      }else {
-        this.$router.push({ name: 'MetrologiaDetalhes', query: {id: router} })
+          toast: true,
+          position: "top-right",
+          iconColor: "#ff5349",
+          customClass: {
+            popup: "colored-toast",
+            title: "title-swal-text"
+          },
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", this.$swal.stopTimer);
+            toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+          },
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true
+        });
+        Toast.fire({
+          icon: "warning",
+          title: "Não há usuário ingressado",
+          background: "#fff",
+        });
+      }
+      else {
+        this.$router.push({ name: "MetrologiaDetalhes", query: { id: router } });
       }
     },
-
-    listMetrologyHistory: async function(){
-      await http.ListMetrologyHistory().then( (res) => {
-        this.metrologyHistoryList = res.data.list
-        
-      })
+    listMetrologyHistory: async function () {
+      await http.ListMetrologyHistory().then((res) => {
+        this.metrologyHistoryList = res.data.list;
+      });
     },
-
-    listMetrologySolicitations: async function(){
-      await http.ListMetrologySolicitations().then( (res) => {
-        this.metrologySolicitationsList = res.data.list
-        
-      })
+    listMetrologySolicitations: async function () {
+      await http.ListMetrologySolicitations().then((res) => {
+        this.metrologySolicitationsList = res.data.list;
+      });
     },
-
-    formatYear(date){
-      return dayjs(date).format('DD/MM/YYYY')
+    formatYear(date) {
+      return dayjs(date).format("DD/MM/YYYY");
     },
-
-    formatHour(date){
-      return dayjs(date).format('HH:mm:ss')
+    formatHour(date) {
+      return dayjs(date).format("HH:mm:ss");
     },
-
-    ingressar: async function(fk_startup){
+    ingressar: async function (fk_startup) {
       this.$store.commit("$SETISLOADING");
-      await http.JoinMetrologyByUserId(this.user_id, fk_startup)
-      this.listMetrologySolicitations()
+      await http.JoinMetrologyByUserId(this.user_id, fk_startup);
+      this.listMetrologySolicitations();
       this.$store.commit("$SETISLOADING");
     },
-
-  }
-      
+  },
+  components: { Pagination }
 };
 </script>
 
 <style scoped>
+
+.pagination-component {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
 .dropdown-content {
   display: none;
   background-color: #fff;
   border-radius: 10px;
   min-width: 50px;
-  border: 1px solid rgba(37, 36, 36, 0.281);  
+  border: 1px solid rgba(37, 36, 36, 0.281);
   padding: 15px 5px;
   z-index: 1;
 }
@@ -317,22 +324,25 @@ table td {
   flex-direction: column;
 }
 
-.btn-view, .btn-preencher, .btn-ingressar {
-    cursor: pointer;
-    color: var(--main_primaryWhite);
-    border: none;
-    background-color: var(--btn_blue);
-    height: 2.5rem;
-    width: 4.6rem;
-    border-radius: 5px;
+.btn-view,
+.btn-preencher,
+.btn-ingressar {
+  cursor: pointer;
+  color: var(--main_primaryWhite);
+  border: none;
+  background-color: var(--btn_blue);
+  height: 2.5rem;
+  width: 4.6rem;
+  border-radius: 5px;
 }
 
 .btn-preencher {
-    background-color: var(--card_orange);
+  background-color: var(--card_orange);
 }
 
 .btn-ingressar {
-  background-color: var(--card_green);;
+  background-color: var(--card_green);
+  ;
 }
 
 .btns {
@@ -345,6 +355,7 @@ table td {
     display: flex;
     padding: 10px 20px 10px 20px;
   }
+
   .tableContent thead {
     display: none;
   }
@@ -363,7 +374,7 @@ table td {
     justify-content: space-between;
   }
 
-  [data-title]{
+  [data-title] {
     color: var(--black_text);
   }
 
@@ -379,12 +390,13 @@ table td {
     content: attr(data-title);
     display: block;
     font-weight: bold;
-    
+
   }
 
   .lastTd {
     border-bottom: 1px solid var(--green_text);
   }
+
   .codeStartup {
     font-weight: 600;
     font-size: 20px;
