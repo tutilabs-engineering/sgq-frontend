@@ -34,7 +34,7 @@ export default {
   data(){
     return{
       config : {
-        date : dayjs().format('YYYY-MM-DD'),
+        date : dayjs().subtract(7, 'day').format('YYYY-MM-DD'),
         machine : "",
         client : "",
         product : "",

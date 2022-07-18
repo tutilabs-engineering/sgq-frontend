@@ -1,11 +1,6 @@
 <template>
   <div>
-    <apexchart
-      width="100%"
-      :type="options.chart.type"
-      :options="options"
-      :series="series"
-    ></apexchart>
+    <apexchart width="100%" :type="options.chart.type" :options="options" :series="series"></apexchart>
   </div>
 </template>
 
@@ -14,23 +9,34 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "BarChartVue",
-  props : {
-    dados : Array
-  },
-  watch : {
-    dados(newValue){
-       console.log(newValue);
-       this.series = newValue
-
-    }
+  props: {
+    dados: Array
   },
   data: function () {
     return {
       series: this.dados,
       options: {
         chart: {
-          width: 380,
-          type: "pie",
+          width: 50,
+          height: 400,
+          type: "donut",
+        },
+
+        legend: {
+          position: "right",
+        },
+        title: {
+          text: 'Falhas de Perguntas Padrões',
+          floating: false,
+          offsetY: 0,
+          offsetX: 0,
+          align: 'center',
+          margin: -10,
+          style: {
+            fontSize: '16px',
+            color: '#444444',
+            fontFamily: 'Poppins'
+          }
         },
         labels: [
           "Cavidade",
@@ -65,7 +71,15 @@ export default defineComponent({
           },
         ],
       },
+
     };
+  },
+
+  watch: {
+    dados(newValue) {
+      this.series = newValue
+
+    }
   },
 });
 </script>

@@ -1,11 +1,41 @@
 <template>
+
+  <div class="cards">
+    <Card
+        status="APROVADOS"
+        :qtde="startupsManagement.approved"
+        img="fas fa-check-square"
+        colore="#43CC74"
+        link="/startups-aprovadas" textContentPopper="Clique para ver mais detalhes"
+      />
+      <Card
+        status="CONDICIONAL"
+        :qtde="startupsManagement.conditional"
+        img="fas fa-tasks"
+        colore="#FFAE3D"
+        link="/startups-andamentos" textContentPopper="Clique para ver mais detalhes"
+      />
+      <Card
+        status="REPROVADOS"
+        :qtde="startupsManagement.disapproved"
+        img="fas fa-times"
+        colore="#FF5349"
+        link="/startups-reprovadas" textContentPopper="Clique para ver mais detalhes"
+      />
+      <Card
+        status="FECHADOS"
+        :qtde="startupsManagement.closed"
+        img="fas fa-door-closed"
+        colore="#5F9DFF"
+        link="#" textContentPopper=""
+      />
+  </div>
   <div class="barCHart_content">
     <div class="barChart">
-      <h3>Quantidade</h3>
       <BarChartVue :dashData="dashData" :dashTime="dashTime" />
     </div>
     <div class="barChart_filter">
-      <div class="legend_chart">
+      <!-- <div class="legend_chart">
         <div class="startUp_fill">
           <span class="circle_fill"></span>
           <p>Preenchimento</p>
@@ -14,7 +44,7 @@
           <span class="circle_metrology"></span>
           <p>Metrologia</p>
         </div>
-      </div>
+      </div> -->
 
       <div class="legend_chart">
         <div class="title_filter">
@@ -28,8 +58,6 @@
 
   <div class="barCHart_content">
     <div class="barChart">
-      <h3>Falha de Perguntas Padrão</h3>
-      
       <DoughnutChart :dados="dadosDash2" />
     </div>
     <div class="barChart_filter">
@@ -38,35 +66,19 @@
           <i class="fas fa-filter"></i>
           <p>Filtro</p>
         </div>
-        <FilterDoughnutChart  @getSelectedSecondConfig="getSelectedSecondConfig"/>
+        <FilterDoughnutChart @getSelectedSecondConfig="getSelectedSecondConfig" />
       </div>
 
-    <!--  <div class="legend_chart_checkbox">
-        <p>Falhas</p>
-        <div class="checkBox_filter">
-          <input type="checkbox" name="" id="" />
-          <label for="">Falha 01</label>
-        </div>
-        <div class="checkBox_filter">
-          <input type="checkbox" name="" id="" />
-          <label for="">Falha 02</label>
-        </div>
-        <div class="checkBox_filter">
-          <input type="checkbox" name="" id="" />
-          <label for="">Falha 03</label>
-        </div>
-        <div class="checkBox_filter">
-          <input type="checkbox" name="" id="" />
-          <label for="">Falha 04</label>
-        </div>
-      </div> -->
     </div>
   </div>
+
 </template>
 
 <script>
+import httpCards from '../services/startup/index'
 import http from "../services/dashboard/Dashboard";
 import BarChartVue from "../components/Chart/BarChartVue.vue";
+import Card from "../components/Card/Card.vue"
 import DoughnutChart from "../components/Chart/DoughnutChartVue.vue";
 import FilterBarChart from "../components/Filters/FilterBarChart.vue";
 import FilterDoughnutChart from "../components/Filters/FilterDoughnutChart.vue";
@@ -76,6 +88,7 @@ export default {
   components: {
     FilterBarChart,
     BarChartVue,
+    Card,
     DoughnutChart,
     FilterDoughnutChart,
   },
@@ -89,11 +102,17 @@ export default {
       },
       dashDataMetrologyQuantity: [],
       dashTime: [],
-      dadosDash2 : []
+      dadosDash2: [],
+      startupsManagement: {
+        approved: "",
+        conditional: "",
+        disapproved: "",
+        closed: "",
+      }
     };
   },
   async created() {
-     await this.$store.commit("$SETISLOADING");
+    await this.$store.commit("$SETISLOADING");
 
     const result = await http.ListAllDataFilter({
       day: dayjs().format("YYYY-MM-DD"),
@@ -105,34 +124,40 @@ export default {
       this.dashData.metrology.push(item.metrology.quantitymetrology);
     });
 
-const result2 = await http.DefaultQuestionsDisapproved({  
-  date_start : dayjs().format("YYYY-MM-DD"),
-  date_end : dayjs().add(6, "day").format("YYYY-MM-DD")
-   })
+    const result2 = await http.DefaultQuestionsDisapproved({
+      date_start: dayjs().format("YYYY-MM-DD"),
+      date_end: dayjs().add(6, "day").format("YYYY-MM-DD")
+    })
 
-this.dadosDash2.push(
-result2.data.cavidade,
-result2.data.ciclo,
-result2.data.datadorMoldeAtualizado,
-result2.data.embalagemConformeFit,
-result2.data.etiquetaEmbalagemDeAcordoProdutoCliente,
-result2.data.fichaInstrucaoDeTrabalho,
-result2.data.fichaTecnicaInjecao,
-result2.data.fluxoOperacao,
-result2.data.masters,
-result2.data.materiaPrima,
-result2.data.padraoHomologado,
-result2.data.pesoMedioLiquido,
-result2.data.planoAtencao,
-result2.data.planoInspecaoQualidade,
-result2.data.posticoDoMolde,
-result2.data.recursosMaoDeObra,
-);
+    this.dadosDash2.push(
+      result2.data.cavidade,
+      result2.data.ciclo,
+      result2.data.datadorMoldeAtualizado,
+      result2.data.embalagemConformeFit,
+      result2.data.etiquetaEmbalagemDeAcordoProdutoCliente,
+      result2.data.fichaInstrucaoDeTrabalho,
+      result2.data.fichaTecnicaInjecao,
+      result2.data.fluxoOperacao,
+      result2.data.masters,
+      result2.data.materiaPrima,
+      result2.data.padraoHomologado,
+      result2.data.pesoMedioLiquido,
+      result2.data.planoAtencao,
+      result2.data.planoInspecaoQualidade,
+      result2.data.posticoDoMolde,
+      result2.data.recursosMaoDeObra,
+    );
+
+    const listCount = await httpCards.listCountOfStartupsByStatus()
+    this.startupsManagement.approved = listCount.data.approved
+    this.startupsManagement.disapproved = listCount.data.disapproved
+    this.startupsManagement.conditional = listCount.data.conditional
+    this.startupsManagement.closed = listCount.data.closed
 
 
-await this.$store.commit("$SETISLOADING");
+    await this.$store.commit("$SETISLOADING");
 
-},
+  },
 
   methods: {
     async getSelectedConfig(data) {
@@ -160,31 +185,31 @@ await this.$store.commit("$SETISLOADING");
 
     },
 
-async getSelectedSecondConfig(dataDate){
-await this.$store.commit("$SETISLOADING");
+    async getSelectedSecondConfig(dataDate) {
+      await this.$store.commit("$SETISLOADING");
 
-const result2 = await http.DefaultQuestionsDisapproved(dataDate);
-this.dadosDash2 = []
-this.dadosDash2.push(
-result2.data.cavidade,
-result2.data.ciclo,
-result2.data.datadorMoldeAtualizado,
-result2.data.embalagemConformeFit,
-result2.data.etiquetaEmbalagemDeAcordoProdutoCliente,
-result2.data.fichaInstrucaoDeTrabalho,
-result2.data.fichaTecnicaInjecao,
-result2.data.fluxoOperacao,
-result2.data.masters,
-result2.data.materiaPrima,
-result2.data.padraoHomologado,
-result2.data.pesoMedioLiquido,
-result2.data.planoAtencao,
-result2.data.planoInspecaoQualidade,
-result2.data.posticoDoMolde,
-result2.data.recursosMaoDeObra,
-);
+      const result2 = await http.DefaultQuestionsDisapproved(dataDate);
+      this.dadosDash2 = []
+      this.dadosDash2.push(
+        result2.data.cavidade,
+        result2.data.ciclo,
+        result2.data.datadorMoldeAtualizado,
+        result2.data.embalagemConformeFit,
+        result2.data.etiquetaEmbalagemDeAcordoProdutoCliente,
+        result2.data.fichaInstrucaoDeTrabalho,
+        result2.data.fichaTecnicaInjecao,
+        result2.data.fluxoOperacao,
+        result2.data.masters,
+        result2.data.materiaPrima,
+        result2.data.padraoHomologado,
+        result2.data.pesoMedioLiquido,
+        result2.data.planoAtencao,
+        result2.data.planoInspecaoQualidade,
+        result2.data.posticoDoMolde,
+        result2.data.recursosMaoDeObra,
+      );
 
-await this.$store.commit("$SETISLOADING");
+      await this.$store.commit("$SETISLOADING");
 
     }
   },
@@ -192,6 +217,25 @@ await this.$store.commit("$SETISLOADING");
 </script>
 
 <style scoped>
+.cards {
+  margin: 10px 0 40px 0;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  z-index: 0;
+}
+
+@media(max-width:1100px) {
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  }
+}
+
+
 input,
 select {
   background: #e9dfdf;
@@ -200,12 +244,12 @@ select {
   padding: 0.5rem 1rem;
   outline: none;
 }
+
 .barCHart_content {
   width: 100%;
-  position: relative;
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 3rem;
+  display: flex;
+  gap:30px;
+  margin-top: 30px;
 }
 
 .barCHart_content:first-child {
@@ -213,7 +257,7 @@ select {
 }
 
 .barCHart_content .barChart {
-  width: 100%;
+  width: 75%;
   background: var(--bg_white);
   padding: 2rem;
   border-radius: 10px;
@@ -221,7 +265,7 @@ select {
 }
 
 .barCHart_content .barChart_filter {
-  width: 100%;
+  width: 25%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -277,12 +321,17 @@ select {
   overflow: auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .barCHart_content {
-    grid-template-columns: 1fr;
+    flex-direction: column-reverse;
+  }
+
+  .barCHart_content .barChart_filter {
+    width: 100%;
   }
 
   .barCHart_content .barChart {
+    width: 100%;
     padding: 2rem 0;
   }
 }
