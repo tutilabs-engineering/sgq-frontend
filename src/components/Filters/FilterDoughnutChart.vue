@@ -49,8 +49,8 @@ export default {
   data(){
     return { 
       config : {
-      date_start : dayjs().format("YYYY-MM-DD"),
-      date_end : dayjs().add(6, "day").format("YYYY-MM-DD"),
+      date_start : dayjs().subtract(12, 'day').format("YYYY-MM-DD"),
+      date_end : dayjs().format("YYYY-MM-DD"),
       workShift: 0
       
     }

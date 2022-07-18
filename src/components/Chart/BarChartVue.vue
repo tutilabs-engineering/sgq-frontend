@@ -1,12 +1,7 @@
 <template>
   <div>
 
-    <apexchart
-      width="100%"
-      :type="options.chart.type"
-      :options="options"
-      :series="series"
-    ></apexchart>
+    <apexchart width="100%" :type="options.chart.type" :options="options" :series="series"></apexchart>
   </div>
 </template>
 
@@ -14,36 +9,48 @@
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "BarChartVue",
-   props: {
+  props: {
     dashData: Array,
     dashTime: Array,
   },
-   
+
   data: function () {
     return {
       options: {
         chart: {
           type: "bar",
           height: 350,
-          stacked: true,
+          stacked: false,
           toolbar: {
-            show: true,
+            show: false,
           },
         },
-        colors: ["#3FC36D", "#E3E745"],
+        colors: ["#3FC36D"],
         xaxis: {
           type: "datetime",
           categories: this.dashTime
         },
+
+        title: {
+          text: 'Quantidade de Startups Preenchidas',
+            floating: false,
+            offsetY: 0,
+            offsetX: 0,
+            align: 'center',
+            margin: 10,
+            style: {
+              fontSize: '16px',
+              color: '#444444',
+              fontFamily: 'Poppins'
+            }
+        },
       },
+
+      
       series: [
         {
-          name: "PREENCHIMENTO",
+          name: "Startups Preenchidas",
           data: this.dashData.startup,
-        },
-        {
-          name: "Metrologia",
-          data: this.dashData.metrology,
         },
       ],
 
@@ -61,37 +68,33 @@ export default defineComponent({
       ],
     };
   },
-    watch: {
-    dashTime(newValue){
-  
-          this.options ={
+  watch: {
+    dashTime(newValue) {
+
+      this.options = {
         chart: {
           type: "bar",
           height: 350,
           stacked: true,
           toolbar: {
-            show: true,
+            show: false,
           },
         },
-        colors: ["#3FC36D", "#E3E745"],
+        colors: ["#3FC36D"],
         xaxis: {
           type: "datetime",
           categories: newValue
         },
       }
-       this.series = [
+      this.series = [
         {
-          name: "Preenchimento",
+          name: "Startups Preenchidas",
           data: this.dashData.startup,
         },
-           {
-          name: "Metrologia",
-          data: this.dashData.metrology,
-        }
       ];
     }
-    }
-     
+  }
+
 
 });
 </script>
