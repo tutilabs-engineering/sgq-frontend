@@ -2,7 +2,9 @@
   <div class="loading-content">
     <h2 class="title">SGQ</h2>
     <div class="quadrado"></div>
-    <p class="version">Versão 1.4.7</p>
+
+    <p class="version">Versão 1.5.8</p>
+
   </div>
 </template>
 

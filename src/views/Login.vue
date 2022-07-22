@@ -29,7 +29,9 @@
 
           <input class="btnLogin" type="submit" value="Entrar" />
         </form>
-        <span class="version">Versão 1.4.7</span>
+
+        <span class="version">Versão 1.5.8</span>
+
       </div>
     </div>
   </div>
