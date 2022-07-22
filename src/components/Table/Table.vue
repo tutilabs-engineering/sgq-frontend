@@ -268,6 +268,7 @@ export default {
       }
     },
     verifyMetrology(metrology) {
+      if(metrology){
       if (metrology.length > 0) {
         if (metrology[0].metrology == false) {
           return "Met. Preenchida";
@@ -279,6 +280,8 @@ export default {
       else {
         return "Não existe Metrologia";
       }
+      }
+       return "Não existe Metrologia";
     },
     calcPagination: async function () {
       this.pages = this.calcPages();
