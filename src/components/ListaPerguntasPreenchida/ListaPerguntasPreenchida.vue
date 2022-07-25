@@ -9,10 +9,10 @@
         @returnAnswered="getAnswered"
       />
     </fieldset>
-
+ 
     <fieldset
       class="content-tablePerguntas"
-      v-if="specificQuestions.length == 0 && verifyReprenchiSpecificDeStartup(startupData)==false"
+      v-if="!verifyExistSpecificQuestions(specificQuestions) && !verifyReprenchiSpecificDeStartup(startupData)"
     >
       <legend class="legenda-warning">
         Não há Perguntas Especificas para este Produto<br /><span
@@ -105,6 +105,15 @@ export default {
   },
 
   methods: {
+    verifyExistSpecificQuestions(specificQuestions){
+      if(specificQuestions){
+         if(specificQuestions.length > 0){
+              return true;
+         }
+         return false;   
+      } 
+      return false;
+    },
     verifyReprenchiSpecificDeStartup: function(startup){
         if(!startup.report_startup_fill){
           return false;
