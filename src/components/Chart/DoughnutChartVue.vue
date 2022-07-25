@@ -26,7 +26,7 @@ export default defineComponent({
           position: "right",
         },
         title: {
-          text: 'Falhas de Perguntas Padrões',
+          text: 'Motivos de Reprovação',
           floating: false,
           offsetY: 0,
           offsetX: 0,

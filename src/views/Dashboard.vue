@@ -2,32 +2,33 @@
 
   <div class="cards">
     <Card
+        status="TOTAL"
+        :qtde="startupsManagement.total"
+        img="fas fa-check-square"
+        colore="#5f9dff"
+        link="/startups-aprovadas" textContentPopper="Clique para ver mais detalhes"
+      />
+
+    <Card
         status="APROVADOS"
-        :qtde="startupsManagement.approved"
+        :qtde="startupsManagement.approved + ' - ' + porcent(startupsManagement.total, startupsManagement.approved)"
         img="fas fa-check-square"
         colore="#43CC74"
         link="/startups-aprovadas" textContentPopper="Clique para ver mais detalhes"
       />
       <Card
         status="CONDICIONAL"
-        :qtde="startupsManagement.conditional"
+        :qtde="startupsManagement.conditional + ' - ' + porcent(startupsManagement.total, startupsManagement.conditional)"
         img="fas fa-tasks"
         colore="#FFAE3D"
         link="/startups-andamentos" textContentPopper="Clique para ver mais detalhes"
       />
       <Card
         status="REPROVADOS"
-        :qtde="startupsManagement.disapproved"
+        :qtde="startupsManagement.disapproved + ' - ' + porcent(startupsManagement.total, startupsManagement.disapproved)"
         img="fas fa-times"
         colore="#FF5349"
         link="/startups-reprovadas" textContentPopper="Clique para ver mais detalhes"
-      />
-      <Card
-        status="FECHADOS"
-        :qtde="startupsManagement.closed"
-        img="fas fa-door-closed"
-        colore="#5F9DFF"
-        link="#" textContentPopper=""
       />
   </div>
   <div class="barCHart_content">
@@ -35,16 +36,6 @@
       <BarChartVue :dashData="dashData" :dashTime="dashTime" />
     </div>
     <div class="barChart_filter">
-      <!-- <div class="legend_chart">
-        <div class="startUp_fill">
-          <span class="circle_fill"></span>
-          <p>Preenchimento</p>
-        </div>
-        <div class="metrology">
-          <span class="circle_metrology"></span>
-          <p>Metrologia</p>
-        </div>
-      </div> -->
 
       <div class="legend_chart">
         <div class="title_filter">
@@ -108,6 +99,7 @@ export default {
         conditional: "",
         disapproved: "",
         closed: "",
+        total: ""
       }
     };
   },
@@ -153,13 +145,18 @@ export default {
     this.startupsManagement.disapproved = listCount.data.disapproved
     this.startupsManagement.conditional = listCount.data.conditional
     this.startupsManagement.closed = listCount.data.closed
-
+    this.startupsManagement.total = this.startupsManagement.approved + this.startupsManagement.conditional + this.startupsManagement.disapproved
 
     await this.$store.commit("$SETISLOADING");
 
   },
 
   methods: {
+
+    porcent(total, target){
+      let por = target*100
+      return `${Math.round(por/total)}%`
+    },
     async getSelectedConfig(data) {
       const time = [];
       const startup = [];

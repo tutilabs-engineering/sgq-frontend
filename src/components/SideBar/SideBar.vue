@@ -1,49 +1,32 @@
 <template>
   <header class="header">
-    <a @click="() => this.$router.push({ name: 'Startup' })" class="logo"
-      ><i class="fas fa-vial"></i>SGQ</a
-    >
+    <a @click="() => this.$router.push({ name: 'Startup' })" class="logo"><i class="fas fa-vial"></i>SGQ</a>
 
-    <input
-      class="menu-btn"
-      type="checkbox"
-      id="menu-btn"
-      v-model="checkboxValue"
-    />
-    <label class="menu-icon" for="menu-btn"
-      ><span class="navicon"></span
-    ></label>
+    <input class="menu-btn" type="checkbox" id="menu-btn" v-model="checkboxValue" />
+    <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
     <ul class="menu">
-   
+
       <li @click="changeCheckboxValue">
-        <a @click="() => this.$router.push({ name: 'Startup' })"
-          ><i class="fas fa-check-circle"></i>Startup</a
-        >
+        <a @click="() => this.$router.push({ name: 'Startup' })">
+          <i class="fas fa-check-circle"></i>
+          Startup
+        </a>
       </li>
       <li @click="changeCheckboxValue">
-        <a @click="() => this.$router.push({ name: 'Status' })"
-          ><i class="fas fa-clone"></i>Criar Startup</a
-        >
+        <a @click="() => this.$router.push({ name: 'Status' })"><i class="fas fa-clone"></i>Criar Startup</a>
       </li>
       <li @click="changeCheckboxValue">
         <a @click="() => this.$router.push({ name: 'Dashboard' })">
-          <i class="fas fa-chart-bar"></i>Dashboard</a
-        >
+          <i class="fas fa-chart-bar"></i>Dashboard</a>
       </li>
       <li @click="changeCheckboxValue">
-        <a @click="() => this.$router.push({ name: 'AnaliseDeProdutos' })"
-          ><i class="fas fa-desktop"></i>Análise</a
-        >
+        <a @click="() => this.$router.push({ name: 'AnaliseDeProdutos' })"><i class="fas fa-desktop"></i>Análise</a>
       </li>
       <li @click="changeCheckboxValue">
-        <a @click="() => this.$router.push({ name: 'metrologia' })"
-          ><i class="fas fa-ruler-combined"></i>Metrologia</a
-        >
+        <a @click="() => this.$router.push({ name: 'metrologia' })"><i class="fas fa-ruler-combined"></i>Metrologia</a>
       </li>
       <li @click="changeCheckboxValue">
-        <a @click="() => this.$router.push({ name: 'Configuracoes' })"
-          ><i class="fas fa-tools"></i>Configuracoes</a
-        >
+        <a @click="() => this.$router.push({ name: 'Configuracoes' })"><i class="fas fa-tools"></i>Configuracoes</a>
       </li>
       <li @click="changeCheckboxValue">
         <a @click="Exit"><i class="fas fa-door-open"></i>Sair</a>
@@ -120,6 +103,7 @@ export default {
   background-color: var(--bg_green);
   color: var(--main_primaryWhite);
 }
+
 .header ul {
   margin: 0;
   padding: 0;
@@ -127,6 +111,7 @@ export default {
   overflow: hidden;
   cursor: pointer;
 }
+
 .header li a {
   font-weight: 400;
   color: #fff;
@@ -157,12 +142,14 @@ export default {
 .logo {
   cursor: pointer;
 }
+
 /* menu */
 .header .menu {
   clear: both;
   max-height: 0;
   transition: max-height 0.2s ease-out;
 }
+
 /* menu icon */
 .header .menu-icon {
   cursor: pointer;
@@ -193,6 +180,7 @@ export default {
   transition: background 0.2s ease-out;
   width: 25px;
 }
+
 .header .menu-icon .navicon:before,
 .header .menu-icon .navicon:after {
   background: var(--main_primaryWhite);
@@ -203,32 +191,41 @@ export default {
   transition: all 0.2s ease-out;
   width: 100%;
 }
+
 .header .menu-icon .navicon:before {
   top: 6px;
 }
+
 .header .menu-icon .navicon:after {
   top: -6px;
 }
+
 /* menu btn */
 .header .menu-btn {
   display: none;
 }
-.header .menu-btn:checked ~ .menu {
+
+.header .menu-btn:checked~.menu {
   max-height: 520px;
 }
-.header .menu-btn:checked ~ .menu-icon .navicon {
+
+.header .menu-btn:checked~.menu-icon .navicon {
   background: transparent;
 }
-.header .menu-btn:checked ~ .menu-icon .navicon:before {
+
+.header .menu-btn:checked~.menu-icon .navicon:before {
   transform: rotate(-45deg);
 }
-.header .menu-btn:checked ~ .menu-icon .navicon:after {
+
+.header .menu-btn:checked~.menu-icon .navicon:after {
   transform: rotate(45deg);
 }
-.header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
-.header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+
+.header .menu-btn:checked~.menu-icon:not(.steps) .navicon:before,
+.header .menu-btn:checked~.menu-icon:not(.steps) .navicon:after {
   top: 0;
 }
+
 /* 48em = 768px */
 
 @media (max-width: 768px) {
@@ -237,23 +234,27 @@ export default {
     height: 65px;
   }
 }
+
 @media (min-width: 769px) {
   .header li {
     float: left;
   }
+
   .header li a {
     padding: 20px 30px;
   }
+
   .header .menu {
     clear: none;
     float: right;
     max-height: none;
   }
+
   .header .menu-icon {
     display: none;
   }
 
-  .header .menu-btn:checked ~ .menu {
+  .header .menu-btn:checked~.menu {
     max-height: 100vw;
   }
 }
