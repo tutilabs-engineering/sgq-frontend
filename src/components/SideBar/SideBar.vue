@@ -255,7 +255,7 @@ export default {
   }
 
   .header .menu-btn:checked~.menu {
-    max-height: 100vw;
+    max-height: 100%;
   }
 }
 </style>

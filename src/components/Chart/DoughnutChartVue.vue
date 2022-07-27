@@ -10,7 +10,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "BarChartVue",
   props: {
-    dados: Array
+    dados: Array,
   },
   data: function () {
     return {
