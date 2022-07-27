@@ -1,50 +1,42 @@
 <template>
 
-  <div class="cards">
-    <Card
-        status="APROVADOS"
-        :qtde="startupsManagement.approved"
-        img="fas fa-check-square"
-        colore="#43CC74"
-        link="/startups-aprovadas" textContentPopper="Clique para ver mais detalhes"
-      />
-      <Card
-        status="CONDICIONAL"
-        :qtde="startupsManagement.conditional"
-        img="fas fa-tasks"
-        colore="#FFAE3D"
-        link="/startups-andamentos" textContentPopper="Clique para ver mais detalhes"
-      />
-      <Card
-        status="REPROVADOS"
-        :qtde="startupsManagement.disapproved"
-        img="fas fa-times"
-        colore="#FF5349"
-        link="/startups-reprovadas" textContentPopper="Clique para ver mais detalhes"
-      />
-      <Card
-        status="FECHADOS"
-        :qtde="startupsManagement.closed"
-        img="fas fa-door-closed"
-        colore="#5F9DFF"
-        link="#" textContentPopper=""
-      />
-  </div>
+  <fieldset class="container-cards">
+    <legend>Quantidade de Startups</legend>
+
+    <div class="filter_cards">
+      <input type="date" v-model="start_time" />
+      <input type="date" v-model="end_time" />
+
+      <button @click.prevent="returnQtde" class="btn-filter-card">Pesquisar</button>
+
+    </div>
+
+    <div class="cards">
+
+      <Card status="TOTAL" :qtde="startupsManagement.total" img="fas fa-check-square" colore="#5f9dff"
+        link="/startups-aprovadas" />
+
+      <Card status="APROVADOS"
+        :qtde="startupsManagement.approved + ' - ' + porcent(startupsManagement.total, startupsManagement.approved)"
+        img="fas fa-check-square" colore="#43CC74" link="/startups-aprovadas" />
+      <Card status="CONDICIONAL"
+        :qtde="startupsManagement.conditional + ' - ' + porcent(startupsManagement.total, startupsManagement.conditional)"
+        img="fas fa-tasks" colore="#FFAE3D" link="/startups-andamentos" />
+      <Card status="REPROVADOS"
+        :qtde="startupsManagement.disapproved + ' - ' + porcent(startupsManagement.total, startupsManagement.disapproved)"
+        img="fas fa-times" colore="#FF5349" link="/startups-reprovadas" />
+    </div>
+    
+    <!-- <div>
+      <LineChart :time="dashTime" :dashLineData="dashData"/>
+    </div> -->
+
+  </fieldset>
   <div class="barCHart_content">
     <div class="barChart">
       <BarChartVue :dashData="dashData" :dashTime="dashTime" />
     </div>
     <div class="barChart_filter">
-      <!-- <div class="legend_chart">
-        <div class="startUp_fill">
-          <span class="circle_fill"></span>
-          <p>Preenchimento</p>
-        </div>
-        <div class="metrology">
-          <span class="circle_metrology"></span>
-          <p>Metrologia</p>
-        </div>
-      </div> -->
 
       <div class="legend_chart">
         <div class="title_filter">
@@ -81,6 +73,7 @@ import BarChartVue from "../components/Chart/BarChartVue.vue";
 import Card from "../components/Card/Card.vue"
 import DoughnutChart from "../components/Chart/DoughnutChartVue.vue";
 import FilterBarChart from "../components/Filters/FilterBarChart.vue";
+// import LineChart from "../components/Chart/LineChart.vue"
 import FilterDoughnutChart from "../components/Filters/FilterDoughnutChart.vue";
 import dayjs from "dayjs";
 
@@ -89,12 +82,17 @@ export default {
     FilterBarChart,
     BarChartVue,
     Card,
+    // LineChart,
     DoughnutChart,
     FilterDoughnutChart,
+
   },
   name: "Dashboard",
   data() {
     return {
+      dadosDoCaralho: {},
+      start_time: dayjs().subtract(1, 'month').format('YYYY-MM-DD'),
+      end_time: dayjs(new Date()).format('YYYY-MM-DD'),
       cdate: dayjs().format("YYYY-MM-DD"),
       dashData: {
         startup: [],
@@ -108,9 +106,11 @@ export default {
         conditional: "",
         disapproved: "",
         closed: "",
+        total: ""
       }
     };
   },
+
   async created() {
     await this.$store.commit("$SETISLOADING");
 
@@ -153,13 +153,36 @@ export default {
     this.startupsManagement.disapproved = listCount.data.disapproved
     this.startupsManagement.conditional = listCount.data.conditional
     this.startupsManagement.closed = listCount.data.closed
-
+    this.startupsManagement.total = this.startupsManagement.approved + this.startupsManagement.conditional + this.startupsManagement.disapproved
 
     await this.$store.commit("$SETISLOADING");
 
   },
 
   methods: {
+
+    returnQtde: async function () {
+
+      if (this.start_time || this.this.end_time) {
+        await httpCards.filterStartups(this.start_time, this.end_time).then((res) => {
+          this.startupsManagement.approved = res.data.approved
+          this.startupsManagement.disapproved = res.data.disapproved
+          this.startupsManagement.conditional = res.data.conditional
+          this.startupsManagement.closed = res.data.closed
+          this.startupsManagement.total = this.startupsManagement.approved + this.startupsManagement.conditional + this.startupsManagement.disapproved
+        }).catch((error) => {
+          console.log(error);
+        })
+      } else {
+        this.start_time = "Olar"
+      }
+
+    },
+
+    porcent(total, target) {
+      let por = target * 100
+      return `${Math.round(por / total)}%`
+    },
     async getSelectedConfig(data) {
       const time = [];
       const startup = [];
@@ -228,6 +251,36 @@ export default {
   z-index: 0;
 }
 
+.container-cards {
+  padding: 20px 20px 0 20px;
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  width: 100%;
+  border-radius: 10px 10px 10px 10px;
+  background-color: white;
+}
+
+legend {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
+.filter_cards {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.btn-filter-card {
+  cursor: pointer;
+
+  padding: 0 5px 0 5px;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--bg_green);
+}
+
 @media(max-width:1100px) {
   .cards {
     display: grid;
@@ -248,7 +301,7 @@ select {
 .barCHart_content {
   width: 100%;
   display: flex;
-  gap:30px;
+  gap: 30px;
   margin-top: 30px;
 }
 
@@ -322,6 +375,20 @@ select {
 }
 
 @media (max-width: 1000px) {
+
+  .btn-filter-card {
+    height: 30px;
+  }
+
+  legend {
+    text-align: center;
+  }
+
+  .filter_cards {
+    display: flex;
+    flex-direction: column;
+  }
+
   .barCHart_content {
     flex-direction: column-reverse;
   }

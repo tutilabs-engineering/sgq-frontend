@@ -94,8 +94,6 @@ export default {
 
       const dataOp = await http.listDataByCodeOp(code_op);
       const data = dataOp.data.results[0];
-      console.log(data);
-
       this.headerInfo.client = data.CardName;
       this.headerInfo.codeClient = data.U_CodCliente;
       this.headerInfo.product = data.ProdName;

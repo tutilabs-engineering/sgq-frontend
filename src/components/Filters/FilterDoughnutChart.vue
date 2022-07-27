@@ -10,36 +10,6 @@
     <option :value="3">3 Turno</option>
   </select>
 
- <!-- <select name="" id="">
-    <option value="">Start-up</option>
-    <option value="">Start-up</option>
-    <option value="">Start-up</option>
-    <option value="">Start-up</option>
-  </select>
-  <select name="" id="">
-    <option value="">Produto</option>
-    <option value="">Produto</option>
-    <option value="">Produto</option>
-    <option value="">Produto</option>
-  </select>
-  <select name="" id="">
-    <option value="">Cliente</option>
-    <option value="">Cliente</option>
-    <option value="">Cliente</option>
-    <option value="">Cliente</option>
-  </select>
-  <select name="" id="">
-    <option value="">Turno</option>
-    <option value="">Turno</option>
-    <option value="">Turno</option>
-    <option value="">Turno</option>
-  </select>
-  <select name="" id="">
-    <option value="">Máquina</option>
-    <option value="">Máquina</option>
-    <option value="">Máquina</option>
-    <option value="">Máquina</option>
-  </select> -->
 </template>
 
 <script>

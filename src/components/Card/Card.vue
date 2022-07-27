@@ -100,10 +100,5 @@ a {
   }
 }
 
-@media (max-width: 500px) {
-  .cardStatus {
-    width: 90vw;
-  }
-}
 </style>
 

@@ -138,7 +138,6 @@ export default {
     },
 
     removeFile(id) {
-      console.log(this.defaultQuestions);
       // eslint-disable-next-line vue/no-mutating-props
       const index = this.defaultQuestions.findIndex((element) => element.fk_default_question === id);
       // eslint-disable-next-line vue/no-mutating-props

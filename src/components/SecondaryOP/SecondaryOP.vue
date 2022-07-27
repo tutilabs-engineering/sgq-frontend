@@ -82,7 +82,6 @@ import http from "../../services/startup/index";
 export default {
   created: async function () {
     await http.listDataByCodeOp(this.codeSecondary).then((res) => {
-      console.log(res.data.results[0]);
       this.headerSecondary.code_op = res.data.results[0].DocNum;
       this.headerSecondary.client = res.data.results[0].CardName;
       this.headerSecondary.codeClient = res.data.results[0].U_CodCliente;
