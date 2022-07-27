@@ -208,9 +208,6 @@ export default {
 
     async getSelectedSecondConfig(dataDate) {
       await this.$store.commit("$SETISLOADING");
-      
-
-      console.log(dataDate);
 
       const result2 = await http.DefaultQuestionsDisapproved(dataDate);
       this.dadosDash2 = []

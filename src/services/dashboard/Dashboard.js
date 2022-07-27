@@ -19,7 +19,6 @@ export default {
   date_end,
   workShift
    }) => {
-     console.log({date_start,date_end,workShift});
     return await http.post("/dashboard/defaultQuestionsDisapproved/filter",{date_start,date_end,workShift})
   },
 

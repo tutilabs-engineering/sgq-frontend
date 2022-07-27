@@ -229,7 +229,6 @@ export default {
 
       this.$store.commit("$SETISLOADING");
 
-      console.log(this.dataNewOpInStartup);
       await http
         .addOpInStartup(this.id_startup, this.dataNewOpInStartup)
         .then((res) => {

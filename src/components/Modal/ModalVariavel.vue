@@ -213,7 +213,6 @@ export default {
       .FindVariableByCodeProduct(this.dataProduct.code_product)
       .then((res) => {
         this.variables = res.data.list;
-        console.log(this.variables);
       });
     this.$store.commit("$SETISLOADING");
   },
@@ -362,7 +361,6 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error.response);
           if (error.response.status === 401) {
             Toast.fire({
               icon: "warning",

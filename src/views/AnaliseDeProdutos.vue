@@ -200,7 +200,6 @@ export default {
           .catch((error) => {
             console.log(error);
             this.isSearched = !this.isSearched;
-            console.log("Código invalido");
           });
         this.$store.commit("$SETISLOADING");
       } else {

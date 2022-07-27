@@ -130,7 +130,6 @@ export default {
 
                         
                     }).catch ( (error) => {
-                      console.log(error.response);
                         if(error.response.data.message === "Already exists a startup open with this code_op"){
                             Toast.fire({
                                 icon: 'warning',

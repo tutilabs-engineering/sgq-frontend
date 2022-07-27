@@ -227,7 +227,6 @@ export default {
     });
     this.itemsAbertos = openedStartups.reverse();
     this.itemsFechados = closedStartups.reverse();
-    console.log(this.itemsFechados);
     this.existItemAbertos(this.itemsAbertos.length);
     this.existItemFechados(this.itemsFechados.length);
     this.totalItens = this.itemsAbertos.length;
