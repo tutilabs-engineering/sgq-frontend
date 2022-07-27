@@ -26,9 +26,9 @@
         :qtde="startupsManagement.disapproved + ' - ' + porcent(startupsManagement.total, startupsManagement.disapproved)"
         img="fas fa-times" colore="#FF5349" link="/startups-reprovadas" />
     </div>
-    <!-- 
-    <div>
-      <PieChart :dataPie="startupsManagement"/>
+    
+    <!-- <div>
+      <LineChart :time="dashTime" :dashLineData="dashData"/>
     </div> -->
 
   </fieldset>
@@ -73,6 +73,7 @@ import BarChartVue from "../components/Chart/BarChartVue.vue";
 import Card from "../components/Card/Card.vue"
 import DoughnutChart from "../components/Chart/DoughnutChartVue.vue";
 import FilterBarChart from "../components/Filters/FilterBarChart.vue";
+// import LineChart from "../components/Chart/LineChart.vue"
 import FilterDoughnutChart from "../components/Filters/FilterDoughnutChart.vue";
 import dayjs from "dayjs";
 
@@ -81,6 +82,7 @@ export default {
     FilterBarChart,
     BarChartVue,
     Card,
+    // LineChart,
     DoughnutChart,
     FilterDoughnutChart,
 

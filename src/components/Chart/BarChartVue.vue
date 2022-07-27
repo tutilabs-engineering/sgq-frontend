@@ -9,14 +9,12 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "BarChartVue",
   props: {
-    
     dashData: Array,
     dashTime: Array,
   },
 
   data: function () {
     return {
-      lista: [0,5,6,1,5,6,5,2,4,5,10],
       options: {
         chart: {
           type: "bar",
