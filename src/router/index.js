@@ -194,9 +194,9 @@ const routes = [
   },
 
   {
-    path: '/paginacaoTeste',
-    name: 'paginacaoTeste',
-    component: () => import('../views/PaginacaoTeste.vue'),
+    path: '/campoTeste',
+    name: 'campoTeste',
+    component: () => import('../views/campoTeste.vue'),
     beforeEnter: Auth
   },
 

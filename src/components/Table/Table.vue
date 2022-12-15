@@ -209,11 +209,19 @@ export default {
     },
   },
   created: async function () {
+
+
+
+
+
+
+
     this.$store.commit("$SETISLOADING");
     const allStartups = await http.listAllStartups();
+    console.log(allStartups);
     let openedStartups = [];
     let closedStartups = [];
-    allStartups.data.forEach((startup) => {
+    allStartups.data.list.forEach((startup) => {
       startup.day = dayjs(startup.day).locale("pt-br").format("DD/MM/YYYY");
       startup.start_time = dayjs(startup.start_time)
         .locale("pt-br")

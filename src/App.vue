@@ -2,7 +2,7 @@
   <div v-if="ModalNotFound">
     <ModalNotFound />
   </div>
-  
+
   <div v-if="ModalErrorPermission">
     <ModalErrorPermission />
   </div>
@@ -81,10 +81,33 @@ export default {
 
     if (result == undefined && localStorage.getItem("token") == undefined) {
       this.$router.push({ path: "/notFound" });
-      
+
     }
 
     var nameURL = window.location.pathname;
+    if (!navigator.onLine) {
+      const Toast = this.$swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: '#ff5349',
+                    customClass: {
+                    popup: 'colored-toast',
+                    title: 'title-swal-text'
+                    },
+                    didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                    },
+                    showConfirmButton: false,
+                    timer: 0,
+                    timerProgressBar: false
+                })
+                Toast.fire({
+                        icon: 'warning',
+                        title: 'Verifique a sua conexão de rede',
+                        background: "#fff",
+                })
+    } 
     var display = document.querySelector(".defaultInterface");
     if (nameURL == "/login") {
       display.style.display = "block";
@@ -103,21 +126,21 @@ export default {
   /* colors */
   --main_primaryWhite: #ffffff;
   --black_text: #444444;
-  --green_text: #3fc36d;
-  --bg_green: #3fc36d;
+  --green_text: #10b981;
+  --bg_green: #10b981;
   --bg_gray: #f5f5f5;
   --bg_white: #ffffff;
 
   /* cards */
-  --card_green: #3fc36d;
+  --card_green: #10b981;
   --card_orange: #ffae3d;
   --card_red: #ff5349;
-  --card_blue: #5f9dff;
+  --card_blue: #0ea5e9;
   --card_white: #ffffff;
 
   /* buttons */
-  --btn_blue: #5f9dff;
-  --btn_green: #3fc36d;
+  --btn_blue: #0ea5e9;
+  --btn_green: #10b981;
   --btn_gray: #e9dfdf;
   --btn_white: #ffffff;
 
@@ -147,9 +170,11 @@ export default {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
 body {
   background-color: var(--bg_gray);
 }
+
 .defaultInterface {
   display: flex;
   justify-content: center;
@@ -171,7 +196,7 @@ body {
   transition: 0.5s;
 }
 
-@media (max-width: 48em){
+@media (max-width: 48em) {
   .content {
     width: 100vw;
     margin-left: 0;
