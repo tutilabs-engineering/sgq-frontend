@@ -3,7 +3,7 @@
     <div class="content-search-op">
       <h2>Buscar Startups vinculadas à OP</h2>
       <input type="number" name="" id="" v-model="numberOp">
-      <button @click="searchOP">Buscar</button>
+      <button class="btn" @click="searchOP">Buscar</button>
 
 
 
@@ -14,26 +14,24 @@
           <tr>
             <th>Código Startup</th>
             <th>Código Produto</th>
-            <th>Status</th>
+            <th>Máquina</th>
             <th>Data</th>
             <th>Ações</th>
           </tr>
           <tr v-for="startup in startupsInOp" :key="startup">
             <td>{{startup.code_startup}}</td>
             <td>{{startup.op.code_product}}</td>
-            <td>{{startup.status.description}}</td>
-            <td>{{startup.day}}</td>
-            <button>Consultar</button>
+            <td>{{startup.op.machine}}</td>
+            <td>{{formatDate(startup.day)}}</td>
+            <button @click="OpenReportStartup(startup.id)">Consultar</button>
           </tr>
         </table>
+
+        <span v-else>Não há resultados</span>
 
       </fieldset>
 
 
-
-      <pre>{{
-          startupsInOp
-      }}</pre>
     </div>
 
 
@@ -44,6 +42,7 @@
 
 <script>
 import http from '../services/startup/index'
+import dayjs from "dayjs";
 export default {
   name: "BuscarOp",
   data() {
@@ -57,6 +56,7 @@ export default {
 
   methods: {
     async searchOP() {
+      this.$store.commit("$SETISLOADING");
       this.listStartups = []
       this.startupsInOp = []
       await http.listAllStartups(0, 10, Number(this.numberOp)).then((res) => {
@@ -64,6 +64,10 @@ export default {
         this.listStartups = res.data.list
         this.showAllOps()
       })
+    },
+
+    formatDate(date) {
+      return dayjs(date).format('DD/MM/YYYY - HH:mm')
     },
 
     showAllOps() {
@@ -75,12 +79,52 @@ export default {
 
       })
 
-    }
+      this.$store.commit("$SETISLOADING");
+
+    },
+
+    OpenReportStartup: function (id_startup) {
+      this.$router.push({
+        path: "/create-startup-by-id",
+        query: { id: id_startup },
+      });
+    },
   }
 
 };
 </script>
 
 <style scoped>
+
+fieldset {
+  margin-top: 20px;
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+legend {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--black_text);
+}
+
+table td {
+  text-align: center;
+}
+
+table tr button {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  background-color: var(--bg_green);
+  height: 2.5rem;
+  color: #ffffff;
+  border:none;
+}
+
 
 </style>
