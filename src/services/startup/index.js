@@ -7,7 +7,7 @@ export default {
     return response
   },
 
-  listAllStartups: async (skip=0, take=30, fk_op=undefined, status=0) => {
+  listAllStartups: async (skip=0, take=10, fk_op=undefined, status=0) => {
     return await http.get(`/reportStartup`, {
       params: {
         fk_op,

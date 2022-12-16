@@ -210,13 +210,16 @@ export default {
   },
   created: async function () {
 
-
-
-
+   
 
 
 
     this.$store.commit("$SETISLOADING");
+
+    const abertas = await http.listAllStartups()
+    console.log(abertas);
+
+    
     const allStartups = await http.listAllStartups();
     console.log(allStartups);
     let openedStartups = [];
