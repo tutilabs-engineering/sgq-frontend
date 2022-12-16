@@ -6,28 +6,28 @@
         status="APROVADOS"
         :qtde="startupsManagement.approved"
         img="fas fa-check-square"
-        colore="#43CC74"
+        colore="#10b981"
         link="/startups-aprovadas" textContentPopper="Clique para ver mais detalhes"
       />
       <Card
         status="CONDICIONAL"
         :qtde="startupsManagement.conditional"
         img="fas fa-tasks"
-        colore="#FFAE3D"
+        colore="#fb923c"
         link="/startups-andamentos" textContentPopper="Clique para ver mais detalhes"
       />
       <Card
         status="REPROVADOS"
         :qtde="startupsManagement.disapproved"
         img="fas fa-times"
-        colore="#FF5349"
+        colore="#ef4444"
         link="/startups-reprovadas" textContentPopper="Clique para ver mais detalhes"
       />
       <Card
         status="FECHADOS"
         :qtde="startupsManagement.closed"
         img="fas fa-door-closed"
-        colore="#5F9DFF"
+        colore="#0ea5e9"
         link="#" textContentPopper=""
       />
     </div>

@@ -133,8 +133,8 @@ export default {
 
   /* cards */
   --card_green: #10b981;
-  --card_orange: #ffae3d;
-  --card_red: #ff5349;
+  --card_orange: #fb923c;
+  --card_red: #ef4444;
   --card_blue: #0ea5e9;
   --card_white: #ffffff;
 
