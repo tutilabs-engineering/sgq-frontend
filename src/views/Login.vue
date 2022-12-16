@@ -1,7 +1,7 @@
 <template>
   <div class="content-login">
     <h1 class="title">SGQ</h1>
-    <span class="software-title">Sistema de Garantia de Qualidade</span>
+    <span class="software-title">Sistema de Garantia de Qualidade <br />Módulo Startup</span>
 
     <form class="form-login" @submit.prevent="Login">
       <label for="matricula" class="title-label">Matricula</label>
