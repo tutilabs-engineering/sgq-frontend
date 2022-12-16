@@ -194,9 +194,9 @@ const routes = [
   },
 
   {
-    path: '/campoTeste',
-    name: 'campoTeste',
-    component: () => import('../views/campoTeste.vue'),
+    path: '/buscarOp',
+    name: 'BuscarOp',
+    component: () => import('../views/BuscarOp.vue'),
     beforeEnter: Auth
   },
 
