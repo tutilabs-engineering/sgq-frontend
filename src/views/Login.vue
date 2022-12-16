@@ -180,6 +180,10 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+input::placeholder {
+  color: rgba(255, 255, 255, 0.613);
+}
+
 input[type="text"],
 input[type="password"] {
   -moz-appearance: textfield;
