@@ -8,7 +8,6 @@
 
     </div>
 
-
     <div v-show="statusTable">
 
       <table>
@@ -23,8 +22,6 @@
           <th>Data</th>
           <th>Criador</th>
           <th>Ações</th>
-
-
 
         </tr>
         <tr v-for="startup in listStartupsOpen" :key="startup">
