@@ -1,7 +1,7 @@
 <template>
   <fieldset class="tableContent">
     <legend>Startups</legend>
-    
+
     <div class="btns">
       <button @click="statusTable = true" :class="{'btn-toggle': statusTable}">Startups Abertas</button>
       <button @click="statusTable = false" :class="{ 'btn-toggle': !statusTable }"> Startups Fechadas</button>
@@ -19,7 +19,7 @@
           <th>Máquina</th>
           <th>Metrologia</th>
           <th>Status</th>
-          <th>Preenc.</th>
+          <th>Preench.</th>
           <th>Data</th>
           <th>Criador</th>
           <th>Ações</th>
@@ -35,9 +35,8 @@
           <td>{{ verifyMetrology(startup.metrology) }}</td>
           <td>{{ verifyOpenStartup(startup) }}</td>
           <td>{{ verifyFillStartup(startup) }}</td>
-          <td>{{ startup.day }} <br />
-            {{ startup.start_time }}</td>
-          <td data-title="Usuario">{{ startup.userThatCreate.name }}</td>
+          <td>{{ formatDate(startup.day, startup.start_time) }}</td>
+          <td data-title="Usuario">{{ startup.userThatCreate.name.split(" ")[0] + ' ' + startup.userThatCreate.name.split(" ")[1] }}</td>
           <button @click="OpenReportStartup(startup.id)">Consultar</button>
 
         </tr>
@@ -60,7 +59,7 @@
           <th>Máquina</th>
           <th>Metrologia</th>
           <th>Status</th>
-          <th>Preenchimento</th>
+          <th>Preench.</th>
           <th>Data</th>
           <th>Criador</th>
           <th>Ações</th>
@@ -74,9 +73,8 @@
           <td>{{ verifyMetrology(startup.metrology) }}</td>
           <td>{{ verifyOpenStartup(startup) }}</td>
           <td>{{ verifyFillStartup(startup) }}</td>
-          <td>{{ startup.day }} <br />
-            {{ startup.start_time }}</td>
-          <td data-title="Usuario">{{ startup.userThatCreate.name }}</td>
+          <td>{{formatDate(startup.day, startup.start_time)}}</td>
+          <td data-title="Usuario">{{  startup.userThatCreate.name.split(" ")[0] + ' ' + startup.userThatCreate.name.split(" ")[1] }}</td>
           <button @click="OpenReportStartup(startup.id)">Consultar</button>
 
         </tr>
@@ -220,6 +218,10 @@ export default {
       });
     },
 
+    formatDate(day, hour) { 
+      let date = `${dayjs(day).format('DD/MM/YYYY')} ${dayjs(hour).format('HH:mm')}`
+      return date
+    }
   },
   components: { Pagination }
 };
