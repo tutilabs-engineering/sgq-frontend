@@ -1,7 +1,10 @@
 <template>
   <div class="loading-content">
     <h2 class="title">SGQ</h2>
-    <div class="quadrado"></div>
+    
+    <span class="loader"></span>
+    <h3>STARTUP DIGITAL</h3>
+    
     <p class="version">Versão 1.7.3</p>
   </div>
 </template>
@@ -29,7 +32,7 @@ export default {
 .loading-content {
   width: 100vw;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.966);
+  background-color: rgba(255, 255, 255, 0.982);
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -61,49 +64,42 @@ export default {
 
 .version {
   color: var(--black_text);
-  margin-top: 20px;
+}.loader {
+  width: 100%;
+  height: 4.8px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+.loader::after {
+  content: '';  
+  width: 96px;
+  height: 4.8px;
+  background: var(--green_text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  animation: hitZak 1s ease-in-out infinite alternate;
 }
 
-@keyframes title-transform {
+@keyframes hitZak {
   0% {
-    opacity: 0.1;
-  }
-  25% {
-    opacity: 0.5;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes cubo-transform {
-  0% {
-    border-radius: 0 0 0 0;
-    opacity: 0.1;
-  }
-
-  25% {
-    border-radius: 0 100% 0 0;
-    background-color: var(--card_red);
-    opacity: 0.5;
+    left: 0;
+    background: var(--card_blue);
+    transform: translateX(-1%);
   }
 
   50% {
-    border-radius: 0 100% 100% 0;
-    background-color: var(--card_green);
-    opacity: 1;
+    left: 50%;
+    background: var(--green_text);
+    transform: translateX(-55%);
   }
-
-  75% {
-    border-radius: 0 100% 100% 100%;
-    background-color: var(--card_blue);
-    opacity: 0.5;
-  }
-
   100% {
-    border-radius: 100% 100% 100% 100%;
-    opacity: 1;
+    left: 100%;
+    background: var(--card_red);
+    transform: translateX(-99%);
   }
 }
+    
 </style>

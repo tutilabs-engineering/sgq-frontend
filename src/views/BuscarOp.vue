@@ -55,6 +55,9 @@ export default {
   },
 
   methods: {
+
+
+
     async searchOP() {
       this.$store.commit("$SETISLOADING");
       this.listStartups = []
