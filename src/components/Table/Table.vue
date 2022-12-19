@@ -275,6 +275,7 @@ table tr button {
   height: 2rem;
   color: #ffffff;
   border: none;
+  margin: 1rem 0 1rem 0;
 }
 
 .btn-pagination {
