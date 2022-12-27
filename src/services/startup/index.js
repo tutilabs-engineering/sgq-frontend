@@ -55,6 +55,17 @@ export default {
     })
   },
 
+  filterStartupsByStatus: async (skip=0, take=10, status=1) => {
+    return http.get(`/reportStartup/management/count`, {
+      params: {
+        skip,
+        take,
+        status
+      }
+
+    })
+  },
+
   // listCountOfStartupsByStatus: async () => {
   //   return http.get(`/reportStartup?skip=0&take=0`)
   // },
