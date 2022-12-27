@@ -85,7 +85,9 @@ export default defineComponent({
   },
   created: async function() {
     const listCount = await http.listCountOfStartupsByStatus()
-    console.log(listCount);
+    console.log(listCount.data);
+
+
     this.startupsManagement.approved = listCount.data.all_approved
 
     this.startupsManagement.disapproved = listCount.data.all_reproved

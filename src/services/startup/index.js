@@ -43,13 +43,21 @@ export default {
     return http.post(`/reportStartup/fill/${id_startup}`, data)
   },
 
-  // listCountOfStartupsByStatus: async () => {
-  //   return http.get(`/reportStartup/management/count`)
-  // },
+  listCountOfStartupsByStatus: async (skip=0, take=0, fk_op=undefined, status=0) => {
+    return http.get(`/reportStartup`, {
+      params: {
+        fk_op,
+        skip,
+        take,
+        status
+      }
 
-  listCountOfStartupsByStatus: async () => {
-    return http.get(`/reportStartup?skip=0&take=0`)
+    })
   },
+
+  // listCountOfStartupsByStatus: async () => {
+  //   return http.get(`/reportStartup?skip=0&take=0`)
+  // },
 
   findReportStartupById: async (id) => {
     return http.get(`/reportStartup/${id}`)
