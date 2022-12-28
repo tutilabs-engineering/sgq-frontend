@@ -194,9 +194,9 @@ const routes = [
   },
 
   {
-    path: '/paginacaoTeste',
-    name: 'paginacaoTeste',
-    component: () => import('../views/PaginacaoTeste.vue'),
+    path: '/buscarOp',
+    name: 'BuscarOp',
+    component: () => import('../views/BuscarOp.vue'),
     beforeEnter: Auth
   },
 

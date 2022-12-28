@@ -1,6 +1,6 @@
 <template>
-  <fieldset className="tableContent" v-if="isOp === true">
-    <legend>Análise de Startup - Aprovadas</legend>
+  <fieldset className="tableContent">
+    <legend>Startups Aprovadas</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cod. Startup</th>
@@ -14,7 +14,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in displayedPosts" :key="item.id">
+        <tr v-for="item in listAproveds" :key="item.id">
           <td style="display: none"></td>
           <td data-title="Cod. Startup">{{ item.code_startup }}</td>
           <td data-title="Cod. OP">{{ item.op.code_op }}</td>
@@ -25,65 +25,26 @@
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
-              <button
-                className="btn_visualizar"
-                @click="OpenReportStartup(item.id)"
-              >
+              <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
                 <i class="fa fa-eye"></i>
                 Visualizar
               </button>
-              <ModalNovaOp
-                :modalNovaOp="modalNovaOp"
-                :nameRouter="nameRouter"
-                @open-modal-novaOp="openModalNovaOp"
-                :startup="item"
-                :startup_id="item.id"
-              />
+              <ModalNovaOp :modalNovaOp="modalNovaOp" :nameRouter="nameRouter" @open-modal-novaOp="openModalNovaOp"
+                :startup="item" :startup_id="item.id" />
             </div>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <div class="pagination-component">
-      <button
-        class="btn-pagination"
-        type="button"
-        v-if="page != 1"
-        @click="page--"
-      >
-        Prev
-      </button>
-      <button
-        class="btn-pagination"
-        type="button"
-        v-for="pageNumber in pages.slice(page - 1, page + 5)"
-        :key="pageNumber"
-        @click="page = pageNumber"
-      >
-        {{ pageNumber }}
-      </button>
-      <button
-        class="btn-pagination"
-        type="button"
-        @click="page++"
-        v-if="page < pages.length"
-      >
-        Next
-      </button>
-    </div>
+    <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
+
+    <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
+
+    <button @click="next()" class="btn-pagination">Proximo</button>
+
   </fieldset>
 
-  <fieldset class="tableContent" v-else>
-    <h2 class="legenda-warning">
-      Não há Startups para serem listadas<br /><button
-        @click="() => this.$router.push({ name: 'Startup' })"
-        class="btn-back"
-      >
-        Voltar
-      </button>
-    </h2>
-  </fieldset>
 </template>
 
 <script>
@@ -95,35 +56,10 @@ export default {
     ModalNovaOp,
   },
   emits: ["modalNovaOp"],
-  setup() {},
+  setup() { },
   name: "Table",
 
-  computed: {
-    displayedPosts() {
-      return this.paginate(this.posts);
-    },
-  },
-
-  watch: {
-    posts() {
-      this.setPages();
-    },
-  },
-
   methods: {
-    setPages() {
-      let numberOfPages = Math.ceil(this.posts.length / this.perPage);
-      for (let index = 1; index <= numberOfPages; index++) {
-        this.pages.push(index);
-      }
-    },
-    paginate(posts) {
-      let page = this.page;
-      let perPage = this.perPage;
-      let from = page * perPage - perPage;
-      let to = page * perPage;
-      return posts.slice(from, to);
-    },
 
     OpenReportStartup: function (id_startup) {
       this.$router.push({
@@ -144,25 +80,37 @@ export default {
       return (date = `${this.day}/${this.month}/${this.year}`);
     },
 
-    verifyOP: async function (list_op) {
-      if (list_op == 0) {
-        return false;
-      } else {
-        return true;
-      }
+    async filterListStartups() {
+      await http.filterStartupsByStatus(this.currentPage, 10, 1).then((res) => {
+        this.listAproveds = res.data.listAllStartups
+      })
     },
+
+    async init() {
+      this.$store.commit("$SETISLOADING");
+      this.currentPage = 0
+      await this.filterListStartups()
+      this.$store.commit("$SETISLOADING");
+    },
+
+    async back () {
+      this.$store.commit("$SETISLOADING");
+      this.currentPage = this.currentPage - 10
+      await this.filterListStartups()
+      this.$store.commit("$SETISLOADING");
+    },
+
+    async next () {
+      this.$store.commit("$SETISLOADING");
+      this.currentPage = this.currentPage + 10
+      await this.filterListStartups()
+      this.$store.commit("$SETISLOADING");
+    }
   },
 
   created: async function () {
     this.$store.commit("$SETISLOADING");
-    const listCount = await http.listCountOfStartupsByStatus();
-    this.listAproveds = listCount.data.reportStartups.approved.reverse();
-
-    this.id_startup = this.listAproveds[0].id;
-    this.isOp = await this.verifyOP(this.listAproveds.length);
-
-    this.posts = this.listAproveds;
-
+    await this.filterListStartups()
     this.$store.commit("$SETISLOADING");
   },
 
@@ -170,11 +118,11 @@ export default {
     return {
       listAproveds: [],
       modalNovaOp: false,
-      isOp: false,
+      isOp: true,
       id_startup: "",
       nameRouter: "TabelaAprovados",
+      currentPage: 0,
 
-      btnChanged: false,
 
       posts: [""],
       page: 1,
@@ -195,12 +143,11 @@ export default {
 .btn-pagination {
   cursor: pointer;
   color: #fff;
-  width: 40px;
-  height: 30px;
   border: none;
   margin: 2px;
   background-color: var(--bg_green);
   border-radius: 5px;
+  padding: 0.4rem;
 }
 
 .btn-pagination:focus {
@@ -225,9 +172,10 @@ export default {
 .tableContent {
   position: relative;
   width: 100%;
+  font-size: 0.85rem;
   background-color: var(--bg_white);
   border: 1px solid rgba(37, 36, 36, 0.281);
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 0.4rem;
   padding: 20px;
 }
 
@@ -254,7 +202,7 @@ export default {
 }
 
 legend {
-  font-size: 25px;
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--black_text);
 }
@@ -271,7 +219,6 @@ legend {
 
 table th {
   height: 50px;
-  font-size: 17px;
   color: var(--black_text);
   padding: 10px 10px 0 10px;
 }
@@ -381,6 +328,7 @@ table td {
 .opcoes {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   gap: 5px;
 }
@@ -397,10 +345,17 @@ table td {
 }
 
 @media (max-width: 1000px) {
+
+  .opcoes {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
   }
+
   .tableContent thead {
     display: none;
   }

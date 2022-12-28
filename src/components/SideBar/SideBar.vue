@@ -16,6 +16,9 @@
         <a @click="() => this.$router.push({ name: 'Status' })"><i class="fas fa-clone"></i>Criar Startup</a>
       </li>
       <li @click="changeCheckboxValue">
+        <a @click="() => this.$router.push({ name: 'BuscarOp' })"><i class="fas fa-search"></i>Buscar</a>
+      </li>
+      <li @click="changeCheckboxValue">
         <a @click="() => this.$router.push({ name: 'Dashboard' })">
           <i class="fas fa-chart-bar"></i>Dashboard</a>
       </li>

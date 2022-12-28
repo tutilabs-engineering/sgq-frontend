@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <h2 class="title">{{ titlePage }}</h2>
-    <span class="version">Versão 1.6.9</span>
+    <span class="version">Versão 1.7.3</span>
   </div>
 </template>
 

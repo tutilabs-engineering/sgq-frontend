@@ -25,6 +25,7 @@ import dayjs from 'dayjs'
 export default {
   data() {
     return {
+
       id_startup: this.$route.query.id,
       itsCreation: true,
       headerInfo: {
@@ -92,7 +93,37 @@ export default {
       }
       this.dataInfo.code_op = code_op
 
-      const dataOp = await http.listDataByCodeOp(code_op);
+      // const dataOp = await http.listDataByCodeOp(code_op);
+      const dataOp = await http.listDataByCodeOp(code_op).then( (res) => {
+        console.log(res);
+        return res
+      }).catch( (error) => {
+        console.log(error.response.data.message);
+        const Toast = this.$swal.mixin({
+                    toast: true,
+                    position: 'top-right',
+                    iconColor: '#ff5349',
+                    customClass: {
+                    popup: 'colored-toast',
+                    title: 'title-swal-text'
+                    },
+                    didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                    },
+                    showConfirmButton: false,
+                    timer: 10000,
+                    timerProgressBar: true
+                })
+                Toast.fire({
+                        icon: 'warning',
+                        title: 'SAP indisponível\nTente novamente em 10 minutos',
+                        background: "#fff",
+                })
+                
+        
+      })
+
       const data = dataOp.data.results[0];
       this.headerInfo.client = data.CardName;
       this.headerInfo.codeClient = data.U_CodCliente;

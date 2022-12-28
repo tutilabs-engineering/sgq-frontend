@@ -149,10 +149,14 @@ export default {
     );
 
     const listCount = await httpCards.listCountOfStartupsByStatus()
-    this.startupsManagement.approved = listCount.data.approved
-    this.startupsManagement.disapproved = listCount.data.disapproved
-    this.startupsManagement.conditional = listCount.data.conditional
-    this.startupsManagement.closed = listCount.data.closed
+    this.startupsManagement.approved = listCount.data.all_approved
+
+    this.startupsManagement.disapproved = listCount.data.all_reproved
+
+    this.startupsManagement.conditional = listCount.data.all_approved_with_condition
+
+    this.startupsManagement.closed = listCount.data.all_closed
+    
     this.startupsManagement.total = this.startupsManagement.approved + this.startupsManagement.conditional + this.startupsManagement.disapproved
 
     await this.$store.commit("$SETISLOADING");

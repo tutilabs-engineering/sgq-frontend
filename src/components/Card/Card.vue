@@ -8,7 +8,7 @@
     <router-link :to="link">
       <div
         class="cardStatus"
-        :style="{ color: colore, borderLeft: '7px solid' }"
+        :style="{ color: colore, borderLeft: '0.25rem solid' }"
       >
         <div className="cardStatusText">
           <h3>{{ status }}</h3>
@@ -67,7 +67,7 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 0px 25px 0px 25px;
-  border-radius: 10px 5px 5px 10px;
+  border-radius: 0.4rem;
 }
 
 .popper {
