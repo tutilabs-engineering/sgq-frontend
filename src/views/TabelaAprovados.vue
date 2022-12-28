@@ -37,9 +37,9 @@
       </tbody>
     </table>
 
-    <button @click="init()" class="btn-pagination" v-if="currentPageOpen !== 0">Inicio</button>
+    <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
 
-    <button @click="back()" class="btn-pagination" v-if="currentPageOpen !== 0">Voltar</button>
+    <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
 
     <button @click="next()" class="btn-pagination">Proximo</button>
 
@@ -59,32 +59,7 @@ export default {
   setup() { },
   name: "Table",
 
-  computed: {
-    displayedPosts() {
-      return this.paginate(this.posts);
-    },
-  },
-
-  watch: {
-    posts() {
-      this.setPages();
-    },
-  },
-
   methods: {
-    setPages() {
-      let numberOfPages = Math.ceil(this.posts.length / this.perPage);
-      for (let index = 1; index <= numberOfPages; index++) {
-        this.pages.push(index);
-      }
-    },
-    paginate(posts) {
-      let page = this.page;
-      let perPage = this.perPage;
-      let from = page * perPage - perPage;
-      let to = page * perPage;
-      return posts.slice(from, to);
-    },
 
     OpenReportStartup: function (id_startup) {
       this.$router.push({
@@ -105,38 +80,29 @@ export default {
       return (date = `${this.day}/${this.month}/${this.year}`);
     },
 
-    verifyOP: async function (list_op) {
-      if (list_op == 0) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-
     async filterListStartups() {
-      await http.filterStartupsByStatus(this.currentPageOpen, 10, 1).then((res) => {
+      await http.filterStartupsByStatus(this.currentPage, 10, 1).then((res) => {
         this.listAproveds = res.data.listAllStartups
       })
     },
 
-
     async init() {
       this.$store.commit("$SETISLOADING");
-      this.currentPageOpen = 0
+      this.currentPage = 0
       await this.filterListStartups()
       this.$store.commit("$SETISLOADING");
     },
 
     async back () {
       this.$store.commit("$SETISLOADING");
-      this.currentPageOpen = this.currentPageOpen - 10
+      this.currentPage = this.currentPage - 10
       await this.filterListStartups()
       this.$store.commit("$SETISLOADING");
     },
 
     async next () {
       this.$store.commit("$SETISLOADING");
-      this.currentPageOpen = this.currentPageOpen + 10
+      this.currentPage = this.currentPage + 10
       await this.filterListStartups()
       this.$store.commit("$SETISLOADING");
     }
@@ -155,9 +121,8 @@ export default {
       isOp: true,
       id_startup: "",
       nameRouter: "TabelaAprovados",
-      currentPageOpen: 0,
+      currentPage: 0,
 
-      btnChanged: false,
 
       posts: [""],
       page: 1,
@@ -207,9 +172,10 @@ export default {
 .tableContent {
   position: relative;
   width: 100%;
+  font-size: 0.85rem;
   background-color: var(--bg_white);
   border: 1px solid rgba(37, 36, 36, 0.281);
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 0.4rem;
   padding: 20px;
 }
 
@@ -236,7 +202,7 @@ export default {
 }
 
 legend {
-  font-size: 25px;
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--black_text);
 }
@@ -253,7 +219,6 @@ legend {
 
 table th {
   height: 50px;
-  font-size: 17px;
   color: var(--black_text);
   padding: 10px 10px 0 10px;
 }
@@ -363,6 +328,7 @@ table td {
 .opcoes {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   gap: 5px;
 }
@@ -379,6 +345,12 @@ table td {
 }
 
 @media (max-width: 1000px) {
+
+  .opcoes {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;

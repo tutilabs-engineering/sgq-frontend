@@ -66,9 +66,6 @@ export default {
     })
   },
 
-  // listCountOfStartupsByStatus: async () => {
-  //   return http.get(`/reportStartup?skip=0&take=0`)
-  // },
 
   findReportStartupById: async (id) => {
     return http.get(`/reportStartup/${id}`)

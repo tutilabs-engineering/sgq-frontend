@@ -2,7 +2,7 @@
   <div>
     <div class="content-search-op">
       <h2>Buscar Startups vinculadas à OP</h2>
-      <input type="number" name="" id="" v-model="numberOp">
+      <input type="number" name="" id="" v-model="numberOp" placeholder="00000">
       <button class="btn" @click="searchOP">Buscar</button>
 
 
@@ -23,7 +23,8 @@
             <td>{{startup.op.code_product}}</td>
             <td>{{startup.op.machine}}</td>
             <td>{{formatDate(startup.day)}}</td>
-            <button @click="OpenReportStartup(startup.id)">Consultar</button>
+            <td><button @click="OpenReportStartup(startup.id)">Consultar</button></td>
+            
           </tr>
         </table>
 
@@ -128,6 +129,26 @@ table tr button {
   color: #ffffff;
   border:none;
 }
+h2 {
+  margin-bottom: 1rem;
+}
+.content-search-op input {
+  height: 2rem;
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  border: 1px solid var(--black_text);
+}
 
+.content-search-op button {
+  width: 5rem;
+  height: 2rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  color: #ffff;
+  background-color: var(--bg_green);
+}
 
 </style>

@@ -11,7 +11,7 @@
     <div v-show="statusTable">
 
       <table>
-        <tr>
+        <thead>
           <th>Cód. Startup</th>
           <th>Cód OP</th>
           <th>Cód. Produto</th>
@@ -23,18 +23,21 @@
           <th>Criador</th>
           <th>Ações</th>
 
-        </tr>
+        </thead>
         <tr v-for="startup in listStartupsOpen" :key="startup">
-          <td>{{ startup.code_startup }}</td>
-          <td>{{ startup.op.code_op }}</td>
-          <td>{{ startup.op.code_product }}</td>
-          <td>{{ startup.op.machine }}</td>
-          <td>{{ verifyMetrology(startup.metrology) }}</td>
-          <td>{{ verifyOpenStartup(startup) }}</td>
-          <td>{{ verifyFillStartup(startup) }}</td>
-          <td>{{ formatDate(startup.day, startup.start_time) }}</td>
-          <td data-title="Usuario">{{ startup.userThatCreate.name.split(" ")[0] + ' ' + startup.userThatCreate.name.split(" ")[1] }}</td>
-          <button @click="OpenReportStartup(startup.id)">Consultar</button>
+          <td data-title="Cód. Startup">{{ startup.code_startup }}</td>
+          <td data-title="Cod. OP">{{ startup.op.code_op }}</td>
+          <td data-title="Cod. Produto">{{ startup.op.code_product }}</td>
+          <td data-title="Máquina">{{ startup.op.machine }}</td>
+          <td data-title="Metrologia">{{ verifyMetrology(startup.metrology) }}</td>
+          <td data-title="Status">{{ verifyOpenStartup(startup) }}</td>
+          <td data-title="Preench.">{{ verifyFillStartup(startup) }}</td>
+          <td data-title="Data">{{ formatDate(startup.day, startup.start_time) }}</td>
+          <td data-title="Criador">{{ startup.userThatCreate.name.split(" ")[0] + ' ' + startup.userThatCreate.name.split(" ")[1] }}</td>
+          <td data-title="Ações">
+            <button class="btn-actions" @click="OpenReportStartup(startup.id)">Consultar</button>
+          </td>
+          
 
         </tr>
       </table>
@@ -49,7 +52,7 @@
     <div v-show="!statusTable">
 
       <table>
-        <tr>
+        <thead>
           <th>Cód. Startup</th>
           <th>Cód. OP</th>
           <th>Cód. Produto</th>
@@ -61,18 +64,20 @@
           <th>Criador</th>
           <th>Ações</th>
 
-        </tr>
+        </thead>
         <tr v-for="startup in  listStartupsClosed" :key="startup">
-          <td>{{ startup.code_startup }}</td>
-          <td>{{ startup.op.code_op }}</td>
-          <td>{{ startup.op.code_product }}</td>
-          <td>{{ startup.op.machine }}</td>
-          <td>{{ verifyMetrology(startup.metrology) }}</td>
-          <td>{{ verifyOpenStartup(startup) }}</td>
-          <td>{{ verifyFillStartup(startup) }}</td>
-          <td>{{formatDate(startup.day, startup.start_time)}}</td>
-          <td data-title="Usuario">{{  startup.userThatCreate.name.split(" ")[0] + ' ' + startup.userThatCreate.name.split(" ")[1] }}</td>
-          <button @click="OpenReportStartup(startup.id)">Consultar</button>
+          <td data-title="Cód. Startup">{{ startup.code_startup }}</td>
+          <td data-title="Cod. OP">{{ startup.op.code_op }}</td>
+          <td data-title="Cod. Produto">{{ startup.op.code_product }}</td>
+          <td data-title="Máquina">{{ startup.op.machine }}</td>
+          <td data-title="Metrologia">{{ verifyMetrology(startup.metrology) }}</td>
+          <td data-title="Status">{{ verifyOpenStartup(startup) }}</td>
+          <td data-title="Preench.">{{ verifyFillStartup(startup) }}</td>
+          <td data-title="Data">{{ formatDate(startup.day, startup.start_time) }}</td>
+          <td data-title="Criador">{{ startup.userThatCreate.name.split(" ")[0] + ' ' + startup.userThatCreate.name.split(" ")[1] }}</td>
+          <td data-title="Ações">
+            <button class="btn-actions" @click="OpenReportStartup(startup.id)">Consultar</button>
+          </td>
 
         </tr>
       </table>
@@ -236,7 +241,7 @@ legend {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
   background-color: white;
-  border-radius: 5px;
+  border-radius: 0.4rem;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -298,5 +303,49 @@ table tr button {
   border-radius: 0.25rem;
   color: var(--main_primaryWhite);
   background-color: var(--bg_green);
+}
+
+@media (max-width: 960px) {
+  .opcoes {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+  
+  .btns {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .tableContent thead {
+    display: none;
+  }
+
+  .tableButton {
+    display: block;
+  }
+
+  .tableContent td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tableContent td:first-of-type {
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .tableContent td:not(:first-of-type):before {
+    content: attr(data-title);
+    display: block;
+    font-weight: bold;
+  }
+
+  .btn-actions {
+    width: 5rem;
+  }
 }
 </style>
