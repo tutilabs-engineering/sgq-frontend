@@ -7,8 +7,28 @@ export default {
     return response
   },
 
-  listAllStartups: async () => {
-    return await http.get(`/reportStartup`)
+  listAllStartups: async (skip=0, take=10, fk_op=undefined, status=0) => {
+    return await http.get(`/reportStartup`, {
+      params: {
+        fk_op,
+        skip,
+        take,
+        status
+      }
+
+    })
+  },
+
+  listAllStartupsClosed: async (skip=0, take=10, fk_op=undefined, status=1) => {
+    return await http.get(`/reportStartup`, {
+      params: {
+        fk_op,
+        skip,
+        take,
+        status
+      }
+
+    })
   },
 
   listAllDefaultQuestions: async () => {
@@ -23,9 +43,29 @@ export default {
     return http.post(`/reportStartup/fill/${id_startup}`, data)
   },
 
-  listCountOfStartupsByStatus: async () => {
-    return http.get(`/reportStartup/management/count`)
+  listCountOfStartupsByStatus: async (skip=0, take=0, fk_op=undefined, status=0) => {
+    return http.get(`/reportStartup`, {
+      params: {
+        fk_op,
+        skip,
+        take,
+        status
+      }
+
+    })
   },
+
+  filterStartupsByStatus: async (skip=0, take=10, status=1) => {
+    return http.get(`/reportStartup/management/count`, {
+      params: {
+        skip,
+        take,
+        status
+      }
+
+    })
+  },
+
 
   findReportStartupById: async (id) => {
     return http.get(`/reportStartup/${id}`)
