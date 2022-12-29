@@ -184,6 +184,7 @@ export default {
   background-color: var(--bg_green);
   border-radius: 5px;
   padding: 0.4rem;
+  width: 80px;
 }
 
 .btn-pagination:focus {
