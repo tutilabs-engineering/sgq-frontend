@@ -1,6 +1,6 @@
 <template>
-  <fieldset className="tableContent" v-if="isOp === true">
-    <legend>Análise de Startup - Condicional</legend>
+  <fieldset className="tableContent">
+    <legend>Startups Condicionais</legend>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cod. Startup</th>
@@ -14,7 +14,7 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in displayedPosts" :key="item.id">
+        <tr v-for="item in listConditional" :key="item.id">
           <td style="display: none"></td>
           <td data-title="Cod. Startup">{{ item.code_startup }}</td>
           <td data-title="Cod. OP">{{ item.op.code_op }}</td>
@@ -25,6 +25,7 @@
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
+
               <button
                 className="btn_visualizar"
                 @click="OpenReportStartup(item.id)"
@@ -45,45 +46,13 @@
       </tbody>
     </table>
 
-    <div class="pagination-component">
-      <button
-        class="btn-pagination"
-        type="button"
-        v-if="page != 1"
-        @click="page--"
-      >
-        Prev
-      </button>
-      <button
-        class="btn-pagination"
-        type="button"
-        v-for="pageNumber in pages.slice(page - 1, page + 5)"
-        :key="pageNumber"
-        @click="page = pageNumber"
-      >
-        {{ pageNumber }}
-      </button>
-      <button
-        class="btn-pagination"
-        type="button"
-        @click="page++"
-        v-if="page < pages.length"
-      >
-        Next
-      </button>
-    </div>
+    <button @click="init()" class="btn-pagination" v-if="currentPageOpen !== 0">Inicio</button>
+
+    <button @click="back()" class="btn-pagination" v-if="currentPageOpen !== 0">Voltar</button>
+
+    <button @click="next()" class="btn-pagination">Proximo</button>
   </fieldset>
 
-  <fieldset class="tableContent" v-else>
-    <h2 class="legenda-warning">
-      Não há Startups para serem listadas<br /><button
-        @click="() => this.$router.push({ name: 'Startup' })"
-        class="btn-back"
-      >
-        Voltar
-      </button>
-    </h2>
-  </fieldset>
 </template>
 
 <script>
@@ -136,16 +105,37 @@ export default {
       this.day = date.slice(-2);
       return (date = `${this.day}/${this.month}/${this.year}`);
     },
+
+    async filterListStartups() {
+      await http.filterStartupsByStatus(this.currentPageOpen, 10, 3).then((res) => {
+        this.listConditional = res.data.listAllStartups
+      })
+    },
+
+    async init() {
+      this.$store.commit("$SETISLOADING");
+      this.currentPageOpen = 0
+      await this.filterListStartups()
+      this.$store.commit("$SETISLOADING");
+    },
+
+    async back () {
+      this.$store.commit("$SETISLOADING");
+      this.currentPageOpen = this.currentPageOpen - 10
+      await this.filterListStartups()
+      this.$store.commit("$SETISLOADING");
+    },
+
+    async next () {
+      this.$store.commit("$SETISLOADING");
+      this.currentPageOpen = this.currentPageOpen + 10
+      await this.filterListStartups()
+      this.$store.commit("$SETISLOADING");
+    }
   },
   created: async function () {
     this.$store.commit("$SETISLOADING");
-    const listCount = await http.listCountOfStartupsByStatus();
-    this.listConditional = listCount.data.reportStartups.conditional.reverse();
-    this.isOp = await this.verifyOP(this.listConditional.length);
-
-    //pagination
-    this.posts = this.listConditional
-
+    await this.filterListStartups()
     this.$store.commit("$SETISLOADING");
   },
 
@@ -166,6 +156,7 @@ export default {
       isOp: false,
       modalNovaOp: false,
       nameRouter: "TabelaAndamento",
+      currentPageOpen: 0,
 
       btnChanged: false,
 
@@ -188,12 +179,12 @@ export default {
 .btn-pagination {
   cursor: pointer;
   color: #fff;
-  width: 40px;
-  height: 30px;
   border: none;
   margin: 2px;
   background-color: var(--bg_green);
   border-radius: 5px;
+  padding: 0.4rem;
+  width: 80px;
 }
 
 .btn-pagination:focus {
@@ -233,8 +224,9 @@ export default {
   width: 100%;
   background-color: var(--bg_white);
   border: 1px solid rgba(37, 36, 36, 0.281);
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 0.4rem;
   padding: 20px;
+  font-size: 0.85rem;
 }
 
 .tableContent h2 {
@@ -260,7 +252,7 @@ export default {
 }
 
 legend {
-  font-size: 25px;
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--black_text);
 }
@@ -278,7 +270,6 @@ legend {
 
 table th {
   height: 50px;
-  font-size: 17px;
   color: var(--black_text);
   padding: 10px 10px 0 10px;
 }
@@ -355,6 +346,7 @@ table td {
 .opcoes {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   gap: 5px;
 }
@@ -392,6 +384,12 @@ table td {
 }
 
 @media (max-width: 960px) {
+  .opcoes {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+  
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
