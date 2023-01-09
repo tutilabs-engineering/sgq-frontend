@@ -21,7 +21,7 @@
     </div>
 
     <SideBar />
-    <Header titlePage="Sistema de Gerenciamento de Qualidade" />
+    <Header titlePage="Módulo Startup" />
 
     <div class="content">
       <router-view />
@@ -74,6 +74,10 @@ export default {
   },
 
   mounted() {
+    let localTheme = localStorage.getItem('theme'); //gets stored theme value if any
+        document.documentElement.setAttribute('data-theme', localTheme);
+
+
     const currentPath = window.location.pathname;
     var routesExists = Routes.options.routes;
 
@@ -162,6 +166,19 @@ export default {
   --regular: 400;
 }
 
+[data-theme="darkMode"] {
+  --main_primaryWhite: #e6e9e4;
+  --black_text: #e6e9e4;
+  --green_text: #010202;
+  --bg_green: #010202;
+  --bg_gray: #181A1B;
+  --bg_white: #1C1E1F;
+
+  --btn_white: #1C1E1F;
+  --card_white: #1C1E1F;
+  --bg_white: #1C1E1F;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
 * {
@@ -186,7 +203,7 @@ body {
   width: calc(100% - 210px);
   height: 100%;
   margin-left: 210px;
-  padding: 100px 40px;
+  padding: 4rem 1.5rem;
   transition: 0.5s;
 }
 

@@ -260,7 +260,7 @@ export default {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
   border-radius: 10px 10px 10px 10px;
-  background-color: white;
+  background-color: var(--bg_white);
 }
 
 legend {

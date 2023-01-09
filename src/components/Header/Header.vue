@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <h2 class="title">{{ titlePage }}</h2>
+    <h5 class="title">{{ titlePage }}</h5>
     <span class="version">Versão 1.7.3</span>
   </div>
 </template>
@@ -15,6 +15,11 @@ export default {
 
   props: ["titlePage"],
 
+  created (){
+    this.theme = localStorage.getItem('theme')
+    console.log(localStorage.getItem('theme'));
+  },
+
   methods: {
     toggleSidebar() {
       let activeSidebar = document.querySelector(".sidebar");
@@ -25,6 +30,7 @@ export default {
       activeContent.classList.toggle("activeContent");
       activeHeader.classList.toggle("activeHeader");
     },
+
   },
 };
 </script>
@@ -34,13 +40,13 @@ export default {
 .header {
   position: fixed;
   width: calc(100% - 210px);
-  height: 70px;
+  height: 3.5rem;
   margin-left: 210px;
   transition: 0.5s;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 1.5rem;
   background-color: var(--bg_white);
   border-bottom: 1px solid rgba(37, 36, 36, 0.281);
   z-index: 10;
@@ -70,8 +76,20 @@ export default {
   transition: 0.3s linear;
 }
 
+.darkModeButton {
+  width: 5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--main_primaryWhite);
+}
+
 .title {
-  font-size: max(1.5rem, 1rem);
+  font-size: max(1.3rem, 0.7rem);
   color: var(--black_text);
   margin-left: 5px;
   line-height: 25px;

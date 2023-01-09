@@ -15,6 +15,9 @@
 
     <span class="version">Versão 1.7.3</span>
 
+    <button class="darkModeButton" v-if="theme === 'darkMode'" @click="toggleTheme"><img src="../../public/icons/moon.svg" alt="">night </button>
+    <button class="darkModeButton" v-else  @click="toggleTheme"><img src="../../public/icons/sun.svg" alt="">day</button>
+
   </div>
 </template>
 <script>
@@ -29,10 +32,24 @@ export default {
       },
       errorValidation: false,
       img_login: "/img/img_login.png",
+      theme: ''
     };
   },
 
+
+
+  created (){
+    this.theme = localStorage.getItem('theme')
+    console.log(localStorage.getItem('theme'));
+  },
+
   methods: {
+    toggleTheme() {
+      this.theme = this.theme == 'darkMode' ? '' : 'darkMode'; //toggles theme value
+            document.documentElement.setAttribute('data-theme', this.theme); // sets the data-theme attribute
+            localStorage.setItem('theme', this.theme); // stores theme value on local storage
+    },
+
     Login: async function () {
       const Toast = this.$swal.mixin({
         toast: true,
@@ -189,6 +206,29 @@ input[type="password"] {
   -moz-appearance: textfield;
   color: var(--main_primaryWhite);
   font-size: 1rem;
+}
+
+.darkModeButton {
+  width: 5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--main_primaryWhite);
+}
+
+
+@media (max-width: 500px) {
+  .form-login {
+    width: 85%;
+  }
+
+  .inputForm, .btnLogin {
+    width: 100%;
+  }
 }
 
 </style>

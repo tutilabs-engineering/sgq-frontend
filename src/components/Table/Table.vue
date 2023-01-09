@@ -1,11 +1,10 @@
 <template>
   <fieldset class="tableContent">
-    <legend>Startups</legend>
+    <div class="title-field">Startups</div>
 
     <div class="btns">
       <button @click="statusTable = true" :class="{'btn-toggle': statusTable}">Startups Abertas</button>
       <button @click="statusTable = false" :class="{ 'btn-toggle': !statusTable }"> Startups Fechadas</button>
-
     </div>
 
     <div v-show="statusTable">
@@ -230,18 +229,20 @@ export default {
 </script>
 
 <style scoped>
-legend {
-  font-size: 30px;
+.title-field {
+  font-size: 1.1rem;
   font-weight: 600;
-  color: var(--black_text);
+  margin-bottom: 1.2rem;
+  text-align: center;
+  width: 100%;
 }
 
 .tableContent {
   margin-top: 20px;
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
-  background-color: white;
-  border-radius: 0.4rem;
+  background-color: var(--bg_white);
+  border-radius: 0.3rem;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -252,7 +253,9 @@ legend {
 .btns {
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 1rem;
+  margin: 0 0 2rem 0;
+  width: 100%;
+  
 }
 
 .btns button {

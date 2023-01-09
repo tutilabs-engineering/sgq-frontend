@@ -104,7 +104,7 @@ fieldset {
   margin-top: 20px;
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
-  background-color: white;
+  background-color: var(--bg_white);
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -132,6 +132,10 @@ table tr button {
 h2 {
   margin-bottom: 1rem;
 }
+
+.content-search-op {
+  color: var(--black_text);
+}
 .content-search-op input {
   height: 2rem;
   margin-right: 0.5rem;
@@ -139,6 +143,7 @@ h2 {
   border-radius: 0.25rem;
   border: none;
   border: 1px solid var(--black_text);
+  
 }
 
 .content-search-op button {

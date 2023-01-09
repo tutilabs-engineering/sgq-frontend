@@ -1,6 +1,6 @@
 <template>
   <fieldset className="tableContent">
-    <legend>Startups Aprovadas</legend>
+    <div class="title-field">Startups Aprovadas</div>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cod. Startup</th>
@@ -202,10 +202,12 @@ export default {
   position: absolute;
 }
 
-legend {
-  font-size: 1.3rem;
+.title-field {
+  font-size: 1.1rem;
   font-weight: 600;
-  color: var(--black_text);
+  margin-bottom: 1.2rem;
+  text-align: center;
+  width: 100%;
 }
 
 .opcoes:hover .dropdown-content {
