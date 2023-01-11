@@ -291,7 +291,8 @@ legend {
 fieldset {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
-  background-color: white;
+  background-color: var(--bg_white);
+  color: var(--black_text);
   border-radius: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
@@ -302,7 +303,8 @@ fieldset {
   padding: 20px;
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: var(--bg_white);
+  color: var(--black_text);
   border-radius: 10px 10px 10px 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;

@@ -178,6 +178,7 @@ export default {
   border: 1px solid rgba(37, 36, 36, 0.281);
   border-radius: 0.4rem;
   padding: 20px;
+  color: var(--black_text);
 }
 
 .tableContent h2 {

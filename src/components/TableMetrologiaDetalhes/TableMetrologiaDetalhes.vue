@@ -129,6 +129,9 @@ legend {
   width: 100%;
   display: flex;
   justify-content: center;
+  background-color: var(--bg_white);
+  color: var(--black_text);
+  
 }
 input[type=number]::-webkit-inner-spin-button { 
     -webkit-appearance: none;

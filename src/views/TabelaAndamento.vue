@@ -227,6 +227,7 @@ export default {
   border-radius: 0.4rem;
   padding: 20px;
   font-size: 0.85rem;
+  color: var(--black_text);
 }
 
 .tableContent h2 {

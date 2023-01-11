@@ -19,13 +19,14 @@ export default {
 .input {
   display: flex;
   flex-direction: column;
-  background-color: var(--main_primaryWhite);
+  
   padding: 10px;
   justify-content: center;
   height: 80px;
   border-radius: 10px;
   color: var(--black_text);
   font-weight: 600;
+  background-color: var(--bg_white);
 }
 
 .input input {

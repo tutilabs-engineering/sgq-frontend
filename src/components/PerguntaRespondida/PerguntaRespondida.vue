@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-for="(answeredQuestion, index) in answeredQuestions"
-    :key="answeredQuestion.fk_default_question"
-  >
+  <div v-for="(answeredQuestion, index) in answeredQuestions" :key="answeredQuestion.fk_default_question">
     <div class="question">
       <fieldset>
         <div class="first-row">
@@ -27,78 +24,38 @@
         </div>
 
         <div class="second-row">
-          <input
-            type="text"
-            v-model="answeredQuestion.description"
-            placeholder="Aguardando Resposta"
-            disabled
-          />
+          <input type="text" v-model="answeredQuestion.description" placeholder="Aguardando Resposta" disabled />
         </div>
 
         <div class="third-row">
           <div class="input">
-            <input
-              type="radio"
-              v-model="answeredQuestion.status"
-              :name="idQuestion"
-              id="AP"
-              value="1"
-              @change="changeIcon(1)"
-              @click="isAnswerd"
-              disabled
-            />
+            <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP" value="1"
+              @change="changeIcon(1)" @click="isAnswerd" disabled />
             <label for="Ap">C</label>
           </div>
 
           <div class="input">
-            <input
-              type="radio"
-              v-model="answeredQuestion.status"
-              :name="idQuestion"
-              id="AP"
-              value="2"
-              @change="changeIcon(2)"
-              @click="isAnswerd"
-              disabled
-            />
+            <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP" value="2"
+              @change="changeIcon(2)" @click="isAnswerd" disabled />
             <label for="Ap">NC</label>
           </div>
 
           <div class="input">
-            <input
-              type="radio"
-              v-model="answeredQuestion.status"
-              :name="idQuestion"
-              id="AP"
-              value="4"
-              @change="changeIcon(4)"
-              @click="isAnswerd"
-              disabled
-            />
+            <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP" value="4"
+              @change="changeIcon(4)" @click="isAnswerd" disabled />
             <label for="Ap">NA</label>
           </div>
         </div>
 
         <div class="fourth-row">
           <div class="input">
-            <input
-              type="radio"
-              v-model="answeredQuestion.status"
-              :name="idQuestion"
-              id="AP"
-              value="3"
-              @change="changeIcon(3)"
-              @click="isAnswerd"
-              disabled
-            />
+            <input type="radio" v-model="answeredQuestion.status" :name="idQuestion" id="AP" value="3"
+              @change="changeIcon(3)" @click="isAnswerd" disabled />
             <label for="Ap">GM</label>
           </div>
 
-          <button
-            class="btn btn-visualizar"
-            @click="openImgPreview(answeredQuestion.file)"
-            v-if="answeredQuestion.file != ''"
-          >
+          <button class="btn btn-visualizar" @click="openImgPreview(answeredQuestion.file)"
+            v-if="answeredQuestion.file != ''">
             Visualizar
           </button>
         </div>
@@ -183,6 +140,8 @@ fieldset {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  background-color: var(--bg_white);
+  color: var(--black_text);
 }
 
 .fa,
@@ -245,6 +204,21 @@ input[type="file"] {
 
 input[type="radio"] {
   margin-right: 10px;
+  background-color: #ffa500;
+}
+
+input[type="radio"]:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: var(--black_text);
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
 }
 
 .fourth-row {

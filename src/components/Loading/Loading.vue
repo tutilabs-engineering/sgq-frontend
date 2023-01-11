@@ -32,7 +32,7 @@ export default {
 .loading-content {
   width: 100vw;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.982);
+  background-color: var(--bg_white);
   display: flex;
   justify-content: center;
   flex-direction: column;

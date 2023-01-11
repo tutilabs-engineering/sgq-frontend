@@ -488,6 +488,8 @@ fieldset {
   border: 1px solid rgba(37, 36, 36, 0.281);
   font-size: 20px;
   font-weight: 600;
+  background-color: var(--bg_white);
+  color: var(--black_text);
 }
 
 legend {
