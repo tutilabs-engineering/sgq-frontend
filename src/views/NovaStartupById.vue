@@ -2,20 +2,20 @@
   <div class="content-novaStartup" v-if="!isFilled">
     <div class="cards-status">
       <fieldset>
-        <legend>Situação </legend>
+        <span class="statup-header">Situação</span>
         <span class="startup-preenchida"> 
         {{verifyOpenStartup(data_startup)}}</span>
       </fieldset>
       
       <fieldset>
-        <legend>Preench. </legend>
+        <span class="statup-header">Preench.</span>
         <span class="startup-preenchida"> 
         {{verifyFillStartup(data_startup)}}</span>
       </fieldset>
 
       <fieldset>
-        <legend>Startup</legend>
-        <span class="startup-preenchida">Cód: {{ code_startup }}</span>
+        <span class="statup-header">Startup</span>
+        <span class="startup-preenchida">{{ code_startup }}</span>
       </fieldset>
     </div>
 
@@ -61,21 +61,21 @@
     <div style="display: flex; gap: 20px; padding-right: 20px">
 
       <fieldset>
-        <legend>Situação </legend>
+        <span class="statup-header">Situação</span>
         <span class="startup-preenchida"> 
         {{verifyOpenStartup(data_startup)}}</span>
       </fieldset>
 
        <fieldset>
-        <legend>Status Startup </legend>
+        <span class="statup-header">Status</span>
         <span class="startup-preenchida" v-if="data_startup.status.id == 1">Aprovado</span>
         <span class="startup-nao-preenchida" v-else-if="data_startup.status.id == 2">Reprovado</span>
-        <span class="startup-preenchida-com-condicional" v-else-if="data_startup.status.id == 3">Aprovado com condicional</span>
+        <span class="startup-preenchida-com-condicional" v-else-if="data_startup.status.id == 3">Aprovado condicionalmente</span>
 
       </fieldset>
       <fieldset>
-        <legend>Startup</legend>
-        <span class="startup-preenchida">Cód: {{ code_startup }}</span>
+        <span class="statup-header">Startup</span>
+        <span class="startup-preenchida">{{ code_startup }}</span>
       </fieldset>
     </div>
 
@@ -107,7 +107,7 @@
               name="client"
               id="client"
               placeholder="ex: Yamaha"
-              :value="data_startup.metrology[0].metrologyHistory.startDate"
+              :value="formatHour(data_startup.metrology[0].metrologyHistory.startDate)"
               disabled
             />
           </div>
@@ -119,7 +119,7 @@
               name="client"
               id="client"
               placeholder="ex: Yamaha"
-              :value="data_startup.metrology[0].metrologyHistory.endDate"
+              :value="formatHour(data_startup.metrology[0].metrologyHistory.endDate)"
               disabled
             />
           </div>
@@ -155,6 +155,7 @@ import ListaPerguntasPreenchida from "../components/ListaPerguntasPreenchida/Lis
 import ListaPerguntas from "../components/ListaPerguntas/ListaPerguntas.vue";
 import TableMetrologiaDetalhes from "../components/TableMetrologiaDetalhes/TableMetrologiaDetalhes.vue";
 
+import dayjs from 'dayjs'
 import http from "../services/startup";
 
 export default {
@@ -242,6 +243,10 @@ export default {
       this.month = date.slice(5, -3);
       this.day = date.slice(-2);
       return (date = `${this.day}/${this.month}/${this.year}`);
+    },
+
+    formatHour(date){
+      return dayjs(date).format('HH:mm:ss - DD/MM/YYYY')
     },
      
      verifyOpenStartup(startup) {
@@ -423,12 +428,13 @@ export default {
   padding: 20px;
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: var(--bg_white);
   border-radius: 10px 10px 10px 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
   margin-bottom: 20px;
+  color: var(--black_text);
 }
 .metrologyInStartup {
   padding-right: 40px;
@@ -457,6 +463,7 @@ export default {
 
 .input input {
   background-color: transparent;
+  color: var(--black_text);
   border: none;
   transition: 1s;
   outline: none;
@@ -493,21 +500,28 @@ fieldset {
 }
 
 legend {
-  font-size: 30px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--black_text);
 }
 
 .startup-nao-preenchida {
   color: var(--card_red);
+  font-size: 0.85rem;
+}
+
+.statup-header {
+  font-size: 0.85rem;
 }
 
 .startup-preenchida {
   color: var(--card_green);
+  font-size: 0.85rem;
 }
 
 .startup-preenchida-com-condicional {
   color: var(--flag_yellow);
+  font-size: 0.85rem;
 }
 
 .content-novaStartup {

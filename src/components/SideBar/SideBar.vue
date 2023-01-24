@@ -244,7 +244,7 @@ export default {
 }
 
 .header .menu-btn:checked~.menu {
-  max-height: 520px;
+  max-height: 600px;
 }
 
 .header .menu-btn:checked~.menu-icon .navicon {
@@ -270,6 +270,10 @@ export default {
   .header {
     width: 100vw;
     height: 65px;
+  }
+
+  .darkModeButton {
+    padding: 20px 20px;
   }
 }
 

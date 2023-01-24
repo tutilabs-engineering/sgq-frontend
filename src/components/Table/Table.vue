@@ -266,6 +266,12 @@ export default {
   padding: 0.4rem;
 }
 
+button {
+  background-color: var(--bg_white);
+  color: var(--black_text);
+  
+}
+
 table {
   width: 100%;
 }

@@ -15,7 +15,6 @@
 
       <tbody>
         <tr v-for="item in listAproveds" :key="item.id">
-          <td style="display: none"></td>
           <td data-title="Cod. Startup">{{ item.code_startup }}</td>
           <td data-title="Cod. OP">{{ item.op.code_op }}</td>
           <td data-title="Cod. Produto">{{ item.op.code_product }}</td>
@@ -171,13 +170,15 @@ export default {
 }
 
 .tableContent {
-  position: relative;
-  width: 100%;
-  font-size: 0.85rem;
-  background-color: var(--bg_white);
+  margin-top: 20px;
   border: 1px solid rgba(37, 36, 36, 0.281);
-  border-radius: 0.4rem;
+  width: 100%;
+  background-color: var(--bg_white);
+  border-radius: 0.3rem;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
+  font-size: 0.85rem;
   color: var(--black_text);
 }
 
@@ -232,7 +233,8 @@ table th {
 }
 
 table td {
-  border-top: 0.4px solid rgba(0, 0, 0, 0.199);
+  text-align: center;
+
 }
 
 .lineWarning {
@@ -389,9 +391,6 @@ table td {
     font-weight: bold;
   }
 
-  .lastTd {
-    border-bottom: 1.6px solid var(--card_green);
-  }
 
   legend {
     text-align: center;

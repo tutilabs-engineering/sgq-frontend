@@ -349,6 +349,7 @@ select {
   display: flex;
   align-items: center;
   gap: 1rem;
+  color: var(--black_text);
 }
 
 .barCHart_content .barChart_filter .legend_chart .startUp_fill .circle_fill {
