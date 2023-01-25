@@ -13,7 +13,7 @@
       <button class="btnLogin">Acessar</button>
     </form>
 
-    <span class="version">Versão 1.7.3</span>
+    <span class="version">Versão {{this.$store.state.version}}</span>
 
     <button class="darkModeButton" v-if="theme === 'darkMode'" @click="toggleTheme"><img src="../../public/icons/moon.svg" alt="">night </button>
     <button class="darkModeButton" v-else  @click="toggleTheme"><img src="../../public/icons/sun.svg" alt="">day</button>

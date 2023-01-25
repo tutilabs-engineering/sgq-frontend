@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <h5 class="title">{{ titlePage }}</h5>
-    <span class="version">Versão 1.7.3</span>
+    <span class="version">Versão {{this.$store.state.version}}</span>
   </div>
 </template>
 
