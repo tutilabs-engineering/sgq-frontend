@@ -186,6 +186,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  
 }
 
 .card-flag {
@@ -193,22 +194,24 @@ export default {
   border-right: 10px solid var(--flag_yellow);
   width: 100%;
   height: 100%;
-  background-color: white;
   border-radius: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  background-color: var(--bg_white);
+  color: var(--black_text);
 }
 
 .card {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
   height: 100%;
-  background-color: white;
   border-radius: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  background-color: var(--bg_white);
+  color: var(--black_text);
 }
 
 .fa,

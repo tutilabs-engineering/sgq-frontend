@@ -104,11 +104,12 @@ export default {
   padding: 20px;
   width: 100%;
   height: 100%;
-  background-color: white;
   border-radius: 10px 10px 10px 10px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
+  background-color: var(--bg_white);
+  color: var(--black_text);
 }
 
 .input {
@@ -134,6 +135,7 @@ export default {
   font-size: 15px;
   height: 52px;
   border-bottom: 2px solid rgba(128, 128, 128, 0.39);
+  color: var(--black_text);
 }
 
 fieldset {

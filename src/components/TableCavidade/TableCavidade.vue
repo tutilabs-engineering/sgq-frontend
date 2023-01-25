@@ -35,17 +35,19 @@ export default {
 fieldset {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
-  background-color: white;
   border-radius: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  background-color: var(--bg_white);
+  color: var(--black_text);
+
 }
 
 legend {
   font-size: 30px;
   font-weight: 600;
-  color: var(--black_text);
+
 }
 
 .tableContent {

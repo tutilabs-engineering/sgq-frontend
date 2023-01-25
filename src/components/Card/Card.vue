@@ -53,7 +53,7 @@ a {
 }
 
 .cardStatus:hover {
-  background-color: rgba(255, 255, 255, 0.932);
+  background-color: var(--bg_gray);
   transform: scale(1.02);
 }
 

@@ -35,7 +35,19 @@
         <a @click="Exit"><i class="fas fa-door-open"></i>Sair</a>
       </li>
 
+      <li>
+        <button class="darkModeButton" v-if="theme === 'darkMode'" @click="toggleTheme"><img src="../../../public/icons/moon.svg" alt="">night </button>
+        
+        <button class="darkModeButton" v-else  @click="toggleTheme"><img src="../../../public/icons/sun.svg" alt="">day</button>
+      </li>
+
+
+      
+
     </ul>
+
+    
+    
   </header>
 </template>
 
@@ -72,6 +84,12 @@ export default {
       this.checkboxValue = !this.checkboxValue;
     },
 
+    toggleTheme() {
+      this.theme = this.theme == 'darkMode' ? '' : 'darkMode'; //toggles theme value
+            document.documentElement.setAttribute('data-theme', this.theme); // sets the data-theme attribute
+            localStorage.setItem('theme', this.theme); // stores theme value on local storage
+    },
+
     Exit: function () {
       this.$swal
         .fire({
@@ -91,6 +109,7 @@ export default {
     return {
       username: "",
       checkboxValue: false,
+      theme: 'darkMode'
     };
   },
 };
@@ -115,7 +134,7 @@ export default {
   cursor: pointer;
 }
 
-.header li a {
+.header li a{
   font-weight: 400;
   color: #fff;
   display: block;
@@ -144,6 +163,22 @@ export default {
 
 .logo {
   cursor: pointer;
+}
+
+.darkModeButton {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  padding: 20px 30px;
+  background: transparent;
+  color: var(--main_primaryWhite);
+}
+
+.darkModeButton img {
+  margin-right: 10px
 }
 
 /* menu */
@@ -209,7 +244,7 @@ export default {
 }
 
 .header .menu-btn:checked~.menu {
-  max-height: 520px;
+  max-height: 600px;
 }
 
 .header .menu-btn:checked~.menu-icon .navicon {
@@ -235,6 +270,10 @@ export default {
   .header {
     width: 100vw;
     height: 65px;
+  }
+
+  .darkModeButton {
+    padding: 20px 20px;
   }
 }
 

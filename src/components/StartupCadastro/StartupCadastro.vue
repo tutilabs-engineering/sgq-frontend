@@ -238,9 +238,10 @@ export default {
 
 .form {
   padding: 20px;
+  color: var(--black_text);
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: var(--bg_white);
   border-radius: 10px 10px 10px 10px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -305,6 +306,7 @@ export default {
   height: 70px;
   padding: 5px;
   border-radius: 5px 5px 0 0;
+  
 }
 
 .inputOp {
@@ -332,6 +334,7 @@ input:-webkit-autofill {
   outline: none;
   font-size: 15px;
   height: 52px;
+  color: var(--black_text);
   border-bottom: 2px solid rgba(128, 128, 128, 0.39);
 }
 
