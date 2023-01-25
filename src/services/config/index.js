@@ -24,7 +24,7 @@ import axios from "axios"
 // SERVER ->
 
 const http = axios.create({
-  baseURL: "http://185.209.179.253:7600",
+  baseURL: "http://185.209.179.253:8200",
   headers: {
     "Accept": "application/json",
     "Content": "application/json"
