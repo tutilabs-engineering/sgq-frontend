@@ -19,14 +19,16 @@ export default {
 .input {
   display: flex;
   flex-direction: column;
-  
   padding: 10px;
   justify-content: center;
   height: 80px;
   border-radius: 10px;
-  color: var(--black_text);
   font-weight: 600;
-  background-color: var(--bg_white);
+  background-color: var(--bg_white) !important;
+}
+
+.input label {
+  color: var(--black_text);
 }
 
 .input input {
@@ -35,5 +37,6 @@ export default {
   height: 50px; 
   padding: 0px 5px 0 5px;
   background-color: transparent;
+  color: var(--black_text);
 }
 </style>

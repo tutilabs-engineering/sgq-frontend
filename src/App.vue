@@ -192,6 +192,12 @@ body {
   background-color: var(--bg_gray);
 }
 
+input[type="number"]:disabled {
+  border: 1px solid var(--black_text);
+  background-color: var(--bg_white);
+  color: var(--black_text);
+}
+
 .defaultInterface {
   display: flex;
   justify-content: center;

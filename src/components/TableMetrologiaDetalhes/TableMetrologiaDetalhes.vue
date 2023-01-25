@@ -112,7 +112,7 @@ export default {
 
 fieldset {
   width: 100%;
-  background-color: white;
+  background-color: var(--bg_white);
   border-radius: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
@@ -203,6 +203,7 @@ table th {
   text-align: center;
 
 }
+
 
 
 @media (max-width: 965px) {
