@@ -5,7 +5,7 @@
     <span class="loader"></span>
     <h3 class="name-module">STARTUP DIGITAL</h3>
     
-    <p class="version">Versão 1.7.3</p>
+    <p class="version">Versão {{this.$store.state.version}}</p>
   </div>
 </template>
 
