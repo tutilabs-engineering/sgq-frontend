@@ -226,7 +226,7 @@ export default {
 }
 .dropdown-content {
   display: none;
-  background-color: #fff;
+  background-color: var(--bg_white);
   border-radius: 10px;
   min-width: 50px;
   border: 1px solid rgba(37, 36, 36, 0.281);
@@ -247,7 +247,7 @@ legend {
 fieldset {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
-  background-color: white;
+  background-color: var(--bg_white);
   border-radius: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
@@ -257,6 +257,8 @@ fieldset {
 .tableContent {
   width: 100%;
   margin-bottom: 20px;
+  background-color: var(--bg_white);
+  color: var(--black_text);
 
 }
 

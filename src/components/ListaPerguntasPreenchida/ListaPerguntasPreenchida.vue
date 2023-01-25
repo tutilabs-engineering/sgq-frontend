@@ -200,6 +200,7 @@ export default {
   background-color: transparent;
   padding: 0px;
   border: none;
+  
 }
 
 .content-imgs {

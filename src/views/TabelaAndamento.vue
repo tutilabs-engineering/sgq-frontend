@@ -15,7 +15,6 @@
 
       <tbody>
         <tr v-for="item in listConditional" :key="item.id">
-          <td style="display: none"></td>
           <td data-title="Cod. Startup">{{ item.code_startup }}</td>
           <td data-title="Cod. OP">{{ item.op.code_op }}</td>
           <td data-title="Cod. Produto">{{ item.op.code_product }}</td>
@@ -26,31 +25,27 @@
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
 
-              <button
-                className="btn_visualizar"
-                @click="OpenReportStartup(item.id)"
-              >
+              <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
                 <i class="fa fa-eye"></i>
                 Visualizar
               </button>
-              <ModalNovaOp
-                :modalNovaOp="modalNovaOp"
-                :nameRouter="nameRouter"
-                @open-modal-novaOp="openModalNovaOp"
-                :startup="item"
-                :startup_id="item.id"
-              />
+              <ModalNovaOp :modalNovaOp="modalNovaOp" :nameRouter="nameRouter" @open-modal-novaOp="openModalNovaOp"
+                :startup="item" :startup_id="item.id" />
             </div>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <button @click="init()" class="btn-pagination" v-if="currentPageOpen !== 0">Inicio</button>
+    <div style="display: flex; gap: 3px;">
+      <button @click="init()" class="btn-pagination" v-if="currentPageOpen !== 0">Inicio</button>
 
-    <button @click="back()" class="btn-pagination" v-if="currentPageOpen !== 0">Voltar</button>
+      <button @click="back()" class="btn-pagination" v-if="currentPageOpen !== 0">Voltar</button>
 
-    <button @click="next()" class="btn-pagination">Proximo</button>
+      <button @click="next()" class="btn-pagination">Proximo</button>
+    </div>
+
+
   </fieldset>
 
 </template>
@@ -79,7 +74,7 @@ export default {
       let to = page * perPage;
       return posts.slice(from, to);
     },
-    
+
     OpenReportStartup: function (id_startup) {
       this.$router.push({
         path: "/create-startup-by-id",
@@ -119,14 +114,14 @@ export default {
       this.$store.commit("$SETISLOADING");
     },
 
-    async back () {
+    async back() {
       this.$store.commit("$SETISLOADING");
       this.currentPageOpen = this.currentPageOpen - 10
       await this.filterListStartups()
       this.$store.commit("$SETISLOADING");
     },
 
-    async next () {
+    async next() {
       this.$store.commit("$SETISLOADING");
       this.currentPageOpen = this.currentPageOpen + 10
       await this.filterListStartups()
@@ -184,6 +179,7 @@ export default {
   background-color: var(--bg_green);
   border-radius: 5px;
   padding: 0.4rem;
+  width: 80px;
 }
 
 .btn-pagination:focus {
@@ -219,13 +215,16 @@ export default {
 }
 
 .tableContent {
-  position: relative;
+  margin-top: 20px;
+  border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
   background-color: var(--bg_white);
-  border: 1px solid rgba(37, 36, 36, 0.281);
-  border-radius: 0.4rem;
+  border-radius: 0.3rem;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   font-size: 0.85rem;
+  color: var(--black_text);
 }
 
 .tableContent h2 {
@@ -277,9 +276,6 @@ table th {
   height: 100px;
 }
 
-table td {
-  border-top: 0.4px solid rgba(0, 0, 0, 0.199);
-}
 
 .tableContent td {
   text-align: center;
@@ -369,6 +365,7 @@ table td {
 .fa-plus-circle {
   color: var(--card_orange);
 }
+
 .fa-file-alt {
   color: var(--card_blue);
 }
@@ -388,11 +385,12 @@ table td {
     justify-content: center;
     flex-direction: row;
   }
-  
+
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
   }
+
   .tableContent thead {
     display: none;
   }

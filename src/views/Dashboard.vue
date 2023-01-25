@@ -260,7 +260,7 @@ export default {
   border: 1px solid rgba(37, 36, 36, 0.281);
   width: 100%;
   border-radius: 10px 10px 10px 10px;
-  background-color: white;
+  background-color: var(--bg_white);
 }
 
 legend {
@@ -349,6 +349,7 @@ select {
   display: flex;
   align-items: center;
   gap: 1rem;
+  color: var(--black_text);
 }
 
 .barCHart_content .barChart_filter .legend_chart .startUp_fill .circle_fill {

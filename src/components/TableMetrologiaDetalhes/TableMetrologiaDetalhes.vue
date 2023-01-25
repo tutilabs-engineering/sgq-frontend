@@ -112,7 +112,7 @@ export default {
 
 fieldset {
   width: 100%;
-  background-color: white;
+  background-color: var(--bg_white);
   border-radius: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
@@ -129,6 +129,9 @@ legend {
   width: 100%;
   display: flex;
   justify-content: center;
+  background-color: var(--bg_white);
+  color: var(--black_text);
+  
 }
 input[type=number]::-webkit-inner-spin-button { 
     -webkit-appearance: none;
@@ -200,6 +203,7 @@ table th {
   text-align: center;
 
 }
+
 
 
 @media (max-width: 965px) {

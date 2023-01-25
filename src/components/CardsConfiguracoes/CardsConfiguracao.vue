@@ -46,7 +46,7 @@ export default {
   display: flex;
   justify-content: center;
   border: 1px solid rgba(37, 36, 36, 0.281);
-  background-color: #fff;
+  background-color: var(--bg_white);
   
 }
 
