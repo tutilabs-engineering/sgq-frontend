@@ -183,7 +183,7 @@
 
           <div class="btns">
             <button class="btn btn-cancel" @click="editStatus = true">
-              Cancel
+              Cancelar
             </button>
 
             <button class="btn btn-save" type="submit">Salvar</button>
@@ -356,6 +356,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--black_text);
 }
 
 fieldset {
@@ -385,7 +386,6 @@ legend {
 }
 
 .perfil h3 {
-  color: var(--green_text);
   margin-bottom: 20px;
 }
 
@@ -404,7 +404,7 @@ legend {
 .input {
   display: flex;
   flex-direction: column;
-  background-color: var(--main_primaryWhite);
+  background-color: var(--bg_white);
   padding: 10px;
   justify-content: center;
   height: 80px;
@@ -420,6 +420,7 @@ legend {
   height: 50px;
   padding: 0px 5px 0 5px;
   background-color: transparent;
+  color: var(--black_text);
 }
 
 .perfil-img {
@@ -443,16 +444,17 @@ legend {
 .footer-user-data {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  color: var(--black_text);
 }
 
 .system-white {
-  background-color: var(--main_primaryWhite);
+  background-color: var(--bg_white);
   color: var(--black_text);
 }
 
 .system-black {
-  color: var(--main_primaryWhite);
-  background-color: var(--black_text);
+  color: var(--black_text);
+  background-color: var(--bg_white);
   grid-column-start: 1;
   grid-column-end: 3;
   margin-bottom: 20px;
@@ -480,7 +482,9 @@ legend {
 }
 
 .btn-edit {
-  background-color: var(--btn_gray);
+  background-color: var(--bg_gray);
+  color: var(--black_text);
+  border: 1px solid var(--black_text);
 }
 
 .btn-save {
@@ -491,21 +495,25 @@ legend {
 .btn-cancel {
   margin-right: 10px;
   cursor: pointer;
+  background-color: var(--bg_gray);
+  color: var(--black_text);
+  border: 1px solid var(--black_text);
 }
 
 .select-lvAcess {
   margin-top: 5px;
   outline: none;
-  background-color: var(--main_primaryWhite);
+  background-color: var(--bg_white);
   border: none;
   border-radius: 5px;
   height: 30px;
   font-weight: 600;
+  color: var(--black_text);
 }
 
 .select-lvAcess * {
-  background-color: var(--black_text);
-  color: var(--main_primaryWhite);
+  background-color: var(--bg_white);
+  color: var(--black_text);
 }
 
 @media (max-width: 768px) {

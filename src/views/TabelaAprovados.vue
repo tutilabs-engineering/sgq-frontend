@@ -1,6 +1,6 @@
 <template>
   <fieldset className="tableContent">
-    <legend>Startups Aprovadas</legend>
+    <div class="title-field">Startups Aprovadas</div>
     <table cellpadding="0" cellspacing="0">
       <thead>
         <th>Cod. Startup</th>
@@ -15,7 +15,6 @@
 
       <tbody>
         <tr v-for="item in listAproveds" :key="item.id">
-          <td style="display: none"></td>
           <td data-title="Cod. Startup">{{ item.code_startup }}</td>
           <td data-title="Cod. OP">{{ item.op.code_op }}</td>
           <td data-title="Cod. Produto">{{ item.op.code_product }}</td>
@@ -37,11 +36,15 @@
       </tbody>
     </table>
 
-    <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
+    <div style="display: flex; gap: 3px;">
+      <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
 
-    <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
+      <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
 
-    <button @click="next()" class="btn-pagination">Proximo</button>
+      <button @click="next()" class="btn-pagination">Proximo</button>
+    </div>
+
+
 
   </fieldset>
 
@@ -93,14 +96,14 @@ export default {
       this.$store.commit("$SETISLOADING");
     },
 
-    async back () {
+    async back() {
       this.$store.commit("$SETISLOADING");
       this.currentPage = this.currentPage - 10
       await this.filterListStartups()
       this.$store.commit("$SETISLOADING");
     },
 
-    async next () {
+    async next() {
       this.$store.commit("$SETISLOADING");
       this.currentPage = this.currentPage + 10
       await this.filterListStartups()
@@ -171,13 +174,16 @@ export default {
 }
 
 .tableContent {
-  position: relative;
-  width: 100%;
-  font-size: 0.85rem;
-  background-color: var(--bg_white);
+  margin-top: 20px;
   border: 1px solid rgba(37, 36, 36, 0.281);
-  border-radius: 0.4rem;
+  width: 100%;
+  background-color: var(--bg_white);
+  border-radius: 0.3rem;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
+  font-size: 0.85rem;
+  color: var(--black_text);
 }
 
 .tableContent h2 {
@@ -202,10 +208,12 @@ export default {
   position: absolute;
 }
 
-legend {
-  font-size: 1.3rem;
+.title-field {
+  font-size: 1.1rem;
   font-weight: 600;
-  color: var(--black_text);
+  margin-bottom: 1.2rem;
+  text-align: center;
+  width: 100%;
 }
 
 .opcoes:hover .dropdown-content {
@@ -229,7 +237,8 @@ table th {
 }
 
 table td {
-  border-top: 0.4px solid rgba(0, 0, 0, 0.199);
+  text-align: center;
+
 }
 
 .lineWarning {
@@ -352,6 +361,7 @@ table td {
     justify-content: center;
     flex-direction: row;
   }
+
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
@@ -386,9 +396,6 @@ table td {
     font-weight: bold;
   }
 
-  .lastTd {
-    border-bottom: 1.6px solid var(--card_green);
-  }
 
   legend {
     text-align: center;

@@ -464,7 +464,7 @@ export default {
   position: fixed;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: var(--bg_white);
   padding: 20px;
   z-index: 90;
   border-radius: 10px;
@@ -671,11 +671,9 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  gap: 1rem;
-  margin-top: 20px;
+  gap: 0.25rem;
   flex-wrap: wrap;
   border-top: 2px solid var(--black_text);
-  padding-top: 20px;
 }
 
 .modal_mask .modal_body .attributeVariable .inputIdentificacao {
@@ -789,6 +787,10 @@ export default {
 }
 
 @media (max-width: 770px) {
+
+  .variaveis {
+    font-size: 0.65rem;
+  }
   .title_modal input {
     font-size: 20px;
     width: 50px;
@@ -820,7 +822,9 @@ export default {
   }
 
   .modal_mask .modal_body .attributeVariable {
-    padding: 2rem 0;
+    padding: 0.3rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
   .modal_mask .modal_body .attributeVariable .inputIdentificacao {

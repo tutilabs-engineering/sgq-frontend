@@ -15,7 +15,6 @@
 
       <tbody>
         <tr v-for="item in listDisapproved" :key="item.id">
-          <td style="display: none"></td>
           <td data-title="Cod. Startup">{{ item.code_startup }}</td>
           <td data-title="Cod. OP">{{ item.op.code_op }}</td>
           <td data-title="Cod. Produto">{{ item.op.code_product }}</td>
@@ -25,10 +24,7 @@
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
-              <button
-                className="btn_visualizar"
-                @click="OpenReportStartup(item.id)"
-              >
+              <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
                 <i class="fa fa-eye"> </i>
                 Visualizar
               </button>
@@ -38,11 +34,15 @@
       </tbody>
     </table>
 
-    <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
+    <div style="display: flex; gap: 3px;">
+      <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
 
-    <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
+      <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
 
-    <button @click="next()" class="btn-pagination">Proximo</button>
+      <button @click="next()" class="btn-pagination">Proximo</button>
+    </div>
+
+
   </fieldset>
 
 </template>
@@ -50,7 +50,7 @@
 <script>
 import http from "../services/startup/";
 export default {
-  setup() {},
+  setup() { },
   name: "Table",
   props: ["titleTable", "iconeAdicionar", "iconeFile", "iconeEdit"],
   data() {
@@ -130,14 +130,14 @@ export default {
       this.$store.commit("$SETISLOADING");
     },
 
-    async back () {
+    async back() {
       this.$store.commit("$SETISLOADING");
       this.currentPage = this.currentPage - 10
       await this.filterListStartups()
       this.$store.commit("$SETISLOADING");
     },
 
-    async next () {
+    async next() {
       this.$store.commit("$SETISLOADING");
       this.currentPage = this.currentPage + 10
       await this.filterListStartups()
@@ -191,13 +191,16 @@ export default {
 }
 
 .tableContent {
-  position: relative;
-  width: 100%;
-  font-size: 0.85rem;
-  background-color: var(--bg_white);
+  margin-top: 20px;
   border: 1px solid rgba(37, 36, 36, 0.281);
-  border-radius: 0.4rem;
+  width: 100%;
+  background-color: var(--bg_white);
+  border-radius: 0.3rem;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
+  font-size: 0.85rem;
+  color: var(--black_text);
 }
 
 .tableContent h2 {
@@ -256,9 +259,6 @@ table th {
   height: 100px;
 }
 
-table td {
-  border-top: 0.4px solid rgba(0, 0, 0, 0.199);
-}
 
 .tableContent td {
   text-align: center;
@@ -320,6 +320,7 @@ table td {
     display: flex;
     padding: 10px 30px 10px 30px;
   }
+
   .tableContent thead {
     display: none;
   }
@@ -338,6 +339,7 @@ table td {
     padding: 10px;
     font-size: 15px;
   }
+
   .fas {
     font-size: 15px;
     margin-right: 5px;
