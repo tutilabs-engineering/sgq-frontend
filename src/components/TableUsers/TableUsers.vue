@@ -211,10 +211,11 @@ export default {
 fieldset {
   border: 1px solid rgba(37, 36, 36, 0.281) !important;
   width: 100%;
-  background-color: white !important;
+  background-color: var(--bg_white) !important;
   border-radius: 10px 10px 10px 10px;
   display: flex;
   flex-direction: column;
+  color: var(--black_text);
   padding: 20px;
 }
 

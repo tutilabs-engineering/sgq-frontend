@@ -320,7 +320,7 @@ export default {
   position: fixed;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: var(--bg_white);
   padding: 20px;
   z-index: 90;
   border-radius: 10px;

@@ -238,7 +238,7 @@ export default {
 .input {
   display: flex;
   flex-direction: column;
-  background-color: var(--main_primaryWhite);
+  background-color: var(--bg_white);
   padding: 10px;
   justify-content: center;
   height: 80px;
@@ -251,6 +251,8 @@ export default {
 .input input {
   border: none;
   outline: none;
+  background-color: var(--bg_white);
+  color: var(--black_text);
   height: 50px;
   padding: 0px 5px 0 5px;
 }
@@ -340,7 +342,7 @@ input:-webkit-autofill {
 .input-acessLevel {
   display: flex;
   flex-direction: column;
-  background-color: var(--main_primaryWhite);
+  background-color: var(--bg_white) !important;
   padding: 10px;
   justify-content: center;
   height: 80px;
@@ -348,6 +350,11 @@ input:-webkit-autofill {
   color: var(--black_text);
   font-weight: 600;
   border: 1px solid rgba(37, 36, 36, 0.281);
+}
+
+.input-acessLevel * {
+  background-color: var(--bg_white);
+  color: var(--black_text);
 }
 
 .buttons-action {
@@ -377,14 +384,14 @@ input:-webkit-autofill {
 .select-lvAcess {
   margin-top: 5px;
   outline: none;
-  background-color: var(--main_primaryWhite);
+  background-color: var(--bg_white);
   border: none;
   border-radius: 5px;
   height: 30px;
 }
 .select-lvAcess * {
   border: none;
-  background-color: var(--main_primaryWhite);
+  background-color: var(--bg_white);
   color: var(--btn_green);
   font-weight: 600;
 }

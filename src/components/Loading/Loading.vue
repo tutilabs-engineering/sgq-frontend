@@ -3,7 +3,7 @@
     <h2 class="title">SGQ</h2>
     
     <span class="loader"></span>
-    <h3>STARTUP DIGITAL</h3>
+    <h3 class="name-module">STARTUP DIGITAL</h3>
     
     <p class="version">Versão 1.7.3</p>
   </div>
@@ -70,6 +70,10 @@ export default {
   display: inline-block;
   position: relative;
   overflow: hidden;
+}
+
+.name-module {
+  color: var(--black_text);
 }
 .loader::after {
   content: '';  

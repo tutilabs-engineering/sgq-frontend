@@ -36,11 +36,15 @@
       </tbody>
     </table>
 
-    <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
+    <div style="display: flex; gap: 3px;">
+      <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
 
-    <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
+      <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
 
-    <button @click="next()" class="btn-pagination">Proximo</button>
+      <button @click="next()" class="btn-pagination">Proximo</button>
+    </div>
+
+
 
   </fieldset>
 
@@ -92,14 +96,14 @@ export default {
       this.$store.commit("$SETISLOADING");
     },
 
-    async back () {
+    async back() {
       this.$store.commit("$SETISLOADING");
       this.currentPage = this.currentPage - 10
       await this.filterListStartups()
       this.$store.commit("$SETISLOADING");
     },
 
-    async next () {
+    async next() {
       this.$store.commit("$SETISLOADING");
       this.currentPage = this.currentPage + 10
       await this.filterListStartups()
@@ -357,6 +361,7 @@ table td {
     justify-content: center;
     flex-direction: row;
   }
+
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;

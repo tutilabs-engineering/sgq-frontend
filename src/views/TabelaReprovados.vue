@@ -24,10 +24,7 @@
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
-              <button
-                className="btn_visualizar"
-                @click="OpenReportStartup(item.id)"
-              >
+              <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
                 <i class="fa fa-eye"> </i>
                 Visualizar
               </button>
@@ -37,11 +34,15 @@
       </tbody>
     </table>
 
-    <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
+    <div style="display: flex; gap: 3px;">
+      <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
 
-    <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
+      <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
 
-    <button @click="next()" class="btn-pagination">Proximo</button>
+      <button @click="next()" class="btn-pagination">Proximo</button>
+    </div>
+
+
   </fieldset>
 
 </template>
@@ -49,7 +50,7 @@
 <script>
 import http from "../services/startup/";
 export default {
-  setup() {},
+  setup() { },
   name: "Table",
   props: ["titleTable", "iconeAdicionar", "iconeFile", "iconeEdit"],
   data() {
@@ -129,14 +130,14 @@ export default {
       this.$store.commit("$SETISLOADING");
     },
 
-    async back () {
+    async back() {
       this.$store.commit("$SETISLOADING");
       this.currentPage = this.currentPage - 10
       await this.filterListStartups()
       this.$store.commit("$SETISLOADING");
     },
 
-    async next () {
+    async next() {
       this.$store.commit("$SETISLOADING");
       this.currentPage = this.currentPage + 10
       await this.filterListStartups()
@@ -319,6 +320,7 @@ table th {
     display: flex;
     padding: 10px 30px 10px 30px;
   }
+
   .tableContent thead {
     display: none;
   }
@@ -337,6 +339,7 @@ table th {
     padding: 10px;
     font-size: 15px;
   }
+
   .fas {
     font-size: 15px;
     margin-right: 5px;

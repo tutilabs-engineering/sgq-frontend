@@ -25,31 +25,27 @@
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
 
-              <button
-                className="btn_visualizar"
-                @click="OpenReportStartup(item.id)"
-              >
+              <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
                 <i class="fa fa-eye"></i>
                 Visualizar
               </button>
-              <ModalNovaOp
-                :modalNovaOp="modalNovaOp"
-                :nameRouter="nameRouter"
-                @open-modal-novaOp="openModalNovaOp"
-                :startup="item"
-                :startup_id="item.id"
-              />
+              <ModalNovaOp :modalNovaOp="modalNovaOp" :nameRouter="nameRouter" @open-modal-novaOp="openModalNovaOp"
+                :startup="item" :startup_id="item.id" />
             </div>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <button @click="init()" class="btn-pagination" v-if="currentPageOpen !== 0">Inicio</button>
+    <div style="display: flex; gap: 3px;">
+      <button @click="init()" class="btn-pagination" v-if="currentPageOpen !== 0">Inicio</button>
 
-    <button @click="back()" class="btn-pagination" v-if="currentPageOpen !== 0">Voltar</button>
+      <button @click="back()" class="btn-pagination" v-if="currentPageOpen !== 0">Voltar</button>
 
-    <button @click="next()" class="btn-pagination">Proximo</button>
+      <button @click="next()" class="btn-pagination">Proximo</button>
+    </div>
+
+
   </fieldset>
 
 </template>
@@ -78,7 +74,7 @@ export default {
       let to = page * perPage;
       return posts.slice(from, to);
     },
-    
+
     OpenReportStartup: function (id_startup) {
       this.$router.push({
         path: "/create-startup-by-id",
@@ -118,14 +114,14 @@ export default {
       this.$store.commit("$SETISLOADING");
     },
 
-    async back () {
+    async back() {
       this.$store.commit("$SETISLOADING");
       this.currentPageOpen = this.currentPageOpen - 10
       await this.filterListStartups()
       this.$store.commit("$SETISLOADING");
     },
 
-    async next () {
+    async next() {
       this.$store.commit("$SETISLOADING");
       this.currentPageOpen = this.currentPageOpen + 10
       await this.filterListStartups()
@@ -369,6 +365,7 @@ table th {
 .fa-plus-circle {
   color: var(--card_orange);
 }
+
 .fa-file-alt {
   color: var(--card_blue);
 }
@@ -388,11 +385,12 @@ table th {
     justify-content: center;
     flex-direction: row;
   }
-  
+
   .btns {
     display: flex;
     padding: 10px 30px 10px 30px;
   }
+
   .tableContent thead {
     display: none;
   }
