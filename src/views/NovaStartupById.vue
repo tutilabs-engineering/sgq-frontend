@@ -3,14 +3,16 @@
     <div class="cards-status">
       <fieldset>
         <span class="statup-header">Situação</span>
-        <span class="startup-preenchida"> 
-        {{verifyOpenStartup(data_startup)}}</span>
+        <span class="startup-preenchida">
+          {{ verifyOpenStartup(data_startup) }}</span
+        >
       </fieldset>
-      
+
       <fieldset>
         <span class="statup-header">Preench.</span>
-        <span class="startup-preenchida"> 
-        {{verifyFillStartup(data_startup)}}</span>
+        <span class="startup-preenchida">
+          {{ verifyFillStartup(data_startup) }}</span
+        >
       </fieldset>
 
       <fieldset>
@@ -45,12 +47,18 @@
           Cancelar
         </button>
         <div v-if="verifyMetrologyStatus(data_startup)">
-          <button class="btn-save btn" @click="saveFillReportStartup">
+          <button
+            class="btn-save btn"
+            @click="saveFillReportStartup(data_startup)"
+          >
             Finalizar
           </button>
         </div>
         <div v-else>
-          <button class="btn-save-fill btn" @click="saveFillReportStartup">
+          <button
+            class="btn-save-fill btn"
+            @click="saveFillReportStartup(data_startup)"
+          >
             Preencher
           </button>
         </div>
@@ -59,19 +67,28 @@
   </div>
   <div class="content-novaStartup" v-else>
     <div style="display: flex; gap: 20px; padding-right: 20px">
-
       <fieldset>
         <span class="statup-header">Situação</span>
-        <span class="startup-preenchida"> 
-        {{verifyOpenStartup(data_startup)}}</span>
+        <span class="startup-preenchida">
+          {{ verifyOpenStartup(data_startup) }}</span
+        >
       </fieldset>
 
-       <fieldset>
+      <fieldset>
         <span class="statup-header">Status</span>
-        <span class="startup-preenchida" v-if="data_startup.status.id == 1">Aprovado</span>
-        <span class="startup-nao-preenchida" v-else-if="data_startup.status.id == 2">Reprovado</span>
-        <span class="startup-preenchida-com-condicional" v-else-if="data_startup.status.id == 3">Aprovado condicionalmente</span>
-
+        <span class="startup-preenchida" v-if="data_startup.status.id == 1"
+          >Aprovado</span
+        >
+        <span
+          class="startup-nao-preenchida"
+          v-else-if="data_startup.status.id == 2"
+          >Reprovado</span
+        >
+        <span
+          class="startup-preenchida-com-condicional"
+          v-else-if="data_startup.status.id == 3"
+          >Aprovado condicionalmente</span
+        >
       </fieldset>
       <fieldset>
         <span class="statup-header">Startup</span>
@@ -107,7 +124,9 @@
               name="client"
               id="client"
               placeholder="ex: Yamaha"
-              :value="formatHour(data_startup.metrology[0].metrologyHistory.startDate)"
+              :value="
+                formatHour(data_startup.metrology[0].metrologyHistory.startDate)
+              "
               disabled
             />
           </div>
@@ -119,7 +138,9 @@
               name="client"
               id="client"
               placeholder="ex: Yamaha"
-              :value="formatHour(data_startup.metrology[0].metrologyHistory.endDate)"
+              :value="
+                formatHour(data_startup.metrology[0].metrologyHistory.endDate)
+              "
               disabled
             />
           </div>
@@ -155,15 +176,16 @@ import ListaPerguntasPreenchida from "../components/ListaPerguntasPreenchida/Lis
 import ListaPerguntas from "../components/ListaPerguntas/ListaPerguntas.vue";
 import TableMetrologiaDetalhes from "../components/TableMetrologiaDetalhes/TableMetrologiaDetalhes.vue";
 
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 import http from "../services/startup";
+import startup from "../services/startup";
 
 export default {
   data() {
     return {
       metrologyStyle: "alert-metrology-aproved",
       id_startup: this.$route.query.id,
-
+      verifyAMetrology: null,
       headerPreenchida: {
         code_op: "",
         client: "",
@@ -174,16 +196,16 @@ export default {
         machine: "",
         product_mold: "",
         date: "",
-        startTime: ""
+        startTime: "",
       },
 
       techniqueInfo: {
         cavity: "",
-        cycle: ""
+        cycle: "",
       },
       dataInfo: {
         code_op: "",
-        user_id: ""
+        user_id: "",
       },
 
       code_secondary: [],
@@ -195,7 +217,7 @@ export default {
       componentsInfo: [],
       showQuestions: true,
 
-      perguntasRespondidas: this.data_startup
+      perguntasRespondidas: this.data_startup,
     };
   },
   components: {
@@ -205,11 +227,11 @@ export default {
     ListaPerguntasPreenchida,
     ListaPerguntas,
     SecondaryOP,
-    TableMetrologiaDetalhes
+    TableMetrologiaDetalhes,
   },
 
-  created: async function() {
-    await http.findReportStartupById(this.id_startup).then(res => {
+  created: async function () {
+    await http.findReportStartupById(this.id_startup).then((res) => {
       this.data_startup = res.data;
       this.code_startup = this.data_startup.code_startup;
       this.headerPreenchida.code_op = this.data_startup.op.code_op;
@@ -232,7 +254,7 @@ export default {
       this.code_secondary = res.data.op.added_op;
     });
 
-    await http.listDataByCodeOp(this.headerPreenchida.code_op).then(res => {
+    await http.listDataByCodeOp(this.headerPreenchida.code_op).then((res) => {
       this.headerPreenchida.quantity = res.data.results[0].PlannedQty;
     });
   },
@@ -245,11 +267,11 @@ export default {
       return (date = `${this.day}/${this.month}/${this.year}`);
     },
 
-    formatHour(date){
-      return dayjs(date).format('HH:mm:ss - DD/MM/YYYY')
+    formatHour(date) {
+      return dayjs(date).format("HH:mm:ss - DD/MM/YYYY");
     },
-     
-     verifyOpenStartup(startup) {
+
+    verifyOpenStartup(startup) {
       if (startup.open && startup.filled) {
         return "Rodando";
       } else if (!startup.open && startup.filled) {
@@ -259,18 +281,15 @@ export default {
       }
     },
 
-      verifyFillStartup(startup ) {
+    verifyFillStartup(startup) {
       // Se startup não estiver fechada e não foi preenchida nenhuma vez
       if (startup.filled == false && !startup.report_startup_fill) {
         return "Em Aberto";
-      } else if (
-        startup.filled == false &&
-        startup.report_startup_fill
-      ) {
+      } else if (startup.filled == false && startup.report_startup_fill) {
         return "Em Andamento";
       }
 
-      return "Preenchido"
+      return "Preenchido";
     },
 
     verifyMetrologyStatus(startup) {
@@ -287,6 +306,7 @@ export default {
     verifyMetrology(startup) {
       if (startup.metrology) {
         if (startup.metrology.length <= 0) {
+          this.verifyAMetrology = true;
           return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
           // Nao Existe metrologia
         }
@@ -295,16 +315,18 @@ export default {
             // Verificar se a metroliga está fechada
             // True ela esta aberta
             //  False ela está fechada
+            this.verifyAMetrology = false;
             this.metrologyStyle = "alert-metrology";
             return "Variaveis em Metrologia Não preenchidas, está Startup não pode ser fechada porém os dados podem ser salvos.";
           }
+          this.verifyAMetrology = true;
           return "Variaveis em Metrologia preenchidas, está Startup pode ser fechada.";
         }
       }
-
+      this.verifyAMetrology = true;
       return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
     },
-    async saveFillReportStartup() {
+    async saveFillReportStartup(startup) {
       //
       this.$store.commit("$SETISLOADING");
 
@@ -334,8 +356,40 @@ export default {
         "specific_questions",
         JSON.stringify(data.specific_questions)
       );
+ 
 
-      await http.fillReportStartup(this.id_startup, form);
+
+      await http.fillReportStartup(this.id_startup, form).then(async (res)=>{
+        if (this.verifyAMetrology) {
+        const piq = {
+          id: startup.id,
+          number_startup: startup.code_startup,
+          number_op: startup.code_op,
+          code_product: startup.op.code_product,
+          description_product:  startup.op.desc_product,
+          mold: startup.op.product_mold,
+          machine: startup.op.machine,
+          description_client: startup.op.client,
+          code_client: startup.op.code_client,
+          userWhoFill: {
+            id: startup.userWhoCreate.id,
+            name: startup.userWhoCreate.name,
+            email: startup.userWhoCreate.email,
+            register: startup.userWhoCreate.register,
+            is_enabled: true,
+            role: {
+              id: startup.userWhoCreate.role.id,
+              description: startup.userWhoCreate.role.description,
+            },
+          },
+          attributeQuestionJSON: data.specific_questions,
+          variablesQuestionJSON: startup.metrology_items,
+          status: 1,
+        };
+      
+        await http.createPIQ(piq);
+      }
+      })
 
       this.$store.commit("$SETISLOADING");
 
@@ -357,7 +411,7 @@ export default {
       this.showQuestions = e;
     },
 
-    ReturnCodeOp: async function(code_op) {
+    ReturnCodeOp: async function (code_op) {
       this.dataInfo.code_op = code_op;
       function GetDateTime() {
         function GetDate() {
@@ -405,21 +459,21 @@ export default {
 
       // //componentsInfo
 
-      data.components.map(item => {
+      data.components.map((item) => {
         this.componentsInfo.push({
           description: item.description,
           item_number: item.ItemCode,
           planned: item.PlannedQty,
-          um: item.UM
+          um: item.UM,
         });
       });
 
       this.$store.commit("$SETDATACREATESTARTUP", {
         techniqueData: this.techniqueInfo,
-        components: this.componentsInfo
+        components: this.componentsInfo,
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -441,7 +495,7 @@ export default {
 }
 
 .cards-status {
-  display: flex; 
+  display: flex;
   gap: 20px;
   padding-right: 20px;
 }
@@ -615,19 +669,18 @@ legend {
   }
 
   .cards-status {
-  display: flex; 
-  gap: 20px;
-  padding-right: 0;
-}
-  
+    display: flex;
+    gap: 20px;
+    padding-right: 0;
+  }
 }
 
 @media (max-width: 765px) {
   .cards-status {
-  display: flex; 
-  gap: 20px;
-  padding-right: 0;
-}
+    display: flex;
+    gap: 20px;
+    padding-right: 0;
+  }
 
   legend {
     text-align: center;
@@ -639,6 +692,6 @@ legend {
 
   .metrologyInStartup {
     padding-right: 0px;
-}
+  }
 }
 </style>

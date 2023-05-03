@@ -1,7 +1,11 @@
 import axios from "axios"
 import { http} from "../config"
+import { httpPIQ } from "../config/PIQ"
 
 export default {
+  createPIQ: async (piq) =>{
+    return await httpPIQ.post("/startup", piq )
+  },
   listDataByCodeOp: async (code_op) => {
     const response = await axios.get(`http://185.209.179.253:3000/api/v1/sap/tutilabs/ops/${code_op}`)
     return response
