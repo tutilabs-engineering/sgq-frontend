@@ -28,9 +28,18 @@
                 <i class="fa fa-eye"></i>
                 Visualizar
               </button>
+        
               <ModalNovaOp :modalNovaOp="modalNovaOp" :nameRouter="nameRouter" @open-modal-novaOp="openModalNovaOp"
                 :startup="item" :startup_id="item.id" />
+
+             
+                  <a className="btn_visualizar_o" target="_blank" :href="`http://185.209.179.253:7550/?startup=${item.id}`">
+                    PIQ
+                  </a>
+                
+
             </div>
+
           </td>
         </tr>
       </tbody>
@@ -137,6 +146,11 @@ export default {
 </script>
 
 <style scoped>
+
+
+.lastTd{
+  margin-bottom: 2px;
+}
 .pagination-component {
   display: flex;
   justify-content: center;
@@ -185,6 +199,7 @@ export default {
   font-size: 0.85rem;
   color: var(--black_text);
 }
+
 
 .tableContent h2 {
   margin-left: 10px;
@@ -285,6 +300,22 @@ table td {
   font-weight: bold;
   border: none;
   font-weight: 300px;
+}
+
+.btn_visualizar_o {
+  border: 2px solid var(--card_green);
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  color: var(--black_text);
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+
 }
 
 .btn_visualizar {
