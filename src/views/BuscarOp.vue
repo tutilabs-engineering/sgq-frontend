@@ -23,7 +23,17 @@
             <td>{{startup.op.code_product}}</td>
             <td>{{startup.op.machine}}</td>
             <td>{{formatDate(startup.day)}}</td>
-            <td><button @click="OpenReportStartup(startup.id)">Consultar</button></td>
+            <td style="display: flex; gap: 10px; flex-direction: center; align-items: center; justify-content: center;">
+              <button @click="OpenReportStartup(startup.id)">Consultar</button>
+              <button>
+                 <a target="_blank" 
+                 :href="`http://185.209.179.253:7550/?startup=${startup.id}`"
+                 >
+                    PIQ
+                </a>
+                </button>
+              </td>
+      
             
           </tr>
         </table>
@@ -53,6 +63,7 @@ export default {
       startupsInOp: [],
     }
 
+
   },
 
   methods: {
@@ -68,6 +79,9 @@ export default {
         this.listStartups = res.data.list
         this.showAllOps()
       })
+    },
+    async RedirectPIQ(){
+      this.r
     },
 
     formatDate(date) {
@@ -100,6 +114,22 @@ export default {
 
 <style scoped>
 
+.btn_visualizar_o {
+  border: 2px solid var(--card_green);
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  color: var(--black_text);
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+
+}
+
 fieldset {
   margin-top: 20px;
   border: 1px solid rgba(37, 36, 36, 0.281);
@@ -128,7 +158,16 @@ table tr button {
   height: 2.5rem;
   color: #ffffff;
   border:none;
+  text-decoration: none;
 }
+
+table tr button a {
+  background: #10b981;
+  color: #ffffff;
+  border:none;
+  text-decoration: none;
+}
+
 h2 {
   margin-bottom: 1rem;
 }
