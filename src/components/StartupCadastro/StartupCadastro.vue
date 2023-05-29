@@ -140,13 +140,23 @@
           disabled
         />
       </div>
+
+      <div class="input">
+        <label for="client">NQA</label>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          v-model="headerInput.nqa"
+        />
+      </div>
     </fieldset>
   </div>
 </template>
 
 <script>
 import http from "../../services/startup";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 
 export default {
   data() {
@@ -156,12 +166,13 @@ export default {
         machine: "",
         product_mold: "",
         day: "",
-        start_time:""
+        start_time: "",
+        nqa: "",
       },
       codeClientManualInput: "",
 
       maqOptions: [],
-      moldOptions: []
+      moldOptions: [],
     };
   },
   props: {
@@ -173,13 +184,13 @@ export default {
       this.$emit("returnCodeOp", newValor);
     },
 
-    formatYear(date){
-      return dayjs(date).format('DD/MM/YYYY')
+    formatYear(date) {
+      return dayjs(date).format("DD/MM/YYYY");
     },
 
-    formatHour(date){
-      return dayjs(date).format('HH:mm:ss')
-    }
+    formatHour(date) {
+      return dayjs(date).format("HH:mm:ss");
+    },
   },
 
   created: async function () {
@@ -195,7 +206,7 @@ export default {
     await http
       .listAllMolds()
       .then((res) => {
-        this.moldOptions = res.data
+        this.moldOptions = res.data;
       })
       .catch((error) => {
         console.log(error);
@@ -218,6 +229,7 @@ export default {
             machine: this.headerInput.machine,
             day: this.headerInfo.date,
             start_time: this.headerInfo.startTime,
+            nqa: Number(this.headerInput.nqa),
           },
         });
       },
@@ -306,7 +318,6 @@ export default {
   height: 70px;
   padding: 5px;
   border-radius: 5px 5px 0 0;
-  
 }
 
 .inputOp {
