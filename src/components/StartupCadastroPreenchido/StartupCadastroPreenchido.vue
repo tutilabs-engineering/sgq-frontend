@@ -5,7 +5,6 @@
 
       
       <legend>Start-Injeção</legend>
-
       <div class="input">
         <label for="op">Ordem de Produção</label>
         <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="headerPreenchida.code_op" disabled>
@@ -54,6 +53,10 @@
       <div class="input">
         <label for="client">Hora inicial</label>
         <input type="text" name="client" id="client" :value="startTime" disabled>
+      </div>
+      <div class="input">
+        <label for="op">NQA</label>
+        <input type="text" name="client" id="nqa" :value="headerPreenchida.nqa" disabled>
       </div>
 
     </fieldset>

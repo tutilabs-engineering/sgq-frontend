@@ -197,6 +197,7 @@ export default {
         product_mold: "",
         date: "",
         startTime: "",
+        nqa: 0,
       },
 
       techniqueInfo: {
@@ -243,7 +244,7 @@ export default {
       this.headerPreenchida.product_mold = this.data_startup.op.product_mold;
       this.headerPreenchida.day = this.data_startup.day;
       this.headerPreenchida.start_time = this.data_startup.created_at;
-
+      this.headerPreenchida.nqa = this.data_startup.nqa;
       this.techniqueInfo.cavity = this.data_startup.op.cavity;
       this.techniqueInfo.cycle = this.data_startup.op.cycle;
 
