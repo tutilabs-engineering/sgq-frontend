@@ -27,7 +27,7 @@
               <button @click="OpenReportStartup(startup.id)">Consultar</button>
               <button>
                  <a target="_blank" 
-                 :href="`http://185.209.179.253:7550/?startup=${startup.id}`"
+                 :href="`http://185.209.179.253:8800/?startup=${startup.id}`"
                  >
                     PIQ
                 </a>
