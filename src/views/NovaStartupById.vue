@@ -385,9 +385,9 @@ export default {
           attributeQuestionJSON: data.specific_questions,
           variablesQuestionJSON: startup.metrology_items,
           status: 1,
+          nqa: this.data_startup.nqa
         };
-      
-        await http.createPIQ(piq);
+        await http.createPIQ(piq)
       }
       })
 
