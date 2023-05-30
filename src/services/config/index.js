@@ -1,4 +1,5 @@
 import axios from "axios"
+import Cookie from 'js-cookie'
 
 //LOCAL
 
@@ -23,8 +24,16 @@ import axios from "axios"
 
 // SERVER ->
 
+// const http = axios.create({
+//   baseURL: "http://185.209.179.253:8200",
+//   headers: {
+//     "Accept": "application/json",
+//     "Content": "application/json"
+//   }
+// })
+
 const http = axios.create({
-  baseURL: "http://185.209.179.253:8200",
+  baseURL: "http://localhost:8000",
   headers: {
     "Accept": "application/json",
     "Content": "application/json"
@@ -32,7 +41,7 @@ const http = axios.create({
 })
 
 http.interceptors.request.use(function (config) {
-  let token = sessionStorage.getItem("token");
+  let token = Cookie.get("token");
 
   if (!token) {
     token = "";

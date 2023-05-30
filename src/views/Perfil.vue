@@ -198,6 +198,7 @@
 import jwt from "jsonwebtoken";
 import InputPerfil from "../components/InputsPerfil/InputPerfil.vue";
 import http from "../services/account/Users";
+import Cookie from 'js-cookie'
 
 export default {
   components: { InputPerfil },
@@ -311,7 +312,7 @@ export default {
     const secret =
       "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
 
-    const token = sessionStorage.getItem("token");
+    const token = Cookie.get("token");
 
     if (token) {
       try {

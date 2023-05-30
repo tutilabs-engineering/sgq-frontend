@@ -54,6 +54,7 @@
 <script>
 import jwt from "jsonwebtoken";
 import http from "../../services/account/Users";
+import Cookie from 'js-cookie'
 
 export default {
   created: async function () {
@@ -62,7 +63,7 @@ export default {
     const secretQuefunciona =
       "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
 
-    const token = sessionStorage.getItem("token");
+    const token = Cookie.get("token");
 
     if (token) {
       try {
@@ -101,7 +102,7 @@ export default {
         })
         .then(() => {
           this.$router.push({ name: "Login" });
-          sessionStorage.removeItem("token");
+          Cookie.remove("token");
         });
     },
   },

@@ -22,6 +22,7 @@
 </template>
 <script>
 import http from "../services/account/Users";
+import Cookie from 'js-cookie'
 
 export default {
   data() {
@@ -75,7 +76,7 @@ export default {
         .then(async (response) => {
           if (response.status === 200) {
             const token = await response.data.token;
-            sessionStorage.setItem("token", token);
+            Cookie.set("token",token)
             if (token) {
               Toast.fire({
                 icon: 'success',
