@@ -140,16 +140,33 @@
           disabled
         />
       </div>
-
-      <div class="input">
-        <label for="client">NQA</label>
-        <input
-          type="text"
-          name="client"
-          id="client"
-          v-model="headerInput.nqa"
-        />
-      </div>
+        <div class="input">
+          <label for="client">Plano de inspeção</label>
+          <input
+            type="text"
+            name="client"
+            id="client"
+            v-model="headerInput.piq"
+          />
+        </div>
+        <div class="input">
+          <label for="client">NQA</label>
+          <input
+            type="text"
+            name="client"
+            id="client"
+            v-model="headerInput.nqa"
+          />
+        </div>
+        <div class="input">
+          <label for="client">Nível</label>
+          <input
+            type="text"
+            name="client"
+            id="client"
+            v-model="headerInput.level"
+          />
+        </div>
     </fieldset>
   </div>
 </template>
@@ -168,6 +185,8 @@ export default {
         day: "",
         start_time: "",
         nqa: "",
+        piq: "",
+        level: "",
       },
       codeClientManualInput: "",
 
@@ -230,6 +249,8 @@ export default {
             day: this.headerInfo.date,
             start_time: this.headerInfo.startTime,
             nqa: Number(this.headerInput.nqa),
+            level: this.headerInput.level,
+            piq: this.headerInput.piq
           },
         });
       },

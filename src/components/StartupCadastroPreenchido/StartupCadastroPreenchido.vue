@@ -7,91 +7,167 @@
       <legend>Start-Injeção</legend>
       <div class="input">
         <label for="op">Ordem de Produção</label>
-        <input type="text" name="client" id="op" placeholder="Digite o código OP" :value="headerPreenchida.code_op" disabled>
+        <input
+          type="text"
+          name="client"
+          id="op"
+          placeholder="Digite o código OP"
+          :value="headerPreenchida.code_op"
+          disabled
+        />
       </div>
-      
+
       <div class="input">
         <label for="client">Cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: Yamaha" :value="headerPreenchida.client" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          placeholder="ex: Yamaha"
+          :value="headerPreenchida.client"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Código cliente</label>
-        <input type="text" name="client" id="client" placeholder="ex: 64321KSS J300 FA" :value="headerPreenchida.codeClient" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          placeholder="ex: 64321KSS J300 FA"
+          :value="headerPreenchida.codeClient"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Produto</label>
-        <input type="text" name="client" id="client" :value="headerPreenchida.product" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          :value="headerPreenchida.product"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Código Produto</label>
-        <input type="text" name="client" id="client" :value="headerPreenchida.codeProduct" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          :value="headerPreenchida.codeProduct"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Quantidade Planejada</label>
-        <input type="number" name="client" id="client" :value="headerPreenchida.quantity" disabled>
+        <input
+          type="number"
+          name="client"
+          id="client"
+          :value="headerPreenchida.quantity"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Máquina</label>
-        <input type="text" name="client" id="client" :value="headerPreenchida.machine" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          :value="headerPreenchida.machine"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Molde</label>
-        <input type="text" name="client" id="client" :value="headerPreenchida.product_mold" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          :value="headerPreenchida.product_mold"
+          disabled
+        />
       </div>
 
       <div class="input">
         <label for="client">Data</label>
-        <input type="text" name="client" id="client" :value="day" disabled>
+        <input type="text" name="client" id="client" :value="day" disabled />
       </div>
 
       <div class="input">
         <label for="client">Hora inicial</label>
-        <input type="text" name="client" id="client" :value="startTime" disabled>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          :value="startTime"
+          disabled
+        />
+      </div>
+      <div class="input">
+        <label for="op">Plano de inspeção</label>
+        <input
+          type="text"
+          name="client"
+          id="nqa"
+          :value="headerPreenchida.piq"
+          disabled
+        />
       </div>
       <div class="input">
         <label for="op">NQA</label>
-        <input type="text" name="client" id="nqa" :value="headerPreenchida.nqa" disabled>
+        <input
+          type="text"
+          name="client"
+          id="nqa"
+          :value="headerPreenchida.nqa"
+          disabled
+        />
       </div>
-
+      <div class="input">
+        <label for="op">Nível</label>
+        <input
+          type="text"
+          name="client"
+          id="nqa"
+          :value="headerPreenchida.level"
+          disabled
+        />
+      </div>
     </fieldset>
   </div>
 </template>
 
 <script>
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 
 export default {
   data() {
     return {
       code_op: "",
-      startTime: dayjs(this.headerPreenchida.start_time).format('HH:mm:ss'),
-      day: dayjs(this.headerPreenchida.day).format('DD/MM/YYYY')
-
-      
+      startTime: dayjs(this.headerPreenchida.start_time).format("HH:mm:ss"),
+      day: dayjs(this.headerPreenchida.day).format("DD/MM/YYYY"),
     };
   },
 
   props: {
     headerPreenchida: Object,
   },
-  
+
   watch: {
-    code_op (newValor) {
+    code_op(newValor) {
       this.$store.commit("$SETCODEOP", this.code_op);
-      this.$emit("returnCodeOp", newValor)
-
+      this.$emit("returnCodeOp", newValor);
     },
-
-
-  }
+  },
 };
-
 </script>
 
 <style scoped>
@@ -152,7 +228,6 @@ legend {
 }
 
 @media (max-width: 965px) {
-
   .content-startupCadastro {
     padding: 0;
   }
