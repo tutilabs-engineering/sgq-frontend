@@ -46,7 +46,7 @@
         >
           Cancelar
         </button>
-        <div v-if="verifyMetrologyStatus(data_startup)">
+        <div v-if="verifyAMetrology">
           <button
             class="btn-save btn"
             @click="saveFillReportStartup(data_startup)"
@@ -56,8 +56,9 @@
         </div>
         <div v-else>
           <button
+            v-if="!verifyAMetrology"
             class="btn-save-fill btn"
-            @click="saveFillReportStartup(data_startup)"
+            @click="finishFillReportStartup(data_startup)"
           >
             Preencher
           </button>
@@ -264,6 +265,39 @@ export default {
     });
   },
   methods: {
+    async createPiq(startup,data) {
+      const piq = {
+        id: startup.id,
+        number_startup: startup.code_startup,
+        number_op: startup.code_op,
+        code_product: startup.op.code_product,
+        description_product: startup.op.desc_product,
+        mold: startup.op.product_mold,
+        machine: startup.op.machine,
+        description_client: startup.op.client,
+        code_client: startup.op.code_client,
+        userWhoFill: {
+          id: startup.userWhoCreate.id,
+          name: startup.userWhoCreate.name,
+          email: startup.userWhoCreate.email,
+          register: startup.userWhoCreate.register,
+          is_enabled: true,
+          role: {
+            id: startup.userWhoCreate.role.id,
+            description: startup.userWhoCreate.role.description,
+          },
+        },
+        attributeQuestionJSON: data.specific_questions,
+        variablesQuestionJSON: startup.metrology_items,
+        status: 1,
+        nqa: this.data_startup.nqa,
+        PIQ: this.data_startup.piq,
+        level: this.data_startup.level,
+      };
+     await http.createPIQ(piq).catch((error)=>{
+     })
+    },
+
     formatDate(date) {
       date = date.slice(0, -14);
       this.year = date.slice(0, -6);
@@ -331,6 +365,55 @@ export default {
       this.verifyAMetrology = true;
       return "Variaveis em Metrologia inexistente, está Startup pode ser fechada diretamente.";
     },
+
+    async finishFillReportStartup(startup) {
+      this.$store.commit("$SETISLOADING");
+
+      const data = this.$store.getters.$GETDATAFILLREPORTSTARTUP;
+
+      const form = new FormData();
+
+      data.default_question.map((item) => {
+        if (item.file != null) {
+          form.append(`${item.fk_default_question}`, item.file);
+          item.file = "";
+        }
+      });
+
+      data.specific_questions.map((item) => {
+        if (item.file != null) {
+          form.append(`${item.fk_specific_question}`, item.file);
+          item.file = "";
+        }
+      });
+
+      form.append("img_1", data.img_1);
+      form.append("img_2", data.img_2);
+      form.append("img_3", data.img_3);
+      form.append("default_questions", JSON.stringify(data.default_question));
+      form.append(
+        "specific_questions",
+        JSON.stringify(data.specific_questions)
+      );
+
+      await http.fillReportStartup(this.id_startup, form)
+
+      this.$store.commit("$SETISLOADING");
+
+      this.$swal
+        .fire({
+          title: "Tudo certo!",
+          text: "A Startup foi Finalizada com sucesso!",
+          imageUrl: "/img/allright.gif",
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: "Custom image",
+        })
+        .then(async () => {
+          this.$router.push({ name: "Startup" });
+        });
+    },
+
     async saveFillReportStartup(startup) {
       //
       this.$store.commit("$SETISLOADING");
@@ -361,41 +444,11 @@ export default {
         "specific_questions",
         JSON.stringify(data.specific_questions)
       );
- 
+
 
 
       await http.fillReportStartup(this.id_startup, form).then(async (res)=>{
-        if (this.verifyAMetrology) {
-        const piq = {
-          id: startup.id,
-          number_startup: startup.code_startup,
-          number_op: startup.code_op,
-          code_product: startup.op.code_product,
-          description_product:  startup.op.desc_product,
-          mold: startup.op.product_mold,
-          machine: startup.op.machine,
-          description_client: startup.op.client,
-          code_client: startup.op.code_client,
-          userWhoFill: {
-            id: startup.userWhoCreate.id,
-            name: startup.userWhoCreate.name,
-            email: startup.userWhoCreate.email,
-            register: startup.userWhoCreate.register,
-            is_enabled: true,
-            role: {
-              id: startup.userWhoCreate.role.id,
-              description: startup.userWhoCreate.role.description,
-            },
-          },
-          attributeQuestionJSON: data.specific_questions,
-          variablesQuestionJSON: startup.metrology_items,
-          status: 1,
-          nqa: this.data_startup.nqa,
-          PIQ: this.data_startup.piq,
-          level: this.data_startup.level
-        };
-        await http.createPIQ(piq)
-      }
+        await this.createPiq(startup,data)
       })
 
       this.$store.commit("$SETISLOADING");
@@ -409,7 +462,7 @@ export default {
           imageHeight: 200,
           imageAlt: "Custom image"
         })
-        .then(() => {
+        .then(async () => {
           this.$router.push({ name: "Startup" });
         });
     },
