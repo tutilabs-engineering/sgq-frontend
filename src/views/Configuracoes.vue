@@ -37,6 +37,7 @@
 <script>
 import jwt from "jsonwebtoken";
 import http from "../services/account/Users";
+import Cookie from 'js-cookie'
 
 import CardsConfiguracao from "../components/CardsConfiguracoes/CardsConfiguracao.vue";
 
@@ -55,7 +56,7 @@ export default {
     const secretQuefunciona =
       "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
 
-    const token = sessionStorage.getItem("token");
+    const token = Cookie.get("token");
 
     if (token) {
       try {

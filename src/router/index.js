@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import http from "../services/account/Users"
 import jwt from "jsonwebtoken"
+import Cookie from 'js-cookie'
 
 async function Auth(to, from, next) {
 
-  const token = sessionStorage.getItem("token")
+  const token = Cookie.get("token")
 
   if (!token) {
     return next("/login")
@@ -24,7 +25,7 @@ async function Auth(to, from, next) {
 async function AuthAdmin(to, from, next) {
 
   async function IsAuth() {
-    const token = sessionStorage.getItem("token")
+    const token = Cookie.get("token")
 
     if (!token) {
       next("/login")
@@ -52,7 +53,7 @@ async function AuthAdmin(to, from, next) {
 
   const secret = "cf2cf1732834hh4hsg657tvdbsi84732492ccF=2=eyfgewyf6329382¨&%$gydsu";
 
-  const token = sessionStorage.getItem("token");
+  const token = Cookie.get("token");
 
   if (token) {
     try {
@@ -74,7 +75,7 @@ async function AuthAdmin(to, from, next) {
 async function EmManutencao(to, from, next) {
 
   async function IsAuth() {
-    const token = sessionStorage.getItem("token")
+    const token = Cookie.get("token")
 
     if (!token) {
       next("/login")

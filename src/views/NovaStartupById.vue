@@ -197,6 +197,9 @@ export default {
         product_mold: "",
         date: "",
         startTime: "",
+        nqa: 0,
+        piq: "",
+        level: ""
       },
 
       techniqueInfo: {
@@ -243,7 +246,9 @@ export default {
       this.headerPreenchida.product_mold = this.data_startup.op.product_mold;
       this.headerPreenchida.day = this.data_startup.day;
       this.headerPreenchida.start_time = this.data_startup.created_at;
-
+      this.headerPreenchida.nqa = this.data_startup.nqa;
+      this.headerPreenchida.piq = this.data_startup.piq;
+      this.headerPreenchida.level = this.data_startup.level;
       this.techniqueInfo.cavity = this.data_startup.op.cavity;
       this.techniqueInfo.cycle = this.data_startup.op.cycle;
 
@@ -385,9 +390,11 @@ export default {
           attributeQuestionJSON: data.specific_questions,
           variablesQuestionJSON: startup.metrology_items,
           status: 1,
+          nqa: this.data_startup.nqa,
+          PIQ: this.data_startup.piq,
+          level: this.data_startup.level
         };
-      
-        await http.createPIQ(piq);
+        await http.createPIQ(piq)
       }
       })
 
