@@ -98,18 +98,18 @@
       </thead>
 
       <tbody>
-        <tr v-for="metrologyHistory in metrologyHistoryList" :key="metrologyHistory.id">
+        <tr v-for="metrologyHistory in metrologyHistoryList" :key="metrologyHistory.fk_startup">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="O.P">{{ metrologyHistory.startup.op.code_op }}</td>
-          <td data-title="Cod. Produto">{{ metrologyHistory.startup.op.code_product }}</td>
-          <td data-title="Produto">{{ metrologyHistory.startup.op.desc_product }}</td>
-          <td data-title="Data de Envio">{{ formatYear(metrologyHistory.sendToMetrology) }} <br>
-            {{ formatHour(metrologyHistory.sendToMetrology) }}</td>
-          <td data-title="Data de Abertura">{{ formatYear(metrologyHistory.metrologyHistory.startDate) }} <br>{{
-              formatHour(metrologyHistory.metrologyHistory.startDate)
+          <td class="codeStartup" data-title="O.P">{{ metrologyHistory.code_op }}</td>
+          <td data-title="Cod. Produto">{{ metrologyHistory.code_product }}</td>
+          <td data-title="Produto">{{ metrologyHistory.desc_product }}</td>
+          <td data-title="Data de Envio">{{ formatYear(metrologyHistory.sendtometrology) }} <br>
+            {{ formatHour(metrologyHistory.sendtometrology) }}</td>
+          <td data-title="Data de Abertura">{{ formatYear(metrologyHistory.startDate) }} <br>{{
+              formatHour(metrologyHistory.startDate)
           }}</td>
-          <td data-title="Data de Finalização">{{ formatYear(metrologyHistory.metrologyHistory.endDate) }} <br>
-            {{ formatHour(metrologyHistory.metrologyHistory.endDate) }}</td>
+          <td data-title="Data de Finalização">{{ formatYear(metrologyHistory.endDate) }} <br>
+            {{ formatHour(metrologyHistory.endDate) }}</td>
           <td class="lastTd" data-title="Opção">
             <button class="btn-view"
               @click="() => this.$router.push({ name: 'MetrologiaDetalhesPreenchido', query: { id: metrologyHistory.fk_startup } })">Visualizar</button>
