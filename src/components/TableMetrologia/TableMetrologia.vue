@@ -98,28 +98,30 @@
       </thead>
 
       <tbody>
-        <tr v-for="metrologyHistory in listPaginated" :key="metrologyHistory.id">
+        <tr v-for="metrologyHistory in metrologyHistoryList" :key="metrologyHistory.fk_startup">
           <td style="display: none"></td>
-          <td class="codeStartup" data-title="O.P">{{ metrologyHistory.startup.op.code_op }}</td>
-          <td data-title="Cod. Produto">{{ metrologyHistory.startup.op.code_product }}</td>
-          <td data-title="Produto">{{ metrologyHistory.startup.op.desc_product }}</td>
-          <td data-title="Data de Envio">{{ formatYear(metrologyHistory.sendToMetrology) }} <br>
-            {{ formatHour(metrologyHistory.sendToMetrology) }}</td>
-          <td data-title="Data de Abertura">{{ formatYear(metrologyHistory.metrologyHistory.startDate) }} <br>{{
-              formatHour(metrologyHistory.metrologyHistory.startDate)
+          <td class="codeStartup" data-title="O.P">{{ metrologyHistory.code_op }}</td>
+          <td data-title="Cod. Produto">{{ metrologyHistory.code_product }}</td>
+          <td data-title="Produto">{{ metrologyHistory.desc_product }}</td>
+          <td data-title="Data de Envio">{{ formatYear(metrologyHistory.sendtometrology) }} <br>
+            {{ formatHour(metrologyHistory.sendtometrology) }}</td>
+          <td data-title="Data de Abertura">{{ formatYear(metrologyHistory.startDate) }} <br>{{
+              formatHour(metrologyHistory.startDate)
           }}</td>
-          <td data-title="Data de Finalização">{{ formatYear(metrologyHistory.metrologyHistory.endDate) }} <br>
-            {{ formatHour(metrologyHistory.metrologyHistory.endDate) }}</td>
+          <td data-title="Data de Finalização">{{ formatYear(metrologyHistory.endDate) }} <br>
+            {{ formatHour(metrologyHistory.endDate) }}</td>
           <td class="lastTd" data-title="Opção">
             <button class="btn-view"
-              @click="() => this.$router.push({ name: 'MetrologiaDetalhesPreenchido', query: { id: metrologyHistory.startup.id } })">Visualizar</button>
+              @click="() => this.$router.push({ name: 'MetrologiaDetalhesPreenchido', query: { id: metrologyHistory.fk_startup } })">Visualizar</button>
           </td>
         </tr>
       </tbody>
     </table>
 
     <div class="pagination-component" v-if="statusTable == false">
-      <Pagination :list="metrologyHistoryList" @displayNewList="displayNewList" />
+        <button class="btn-pagination" v-if="currentPage !== 0" @click="init()">Inicio</button>
+        <button class="btn-pagination" v-if="currentPage !== 0" @click="backPage()">Voltar</button>
+        <button class="btn-pagination" v-if="metrologyHistoryList.length !== 0" @click="nextPage()">Próximo</button>
     </div>
   </fieldset>
 </template>
@@ -143,21 +145,38 @@ export default {
       dateOpened: "",
       dateFinished: "",
 
-      listPaginated: []
+      listPaginated: [],
+      currentPage: 0
     };
   },
   created: async function () {
     this.$store.commit("$SETISLOADING");
-    await this.listMetrologyHistory();
 
     //Lista solictações
     await this.listMetrologySolicitations();
     await userId.DataUser().then((res) => {
       this.user_id = res.data.user.id;
     });
+      await this.listMetrologyHistory();
     this.$store.commit("$SETISLOADING");
   },
   methods: {
+
+    async init () {
+      this.currentPage = 0
+      this.listMetrologyHistory()
+    },
+
+    async backPage() {
+      this.currentPage = this.currentPage - 10
+      await this.listMetrologyHistory()
+    },
+
+    async nextPage() {
+      this.currentPage = this.currentPage + 10
+      this.listMetrologyHistory()
+    },
+
     displayNewList(e) {
       this.listPaginated = e
     },
@@ -191,7 +210,7 @@ export default {
       }
     },
     listMetrologyHistory: async function () {
-      await http.ListMetrologyHistory().then((res) => {
+      await http.ListMetrologyHistory(this.currentPage, 10).then((res) => {
         this.metrologyHistoryList = res.data.list;
       });
     },
@@ -349,6 +368,13 @@ table td {
 
 .btns {
   display: none;
+}
+
+.btn-pagination {
+  border: none;
+  cursor: pointer;
+  background-color: var(--card_green);
+  padding: 0.3rem;
 }
 
 @media (max-width: 1080px) {
