@@ -24,21 +24,21 @@ import Cookie from 'js-cookie'
 
 // SERVER ->
 
-// const http = axios.create({
-//   baseURL: "http://185.209.179.253:8200",
-//   headers: {
-//     "Accept": "application/json",
-//     "Content": "application/json"
-//   }
-// })
-
-const http = axios.create({
-  baseURL: "http://localhost:8000",
-  headers: {
-    "Accept": "application/json",
-    "Content": "application/json"
+ const http = axios.create({
+   baseURL: "http://185.209.179.253:8200",
+   headers: {
+     "Accept": "application/json",
+     "Content": "application/json"
   }
-})
+ })
+
+//const http = axios.create({
+ // baseURL: "http://localhost:8000",
+  //headers: {
+    //"Accept": "application/json",
+    //"Content": "application/json"
+ // }
+//})
 
 http.interceptors.request.use(function (config) {
   let token = Cookie.get("token");
