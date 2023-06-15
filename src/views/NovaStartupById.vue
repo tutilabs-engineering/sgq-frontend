@@ -294,8 +294,8 @@ export default {
         PIQ: this.data_startup.piq,
         level: this.data_startup.level,
       };
-     await http.createPIQ(piq).catch((error)=>{
-     })
+    //  await http.createPIQ(piq).catch((error)=>{
+    //  })
     },
 
     formatDate(date) {
@@ -448,7 +448,7 @@ export default {
 
 
       await http.fillReportStartup(this.id_startup, form).then(async (res)=>{
-        await this.createPiq(startup,data)
+        // await this.createPiq(startup,data)
       })
 
       this.$store.commit("$SETISLOADING");
