@@ -33,7 +33,7 @@
                 :startup="item" :startup_id="item.id" />
 
              
-                  <a className="btn_visualizar_o" target="_blank" :href="`http://185.209.179.253:8800/?startup=${item.id}`">
+                  <a className="btn_visualizar_o" target="_blank" :href="`http://185.209.179.253:7550/?startup=${item.id}`">
                     PIQ
                   </a>
                 
