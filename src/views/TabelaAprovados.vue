@@ -24,39 +24,47 @@
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
-              <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
+              <button
+                className="btn_visualizar"
+                @click="OpenReportStartup(item.id)"
+              >
                 <i class="fa fa-eye"></i>
                 Visualizar
               </button>
-        
-              <ModalNovaOp :modalNovaOp="modalNovaOp" :nameRouter="nameRouter" @open-modal-novaOp="openModalNovaOp"
-                :startup="item" :startup_id="item.id" />
 
-             
-                  <a className="btn_visualizar_o" target="_blank" :href="`http://185.209.179.253:7550/?startup=${item.id}`">
-                    PIQ
-                  </a>
-                
+              <ModalNovaOp
+                :modalNovaOp="modalNovaOp"
+                :nameRouter="nameRouter"
+                @open-modal-novaOp="openModalNovaOp"
+                :startup="item"
+                :startup_id="item.id"
+              />
 
+              <a
+                className="btn_visualizar_o"
+                target="_blank"
+                :href="`http://185.209.179.253:7550/?startup=${item.id}`"
+              >
+                PIQ
+              </a>
             </div>
-
           </td>
         </tr>
       </tbody>
     </table>
 
-    <div style="display: flex; gap: 3px;">
-      <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
+    <div style="display: flex; gap: 3px">
+      <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">
+        Inicio
+      </button>
 
-      <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
+      <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">
+        Voltar
+      </button>
 
       <button @click="next()" class="btn-pagination">Proximo</button>
     </div>
-
-
-
   </fieldset>
-
 </template>
 
 <script>
@@ -68,11 +76,10 @@ export default {
     ModalNovaOp,
   },
   emits: ["modalNovaOp"],
-  setup() { },
+  setup() {},
   name: "Table",
 
   methods: {
-
     OpenReportStartup: function (id_startup) {
       this.$router.push({
         path: "/create-startup-by-id",
@@ -94,35 +101,35 @@ export default {
 
     async filterListStartups() {
       await http.filterStartupsByStatus(this.currentPage, 10, 1).then((res) => {
-        this.listAproveds = res.data.listAllStartups
-      })
+        this.listAproveds = res.data.listAllStartups;
+      });
     },
 
     async init() {
       this.$store.commit("$SETISLOADING");
-      this.currentPage = 0
-      await this.filterListStartups()
+      this.currentPage = 0;
+      await this.filterListStartups();
       this.$store.commit("$SETISLOADING");
     },
 
     async back() {
       this.$store.commit("$SETISLOADING");
-      this.currentPage = this.currentPage - 10
-      await this.filterListStartups()
+      this.currentPage = this.currentPage - 10;
+      await this.filterListStartups();
       this.$store.commit("$SETISLOADING");
     },
 
     async next() {
       this.$store.commit("$SETISLOADING");
-      this.currentPage = this.currentPage + 10
-      await this.filterListStartups()
+      this.currentPage = this.currentPage + 10;
+      await this.filterListStartups();
       this.$store.commit("$SETISLOADING");
-    }
+    },
   },
 
   created: async function () {
     this.$store.commit("$SETISLOADING");
-    await this.filterListStartups()
+    await this.filterListStartups();
     this.$store.commit("$SETISLOADING");
   },
 
@@ -135,7 +142,6 @@ export default {
       nameRouter: "TabelaAprovados",
       currentPage: 0,
 
-
       posts: [""],
       page: 1,
       perPage: 10,
@@ -146,9 +152,7 @@ export default {
 </script>
 
 <style scoped>
-
-
-.lastTd{
+.lastTd {
   margin-bottom: 2px;
 }
 .pagination-component {
@@ -199,7 +203,6 @@ export default {
   font-size: 0.85rem;
   color: var(--black_text);
 }
-
 
 .tableContent h2 {
   margin-left: 10px;
@@ -253,7 +256,6 @@ table th {
 
 table td {
   text-align: center;
-
 }
 
 .lineWarning {
@@ -315,7 +317,6 @@ table td {
   justify-content: center;
   gap: 5px;
   margin-bottom: 10px;
-
 }
 
 .btn_visualizar {
@@ -386,7 +387,6 @@ table td {
 }
 
 @media (max-width: 1000px) {
-
   .opcoes {
     display: flex;
     justify-content: center;
@@ -426,7 +426,6 @@ table td {
     display: block;
     font-weight: bold;
   }
-
 
   legend {
     text-align: center;
