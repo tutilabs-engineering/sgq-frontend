@@ -3,12 +3,28 @@
     <div class="title-field">Startups</div>
 
     <div class="btns">
-      <button @click="statusTable = true" :class="{'btn-toggle': statusTable}">Startups Abertas</button>
-      <button @click="statusTable = false" :class="{ 'btn-toggle': !statusTable }"> Startups Fechadas</button>
+      <button
+        @click="statusTable = true"
+        :class="{ 'btn-toggle': statusTable }"
+      >
+        Startups Abertas
+      </button>
+      <button
+        @click="statusTable = false"
+        :class="{ 'btn-toggle': !statusTable }"
+      >
+        Startups Fechadas
+      </button>
+    </div>
+
+    <div class="search-field">
+      <input type="text" placeholder="Buscar máquina" v-model="searchMachine" />
+      <button @click="filterMachine">
+        <i class="fas fa-search"></i> Buscar
+      </button>
     </div>
 
     <div v-show="statusTable">
-
       <table>
         <thead>
           <th>Cód. Startup</th>
@@ -21,35 +37,55 @@
           <th>Data</th>
           <th>Criador</th>
           <th>Ações</th>
-
         </thead>
         <tr v-for="startup in listStartupsOpen" :key="startup">
           <td data-title="Cód. Startup">{{ startup.code_startup }}</td>
           <td data-title="Cod. OP">{{ startup.op.code_op }}</td>
           <td data-title="Cod. Produto">{{ startup.op.code_product }}</td>
           <td data-title="Máquina">{{ startup.op.machine }}</td>
-          <td data-title="Metrologia">{{ verifyMetrology(startup.metrology) }}</td>
+          <td data-title="Metrologia">
+            {{ verifyMetrology(startup.metrology) }}
+          </td>
           <td data-title="Status">{{ verifyOpenStartup(startup) }}</td>
           <td data-title="Preench.">{{ verifyFillStartup(startup) }}</td>
-          <td data-title="Data">{{ formatDate(startup.day, startup.start_time) }}</td>
-          <td data-title="Criador">{{ startup.userThatCreate.name.split(" ")[0] + ' ' + startup.userThatCreate.name.split(" ")[1] }}</td>
-          <td data-title="Ações">
-            <button class="btn-actions" @click="OpenReportStartup(startup.id)">Consultar</button>
+          <td data-title="Data">
+            {{ formatDate(startup.day, startup.start_time) }}
           </td>
-          
-
+          <td data-title="Criador">
+            {{
+              startup.userThatCreate.name.split(" ")[0] +
+              " " +
+              startup.userThatCreate.name.split(" ")[1]
+            }}
+          </td>
+          <td data-title="Ações">
+            <button class="btn-actions" @click="OpenReportStartup(startup.id)">
+              Consultar
+            </button>
+          </td>
         </tr>
       </table>
 
-      <button @click="init()" class="btn-pagination" v-if="currentPageOpen !== 0">Inicio</button>
+      <button
+        @click="init()"
+        class="btn-pagination"
+        v-if="currentPageOpen !== 0"
+      >
+        Inicio
+      </button>
 
-      <button @click="back()" class="btn-pagination" v-if="currentPageOpen !== 0">Voltar</button>
+      <button
+        @click="back()"
+        class="btn-pagination"
+        v-if="currentPageOpen !== 0"
+      >
+        Voltar
+      </button>
 
       <button @click="next()" class="btn-pagination">Proximo</button>
     </div>
 
     <div v-show="!statusTable">
-
       <table>
         <thead>
           <th>Cód. Startup</th>
@@ -62,35 +98,54 @@
           <th>Data</th>
           <th>Criador</th>
           <th>Ações</th>
-
         </thead>
-        <tr v-for="startup in  listStartupsClosed" :key="startup">
+        <tr v-for="startup in listStartupsClosed" :key="startup">
           <td data-title="Cód. Startup">{{ startup.code_startup }}</td>
           <td data-title="Cod. OP">{{ startup.op.code_op }}</td>
           <td data-title="Cod. Produto">{{ startup.op.code_product }}</td>
           <td data-title="Máquina">{{ startup.op.machine }}</td>
-          <td data-title="Metrologia">{{ verifyMetrology(startup.metrology) }}</td>
+          <td data-title="Metrologia">
+            {{ verifyMetrology(startup.metrology) }}
+          </td>
           <td data-title="Status">{{ verifyOpenStartup(startup) }}</td>
           <td data-title="Preench.">{{ verifyFillStartup(startup) }}</td>
-          <td data-title="Data">{{ formatDate(startup.day, startup.start_time) }}</td>
-          <td data-title="Criador">{{ startup.userThatCreate.name.split(" ")[0] + ' ' + startup.userThatCreate.name.split(" ")[1] }}</td>
-          <td data-title="Ações">
-            <button class="btn-actions" @click="OpenReportStartup(startup.id)">Consultar</button>
+          <td data-title="Data">
+            {{ formatDate(startup.day, startup.start_time) }}
           </td>
-
+          <td data-title="Criador">
+            {{
+              startup.userThatCreate.name.split(" ")[0] +
+              " " +
+              startup.userThatCreate.name.split(" ")[1]
+            }}
+          </td>
+          <td data-title="Ações">
+            <button class="btn-actions" @click="OpenReportStartup(startup.id)">
+              Consultar
+            </button>
+          </td>
         </tr>
       </table>
 
-      <button @click="init()" class="btn-pagination" v-if="currentPageClosed !== 0">Inicio</button>
+      <button
+        @click="init()"
+        class="btn-pagination"
+        v-if="currentPageClosed !== 0"
+      >
+        Inicio
+      </button>
 
-      <button @click="back()" class="btn-pagination" v-if="currentPageClosed !== 0">Voltar</button>
+      <button
+        @click="back()"
+        class="btn-pagination"
+        v-if="currentPageClosed !== 0"
+      >
+        Voltar
+      </button>
 
       <button @click="next()" class="btn-pagination">Proximo</button>
     </div>
-
   </fieldset>
-
-
 </template>
 
 <script>
@@ -99,7 +154,7 @@ import dayjs from "dayjs";
 import Pagination from "../Pagination/Pagination.vue";
 
 export default {
-  setup() { },
+  setup() {},
   name: "Table",
   data() {
     return {
@@ -107,27 +162,26 @@ export default {
       listStartupsOpen: [],
       listStartupsClosed: [],
       currentPageOpen: 0,
-      currentPageClosed: 0
+      currentPageClosed: 0,
+      searchMachine: "",
     };
   },
 
   async created() {
-
     this.$store.commit("$SETISLOADING");
-    await this.startupOpenList()
-    await this.startupClosedList()
+    await this.startupOpenList();
+    await this.startupClosedList();
     this.$store.commit("$SETISLOADING");
   },
   methods: {
-
     async init() {
       this.$store.commit("$SETISLOADING");
       if (this.statusTable) {
-        this.currentPageOpen = 0
-        await this.startupOpenList()
+        this.currentPageOpen = 0;
+        await this.startupOpenList();
       } else {
-        this.currentPageClosed = 0
-        await this.startupClosedList()
+        this.currentPageClosed = 0;
+        await this.startupClosedList();
       }
       this.$store.commit("$SETISLOADING");
     },
@@ -135,50 +189,59 @@ export default {
     async back() {
       this.$store.commit("$SETISLOADING");
       if (this.statusTable) {
-        this.currentPageOpen = this.currentPageOpen - 10
-        await this.startupOpenList()
+        this.currentPageOpen = this.currentPageOpen - 10;
+        await this.startupOpenList();
       } else {
-        this.currentPageClosed = this.currentPageClosed - 10
-        await this.startupClosedList()
+        this.currentPageClosed = this.currentPageClosed - 10;
+        await this.startupClosedList();
       }
       this.$store.commit("$SETISLOADING");
-
     },
 
     async next() {
       this.$store.commit("$SETISLOADING");
       if (this.statusTable) {
-        this.currentPageOpen = this.currentPageOpen + 10
-        await this.startupOpenList()
+        this.currentPageOpen = this.currentPageOpen + 10;
+        await this.startupOpenList();
       } else {
-        this.currentPageClosed = this.currentPageClosed + 10
-        await this.startupClosedList()
+        this.currentPageClosed = this.currentPageClosed + 10;
+        await this.startupClosedList();
       }
       this.$store.commit("$SETISLOADING");
-
     },
 
+    async filterMachine() {
+      const machine = this.searchMachine;
+      await http
+        .listAllStartups(this.currentPageOpen, 10, undefined, 0, machine)
+        .then((res) => {
+          this.listStartupsOpen = res.data.list;
+        });
+    },
 
     async startupOpenList() {
-      await http.listAllStartups(this.currentPageOpen, 10, undefined, 0).then((res) => {
-        this.listStartupsOpen = res.data.list
-      })
+      const machine = "";
+      await http
+        .listAllStartups(this.currentPageOpen, 10, undefined, 0, machine)
+        .then((res) => {
+          this.listStartupsOpen = res.data.list;
+        });
     },
 
     async startupClosedList() {
-      await http.listAllStartupsClosed(this.currentPageClosed, 10, undefined, 1).then((res) => {
-        this.listStartupsClosed = res.data.list
-      })
+      await http
+        .listAllStartupsClosed(this.currentPageClosed, 10, undefined, 1)
+        .then((res) => {
+          this.listStartupsClosed = res.data.list;
+        });
     },
 
     verifyOpenStartup(startup) {
       if (startup.open && startup.filled) {
         return "Rodando";
-      }
-      else if (!startup.open && startup.filled) {
+      } else if (!startup.open && startup.filled) {
         return "Fechado";
-      }
-      else {
+      } else {
         return "Aguardando";
       }
     },
@@ -186,12 +249,12 @@ export default {
       // Se startup não estiver fechada e não foi preenchida nenhuma vez
       if (startup.filled == false && startup.report_startup_fill.length <= 0) {
         return "Em Aberto";
-      }
-      else if (startup.filled == false &&
-        startup.report_startup_fill.length > 0) {
+      } else if (
+        startup.filled == false &&
+        startup.report_startup_fill.length > 0
+      ) {
         return "Em Andamento";
-      }
-      else if (startup.filled == true) {
+      } else if (startup.filled == true) {
         return "Preenchido";
       }
     },
@@ -200,12 +263,10 @@ export default {
         if (metrology.length > 0) {
           if (metrology[0].metrology == false) {
             return "Met. Preenchida";
-          }
-          else if (metrology[0].metrology == true) {
+          } else if (metrology[0].metrology == true) {
             return "Met. Não Preenchida";
           }
-        }
-        else {
+        } else {
           return "Não existe Metrologia";
         }
       }
@@ -219,12 +280,14 @@ export default {
       });
     },
 
-    formatDate(day, hour) { 
-      let date = `${dayjs(day).format('DD/MM/YYYY')} ${dayjs(hour).format('HH:mm')}`
-      return date
-    }
+    formatDate(day, hour) {
+      let date = `${dayjs(day).format("DD/MM/YYYY")} ${dayjs(hour).format(
+        "HH:mm"
+      )}`;
+      return date;
+    },
   },
-  components: { Pagination }
+  components: { Pagination },
 };
 </script>
 
@@ -255,7 +318,6 @@ export default {
   justify-content: flex-start;
   margin: 0 0 2rem 0;
   width: 100%;
-  
 }
 
 .btns button {
@@ -269,13 +331,11 @@ export default {
 button {
   background-color: var(--bg_white);
   color: var(--black_text);
-  
 }
 
 table {
   width: 100%;
 }
-
 
 table td {
   text-align: center;
@@ -314,13 +374,43 @@ table tr button {
   background-color: var(--bg_green);
 }
 
+.search-field {
+  background-color: transparent;
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.search-field input {
+  width: 70%;
+  height: 40px;
+  border: none;
+  border: 1px solid rgba(37, 36, 36, 0.281);
+  border-radius: 5px;
+  outline: none;
+  padding: 10px;
+}
+
+.search-field button {
+  max-width: 20%;
+  min-width: 30%;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--card_green);
+  color: #fff;
+  font-weight: 400;
+  cursor: pointer;
+}
+
 @media (max-width: 960px) {
   .opcoes {
     display: flex;
     justify-content: center;
     flex-direction: row;
   }
-  
+
   .btns {
     display: flex;
     justify-content: flex-start;

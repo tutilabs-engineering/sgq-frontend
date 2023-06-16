@@ -29,6 +29,7 @@ import Cookie from 'js-cookie'
    headers: {
      "Accept": "application/json",
      "Content": "application/json"
+
   }
  })
 
@@ -39,6 +40,14 @@ import Cookie from 'js-cookie'
     //"Content": "application/json"
  // }
 //})
+
+// const http = axios.create({
+//   baseURL: "http://localhost:8000",
+//   headers: {
+//     "Accept": "application/json",
+//     "Content": "application/json"
+//   }
+// })
 
 http.interceptors.request.use(function (config) {
   let token = Cookie.get("token");
