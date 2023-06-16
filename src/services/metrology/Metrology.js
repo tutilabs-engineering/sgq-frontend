@@ -1,8 +1,12 @@
 import { http } from "../config";
 
 export default {
-    ListMetrologyHistory: async () => {
-        return await http.get("metrology/history")
+    ListMetrologyHistory: async (skip, limit) => {
+        return await http.get("metrology/history",{
+            headers: {
+                skip, limit
+            }
+        })
     },
 
     ListMetrologySolicitations: async () => {
