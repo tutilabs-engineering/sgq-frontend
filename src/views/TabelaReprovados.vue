@@ -24,7 +24,10 @@
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div class="opcoes">
-              <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
+              <button
+                className="btn_visualizar"
+                @click="OpenReportStartup(item.id)"
+              >
                 <i class="fa fa-eye"> </i>
                 Visualizar
               </button>
@@ -34,23 +37,24 @@
       </tbody>
     </table>
 
-    <div style="display: flex; gap: 3px;">
-      <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">Inicio</button>
+    <div style="display: flex; gap: 3px">
+      <button @click="init()" class="btn-pagination" v-if="currentPage !== 0">
+        Inicio
+      </button>
 
-      <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">Voltar</button>
+      <button @click="back()" class="btn-pagination" v-if="currentPage !== 0">
+        Voltar
+      </button>
 
       <button @click="next()" class="btn-pagination">Proximo</button>
     </div>
-
-
   </fieldset>
-
 </template>
 
 <script>
 import http from "../services/startup/";
 export default {
-  setup() { },
+  setup() {},
   name: "Table",
   props: ["titleTable", "iconeAdicionar", "iconeFile", "iconeEdit"],
   data() {
@@ -118,36 +122,36 @@ export default {
 
     async filterListStartups() {
       await http.filterStartupsByStatus(this.currentPage, 10, 2).then((res) => {
-        this.listDisapproved = res.data.listAllStartups
-      })
+        console.log(res);
+        this.listDisapproved = res.data.listAllStartups;
+      });
     },
-
 
     async init() {
       this.$store.commit("$SETISLOADING");
-      this.currentPage = 0
-      await this.filterListStartups()
+      this.currentPage = 0;
+      await this.filterListStartups();
       this.$store.commit("$SETISLOADING");
     },
 
     async back() {
       this.$store.commit("$SETISLOADING");
-      this.currentPage = this.currentPage - 10
-      await this.filterListStartups()
+      this.currentPage = this.currentPage - 10;
+      await this.filterListStartups();
       this.$store.commit("$SETISLOADING");
     },
 
     async next() {
       this.$store.commit("$SETISLOADING");
-      this.currentPage = this.currentPage + 10
-      await this.filterListStartups()
+      this.currentPage = this.currentPage + 10;
+      await this.filterListStartups();
       this.$store.commit("$SETISLOADING");
-    }
+    },
   },
 
   created: async function () {
     this.$store.commit("$SETISLOADING");
-    await this.filterListStartups()
+    await this.filterListStartups();
     this.$store.commit("$SETISLOADING");
   },
 };
@@ -258,7 +262,6 @@ table th {
 .tableContent tr {
   height: 100px;
 }
-
 
 .tableContent td {
   text-align: center;
