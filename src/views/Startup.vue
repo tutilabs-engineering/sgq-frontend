@@ -7,38 +7,52 @@
         :qtde="startupsManagement.approved"
         img="fas fa-check-square"
         colore="#10b981"
-        link="/startups-aprovadas" textContentPopper="Clique para ver mais detalhes"
+        link="/startups-aprovadas"
+        textContentPopper="Clique para ver mais detalhes"
       />
       <Card
         status="CONDICIONAL"
         :qtde="startupsManagement.conditional"
         img="fas fa-tasks"
         colore="#fb923c"
-        link="/startups-andamentos" textContentPopper="Clique para ver mais detalhes"
+        link="/startups-andamentos"
+        textContentPopper="Clique para ver mais detalhes"
       />
       <Card
         status="REPROVADOS"
         :qtde="startupsManagement.disapproved"
         img="fas fa-times"
         colore="#ef4444"
-        link="/startups-reprovadas" textContentPopper="Clique para ver mais detalhes"
+        link="/startups-reprovadas"
+        textContentPopper="Clique para ver mais detalhes"
       />
       <Card
         status="FECHADOS"
         :qtde="startupsManagement.closed"
         img="fas fa-door-closed"
         colore="#0ea5e9"
-        link="#" textContentPopper=""
+        link="#"
+        textContentPopper=""
       />
     </div>
 
     <div class="table-injection">
-      <Table @returnItemAbertos="ReturnItemAbertos" @returnItemFechados="ReturnItemFechados"/>
+      <Table
+        @returnItemAbertos="ReturnItemAbertos"
+        @returnItemFechados="ReturnItemFechados"
+      />
     </div>
 
-    <div class="info" v-if="statusItemsAbertos === true && statusItemsFechados === true">
-      <h3 style="text-align:center">Não há startups para serem listadas aqui</h3>
-      <button @click="() => this.$router.push({ name: 'Status' })">Criar uma Startup</button>
+    <div
+      class="info"
+      v-if="statusItemsAbertos === true && statusItemsFechados === true"
+    >
+      <h3 style="text-align: center">
+        Não há startups para serem listadas aqui
+      </h3>
+      <button @click="() => this.$router.push({ name: 'Status' })">
+        Criar uma Startup
+      </button>
     </div>
   </div>
 </template>
@@ -48,7 +62,7 @@
 import Table from "../components/Table/Table.vue";
 import Card from "../components/Card/Card.vue";
 import { defineComponent } from "vue";
-import http from "../services/startup/"
+import http from "../services/startup/";
 
 export default defineComponent({
   name: "Startup",
@@ -62,42 +76,40 @@ export default defineComponent({
         conditional: "",
         disapproved: "",
         closed: "",
-      }
+      },
     };
   },
 
   methods: {
-    ReturnItemAbertos: async function (itemsAbertos){
-      if(itemsAbertos == 0){
-        this.statusItemsAbertos = true
-      }else {
-        this.statusItemsAbertos = false
+    ReturnItemAbertos: async function (itemsAbertos) {
+      if (itemsAbertos == 0) {
+        this.statusItemsAbertos = true;
+      } else {
+        this.statusItemsAbertos = false;
       }
     },
 
-    ReturnItemFechados: async function (itemsFechados){
-      if(itemsFechados == 0){
-        this.statusItemsFechados = true
-      }else {
-        this.statusItemsFechados = false
+    ReturnItemFechados: async function (itemsFechados) {
+      if (itemsFechados == 0) {
+        this.statusItemsFechados = true;
+      } else {
+        this.statusItemsFechados = false;
       }
     },
   },
-  created: async function() {
-    const listCount = await http.listCountOfStartupsByStatus()
-    console.log(listCount.data);
+  created: async function () {
+    const listCount = await http.listCountOfStartupsByStatus();
+    // console.log(listCount.data);
 
+    this.startupsManagement.approved = listCount.data.all_approved;
 
-    this.startupsManagement.approved = listCount.data.all_approved
+    this.startupsManagement.disapproved = listCount.data.all_reproved;
 
-    this.startupsManagement.disapproved = listCount.data.all_reproved
+    this.startupsManagement.conditional =
+      listCount.data.all_approved_with_condition;
 
-    this.startupsManagement.conditional = listCount.data.all_approved_with_condition
-
-    this.startupsManagement.closed = listCount.data.all_closed
-
+    this.startupsManagement.closed = listCount.data.all_closed;
   },
-
 });
 </script>
 
@@ -134,7 +146,7 @@ export default defineComponent({
 }
 
 .cards {
-  margin-top:  10px; 
+  margin-top: 10px;
   width: 100%;
   height: auto;
   display: flex;
@@ -144,11 +156,10 @@ export default defineComponent({
   z-index: 0;
 }
 
-@media(max-width:1100px){
+@media (max-width: 1100px) {
   .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(16rem,1fr));
-
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
   }
 }
 </style>

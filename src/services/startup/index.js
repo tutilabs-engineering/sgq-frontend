@@ -24,13 +24,14 @@ export default {
     })
   },
 
-  listAllStartupsClosed: async (skip = 0, take = 10, fk_op = undefined, status = 1) => {
+  listAllStartupsClosed: async (skip = 0, take = 10, fk_op = undefined, status = 1, machine) => {
     return await http.get(`/reportStartup`, {
       params: {
         fk_op,
         skip,
         take,
-        status
+        status,
+        machine
       }
 
     })
