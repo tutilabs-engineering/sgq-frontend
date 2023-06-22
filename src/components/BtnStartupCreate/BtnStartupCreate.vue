@@ -157,6 +157,15 @@ export default {
                       "A ultima Startup com está maquina precisa ser preenchida.",
                     background: "#e3e745",
                   });
+                } else if (
+                  error.response.data.message ===
+                  "Already exists a startup closed and approved with this code_op"
+                ) {
+                  Toast.fire({
+                    icon: "warning",
+                    title: "Existem Startup fechada ou aprovada com esta OP.",
+                    background: "#e3e745",
+                  });
                 } else {
                   Toast.fire({
                     icon: "warning",
