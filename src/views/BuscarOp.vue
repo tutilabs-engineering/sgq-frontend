@@ -226,4 +226,10 @@ h2 {
   color: #ffff;
   background-color: var(--bg_green);
 }
+
+@media (max-width: 768px) {
+  .searchOp {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 </style>
