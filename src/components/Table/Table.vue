@@ -229,8 +229,15 @@ export default {
     },
 
     async startupClosedList() {
+      const machine = "";
       await http
-        .listAllStartupsClosed(this.currentPageClosed, 10, undefined, 1)
+        .listAllStartupsClosed(
+          this.currentPageClosed,
+          10,
+          undefined,
+          1,
+          machine
+        )
         .then((res) => {
           this.listStartupsClosed = res.data.list;
         });
