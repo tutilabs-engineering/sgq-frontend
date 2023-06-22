@@ -2,14 +2,26 @@
   <div>
     <div class="content-search-op">
       <h2>Buscar Startups vinculadas à OP</h2>
-      <input
-        type="number"
-        name=""
-        id=""
-        v-model="numberOp"
-        placeholder="00000"
-      />
-      <button class="btn" @click="searchOP">Buscar</button>
+      <div class="searchOp">
+        <input
+          type="number"
+          name=""
+          id=""
+          v-model="numberOp"
+          placeholder="00000"
+        />
+        <div class="radioInput">
+          <div>
+            <input type="radio" :value="0" name="statusOp" v-model="statusOp" />
+            <label for="">OP Aberta</label>
+          </div>
+          <div>
+            <input type="radio" :value="1" name="statusOp" v-model="statusOp" />
+            <label for="">OP Fechada</label>
+          </div>
+        </div>
+        <button class="btn" @click="searchOP">Buscar</button>
+      </div>
 
       <fieldset>
         <legend class="legenda-warning">Ordem de produção</legend>
@@ -22,6 +34,9 @@
             <th>Data</th>
             <th>Ações</th>
           </tr>
+          <!-- {{
+            startupsInOp
+          }} -->
           <tr v-for="startup in startupsInOp" :key="startup">
             <td>{{ startup.code_startup }}</td>
             <td>{{ startup.op.code_product }}</td>
@@ -63,21 +78,27 @@ export default {
   data() {
     return {
       numberOp: "",
-      listStartups: [],
+      listStartupsAbertas: [],
+      listStartupsFechadas: [],
       startupsInOp: [],
+      statusOp: "",
     };
   },
 
   methods: {
     async searchOP() {
+      console.log(this.statusOp);
       this.$store.commit("$SETISLOADING");
       this.listStartups = [];
       this.startupsInOp = [];
-      await http.listAllStartups(0, 10, Number(this.numberOp)).then((res) => {
-        console.log(res);
-        this.listStartups = res.data.list;
-        this.showAllOps();
-      });
+      const machine = "";
+      await http
+        .listAllStartups(0, 10, Number(this.numberOp), this.statusOp, machine)
+        .then((res) => {
+          console.log(res.data.list);
+          this.listStartupsAbertas = res.data.list;
+          this.showAllOps();
+        });
     },
     async RedirectPIQ() {
       this.r;
@@ -88,7 +109,7 @@ export default {
     },
 
     showAllOps() {
-      this.listStartups.map((item) => {
+      this.listStartupsAbertas.map((item) => {
         if (item.op.code_op === this.numberOp) {
           this.startupsInOp.push(item);
           // console.log(this.startupsInOp);
@@ -138,6 +159,24 @@ legend {
   font-size: 15px;
   font-weight: 600;
   color: var(--black_text);
+}
+
+.searchOp {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.radioInput {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.radioInput div {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 table td {
