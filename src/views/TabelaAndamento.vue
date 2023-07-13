@@ -24,30 +24,53 @@
           <td data-title="Técnico">{{ item.userThatCreate.name }}</td>
           <td class="lastTd" data-title="Opcoes">
             <div className="opcoes">
-
-              <button className="btn_visualizar" @click="OpenReportStartup(item.id)">
+              <button
+                className="btn_visualizar"
+                @click="OpenReportStartup(item.id)"
+              >
                 <i class="fa fa-eye"></i>
                 Visualizar
               </button>
-              <ModalNovaOp :modalNovaOp="modalNovaOp" :nameRouter="nameRouter" @open-modal-novaOp="openModalNovaOp"
-                :startup="item" :startup_id="item.id" />
+              <ModalNovaOp
+                :modalNovaOp="modalNovaOp"
+                :nameRouter="nameRouter"
+                @open-modal-novaOp="openModalNovaOp"
+                :startup="item"
+                :startup_id="item.id"
+              />
+              <a
+                className="btn_visualizar_o"
+                target="_blank"
+                :href="`http://185.209.179.253:7550/?startup=${item.id}`"
+              >
+                PIQ
+              </a>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <div style="display: flex; gap: 3px;">
-      <button @click="init()" class="btn-pagination" v-if="currentPageOpen !== 0">Inicio</button>
+    <div style="display: flex; gap: 3px">
+      <button
+        @click="init()"
+        class="btn-pagination"
+        v-if="currentPageOpen !== 0"
+      >
+        Inicio
+      </button>
 
-      <button @click="back()" class="btn-pagination" v-if="currentPageOpen !== 0">Voltar</button>
+      <button
+        @click="back()"
+        class="btn-pagination"
+        v-if="currentPageOpen !== 0"
+      >
+        Voltar
+      </button>
 
       <button @click="next()" class="btn-pagination">Proximo</button>
     </div>
-
-
   </fieldset>
-
 </template>
 
 <script>
@@ -102,42 +125,44 @@ export default {
     },
 
     async filterListStartups() {
-      await http.filterStartupsByStatus(this.currentPageOpen, 10, 3).then((res) => {
-        this.listConditional = res.data.listAllStartups
-      })
+      await http
+        .filterStartupsByStatus(this.currentPageOpen, 10, 3)
+        .then((res) => {
+          this.listConditional = res.data.listAllStartups;
+        });
     },
 
     async init() {
       this.$store.commit("$SETISLOADING");
-      this.currentPageOpen = 0
-      await this.filterListStartups()
+      this.currentPageOpen = 0;
+      await this.filterListStartups();
       this.$store.commit("$SETISLOADING");
     },
 
     async back() {
       this.$store.commit("$SETISLOADING");
-      this.currentPageOpen = this.currentPageOpen - 10
-      await this.filterListStartups()
+      this.currentPageOpen = this.currentPageOpen - 10;
+      await this.filterListStartups();
       this.$store.commit("$SETISLOADING");
     },
 
     async next() {
       this.$store.commit("$SETISLOADING");
-      this.currentPageOpen = this.currentPageOpen + 10
-      await this.filterListStartups()
+      this.currentPageOpen = this.currentPageOpen + 10;
+      await this.filterListStartups();
       this.$store.commit("$SETISLOADING");
-    }
+    },
   },
   created: async function () {
     this.$store.commit("$SETISLOADING");
-    await this.filterListStartups()
+    await this.filterListStartups();
     this.$store.commit("$SETISLOADING");
   },
 
   watch: {
     posts() {
       this.setPages();
-    }
+    },
   },
   computed: {
     displayedPosts() {
@@ -199,6 +224,21 @@ export default {
 .legenda-warning span {
   font-size: 15px;
   font-weight: 400;
+}
+
+.btn_visualizar_o {
+  border: 2px solid var(--card_green);
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  color: var(--black_text);
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
 }
 
 .btn-back {
@@ -275,7 +315,6 @@ table th {
 .tableContent tr {
   height: 100px;
 }
-
 
 .tableContent td {
   text-align: center;

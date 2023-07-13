@@ -200,7 +200,7 @@ export default {
         startTime: "",
         nqa: 0,
         piq: "",
-        level: ""
+        level: "",
       },
 
       techniqueInfo: {
@@ -265,7 +265,7 @@ export default {
     });
   },
   methods: {
-    async createPiq(startup,data) {
+    async createPiq(startup, data) {
       const piq = {
         id: startup.id,
         number_startup: startup.code_startup,
@@ -294,8 +294,8 @@ export default {
         PIQ: this.data_startup.piq,
         level: this.data_startup.level,
       };
-    //  await http.createPIQ(piq).catch((error)=>{
-    //  })
+      //  await http.createPIQ(piq).catch((error)=>{
+      //  })
     },
 
     formatDate(date) {
@@ -396,7 +396,7 @@ export default {
         JSON.stringify(data.specific_questions)
       );
 
-      await http.fillReportStartup(this.id_startup, form)
+      await http.fillReportStartup(this.id_startup, form);
 
       this.$store.commit("$SETISLOADING");
 
@@ -422,14 +422,14 @@ export default {
 
       const form = new FormData();
 
-      data.default_question.map(item => {
+      data.default_question.map((item) => {
         if (item.file != null) {
           form.append(`${item.fk_default_question}`, item.file);
           item.file = "";
         }
       });
 
-      data.specific_questions.map(item => {
+      data.specific_questions.map((item) => {
         if (item.file != null) {
           form.append(`${item.fk_specific_question}`, item.file);
           item.file = "";
@@ -445,11 +445,9 @@ export default {
         JSON.stringify(data.specific_questions)
       );
 
-
-
-      await http.fillReportStartup(this.id_startup, form).then(async (res)=>{
+      await http.fillReportStartup(this.id_startup, form).then(async (res) => {
         // await this.createPiq(startup,data)
-      })
+      });
 
       this.$store.commit("$SETISLOADING");
 
@@ -460,7 +458,7 @@ export default {
           imageUrl: "/img/allright.gif",
           imageWidth: 400,
           imageHeight: 200,
-          imageAlt: "Custom image"
+          imageAlt: "Custom image",
         })
         .then(async () => {
           this.$router.push({ name: "Startup" });
@@ -611,6 +609,10 @@ fieldset {
   font-weight: 600;
   background-color: var(--bg_white);
   color: var(--black_text);
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 legend {
