@@ -140,33 +140,33 @@
           disabled
         />
       </div>
-        <div class="input">
-          <label for="client">Plano de inspeção</label>
-          <input
-            type="text"
-            name="client"
-            id="client"
-            v-model="headerInput.piq"
-          />
-        </div>
-        <div class="input">
-          <label for="client">NQA</label>
-          <input
-            type="text"
-            name="client"
-            id="client"
-            v-model="headerInput.nqa"
-          />
-        </div>
-        <div class="input">
-          <label for="client">Nível</label>
-          <input
-            type="text"
-            name="client"
-            id="client"
-            v-model="headerInput.level"
-          />
-        </div>
+      <div class="input">
+        <label for="client">Plano de inspeção</label>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          v-model="headerInput.piq"
+        />
+      </div>
+      <div class="input">
+        <label for="client">NQA</label>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          v-model="headerInput.nqa"
+        />
+      </div>
+      <div class="input">
+        <label for="client">Nível</label>
+        <input
+          type="text"
+          name="client"
+          id="client"
+          v-model="headerInput.level"
+        />
+      </div>
     </fieldset>
   </div>
 </template>
@@ -250,7 +250,7 @@ export default {
             start_time: this.headerInfo.startTime,
             nqa: Number(this.headerInput.nqa),
             level: this.headerInput.level,
-            piq: this.headerInput.piq
+            piq: this.headerInput.piq,
           },
         });
       },
@@ -297,6 +297,7 @@ export default {
   display: flex;
   flex-direction: row;
   margin-bottom: 30px;
+  padding: 20px;
 }
 
 .search-field input {

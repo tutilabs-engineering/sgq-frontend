@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <UpdateImagem v-if="showUpdateImage" @salvar="salvar" /> -->
     <transition name="model">
       <form action="">
         <div class="modal_mask">
@@ -82,6 +83,12 @@
                     </div>
 
                     <div class="titleHeader">
+                      <!-- <button
+                        class="editar"
+                        @click.prevent="updateVariable(variable.id)"
+                      >
+                        Editar
+                      </button> -->
                       <button
                         class="delete"
                         @click.prevent="deleteVariable(variable.id)"
@@ -162,7 +169,10 @@
                   <span> <i class="fas fa-plus"></i> Enviar</span>
                 </button>
 
-                <div class="alertMax" v-show="list.max < list.min">
+                <div
+                  class="alertMax"
+                  v-show="parseInt(list.max) < parseInt(list.min)"
+                >
                   <p>OBS: O campo máximo tem que ser maior que o mínimo</p>
                 </div>
               </form>
@@ -177,13 +187,15 @@
 
 <script>
 import http from "../../services/productAnalysis/Variables";
+import UpdateImagem from "../UploadImage/UpdateImagem.vue";
 
 export default {
-  components: {},
+  components: { UpdateImagem },
   name: "Modal",
   emits: ["changeStatus"],
   data() {
     return {
+      showUpdateImage: false,
       variables: [{}],
       actionButton: "Insert",
       dynamicTitle: "Add Data",
@@ -218,6 +230,9 @@ export default {
   },
 
   methods: {
+    salvar() {
+      this.showUpdateImage = false;
+    },
     insertImageFile(e) {
       this.list.file = e.target.files[0];
       this.createImage(e.target.files[0]);
@@ -328,6 +343,10 @@ export default {
         });
       this.reloadList();
       this.$store.commit("$SETISLOADING");
+    },
+
+    updateVariable(id) {
+      this.showUpdateImage = true;
     },
 
     /* Delete Variable */
@@ -443,6 +462,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .titleHeaderImg {
@@ -782,12 +802,26 @@ export default {
   font-weight: 400;
 }
 
+.editar {
+  background-color: var(--card_blue);
+  color: var(--main_primaryWhite);
+  width: 100px;
+  height: 35px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 400;
+}
+
 .fas {
   margin-right: 10px;
 }
 
 @media (max-width: 770px) {
-
   .variaveis {
     font-size: 0.65rem;
   }

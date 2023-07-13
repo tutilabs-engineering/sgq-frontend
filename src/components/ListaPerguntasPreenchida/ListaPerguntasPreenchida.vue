@@ -184,7 +184,7 @@ export default {
 };
 </script>
 
-<style secoped>
+<style scoped>
 
 .content-questions {
   width: 100%;

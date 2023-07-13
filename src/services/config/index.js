@@ -24,21 +24,21 @@ import Cookie from 'js-cookie'
 
 // SERVER ->
 
- const http = axios.create({
-   baseURL: "http://185.209.179.253:8200",
-   headers: {
-     "Accept": "application/json",
-     "Content": "application/json"
+const http = axios.create({
+  baseURL: "http://localhost:3000",
+  headers: {
+    "Accept": "application/json",
+    "Content": "application/json"
 
   }
- })
+})
 
 //const http = axios.create({
- // baseURL: "http://localhost:8000",
-  //headers: {
-    //"Accept": "application/json",
-    //"Content": "application/json"
- // }
+// baseURL: "http://localhost:8000",
+//headers: {
+//"Accept": "application/json",
+//"Content": "application/json"
+// }
 //})
 
 // const http = axios.create({

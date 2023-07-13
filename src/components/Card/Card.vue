@@ -96,9 +96,7 @@ a {
 @media (max-width: 1100px) {
   .popper {
     width: 100%;
-
   }
 }
-
 </style>
 
