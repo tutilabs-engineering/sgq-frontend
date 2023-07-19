@@ -142,6 +142,9 @@ export default {
   --card_blue: #0ea5e9;
   --card_white: #ffffff;
 
+    /* labels */
+  --lbl_blue: #0ea5e9;
+
   /* buttons */
   --btn_blue: #0ea5e9;
   --btn_green: #10b981;
