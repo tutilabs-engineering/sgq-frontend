@@ -226,4 +226,16 @@ h2 {
   color: #ffff;
   background-color: var(--bg_green);
 }
+
+@media (max-width: 768px) {
+  .searchOp {
+    grid-template-columns: 2fr 3fr 1fr;
+  }
+}
+
+@media (max-width: 425px) {
+  .searchOp {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
