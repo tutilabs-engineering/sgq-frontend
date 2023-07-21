@@ -109,7 +109,7 @@
                   <input
                     type="text"
                     v-model="list.description"
-                    placeholder="Identificação 01"
+                    placeholder="B - Comprimento total (Tipo de Equipamento)"
                   />
                 </div>
 
@@ -300,10 +300,28 @@ export default {
         timerProgressBar: true,
       });
 
-      const inputDescription = this.list.description;
-      const inputCota = this.list.cota;
-      const inputMax = this.list.max;
-      const inputMin = this.list.min;
+      if (
+        !this.list.description ||
+        !this.list.cota ||
+        !this.list.max ||
+        !this.list.min
+      ) {
+        Toast.fire({
+          icon: "error",
+          title: "Preencha todos os campos!",
+          background: "#FFA490",
+        });
+        return;
+      }
+
+      if (!this.list.file) {
+        Toast.fire({
+          icon: "error",
+          title: "Imagem obrigatória!",
+          background: "#FFA490",
+        });
+        return;
+      }
 
       this.$store.commit("$SETISLOADING");
 
@@ -332,13 +350,7 @@ export default {
           }
         })
         .catch((error) => {
-          if (!inputDescription || !inputCota || !inputMax || !inputMin) {
-            Toast.fire({
-              icon: "error",
-              title: "Preencha todos os campos!",
-              background: "#FFA490",
-            });
-          }
+          console.log(error);
           return error;
         });
       this.reloadList();
