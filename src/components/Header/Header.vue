@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <h5 class="title">{{ titlePage }}</h5>
-    <span class="version">Versão {{this.$store.state.version}}</span>
+    <span class="version">Versão {{ this.$store.state.version }}</span>
   </div>
 </template>
 
@@ -15,9 +15,8 @@ export default {
 
   props: ["titlePage"],
 
-  created (){
-    this.theme = localStorage.getItem('theme')
-    console.log(localStorage.getItem('theme'));
+  created() {
+    this.theme = localStorage.getItem("theme");
   },
 
   methods: {
@@ -30,7 +29,6 @@ export default {
       activeContent.classList.toggle("activeContent");
       activeHeader.classList.toggle("activeHeader");
     },
-
   },
 };
 </script>
@@ -95,7 +93,7 @@ export default {
   line-height: 25px;
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
   .header {
     display: none;
   }
