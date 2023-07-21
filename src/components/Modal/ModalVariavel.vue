@@ -233,7 +233,22 @@ export default {
 
   methods: {
     async salvarImagem(img) {
-      console.log(img);
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "top-right",
+        iconColor: "white",
+        customClass: {
+          popup: "colored-toast",
+          title: "title-swal-text",
+        },
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", this.$swal.stopTimer);
+          toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
       const formData = new FormData();
 
       formData.append("file", img);
@@ -241,26 +256,13 @@ export default {
       await http
         .UpdateImagem(this.idImg, formData)
         .then((res) => {
-          console.log(res);
+          Toast.fire({
+            icon: "success",
+            title: "Imagem inserida com sucesso!",
+            background: "#A8D4FF",
+          });
         })
         .catch((error) => {
-          const Toast = this.$swal.mixin({
-            toast: true,
-            position: "top-right",
-            iconColor: "white",
-            customClass: {
-              popup: "colored-toast",
-              title: "title-swal-text",
-            },
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", this.$swal.stopTimer);
-              toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-            },
-            showConfirmButton: false,
-            timer: 2500,
-            timerProgressBar: true,
-          });
-          console.log(error.response.data.message);
           if (error.response.data.message) {
             Toast.fire({
               icon: "error",
@@ -278,8 +280,6 @@ export default {
       // if (this.list.file != "") {
       //   this.statusButtonImage = false;
       // }
-      console.log(e.target.files[0]);
-      console.log(this.createImage());
     },
 
     openImgPreview(imgPreview) {
@@ -355,14 +355,14 @@ export default {
         return;
       }
 
-      // if (!this.list.file) {
-      //   Toast.fire({
-      //     icon: "error",
-      //     title: "Imagem obrigatória!",
-      //     background: "#FFA490",
-      //   });
-      //   return;
-      // }
+      if (!this.list.file) {
+        Toast.fire({
+          icon: "error",
+          title: "Imagem obrigatória!",
+          background: "#FFA490",
+        });
+        return;
+      }
 
       this.$store.commit("$SETISLOADING");
 

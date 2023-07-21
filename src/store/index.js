@@ -6,6 +6,7 @@ export default createStore({
 
     version: '1.7.5',
     urlImg: 'http://192.168.137.19:3000/static',
+    // urlImg: 'http://185.209.179.253:8200/static',
     user: {
       name: ""
     },
