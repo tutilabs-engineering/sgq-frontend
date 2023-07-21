@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <UpdateImagem v-if="showUpdateImage" @salvar="salvar" /> -->
+    <UpdateImagem v-if="showUpdateImage" @salvarImagem="salvarImagem" />
     <transition name="model">
       <form action="">
         <div class="modal_mask">
@@ -83,12 +83,12 @@
                     </div>
 
                     <div class="titleHeader">
-                      <!-- <button
+                      <button
                         class="editar"
                         @click.prevent="updateVariable(variable.id)"
                       >
                         Editar
-                      </button> -->
+                      </button>
                       <button
                         class="delete"
                         @click.prevent="deleteVariable(variable.id)"
@@ -213,6 +213,8 @@ export default {
       statusButtonImage: true,
       imgObject: {},
       constURL: this.$store.state.urlImg,
+      imagem: "",
+      idImg: "",
     };
   },
   props: {
@@ -230,15 +232,54 @@ export default {
   },
 
   methods: {
-    salvar() {
+    async salvarImagem(img) {
+      console.log(img);
+      const formData = new FormData();
+
+      formData.append("file", img);
+
+      await http
+        .UpdateImagem(this.idImg, formData)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          const Toast = this.$swal.mixin({
+            toast: true,
+            position: "top-right",
+            iconColor: "white",
+            customClass: {
+              popup: "colored-toast",
+              title: "title-swal-text",
+            },
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", this.$swal.stopTimer);
+              toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+            },
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+          });
+          console.log(error.response.data.message);
+          if (error.response.data.message) {
+            Toast.fire({
+              icon: "error",
+              title: "Variável já possui imagem associada a ela!",
+              background: "#FFA490",
+            });
+          }
+        });
       this.showUpdateImage = false;
+      this.reloadList();
     },
     insertImageFile(e) {
       this.list.file = e.target.files[0];
       this.createImage(e.target.files[0]);
-      if (this.list.file != "") {
-        this.statusButtonImage = false;
-      }
+      // if (this.list.file != "") {
+      //   this.statusButtonImage = false;
+      // }
+      console.log(e.target.files[0]);
+      console.log(this.createImage());
     },
 
     openImgPreview(imgPreview) {
@@ -314,14 +355,14 @@ export default {
         return;
       }
 
-      if (!this.list.file) {
-        Toast.fire({
-          icon: "error",
-          title: "Imagem obrigatória!",
-          background: "#FFA490",
-        });
-        return;
-      }
+      // if (!this.list.file) {
+      //   Toast.fire({
+      //     icon: "error",
+      //     title: "Imagem obrigatória!",
+      //     background: "#FFA490",
+      //   });
+      //   return;
+      // }
 
       this.$store.commit("$SETISLOADING");
 
@@ -358,6 +399,7 @@ export default {
     },
 
     updateVariable(id) {
+      this.idImg = id;
       this.showUpdateImage = true;
     },
 

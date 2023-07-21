@@ -73,6 +73,7 @@ export default {
     },
 
     saveNewStartup: async function () {
+      // console.log(this.$store.getters.$GETDATACREATESTARTUP);
       const Toast = this.$swal.mixin({
         toast: true,
         position: "top-right",

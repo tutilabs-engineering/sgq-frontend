@@ -11,8 +11,9 @@ export default {
 
   DeleteVariable: async (id) => {
     return await http.delete(`variable/${id}`)
-  
+  },
+
+  UpdateImagem: async (id, data) => {
+    return await http.put(`variable/${id}`, data)
   }
-
-
 }
