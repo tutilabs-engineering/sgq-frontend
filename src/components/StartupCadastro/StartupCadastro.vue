@@ -106,6 +106,9 @@
           id="client"
           v-model="headerInput.product_mold"
         />
+        <LabelMoldeFamilia
+          v-if="selected_mold && selected_mold.is_family"
+        ></LabelMoldeFamilia>
 
         <datalist id="moldes">
           <option
@@ -172,12 +175,14 @@
 </template>
 
 <script>
+import LabelMoldeFamilia from "../LabelMoldeFamilia/LabelMoldeFamilia.vue";
 import http from "../../services/startup";
 import dayjs from "dayjs";
 
 export default {
   data() {
     return {
+      selected_mold: {},
       code_op: "",
       headerInput: {
         machine: "",
@@ -212,16 +217,7 @@ export default {
     },
   },
 
-  created: async function () {
-    await http
-      .listAllMachines()
-      .then((res) => {
-        this.maqOptions = res.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
+  async mounted() {
     await http
       .listAllMolds()
       .then((res) => {
@@ -231,11 +227,25 @@ export default {
         console.log(error);
       });
   },
+
+  created: async function () {
+    await http
+      .listAllMachines()
+      .then((res) => {
+        this.maqOptions = res.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
   watch: {
     headerInput: {
       deep: true,
       immediate: true,
-      handler() {
+      async handler() {
+        this.selected_mold = this.moldOptions.find((mold) => {
+          return this.headerInput.product_mold == mold.description;
+        });
         this.$store.commit("$SETDATACREATESTARTUP", {
           header: {
             client: this.headerInfo.client,
@@ -255,6 +265,9 @@ export default {
         });
       },
     },
+  },
+  components: {
+    LabelMoldeFamilia,
   },
 };
 </script>

@@ -74,7 +74,11 @@
           {{ verifyOpenStartup(data_startup) }}</span
         >
       </fieldset>
-
+      <fieldset v-if="data_startup.stop_code">
+        <span class="statup-header">Parada de Máquina</span>
+        <span class="startup-preenchida parada-maquina">Cód. {{ data_startup.stop_code.id }}</span>
+        <span class="startup-preenchida parada-maquina"> {{ data_startup.stop_code.description.toLowerCase() }}</span>
+      </fieldset>
       <fieldset>
         <span class="statup-header">Status</span>
         <span class="startup-preenchida" v-if="data_startup.status.id == 1"
@@ -633,6 +637,10 @@ legend {
 .startup-preenchida {
   color: var(--card_green);
   font-size: 0.85rem;
+}
+
+.parada-maquina {
+  color: var(--card_red);
 }
 
 .startup-preenchida-com-condicional {
