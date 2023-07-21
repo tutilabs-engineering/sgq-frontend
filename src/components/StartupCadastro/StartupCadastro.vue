@@ -104,17 +104,28 @@
           list="moldes"
           name="client"
           id="client"
-          v-model="headerInput.product_mold"
+          v-model="headerInput.mold.product_mold"
         />
+        <LabelMoldeFamilia
+          v-if="selected_mold && selected_mold.is_family"
+        ></LabelMoldeFamilia>
+        <div v-else style="display: flex; align-items: center; gap: 0.5rem">
+          <label for="">Molde Família</label>
+          <input
+            type="checkbox"
+            name="mold_family"
+            id=""
+            :value="true"
+            v-model="headerInput.mold.is_family"
+          />
+        </div>
 
         <datalist id="moldes">
           <option
             v-for="(molde, index) in moldOptions"
             :value="molde.description"
             :key="index"
-          >
-            {{ molde.value }}
-          </option>
+          ></option>
         </datalist>
       </div>
 
@@ -172,16 +183,21 @@
 </template>
 
 <script>
+import LabelMoldeFamilia from "../LabelMoldeFamilia/LabelMoldeFamilia.vue";
 import http from "../../services/startup";
 import dayjs from "dayjs";
 
 export default {
   data() {
     return {
+      selected_mold: {},
       code_op: "",
       headerInput: {
         machine: "",
-        product_mold: "",
+        mold: {
+          product_mold: "MD",
+          is_family: false,
+        },
         day: "",
         start_time: "",
         nqa: "",
@@ -212,16 +228,7 @@ export default {
     },
   },
 
-  created: async function () {
-    await http
-      .listAllMachines()
-      .then((res) => {
-        this.maqOptions = res.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
+  async mounted() {
     await http
       .listAllMolds()
       .then((res) => {
@@ -231,11 +238,25 @@ export default {
         console.log(error);
       });
   },
+
+  created: async function () {
+    await http
+      .listAllMachines()
+      .then((res) => {
+        this.maqOptions = res.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
   watch: {
     headerInput: {
       deep: true,
       immediate: true,
-      handler() {
+      async handler() {
+        this.selected_mold = this.moldOptions.find((mold) => {
+          return this.headerInput.mold.product_mold == mold.description;
+        });
         this.$store.commit("$SETDATACREATESTARTUP", {
           header: {
             client: this.headerInfo.client,
@@ -244,7 +265,10 @@ export default {
             code_product: this.headerInfo.codeProduct,
             desc_product: this.headerInfo.product,
             quantity: this.headerInfo.quantity,
-            product_mold: this.headerInput.product_mold,
+            mold: {
+              product_mold: this.headerInput.mold.product_mold,
+              is_family: this.headerInput.mold.is_family,
+            },
             machine: this.headerInput.machine,
             day: this.headerInfo.date,
             start_time: this.headerInfo.startTime,
@@ -255,6 +279,9 @@ export default {
         });
       },
     },
+  },
+  components: {
+    LabelMoldeFamilia,
   },
 };
 </script>

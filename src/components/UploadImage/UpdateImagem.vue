@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="upload">
-      <img :src="file" alt="" v-if="uploadImg" />
+      <img :src="file1" alt="" v-if="uploadImg" />
       <div class="uploadImg">
         <div class="inputUpLoad">
           <label for="inputImage" class="inputImage"
@@ -16,7 +16,7 @@
             @change="insertImageFile"
           />
         </div>
-        <button @click="teste">Adicionar</button>
+        <button @click="salvarImagem">Adicionar</button>
       </div>
     </div>
   </div>
@@ -27,18 +27,26 @@ export default {
   data() {
     return {
       file: "",
+      file1: "",
       uploadImg: false,
     };
+  },
+
+  props: {
+    idImg: {
+      type: String,
+      required: true,
+    },
   },
 
   methods: {
     insertImageFile(e) {
       this.uploadImg = true;
-      const file = e.target.files[0];
-      this.file = URL.createObjectURL(file);
+      this.file = e.target.files[0];
+      this.file1 = URL.createObjectURL(this.file);
     },
-    teste() {
-      this.$emit("salvar");
+    salvarImagem() {
+      this.$emit("salvarImagem", this.file);
     },
   },
 };
