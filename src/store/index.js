@@ -5,7 +5,8 @@ export default createStore({
   state: {
 
     version: '1.7.5',
-    urlImg: 'http://185.209.179.253:8200/static',
+    urlImg: 'http://192.168.137.19:3000/static',
+    // urlImg: 'http://185.209.179.253:8200/static',
     user: {
       name: ""
     },
@@ -23,12 +24,15 @@ export default createStore({
         code_client: "",
         code_product: "",
         desc_product: "",
-        product_mold: "",
+        mold: {
+          product_mold: "",
+          is_family: false
+        },
         quantity: "",
         machine: "",
         day: "",
         start_time: "",
-        nqa: ''
+        nqa: '',
       },
       techniqueData: {
         cavity: 0,
@@ -112,6 +116,7 @@ export default createStore({
     },
 
     async $GETDATACREATESTARTUP(state) {
+      console.log(state);
 
       state.createDataStartup.user_id = await userId.DataUser().then((res) => {
         return res.data.user.id
