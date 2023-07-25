@@ -3,13 +3,13 @@ import Cookie from 'js-cookie'
 
 //LOCAL
 
-const http = axios.create({
-  baseURL: "http://192.168.137.19:3000",
-  headers: {
-    "Accept": "application/json",
-    "Content": "application/json"
-  }
-})
+//const http = axios.create({
+//  baseURL: "http://192.168.137.19:3000",
+//  headers: {
+//    "Accept": "application/json",
+//    "Content": "application/json"
+//  }
+//})
 
 // API SAP
 
@@ -23,13 +23,13 @@ const http = axios.create({
 
 // SERVER ->
 
-// const http = axios.create({
-//   baseURL: "http://185.209.179.253:8200",
-//   headers: {
-//     "Accept": "application/json",
-//     "Content": "application/json"
-//   }
-// })
+const http = axios.create({
+  baseURL: "http://185.209.179.253:8200",
+  headers: {
+    "Accept": "application/json",
+    "Content": "application/json"
+  }
+})
 
 http.interceptors.request.use(function (config) {
   let token = Cookie.get("token");
