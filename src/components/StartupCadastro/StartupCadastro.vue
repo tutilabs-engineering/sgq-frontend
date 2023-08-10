@@ -195,7 +195,7 @@ export default {
       headerInput: {
         machine: "",
         mold: {
-          product_mold: "MD",
+          product_mold: "",
           is_family: false,
         },
         day: "",

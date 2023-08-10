@@ -1,6 +1,10 @@
 <template>
   <div>
-    <UpdateImagem v-if="showUpdateImage" @salvarImagem="salvarImagem" />
+    <UpdateImagem
+      v-if="showUpdateImage"
+      @salvarImagem="salvarImagem"
+      @closeModal="closeModal"
+    />
     <transition name="model">
       <form action="">
         <div class="modal_mask">
@@ -153,6 +157,7 @@
                     type="file"
                     class="inputUpLoad"
                     id="inputImage"
+                    accept=".png, .jpeg, .jpg"
                     @change="insertImageFile"
                   />
                 </div>
@@ -273,6 +278,9 @@ export default {
         });
       this.showUpdateImage = false;
       this.reloadList();
+    },
+    closeModal() {
+      this.showUpdateImage = false;
     },
     insertImageFile(e) {
       this.list.file = e.target.files[0];
