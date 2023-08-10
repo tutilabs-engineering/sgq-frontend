@@ -100,7 +100,7 @@
       <div class="input">
         <label for="client">Molde</label>
         <input
-          type="number"
+          type="text"
           list="moldes"
           name="client"
           id="client"
@@ -266,7 +266,7 @@ export default {
             desc_product: this.headerInfo.product,
             quantity: this.headerInfo.quantity,
             mold: {
-              product_mold: "MD" + this.headerInput.mold.product_mold,
+              product_mold: this.headerInput.mold.product_mold,
               is_family: this.headerInput.mold.is_family,
             },
             machine: this.headerInput.machine,
