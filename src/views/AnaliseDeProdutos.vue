@@ -35,6 +35,13 @@
               >
                 <i class="fas fa-sort-numeric-up"></i> Variáveis
               </button>
+
+              <button
+                class="btn btn-pp"
+                @click="StartComponentPointPoint(product)"
+              >
+                Ponto a Ponto
+              </button>
             </div>
           </td>
         </tr>
@@ -49,6 +56,12 @@
       v-if="modalVariableOpen"
       :dataProduct="dataHeader"
       @changeStatus="changeStatusModalVariable"
+    />
+
+    <ModalPointPoint
+      v-if="modalPointPointOpen"
+      :dataProduct="dataHeader"
+      @changeStatus="changeStatusModalPointPoint"
     />
     <div class="pagination-component">
       <button
@@ -107,6 +120,12 @@
               >
                 <i class="fas fa-sort-numeric-up"></i> Variáveis
               </button>
+              <button
+                class="btn btn-pp"
+                @click="StartComponentPointPoint(product)"
+              >
+                Ponto a Ponto
+              </button>
             </div>
           </td>
         </tr>
@@ -122,16 +141,22 @@
       :dataProduct="dataHeader"
       @changeStatus="changeStatusModalVariable"
     />
+    <ModalPointPoint
+      v-if="modalPointPointOpen"
+      :dataProduct="dataHeader"
+      @changeStatus="changeStatusModalPointPoint"
+    />
   </fieldset>
 </template>
 
 <script>
 import ModalAttribute from "../components/Modal/ModalAtributo.vue";
 import ModalVariable from "../components/Modal/ModalVariavel.vue";
+import ModalPointPoint from "../components/Modal/ModalPointPoint.vue";
 import http from "../services/productAnalysis/Products";
 
 export default {
-  components: { ModalAttribute, ModalVariable },
+  components: { ModalAttribute, ModalVariable, ModalPointPoint },
   setup() {},
   name: "Table",
   emits: ["modalAtributo", "modalVariavel"],
@@ -141,6 +166,7 @@ export default {
       listAllProducts: [],
       modalAttributeOpen: false,
       modalVariableOpen: false,
+      modalPointPointOpen: false,
       dataHeader: Object,
       codeProductValue: "",
       isSearched: false,
@@ -216,11 +242,19 @@ export default {
       this.dataHeader = dataProduct;
     },
 
+    StartComponentPointPoint(dataProduct) {
+      this.modalPointPointOpen = !this.modalPointPointOpen;
+      this.dataHeader = dataProduct;
+    },
+
     changeStatusModalAtrribute() {
       this.modalAttributeOpen = !this.modalAttributeOpen;
     },
     changeStatusModalVariable() {
       this.modalVariableOpen = !this.modalVariableOpen;
+    },
+    changeStatusModalPointPoint() {
+      this.modalPointPointOpen = !this.modalPointPointOpen;
     },
   },
 
@@ -272,7 +306,6 @@ legend {
   font-size: 30px;
   font-weight: 600;
   color: var(--black_text);
-  
 }
 
 .tableContent {
@@ -363,7 +396,7 @@ table td {
 
 .btn {
   border: none;
-  width: 100px;
+  width: 130px;
   height: 40px;
   padding: 10px;
   border-radius: 5px;
@@ -377,6 +410,10 @@ table td {
 
 .btn-va {
   background-color: var(--card_orange);
+}
+
+.btn-pp {
+  background-color: var(--btn_green);
 }
 
 @media (max-width: 765px) {

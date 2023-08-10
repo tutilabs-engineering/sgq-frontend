@@ -1,9 +1,6 @@
 <template>
   <div class="content-startupCadastro">
-    
     <fieldset class="form">
-
-      
       <legend>Start-Injeção</legend>
       <div class="input">
         <label for="op">Ordem de Produção</label>

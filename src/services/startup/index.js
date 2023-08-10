@@ -92,6 +92,10 @@ export default {
   filterStartups: async (start_time, end_time) => {
     return http.post(`/reportStartup/management/count_filter`, { start_time, end_time }
     )
+  },
+
+  createPointPoint: async (data) => {
+    return http.post('/pointToPoint', data)
   }
 
 
