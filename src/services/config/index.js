@@ -4,7 +4,7 @@ import Cookie from 'js-cookie'
 //LOCAL
 
 const http = axios.create({
-  baseURL: "http://192.168.137.136:8200",
+  baseURL: "http://185.209.179.253:7550:8200",
   headers: {
     "Accept": "application/json",
     "Content": "application/json"
