@@ -95,6 +95,7 @@
             {{ maquina.VisResCode }}
           </option>
         </datalist>
+        <span>Exemplo Máq Filial: <strong>F360/01</strong> | Máquina Matriz: <strong>360/02</strong></span>
       </div>
 
       <div class="input">
@@ -365,8 +366,7 @@ export default {
 .input {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 70px;
+  height: auto;
   padding: 5px;
   border-radius: 5px 5px 0 0;
 }
@@ -395,9 +395,13 @@ input:-webkit-autofill {
   transition: 1s;
   outline: none;
   font-size: 15px;
-  height: 52px;
+  height: auto;
   color: var(--black_text);
   border-bottom: 2px solid rgba(128, 128, 128, 0.39);
+}
+
+.inputMaq > span {
+  font-size: 0.8rem;
 }
 
 input::placeholder {
