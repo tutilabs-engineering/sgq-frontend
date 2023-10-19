@@ -19,6 +19,7 @@ export default {
     return {
       fillStatus: false,
       isQuestionOpen: false,
+      machineInSap: false
     };
   },
 
@@ -103,7 +104,18 @@ export default {
           this.ValidateQtyAnsweredQuestions();
         } else {
           const data = await this.$store.getters.$GETDATACREATESTARTUP;
-          if (data) {
+
+          await http.listAllMachines().then( (res) => {
+              res.data.results.map( async (item) => {
+
+                if(item.VisResCode === await data.header.machine) {
+                  this.machineInSap = true
+                }
+              })
+            })
+          if (data && this.machineInSap) {
+            
+
             await http
               .createNewStartup(data)
               .then((res) => {
@@ -182,6 +194,12 @@ export default {
                   });
                 }
               });
+              this.machineInSap = false
+          } else {
+            Toast.fire({
+                    title: "FORMATO DE MÁQUINA INVÁLIDA. POR FAVOR, UTILIZE APENAS AS OPÇÕES LISTADAS!",
+                    background: "#ff1230",
+            });
           }
         }
       }

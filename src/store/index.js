@@ -115,7 +115,6 @@ export default createStore({
     },
 
     async $GETDATACREATESTARTUP(state) {
-      console.log(state);
 
       state.createDataStartup.user_id = await userId.DataUser().then((res) => {
         return res.data.user.id

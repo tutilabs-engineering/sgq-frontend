@@ -82,7 +82,9 @@ export default {
   },
 
   listAllMachines: async () => {
-    return http.get(`/reportStartup/machines/list`)
+    // return http.get(`/reportStartup/machines/list`)
+    const response = await axios.get(`http://185.209.179.253:3000/api/v1/sap/tutilabs/machines`)
+    return response
   },
 
   listAllMolds: async () => {

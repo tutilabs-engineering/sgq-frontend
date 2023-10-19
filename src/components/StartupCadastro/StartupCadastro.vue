@@ -92,7 +92,7 @@
             :value="maquina.description"
             :key="index"
           >
-            {{ maquina.value }}
+            {{ maquina.VisResCode }}
           </option>
         </datalist>
       </div>
@@ -243,7 +243,8 @@ export default {
     await http
       .listAllMachines()
       .then((res) => {
-        this.maqOptions = res.data;
+        this.maqOptions = res.data.results;
+
       })
       .catch((error) => {
         console.log(error);
@@ -277,6 +278,7 @@ export default {
             piq: this.headerInput.piq,
           },
         });
+
       },
     },
   },
