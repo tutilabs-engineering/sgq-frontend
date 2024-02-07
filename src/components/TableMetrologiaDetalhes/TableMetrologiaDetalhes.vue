@@ -1,115 +1,135 @@
 <template>
-<div class="tableContent">
- 
-      <table cellpadding="0" cellspacing="0">
- 
-        <thead>
-          <th>Identificação</th>
-          <th v-for="x in arrayFilter(variables[0].items)" :key="x.id">{{"min - Cavidade " + x.position_cavity + " - max"}}</th>
-        </thead>
+  <div class="tableContent">
+    <table cellpadding="0" cellspacing="0">
+      <thead>
+        <th>Identificação</th>
+        <th v-for="x in arrayFilter(variables[0].items)" :key="x.id">
+          {{ "min - Cavidade " + x.position_cavity + " - max" }}
+        </th>
+      </thead>
 
-        <tbody>
-    
-          <tr v-for="i in variables" :key="i" >
-               <td> {{ i.variable}} </td>
-               <td v-for="item in arrayFilter(i.items)" :key="item" data-title="Cavidade">
-                <div class="cavity-area" v-if="item !== null">
-               
-                  <span>min - {{item.variable.min}}</span>
-                   <input @change="verifyValue(item.value, item.variable.min, item.variable.max)" class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required v-if="statusInput" disabled>
+      <tbody>
+        <tr v-for="i in variables" :key="i">
+          <td>{{ i.variable }}</td>
+          <td
+            v-for="item in arrayFilter(i.items)"
+            :key="item"
+            data-title="Cavidade"
+          >
+            <div class="cavity-area" v-if="item !== null">
+              <span>min - {{ item.variable.min }}</span>
+              <input
+                @change="
+                  verifyValue(item.value, item.variable.min, item.variable.max)
+                "
+                class="input-test"
+                type="number"
+                :min="item.variable.min"
+                :max="item.variable.max"
+                v-model="item.value"
+                required
+                v-if="statusInput"
+                disabled
+              />
 
-                   <input @change="verifyValue(item.value, item.variable.min, item.variable.max)" class="input-test" type="number" :min="item.variable.min" :max="item.variable.max" v-model="item.value" required v-else>
+              <input
+                @change="
+                  verifyValue(item, item.variable.min, item.variable.max)
+                "
+                step="0.01"
+                pattern="[0-9]+([\,][0-9]+)?"
+                class="input-test"
+                type="number"
+                :min="0"
+                v-model="item.value"
+                required
+                v-else
+              />
 
-                   <span>{{item.variable.max}} - max</span>
-            
-                </div>
-                <div>
-                   <i class="fas fa-eye" @click="verifyModelImagen(item.variable.file)" ></i>
-               
-                </div>
-               
-               </td>   
-              
-          </tr>
-             
-           
-        </tbody>
-      </table>
-
+              <span>{{ item.variable.max }} - max</span>
+            </div>
+            <div>
+              <i
+                class="fas fa-eye"
+                @click="verifyModelImagen(item.variable.file)"
+              ></i>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      statusInput: false
+    };
+  },
 
-    data(){
-      return {
-        statusInput: false,
+  created: async function() {
+    this.inputToggle();
+  },
+
+  props: {
+    variables: Object,
+    inputStatus: Boolean
+  },
+  methods: {
+    inputToggle() {
+      if (this.inputStatus == true) {
+        this.statusInput = true;
+      } else {
+        this.statusInput = false;
       }
     },
 
-    created: async function() {
-      this.inputToggle()
-    },
-
-    props: {
-        variables: Object,
-        inputStatus: Boolean,
-    },
-    methods : {
-      inputToggle(){
-        if(this.inputStatus == true){
-          this.statusInput = true
-        }else {
-          this.statusInput = false
-        }
-      },
-
-      verifyModelImagen(imagem){
+    verifyModelImagen(imagem) {
       const rota = this.$store.state.urlImg;
 
       this.$swal.fire({
-      imageUrl: `${rota}/variables/${imagem}`,
-      padding: '1.5em',
-      imageWidth: 800,
-      imageHeight: 500,
-      imageAlt: 'Variavel sem Imagem',
-      })
-      },
-      arrayFilter(arr){
-         var arraySemVazios = arr.filter(function (i) {
-         return i;
-       });
-
-       return arraySemVazios
-
-       },
-
-       verifyValue(item, min, max){
-         if(item < min || item > max){
-           console.log("Deu ruim");
-         }
-       }
+        imageUrl: `${rota}/variables/${imagem}`,
+        padding: "1.5em",
+        imageWidth: 800,
+        imageHeight: 500,
+        imageAlt: "Variavel sem Imagem"
+      });
     },
-    watch : {
-      variables : {
-            deep: true,
-            immediate:true,
-            handler(newValue){
-             this.$emit("variablesModification",newValue)
-            }
+    arrayFilter(arr) {
+      var arraySemVazios = arr.filter(function(i) {
+        return i;
+      });
+
+      return arraySemVazios;
+    },
+
+    verifyValue(item, min, max) {
+      if (typeof item.value !== "number" || item.value < 0) {
+        item.value = 0;
+      }
+
+      if (item.value < min || item.value > max) {
+        console.log(
+          `Valor da variável está fora do especificado - Min: ${min} e Max: ${max} `
+        );
       }
     }
-  
-
-
-    
+  },
+  watch: {
+    variables: {
+      deep: true,
+      immediate: true,
+      handler(newValue) {
+        this.$emit("variablesModification", newValue);
+      }
+    }
+  }
 };
-
 </script>
 
 <style scoped>
-
 fieldset {
   width: 100%;
   background-color: var(--bg_white);
@@ -131,16 +151,13 @@ legend {
   justify-content: center;
   background-color: var(--bg_white);
   color: var(--black_text);
-  
 }
-input[type=number]::-webkit-inner-spin-button { 
-    -webkit-appearance: none;
-    
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
-input[type=number] { 
-   -moz-appearance: textfield;
-   appearance: textfield;
-
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 table {
   width: 100%;
@@ -150,7 +167,7 @@ table {
 
 table th {
   font-size: 10px;
-  color:  var(--black_text);
+  color: var(--black_text);
   padding: 10px 10px 10px 10px;
 }
 
@@ -173,7 +190,6 @@ table th {
   outline: none;
 }
 
-
 .tableContent td {
   text-align: center;
   height: 30px;
@@ -192,7 +208,7 @@ table th {
   font-size: 10px;
 }
 
-.input-test{
+.input-test {
   border: none;
   margin: 0 20px 0 20px;
   border: 1px solid rgba(37, 36, 36, 0.281);
@@ -201,13 +217,9 @@ table th {
   outline: none;
   height: 40px;
   text-align: center;
-
 }
 
-
-
 @media (max-width: 965px) {
-
   .tableContent {
     color: var(--black_text);
   }
@@ -215,9 +227,8 @@ table th {
   .tableContent {
     font-size: 10px;
   }
-  
+
   .tableContent thead {
-    
     display: none;
   }
 
@@ -230,7 +241,6 @@ table th {
     align-items: center;
     justify-content: space-between;
     margin-top: 20px;
-    
   }
 
   .tableContent td:first-of-type {
@@ -245,8 +255,6 @@ table th {
     font-size: 9px;
     content: attr(data-title);
     display: block;
-
   }
-
 }
 </style>
