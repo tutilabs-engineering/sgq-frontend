@@ -13,10 +13,11 @@
       <button class="btnLogin">Acessar</button>
     </form>
 
-    <span class="version">Versão {{this.$store.state.version}}</span>
+    <span class="version">Versão {{ this.$store.state.version }}</span>
 
-    <button class="darkModeButton" v-if="theme === 'darkMode'" @click="toggleTheme"><img src="../../public/icons/moon.svg" alt="">night </button>
-    <button class="darkModeButton" v-else  @click="toggleTheme"><img src="../../public/icons/sun.svg" alt="">day</button>
+    <button class="darkModeButton" v-if="theme === 'darkMode'" @click="toggleTheme"><img src="../../public/icons/moon.svg"
+        alt="">night </button>
+    <button class="darkModeButton" v-else @click="toggleTheme"><img src="../../public/icons/sun.svg" alt="">day</button>
 
   </div>
 </template>
@@ -39,7 +40,8 @@ export default {
 
 
 
-  created (){
+  created() {
+    console.log(this.$store.state.userLogin);
     this.theme = localStorage.getItem('theme')
     console.log(localStorage.getItem('theme'));
   },
@@ -47,8 +49,8 @@ export default {
   methods: {
     toggleTheme() {
       this.theme = this.theme == 'darkMode' ? '' : 'darkMode'; //toggles theme value
-            document.documentElement.setAttribute('data-theme', this.theme); // sets the data-theme attribute
-            localStorage.setItem('theme', this.theme); // stores theme value on local storage
+      document.documentElement.setAttribute('data-theme', this.theme); // sets the data-theme attribute
+      localStorage.setItem('theme', this.theme); // stores theme value on local storage
     },
 
     Login: async function () {
@@ -74,9 +76,10 @@ export default {
       await http
         .sessions(access)
         .then(async (response) => {
+          this.$store.commit('$SETUSERLOGIN', response.data.user.unity)
           if (response.status === 200) {
             const token = await response.data.token;
-            Cookie.set("token",token)
+            Cookie.set("token", token)
             if (token) {
               Toast.fire({
                 icon: 'success',
@@ -227,9 +230,9 @@ input[type="password"] {
     width: 85%;
   }
 
-  .inputForm, .btnLogin {
+  .inputForm,
+  .btnLogin {
     width: 100%;
   }
 }
-
 </style>
