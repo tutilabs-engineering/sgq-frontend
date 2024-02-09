@@ -1,42 +1,25 @@
 <template>
   <div>
-    <UpdateImagem
-      v-if="showUpdateImage"
-      @salvarImagem="salvarImagem"
-      @closeModal="closeModal"
-    />
+    <UpdateImagem v-if="showUpdateImage" @salvarImagem="salvarImagem" @closeModal="closeModal" />
     <transition name="model">
       <form action="">
         <div class="modal_mask">
           <div class="modal_content">
             <div class="modal_header">
               <h1>Tabela de Variáveis</h1>
-              <input
-                type="button"
-                value="X"
-                colorButton="red"
-                @click="$emit('changeStatus')"
-              />
+              <input type="button" value="X" colorButton="red" @click="$emit('changeStatus')" />
             </div>
 
             <div class="modal_body">
               <div class="inputsHeader">
                 <div class="input">
                   <p>Cód. Produto</p>
-                  <input
-                    type="text"
-                    readonly
-                    :value="dataProduct.code_product"
-                  />
+                  <input type="text" readonly :value="dataProduct.code_product" />
                 </div>
 
                 <div class="input">
                   <p>Descrição Produto</p>
-                  <input
-                    type="text"
-                    readonly
-                    :value="dataProduct.name_product"
-                  />
+                  <input type="text" readonly :value="dataProduct.name_product" />
                 </div>
               </div>
 
@@ -51,11 +34,7 @@
                 </div>
 
                 <div class="headerVariavel">
-                  <div
-                    class="testeLi"
-                    v-for="(variable, index) in variables"
-                    :key="index"
-                  >
+                  <div class="testeLi" v-for="(variable, index) in variables" :key="index">
                     <div class="titleHeader">
                       {{ variable.description }}
                     </div>
@@ -73,30 +52,19 @@
                     </div>
 
                     <div class="titleHeader">
-                      <img
-                        v-on:click="
-                          openImgPreview(
-                            constURL + '/variables/' + variable.file
-                          )
-                        "
-                        style="height: 50px"
-                        :src="constURL + '/variables/' + variable.file"
-                        alt=""
-                        class="titleHeaderImg"
-                      />
+                      <img v-on:click="
+                        openImgPreview(
+                          constURL + '/variables/' + variable.file
+                        )
+                        " style="height: 50px" :src="constURL + '/variables/' + variable.file" alt=""
+                        class="titleHeaderImg" />
                     </div>
 
                     <div class="titleHeader">
-                      <button
-                        class="editar"
-                        @click.prevent="updateVariable(variable.id)"
-                      >
+                      <button class="editar" @click.prevent="updateVariable(variable.id)">
                         Editar
                       </button>
-                      <button
-                        class="delete"
-                        @click.prevent="deleteVariable(variable.id)"
-                      >
+                      <button class="delete" @click.prevent="deleteVariable(variable.id)">
                         Deletar
                       </button>
                     </div>
@@ -104,69 +72,36 @@
                 </div>
               </div>
 
-              <form
-                class="attributeVariable"
-                @submit.prevent="RegisterVariable"
-              >
+              <form class="attributeVariable" @submit.prevent="RegisterVariable">
                 <div class="inputIdentificacao">
                   <p>Identificação:</p>
-                  <input
-                    type="text"
-                    v-model="list.description"
-                    placeholder="B - Comprimento total (Tipo de Equipamento)"
-                  />
+                  <input type="text" v-model="list.description"
+                    placeholder="B - Comprimento total (Tipo de Equipamento)" />
                 </div>
 
                 <div class="inputCota">
                   <p>Nominal:</p>
-                  <input
-                    type="text"
-                    v-model="list.cota"
-                    step="any"
-                    placeholder="12.5"
-                  />
+                  <input type="text" v-model="list.cota" step="any" placeholder="12.5" />
                 </div>
 
                 <div class="inputCota">
                   <p>Máximo:</p>
-                  <input
-                    type="text"
-                    v-model="list.max"
-                    step="any"
-                    placeholder="12.6"
-                  />
+                  <input type="text" v-model="list.max" step="any" placeholder="12.6" />
                 </div>
 
                 <div class="inputCota">
                   <p class="titleHeader">Mínimo:</p>
-                  <input
-                    type="text"
-                    v-model="list.min"
-                    step="any"
-                    placeholder="12.3"
-                  />
+                  <input type="text" v-model="list.min" step="any" placeholder="12.3" />
                 </div>
 
                 <div class="inputUpLoad" v-if="statusButtonImage">
-                  <label for="inputImage" class="inputImage"
-                    ><i class="fas fa-paperclip"></i> <span>Anexar</span></label
-                  >
+                  <label for="inputImage" class="inputImage"><i class="fas fa-paperclip"></i> <span>Anexar</span></label>
 
-                  <input
-                    ref="file"
-                    type="file"
-                    class="inputUpLoad"
-                    id="inputImage"
-                    accept=".png, .jpeg, .jpg"
-                    @change="insertImageFile"
-                  />
+                  <input ref="file" type="file" class="inputUpLoad" id="inputImage" accept=".png, .jpeg, .jpg"
+                    @change="insertImageFile" />
                 </div>
 
-                <button
-                  class="inputUpLoad inputImageDelete"
-                  @click="changeStatusButtonImage"
-                  v-else
-                >
+                <button class="inputUpLoad inputImageDelete" @click="changeStatusButtonImage" v-else>
                   Remover
                 </button>
 
@@ -174,10 +109,7 @@
                   <span> <i class="fas fa-plus"></i> Enviar</span>
                 </button>
 
-                <div
-                  class="alertMax"
-                  v-show="parseInt(list.max) < parseInt(list.min)"
-                >
+                <div class="alertMax" v-show="parseInt(list.max) < parseInt(list.min)">
                   <p>OBS: O campo máximo tem que ser maior que o mínimo</p>
                 </div>
               </form>
@@ -530,6 +462,7 @@ export default {
 .titleHeaderImg {
   cursor: pointer;
 }
+
 .variaveis .headerVariaveis .titleHeader {
   position: relative;
   width: 33%;
@@ -887,6 +820,7 @@ export default {
   .variaveis {
     font-size: 0.65rem;
   }
+
   .title_modal input {
     font-size: 20px;
     width: 50px;

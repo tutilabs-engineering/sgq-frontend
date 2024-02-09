@@ -1,6 +1,5 @@
 <template>
-
-  <fieldset class="container-cards">
+  <!-- <fieldset class="container-cards">
     <legend>Quantidade de Startups</legend>
 
     <div class="filter_cards">
@@ -25,14 +24,25 @@
       <Card status="REPROVADOS"
         :qtde="startupsManagement.disapproved + ' - ' + porcent(startupsManagement.total, startupsManagement.disapproved)"
         img="fas fa-times" colore="#FF5349" link="/startups-reprovadas" />
-    </div>
-    
-    <!-- <div>
+    </div> -->
+
+  <!-- <div>
       <LineChart :time="dashTime" :dashLineData="dashData"/>
     </div> -->
 
-  </fieldset>
-  <div class="barCHart_content">
+  <!-- </fieldset> -->
+
+  <div class="dashboardIframe" v-if="this.$store.state.userLogin === 1">
+    <iframe title="Report Section" width="600" height="373.5"
+      src="https://app.powerbi.com/view?r=eyJrIjoiZmJmZDEzYmQtYjg3NS00NjMzLTgzZGYtNDNhYWEwYmI0Y2JjIiwidCI6ImM1ZWFlMTRiLTQwZGMtNDRmNi05YTFiLWRlOTk2ZTBmOTk3YyJ9"
+      frameborder="0" allowFullScreen="true"></iframe>
+  </div>
+  <div class="dashboardIframe" v-else>
+    <iframe title="Startup_Filial" width="600" height="373.5"
+      src="https://app.powerbi.com/view?r=eyJrIjoiMzdkZjIzMzYtZGQ2ZC00YzMwLWIxNTAtMWIwNDU5NTU4MGEzIiwidCI6ImM1ZWFlMTRiLTQwZGMtNDRmNi05YTFiLWRlOTk2ZTBmOTk3YyJ9"
+      frameborder="0" allowFullScreen="true"></iframe>
+  </div>
+  <!-- <div class="barCHart_content">
     <div class="barChart">
       <BarChartVue :dashData="dashData" :dashTime="dashTime" />
     </div>
@@ -46,9 +56,9 @@
         <FilterBarChart @getSelectedConfig="getSelectedConfig" />
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="barCHart_content">
+  <!-- <div class="barCHart_content">
     <div class="barChart">
       <DoughnutChart :dados="dadosDash2" />
     </div>
@@ -62,8 +72,7 @@
       </div>
 
     </div>
-  </div>
-
+  </div> -->
 </template>
 
 <script>
@@ -112,6 +121,7 @@ export default {
   },
 
   async created() {
+    console.log(this.$store.state.userLogin);
     await this.$store.commit("$SETISLOADING");
 
     const result = await http.ListAllDataFilter({
@@ -156,7 +166,7 @@ export default {
     this.startupsManagement.conditional = listCount.data.all_approved_with_condition
 
     this.startupsManagement.closed = listCount.data.all_closed
-    
+
     this.startupsManagement.total = this.startupsManagement.approved + this.startupsManagement.conditional + this.startupsManagement.disapproved
 
     await this.$store.commit("$SETISLOADING");
@@ -244,6 +254,19 @@ export default {
 </script>
 
 <style scoped>
+.dashboardIframe {
+  padding: 1rem;
+}
+
+iframe {
+  width: 100%;
+  height: 100vh;
+}
+
+/* iframe .displayAreaViewport {
+  background: #f5f5f5;
+} */
+
 .cards {
   margin: 10px 0 40px 0;
   width: 100%;
